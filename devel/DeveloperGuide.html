@@ -46,20 +46,20 @@ as things come up.</p>
 -- Ian Bicking</blockquote>
 <div class="section" id="development-installation">
 <h1>Development Installation</h1>
-<p>First install <a href="http://formencode.org" class="reference external">FormEncode</a>:</p>
+<p>First install <a href="http://www.formencode.org/en/latest/download.html" class="reference external">FormEncode</a>:</p>
 <pre class="literal-block">
-$ svn co http://svn.colorstudy.com/FormEncode/trunk FormEncode
-$ cd FormEncode
+$ git clone git://github.com/formencode/formencode.git
+$ cd formencode
 $ sudo python setup.py develop
 </pre>
 <p>Then do the same for SQLObject:</p>
 <pre class="literal-block">
-$ svn co http://svn.colorstudy.com/SQLObject/trunk SQLObject
-$ cd SQLObject
+$ git clone git clone git://git.code.sf.net/p/sqlobject/sqlobject
+$ cd sqlobject
 $ sudo python setup.py develop
 </pre>
 <p>Voila!  The packages are globally installed, but the files from the
-checkout were not copied into <tt class="docutils literal"><span class="pre">site-packages</span></tt>.  See <a href="http://peak.telecommunity.com/DevCenter/setuptools" class="reference external">setuptools</a> for more.</p>
+checkout were not copied into <tt class="docutils literal"><span class="pre">site-packages</span></tt>.  See <a href="http://pythonhosted.org/setuptools/" class="reference external">setuptools</a> for more.</p>
 </div>
 <div class="section" id="style-guide">
 <h1>Style Guide</h1>

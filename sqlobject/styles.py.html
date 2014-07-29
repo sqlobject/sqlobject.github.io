@@ -1,4 +1,4 @@
-<html><head><title>/home/phd/work/SQLObject/SQLObject-trunk/sqlobject/styles.py</title>
+<html><head><title>/home/phd/current/SQLObject/SQLObject/sqlobject/styles.py</title>
         <script type="text/javascript"><!--
         
 function show_line_range() {
@@ -192,9 +192,9 @@ function show_line_range() {
 <a class="lnum" href="#122" name="122">0122</a>&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;<span class="keyword">return</span>&#0160;<span class="name">defaultStyle</span><br />
 <a class="lnum" href="#123" name="123">0123</a><br />
 <a class="lnum" href="#124" name="124">0124</a><span class="comment">############################################################</span><br />
-<a class="lnum" href="#125" name="125">0125</a><span class="comment"></span><span class="comment">##&#0160;Text&#0160;utilities</span><br />
-<a class="lnum" href="#126" name="126">0126</a><span class="comment"></span><span class="comment">############################################################</span><br />
-<a class="lnum" href="#127" name="127">0127</a><span class="comment"></span><span class="name">_mixedToUnderRE</span>&#0160;<span class="op">=</span>&#0160;<span class="name">re</span><span class="op">.</span><span class="name">compile</span><span class="op">(</span><span class="string">r'[A-Z]+'</span><span class="op">)</span><br />
+<a class="lnum" href="#125" name="125">0125</a><span class="comment">##&#0160;Text&#0160;utilities</span><br />
+<a class="lnum" href="#126" name="126">0126</a><span class="comment">############################################################</span><br />
+<a class="lnum" href="#127" name="127">0127</a><span class="name">_mixedToUnderRE</span>&#0160;<span class="op">=</span>&#0160;<span class="name">re</span><span class="op">.</span><span class="name">compile</span><span class="op">(</span><span class="string">r'[A-Z]+'</span><span class="op">)</span><br />
 <a class="lnum" href="#128" name="128">0128</a><span class="keyword">def</span>&#0160;<span class="name">mixedToUnder</span><span class="op">(</span><span class="name">s</span><span class="op">)</span><span class="op">:</span><br />
 <a class="lnum" href="#129" name="129">0129</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">if</span>&#0160;<span class="name">s</span><span class="op">.</span><span class="name">endswith</span><span class="op">(</span><span class="string">'ID'</span><span class="op">)</span><span class="op">:</span><br />
 <a class="lnum" href="#130" name="130">0130</a>&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;<span class="keyword">return</span>&#0160;<span class="name">mixedToUnder</span><span class="op">(</span><span class="name">s</span><span class="op">[</span><span class="op">:</span><span class="op">-</span><span class="number">2</span><span class="op">]</span>&#0160;<span class="op">+</span>&#0160;<span class="string">"_id"</span><span class="op">)</span><br />

@@ -1,4 +1,4 @@
-<html><head><title>/home/phd/work/SQLObject/SQLObject-trunk/sqlobject/events.py</title>
+<html><head><title>/home/phd/current/SQLObject/SQLObject/sqlobject/events.py</title>
         <script type="text/javascript"><!--
         
 function show_line_range() {
@@ -92,7 +92,7 @@ function show_line_range() {
 <a class="lnum" href="#20" name="20">0020</a>&#0160;&#0160;&#0160;&#0160;<span class="name">subclassClones</span><span class="op">.</span><span class="name">setdefault</span><span class="op">(</span><span class="name">soClass</span><span class="op">,</span>&#0160;<span class="op">[</span><span class="op">]</span><span class="op">)</span><span class="op">.</span><span class="name">append</span><span class="op">(</span><span class="op">(</span><span class="name">weakReceiver</span><span class="op">,</span>&#0160;<span class="name">signal</span><span class="op">)</span><span class="op">)</span><br />
 <a class="lnum" href="#21" name="21">0021</a><br />
 <a class="lnum" href="#22" name="22">0022</a><span class="comment">#&#0160;We&#0160;export&#0160;this&#0160;function:</span><br />
-<a class="lnum" href="#23" name="23">0023</a><span class="comment"></span><span class="name">send</span>&#0160;<span class="op">=</span>&#0160;<span class="name">dispatcher</span><span class="op">.</span><span class="name">send</span><br />
+<a class="lnum" href="#23" name="23">0023</a><span class="name">send</span>&#0160;<span class="op">=</span>&#0160;<span class="name">dispatcher</span><span class="op">.</span><span class="name">send</span><br />
 <a class="lnum" href="#24" name="24">0024</a><br />
 <a class="lnum" href="#25" name="25">0025</a><span class="keyword">class</span>&#0160;<span class="name">Signal</span><span class="op">(</span><span class="name">object</span><span class="op">)</span><span class="op">:</span><br />
 <a class="lnum" href="#26" name="26">0026</a>&#0160;&#0160;&#0160;&#0160;<span class="string">"""</span><br />
@@ -135,10 +135,10 @@ function show_line_range() {
 <a class="lnum" href="#63" name="63">0063</a><span class="name">dispatcher</span><span class="op">.</span><span class="name">connect</span><span class="op">(</span><span class="name">_makeSubclassConnections</span><span class="op">,</span>&#0160;<span class="name">signal</span><span class="op">=</span><span class="name">ClassCreateSignal</span><span class="op">)</span><br />
 <a class="lnum" href="#64" name="64">0064</a><br />
 <a class="lnum" href="#65" name="65">0065</a><span class="comment">#&#0160;@@:&#0160;Should&#0160;there&#0160;be&#0160;a&#0160;class&#0160;reload&#0160;event?&#0160;&#0160;This&#0160;would&#0160;allow&#0160;modules</span><br />
-<a class="lnum" href="#66" name="66">0066</a><span class="comment"></span><span class="comment">#&#0160;to&#0160;be&#0160;reloaded,&#0160;possibly.&#0160;&#0160;Or&#0160;it&#0160;could&#0160;even&#0160;be&#0160;folded&#0160;into</span><br />
-<a class="lnum" href="#67" name="67">0067</a><span class="comment"></span><span class="comment">#&#0160;ClassCreateSignal,&#0160;since&#0160;anything&#0160;that&#0160;listens&#0160;to&#0160;that&#0160;needs&#0160;to&#0160;pay</span><br />
-<a class="lnum" href="#68" name="68">0068</a><span class="comment"></span><span class="comment">#&#0160;attention&#0160;to&#0160;reloads&#0160;(or&#0160;else&#0160;it&#0160;is&#0160;probably&#0160;buggy).</span><br />
-<a class="lnum" href="#69" name="69">0069</a><span class="comment"></span><br />
+<a class="lnum" href="#66" name="66">0066</a><span class="comment">#&#0160;to&#0160;be&#0160;reloaded,&#0160;possibly.&#0160;&#0160;Or&#0160;it&#0160;could&#0160;even&#0160;be&#0160;folded&#0160;into</span><br />
+<a class="lnum" href="#67" name="67">0067</a><span class="comment">#&#0160;ClassCreateSignal,&#0160;since&#0160;anything&#0160;that&#0160;listens&#0160;to&#0160;that&#0160;needs&#0160;to&#0160;pay</span><br />
+<a class="lnum" href="#68" name="68">0068</a><span class="comment">#&#0160;attention&#0160;to&#0160;reloads&#0160;(or&#0160;else&#0160;it&#0160;is&#0160;probably&#0160;buggy).</span><br />
+<a class="lnum" href="#69" name="69">0069</a><br />
 <a class="lnum" href="#70" name="70">0070</a><span class="keyword">class</span>&#0160;<span class="name">RowCreateSignal</span><span class="op">(</span><span class="name">Signal</span><span class="op">)</span><span class="op">:</span><br />
 <a class="lnum" href="#71" name="71">0071</a>&#0160;&#0160;&#0160;&#0160;<span class="string">"""</span><br />
 <a class="lnum" href="#72" name="72">0072</a><span class="string">&#0160;&#0160;&#0160;&#0160;Called&#0160;before&#0160;an&#0160;instance&#0160;is&#0160;created,&#0160;with&#0160;the&#0160;class&#0160;as&#0160;the</span><br />
@@ -164,8 +164,8 @@ function show_line_range() {
 <a class="lnum" href="#92" name="92">0092</a><span class="string">&#0160;&#0160;&#0160;&#0160;existing&#0160;database&#0160;row.</span><br />
 <a class="lnum" href="#93" name="93">0093</a><span class="string">&#0160;&#0160;&#0160;&#0160;"""</span><br />
 <a class="lnum" href="#94" name="94">0094</a><span class="comment">#&#0160;@@:&#0160;An&#0160;event&#0160;for&#0160;getting&#0160;a&#0160;row?&#0160;&#0160;But&#0160;for&#0160;each&#0160;row,&#0160;when&#0160;doing&#0160;a</span><br />
-<a class="lnum" href="#95" name="95">0095</a><span class="comment"></span><span class="comment">#&#0160;select?&#0160;&#0160;For&#0160;.sync,&#0160;.syncUpdate,&#0160;.expire?</span><br />
-<a class="lnum" href="#96" name="96">0096</a><span class="comment"></span><br />
+<a class="lnum" href="#95" name="95">0095</a><span class="comment">#&#0160;select?&#0160;&#0160;For&#0160;.sync,&#0160;.syncUpdate,&#0160;.expire?</span><br />
+<a class="lnum" href="#96" name="96">0096</a><br />
 <a class="lnum" href="#97" name="97">0097</a><span class="keyword">class</span>&#0160;<span class="name">RowDestroySignal</span><span class="op">(</span><span class="name">Signal</span><span class="op">)</span><span class="op">:</span><br />
 <a class="lnum" href="#98" name="98">0098</a>&#0160;&#0160;&#0160;&#0160;<span class="string">"""</span><br />
 <a class="lnum" href="#99" name="99">0099</a><span class="string">&#0160;&#0160;&#0160;&#0160;Called&#0160;before&#0160;an&#0160;instance&#0160;is&#0160;deleted.&#0160;&#0160;Sender&#0160;is&#0160;the&#0160;instance's</span><br />
@@ -239,8 +239,8 @@ function show_line_range() {
 <a class="lnum" href="#167" name="167">0167</a><span class="string">&#0160;&#0160;&#0160;&#0160;"""</span><br />
 <a class="lnum" href="#168" name="168">0168</a><br />
 <a class="lnum" href="#169" name="169">0169</a><span class="comment">#&#0160;@@:&#0160;Signals&#0160;for&#0160;indexes&#0160;and&#0160;joins?&#0160;&#0160;These&#0160;are&#0160;mostly&#0160;event&#0160;consumers,</span><br />
-<a class="lnum" href="#170" name="170">0170</a><span class="comment"></span><span class="comment">#&#0160;though.</span><br />
-<a class="lnum" href="#171" name="171">0171</a><span class="comment"></span><br />
+<a class="lnum" href="#170" name="170">0170</a><span class="comment">#&#0160;though.</span><br />
+<a class="lnum" href="#171" name="171">0171</a><br />
 <a class="lnum" href="#172" name="172">0172</a><span class="keyword">class</span>&#0160;<span class="name">CreateTableSignal</span><span class="op">(</span><span class="name">Signal</span><span class="op">)</span><span class="op">:</span><br />
 <a class="lnum" href="#173" name="173">0173</a>&#0160;&#0160;&#0160;&#0160;<span class="string">"""</span><br />
 <a class="lnum" href="#174" name="174">0174</a><span class="string">&#0160;&#0160;&#0160;&#0160;Called&#0160;when&#0160;a&#0160;table&#0160;is&#0160;created.&#0160;&#0160;If&#0160;``ifNotExists==True``&#0160;and&#0160;the</span><br />
@@ -265,9 +265,9 @@ function show_line_range() {
 <a class="lnum" href="#193" name="193">0193</a><span class="string">&#0160;&#0160;&#0160;&#0160;"""</span><br />
 <a class="lnum" href="#194" name="194">0194</a><br />
 <a class="lnum" href="#195" name="195">0195</a><span class="comment">############################################################</span><br />
-<a class="lnum" href="#196" name="196">0196</a><span class="comment"></span><span class="comment">##&#0160;Event&#0160;Debugging</span><br />
-<a class="lnum" href="#197" name="197">0197</a><span class="comment"></span><span class="comment">############################################################</span><br />
-<a class="lnum" href="#198" name="198">0198</a><span class="comment"></span><br />
+<a class="lnum" href="#196" name="196">0196</a><span class="comment">##&#0160;Event&#0160;Debugging</span><br />
+<a class="lnum" href="#197" name="197">0197</a><span class="comment">############################################################</span><br />
+<a class="lnum" href="#198" name="198">0198</a><br />
 <a class="lnum" href="#199" name="199">0199</a><span class="keyword">def</span>&#0160;<span class="name">summarize_events_by_sender</span><span class="op">(</span><span class="name">sender</span><span class="op">=</span><span class="name">None</span><span class="op">,</span>&#0160;<span class="name">output</span><span class="op">=</span><span class="name">None</span><span class="op">,</span>&#0160;<span class="name">indent</span><span class="op">=</span><span class="number">0</span><span class="op">)</span><span class="op">:</span><br />
 <a class="lnum" href="#200" name="200">0200</a>&#0160;&#0160;&#0160;&#0160;<span class="string">"""</span><br />
 <a class="lnum" href="#201" name="201">0201</a><span class="string">&#0160;&#0160;&#0160;&#0160;Prints&#0160;out&#0160;a&#0160;summary&#0160;of&#0160;the&#0160;senders&#0160;and&#0160;listeners&#0160;in&#0160;the&#0160;system,</span><br />
