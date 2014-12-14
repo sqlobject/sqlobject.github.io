@@ -922,13 +922,6 @@ directory (if it can).  For display purposes.</span>
   </li>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.manager.command.CommandRecord.html#find_last_version">
-      <tt>find_last_version</tt>
-    </a>
-    <a href="sqlobject/manager/command.py.html?f=1101&amp;l=1111#1101">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.manager.command.CommandRecord.html#ini_config">
       <tt>ini_config</tt>
     </a>
@@ -969,31 +962,10 @@ The dependency tree is defined by the foreign key relations.</span>
   </small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.manager.command.CommandRecord.html#connection">
-      <tt>connection</tt>
-    </a>
-    <a href="sqlobject/manager/command.py.html?f=384&amp;l=395#384">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.manager.command.CommandRecord.html#classes">
-      <tt>classes</tt>
-    </a>
-    <a href="sqlobject/manager/command.py.html?f=311&amp;l=367#311">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.manager.command.CommandRecord.html#load_options_from_egg">
       <tt>load_options_from_egg</tt>
     </a>
     <a href="sqlobject/manager/command.py.html?f=492&amp;l=500#492">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.manager.command.CommandRecord.html#base_dir">
-      <tt>base_dir</tt>
-    </a>
-    <a href="sqlobject/manager/command.py.html?f=1071&amp;l=1080#1071">...</a>
     <small></small>
   </li>
     </ul>
@@ -1467,18 +1439,6 @@ values are also hashable).</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.cache.CacheFactory.html#created">
-      <tt>created</tt>
-    </a>
-    <a href="sqlobject/cache.py.html?f=161&amp;l=181#161">...</a>
-    <small>
-      - <span class="rst">Inserts and object into the cache.  Should be used when no one
-else knows about the object yet, so there cannot be any object
-already in the cache.  After a database INSERT is an example
-of this situation.</span>
-  </small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.cache.CacheFactory.html#clear">
       <tt>clear</tt>
     </a>
@@ -1486,15 +1446,6 @@ of this situation.</span>
     <small>
       - <span class="rst">Removes everything from the cache.  Warning!  This can cause
 duplicate objects in memory.</span>
-  </small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.cache.CacheFactory.html#tryGet">
-      <tt>tryGet</tt>
-    </a>
-    <a href="sqlobject/cache.py.html?f=54&amp;l=65#54">...</a>
-    <small>
-      - <span class="rst">This returns None, or the object in cache.</span>
   </small>
   </li>
     </ul>
@@ -1719,6 +1670,15 @@ which returns the string hash of any other string (i.e. basestring).</span>
     <a href="sqlobject/include/pydispatch/saferef.py.html?f=144&amp;l=149#144">...</a>
     <small>
       - <span class="rst">Compare with another reference</span>
+  </small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.include.pydispatch.saferef.BoundMethodWeakref.html#__call__">
+      <tt>__call__</tt>
+    </a>
+    <a href="sqlobject/include/pydispatch/saferef.py.html?f=149&amp;l=166#149">...</a>
+    <small>
+      - <span class="rst">Return a strong reference to the bound method</span>
   </small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -2096,6 +2056,13 @@ Otherwise return is as a sqlbuilder constant.</span>
       <tt>createIDColumn</tt>
     </a>
     <a href="sqlobject/postgres/pgconnection.py.html?f=231&amp;l=234#231">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.postgres.pgconnection.PostgresConnection.html#makeConnection">
+      <tt>makeConnection</tt>
+    </a>
+    <a href="sqlobject/postgres/pgconnection.py.html?f=139&amp;l=159#139">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -2493,10 +2460,10 @@ with a class.  Return data just like <tt class="docutils literal">load_csv</tt> 
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.versioning.Versioning.html#__addtoclass__">
-      <tt>__addtoclass__</tt>
+    <a href="class-sqlobject.versioning.Versioning.html#createVersionTable">
+      <tt>createVersionTable</tt>
     </a>
-    <a href="sqlobject/versioning/__init__.py.html?f=68&amp;l=93#68">...</a>
+    <a href="sqlobject/versioning/__init__.py.html?f=94&amp;l=96#94">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -2518,6 +2485,13 @@ with a class.  Return data just like <tt class="docutils literal">load_csv</tt> 
       <tt>__init__</tt>
     </a>
     <a href="sqlobject/versioning/__init__.py.html?f=61&amp;l=67#61">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.versioning.Versioning.html#__get__">
+      <tt>__get__</tt>
+    </a>
+    <a href="sqlobject/versioning/__init__.py.html?f=110&amp;l=115#110">...</a>
     <small></small>
   </li>
     </ul>
@@ -2551,6 +2525,13 @@ with a class.  Return data just like <tt class="docutils literal">load_csv</tt> 
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.constraints.MaxLength.html#__call__">
+      <tt>__call__</tt>
+    </a>
+    <a href="sqlobject/constraints.py.html?f=54&amp;l=64#54">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.constraints.MaxLength.html#__init__">
       <tt>__init__</tt>
     </a>
@@ -2566,6 +2547,14 @@ with a class.  Return data just like <tt class="docutils literal">load_csv</tt> 
     <a href="sqlobject/constraints.py.html?f=5&amp;l=18#5">...</a>
     <small></small>
     <ul>
+      <li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.constraints.BadValue.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/constraints.py.html?f=7&amp;l=18#7">...</a>
+    <small></small>
+  </li>
     </ul>
   </li><li class="class">
     <span class="prefix">C</span>
@@ -3324,13 +3313,6 @@ dereferences string column names.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.INSubquery.html#__cmp__">
-      <tt>__cmp__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=183&amp;l=185#183">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.INSubquery.html#__pos__">
       <tt>__pos__</tt>
     </a>
@@ -3380,17 +3362,17 @@ dereferences string column names.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.INSubquery.html#__or__">
+      <tt>__or__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=163&amp;l=165#163">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.INSubquery.html#__add__">
       <tt>__add__</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.INSubquery.html#__gt__">
-      <tt>__gt__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=144&amp;l=146#144">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -3426,13 +3408,6 @@ dereferences string column names.</span>
       <tt>components</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=1207&amp;l=1209#1207">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.INSubquery.html#__sub__">
-      <tt>__sub__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=113&amp;l=115#113">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -3507,13 +3482,6 @@ dereferences string column names.</span>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=198&amp;l=200#198">...</a>
     <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.Union.html#tablesUsedSet">
-      <tt>tablesUsedSet</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=200&amp;l=209#200">...</a>
-    <small></small>
   </li>
     </ul>
   </li><li class="class">
@@ -3556,6 +3524,13 @@ dereferences string column names.</span>
       <tt>startswith</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=188&amp;l=190#188">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.ColumnAS.html#__radd__">
+      <tt>__radd__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=111&amp;l=113#111">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -3699,13 +3674,6 @@ dereferences string column names.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.ColumnAS.html#tablesUsed">
-      <tt>tablesUsed</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=198&amp;l=200#198">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.ColumnAS.html#tablesUsedSet">
       <tt>tablesUsedSet</tt>
     </a>
@@ -3737,6 +3705,20 @@ dereferences string column names.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.AliasField.html#__add__">
+      <tt>__add__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.AliasField.html#__neg__">
+      <tt>__neg__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=127&amp;l=129#127">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.AliasField.html#tablesUsed">
       <tt>tablesUsed</tt>
     </a>
@@ -3760,13 +3742,6 @@ dereferences string column names.</span>
     <small></small>
     <ul>
       <li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLCall.html#__and__">
-      <tt>__and__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=159&amp;l=161#159">...</a>
-    <small></small>
-  </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.SQLCall.html#tablesUsedImmediate">
       <tt>tablesUsedImmediate</tt>
@@ -3812,13 +3787,6 @@ dereferences string column names.</span>
     <small></small>
     <ul>
       <li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.Update.html#__and__">
-      <tt>__and__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=159&amp;l=161#159">...</a>
-    <small></small>
-  </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.Update.html#__ne__">
       <tt>__ne__</tt>
@@ -3876,13 +3844,6 @@ dereferences string column names.</span>
       <tt>tablesUsedImmediate</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=209&amp;l=211#209">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLModulo.html#__add__">
-      <tt>__add__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -3951,20 +3912,6 @@ dereferences string column names.</span>
   </li>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.LIKE.html#__ror__">
-      <tt>__ror__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=165&amp;l=167#165">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.LIKE.html#__rmul__">
-      <tt>__rmul__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=119&amp;l=121#119">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.LIKE.html#tablesUsedImmediate">
       <tt>tablesUsedImmediate</tt>
     </a>
@@ -3983,6 +3930,13 @@ dereferences string column names.</span>
       <tt>__gt__</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=144&amp;l=146#144">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.LIKE.html#tablesUsed">
+      <tt>tablesUsed</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=198&amp;l=200#198">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -4021,13 +3975,6 @@ dereferences string column names.</span>
       <tt>__add__</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLJoin.html#tablesUsed">
-      <tt>tablesUsed</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=198&amp;l=200#198">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -4070,10 +4017,10 @@ dereferences string column names.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.NOTINSubquery.html#__neg__">
-      <tt>__neg__</tt>
+    <a href="class-sqlobject.sqlbuilder.NOTINSubquery.html#__add__">
+      <tt>__add__</tt>
     </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=127&amp;l=129#127">...</a>
+    <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -4129,13 +4076,6 @@ dereferences string column names.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLConstant.html#__neg__">
-      <tt>__neg__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=127&amp;l=129#127">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.SQLConstant.html#tablesUsed">
       <tt>tablesUsed</tt>
     </a>
@@ -4188,6 +4128,13 @@ dereferences string column names.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.Select.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=557&amp;l=584#557">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.Select.html#tablesUsedImmediate">
       <tt>tablesUsedImmediate</tt>
     </a>
@@ -4206,13 +4153,6 @@ dereferences string column names.</span>
       <tt>__or__</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=163&amp;l=165#163">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.Select.html#__add__">
-      <tt>__add__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -4272,13 +4212,6 @@ dereferences string column names.</span>
       <tt>tablesUsedImmediate</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=1139&amp;l=1141#1139">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.OuterField.html#tablesUsed">
-      <tt>tablesUsed</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=198&amp;l=200#198">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -4439,6 +4372,13 @@ dereferences string column names.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.TableSpace.TableClass.FieldClass.html#__call__">
+      <tt>__call__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=170&amp;l=172#170">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.TableSpace.TableClass.FieldClass.html#__mul__">
       <tt>__mul__</tt>
     </a>
@@ -4450,6 +4390,27 @@ dereferences string column names.</span>
       <tt>tablesUsedImmediate</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=343&amp;l=345#343">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.TableSpace.TableClass.FieldClass.html#__rcmp__">
+      <tt>__rcmp__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=185&amp;l=187#185">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.TableSpace.TableClass.FieldClass.html#__or__">
+      <tt>__or__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=163&amp;l=165#163">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.TableSpace.TableClass.FieldClass.html#__add__">
+      <tt>__add__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -4779,13 +4740,6 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.ImportProxy.FieldClass.html#__rsub__">
-      <tt>__rsub__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=115&amp;l=117#115">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.ImportProxy.FieldClass.html#__rdiv__">
       <tt>__rdiv__</tt>
     </a>
@@ -4985,13 +4939,6 @@ not yet be in a classregistry.</span>
   </li>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.ImportProxy.html#__and__">
-      <tt>__and__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=159&amp;l=161#159">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.ImportProxy.html#__abs__">
       <tt>__abs__</tt>
     </a>
@@ -5046,13 +4993,6 @@ not yet be in a classregistry.</span>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=135&amp;l=137#135">...</a>
     <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.ImportProxy.html#__ge__">
-      <tt>__ge__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=146&amp;l=148#146">...</a>
-    <small></small>
   </li>
     </ul>
   </li><li class="class">
@@ -5072,10 +5012,10 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.Replace.html#__add__">
-      <tt>__add__</tt>
+    <a href="class-sqlobject.sqlbuilder.Replace.html#__neg__">
+      <tt>__neg__</tt>
     </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
+    <a href="sqlobject/sqlbuilder.py.html?f=127&amp;l=129#127">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -5526,6 +5466,13 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.SQLJoinOn.html#__call__">
+      <tt>__call__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=170&amp;l=172#170">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.SQLJoinOn.html#__ne__">
       <tt>__ne__</tt>
     </a>
@@ -5572,6 +5519,13 @@ not yet be in a classregistry.</span>
       <tt>components</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=195&amp;l=197#195">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.SQLJoinOn.html#__sub__">
+      <tt>__sub__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=113&amp;l=115#113">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -5658,13 +5612,6 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLObjectTableWithJoins.html#__rmod__">
-      <tt>__rmod__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=137&amp;l=139#137">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.SQLObjectTableWithJoins.html#__init__">
       <tt>__init__</tt>
     </a>
@@ -5737,13 +5684,6 @@ not yet be in a classregistry.</span>
       <tt>startswith</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=188&amp;l=190#188">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLJoinUsing.html#__rmul__">
-      <tt>__rmul__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=119&amp;l=121#119">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -5824,13 +5764,6 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLJoinUsing.html#__rcmp__">
-      <tt>__rcmp__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=185&amp;l=187#185">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.SQLJoinUsing.html#__add__">
       <tt>__add__</tt>
     </a>
@@ -5856,13 +5789,6 @@ not yet be in a classregistry.</span>
       <tt>components</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=195&amp;l=197#195">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLJoinUsing.html#__sub__">
-      <tt>__sub__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=113&amp;l=115#113">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -5908,13 +5834,6 @@ not yet be in a classregistry.</span>
       <tt>__or__</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=163&amp;l=165#163">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.SQLPrefix.html#__add__">
-      <tt>__add__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -6101,6 +6020,13 @@ not yet be in a classregistry.</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.Insert.html#__ne__">
+      <tt>__ne__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=153&amp;l=158#153">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.Insert.html#tablesUsedImmediate">
       <tt>tablesUsedImmediate</tt>
     </a>
@@ -6191,24 +6117,10 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.DESC.html#tablesUsedImmediate">
-      <tt>tablesUsedImmediate</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=209&amp;l=211#209">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlbuilder.DESC.html#__add__">
       <tt>__add__</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=109&amp;l=111#109">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sqlbuilder.DESC.html#__neg__">
-      <tt>__neg__</tt>
-    </a>
-    <a href="sqlobject/sqlbuilder.py.html?f=127&amp;l=129#127">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -6233,6 +6145,13 @@ not yet be in a classregistry.</span>
       <tt>startswith</tt>
     </a>
     <a href="sqlobject/sqlbuilder.py.html?f=188&amp;l=190#188">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlbuilder.AliasTable.html#__pos__">
+      <tt>__pos__</tt>
+    </a>
+    <a href="sqlobject/sqlbuilder.py.html?f=125&amp;l=127#125">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -6752,17 +6671,28 @@ not yet be in a classregistry.</span>
   </li>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#createReferenceConstraint">
-      <tt>createReferenceConstraint</tt>
-    </a>
-    <a href="sqlobject/firebird/firebirdconnection.py.html?f=142&amp;l=144#142">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#delColumn">
       <tt>delColumn</tt>
     </a>
     <a href="sqlobject/firebird/firebirdconnection.py.html?f=175&amp;l=177#175">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#guessClass">
+      <tt>guessClass</tt>
+    </a>
+    <a href="sqlobject/firebird/firebirdconnection.py.html?f=338&amp;l=389#338">...</a>
+    <small>
+      - <span class="rst">An internal method that tries to figure out what Col subclass
+is appropriate given whatever introspective information is
+available -- both very database-specific.</span>
+  </small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/firebird/firebirdconnection.py.html?f=17&amp;l=44#17">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -6773,13 +6703,6 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#createColumn">
-      <tt>createColumn</tt>
-    </a>
-    <a href="sqlobject/firebird/firebirdconnection.py.html?f=145&amp;l=147#145">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#dropTable">
       <tt>dropTable</tt>
     </a>
@@ -6787,10 +6710,27 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#columnsFromSchema">
+      <tt>columnsFromSchema</tt>
+    </a>
+    <a href="sqlobject/firebird/firebirdconnection.py.html?f=202&amp;l=337#202">...</a>
+    <small>
+      - <span class="rst">Look at the given table and create Col instances (or
+subclasses of Col) for the fields it finds in that table.</span>
+  </small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#dropDatabase">
       <tt>dropDatabase</tt>
     </a>
     <a href="sqlobject/firebird/firebirdconnection.py.html?f=394&amp;l=396#394">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#createTable">
+      <tt>createTable</tt>
+    </a>
+    <a href="sqlobject/firebird/firebirdconnection.py.html?f=136&amp;l=141#136">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -6801,10 +6741,10 @@ not yet be in a classregistry.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#makeConnection">
-      <tt>makeConnection</tt>
+    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#readDefaultEncodingFromDB">
+      <tt>readDefaultEncodingFromDB</tt>
     </a>
-    <a href="sqlobject/firebird/firebirdconnection.py.html?f=81&amp;l=95#81">...</a>
+    <a href="sqlobject/firebird/firebirdconnection.py.html?f=178&amp;l=201#178">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -6826,13 +6766,6 @@ not yet be in a classregistry.</span>
       <tt>addColumn</tt>
     </a>
     <a href="sqlobject/firebird/firebirdconnection.py.html?f=166&amp;l=170#166">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.firebird.firebirdconnection.FirebirdConnection.html#createEmptyDatabase">
-      <tt>createEmptyDatabase</tt>
-    </a>
-    <a href="sqlobject/firebird/firebirdconnection.py.html?f=390&amp;l=393#390">...</a>
     <small></small>
   </li>
     </ul>
@@ -6880,10 +6813,24 @@ not yet be in a classregistry.</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.converters.ConverterRegistry.html#registerConverter">
+      <tt>registerConverter</tt>
+    </a>
+    <a href="sqlobject/converters.py.html?f=61&amp;l=66#61">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.converters.ConverterRegistry.html#lookupConverter">
       <tt>lookupConverter</tt>
     </a>
     <a href="sqlobject/converters.py.html?f=67&amp;l=72#67">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.converters.ConverterRegistry.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/converters.py.html?f=57&amp;l=60#57">...</a>
     <small></small>
   </li>
     </ul>
@@ -7065,6 +7012,18 @@ actual classes.</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.classregistry.ClassRegistry.html#addClassCallback">
+      <tt>addClassCallback</tt>
+    </a>
+    <a href="sqlobject/classregistry.py.html?f=51&amp;l=62#51">...</a>
+    <small>
+      - <span class="rst">Whenever a name is substituted for the class, you can register
+a callback that will be called when the needed class is
+created.  If it's already been created, the callback will be
+called immediately.</span>
+  </small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.classregistry.ClassRegistry.html#getClass">
       <tt>getClass</tt>
     </a>
@@ -7077,16 +7036,6 @@ actual classes.</span>
     </a>
     <a href="sqlobject/classregistry.py.html?f=111&amp;l=113#111">...</a>
     <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.classregistry.ClassRegistry.html#addCallback">
-      <tt>addCallback</tt>
-    </a>
-    <a href="sqlobject/classregistry.py.html?f=63&amp;l=71#63">...</a>
-    <small>
-      - <span class="rst">This callback is called for all classes, not just specific
-ones (like addClassCallback).</span>
-  </small>
   </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.classregistry.ClassRegistry.html#__init__">
@@ -7244,13 +7193,6 @@ alongside every SQLObject instance.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.main.sqlmeta.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=247&amp;l=249#247">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.main.sqlmeta.html#expireAll">
       <tt>expireAll</tt>
     </a>
@@ -7258,20 +7200,6 @@ alongside every SQLObject instance.</span>
     <small>
       - <span class="rst">Expire all instances of this class.</span>
   </small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.main.sqlmeta.html#addColumnsFromDatabase">
-      <tt>addColumnsFromDatabase</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=437&amp;l=446#437">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.main.sqlmeta.html#send">
-      <tt>send</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=250&amp;l=253#250">...</a>
-    <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.main.sqlmeta.html#setClass">
@@ -7419,13 +7347,6 @@ alongside every SQLObject instance.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.main.SQLObject.html#get">
-      <tt>get</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=875&amp;l=906#875">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.main.SQLObject.html#__getstate__">
       <tt>__getstate__</tt>
     </a>
@@ -7444,20 +7365,6 @@ alongside every SQLObject instance.</span>
       <tt>dropTable</tt>
     </a>
     <a href="sqlobject/main.py.html?f=1385&amp;l=1402#1385">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.main.SQLObject.html#__setstate__">
-      <tt>__setstate__</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=1688&amp;l=1700#1688">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.main.SQLObject.html#createJoinTablesSQL">
-      <tt>createJoinTablesSQL</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=1454&amp;l=1461#1454">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -7496,24 +7403,17 @@ alongside every SQLObject instance.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.main.SQLObject.html#setConnection">
-      <tt>setConnection</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=1639&amp;l=1644#1639">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.main.SQLObject.html#__eq__">
-      <tt>__eq__</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=1651&amp;l=1656#1651">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.main.SQLObject.html#createIndexesSQL">
       <tt>createIndexesSQL</tt>
     </a>
     <a href="sqlobject/main.py.html?f=1470&amp;l=1479#1470">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.main.SQLObject.html#deleteMany">
+      <tt>deleteMany</tt>
+    </a>
+    <a href="sqlobject/main.py.html?f=1595&amp;l=1599#1595">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -7542,13 +7442,6 @@ alongside every SQLObject instance.</span>
       <tt>__le__</tt>
     </a>
     <a href="sqlobject/main.py.html?f=1663&amp;l=1665#1663">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.main.SQLObject.html#__ge__">
-      <tt>__ge__</tt>
-    </a>
-    <a href="sqlobject/main.py.html?f=1669&amp;l=1671#1669">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -7691,6 +7584,13 @@ signature <tt class="docutils literal">factory_class(added_class, attr_name, *ar
   </li>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.boundattributes.BoundFactory.html#make_object">
+      <tt>make_object</tt>
+    </a>
+    <a href="sqlobject/boundattributes.py.html?f=132&amp;l=134#132">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.boundattributes.BoundFactory.html#set_object">
       <tt>set_object</tt>
     </a>
@@ -7766,10 +7666,10 @@ schema generation).</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.styles.Style.html#instanceIDAttrToAttr">
-      <tt>instanceIDAttrToAttr</tt>
+    <a href="class-sqlobject.styles.Style.html#pythonClassToAttr">
+      <tt>pythonClassToAttr</tt>
     </a>
-    <a href="sqlobject/styles.py.html?f=57&amp;l=59#57">...</a>
+    <a href="sqlobject/styles.py.html?f=51&amp;l=53#51">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -7841,13 +7741,6 @@ ID names (like ProductID instead of simply id).</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.styles.MixedCaseStyle.html#pythonAttrToDBColumn">
-      <tt>pythonAttrToDBColumn</tt>
-    </a>
-    <a href="sqlobject/styles.py.html?f=99&amp;l=101#99">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.styles.MixedCaseStyle.html#dbColumnToPythonAttr">
       <tt>dbColumnToPythonAttr</tt>
     </a>
@@ -7859,6 +7752,13 @@ ID names (like ProductID instead of simply id).</span>
       <tt>pythonClassToAttr</tt>
     </a>
     <a href="sqlobject/styles.py.html?f=51&amp;l=53#51">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.styles.MixedCaseStyle.html#instanceIDAttrToAttr">
+      <tt>instanceIDAttrToAttr</tt>
+    </a>
+    <a href="sqlobject/styles.py.html?f=57&amp;l=59#57">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -7957,6 +7857,13 @@ ID names (like ProductID instead of simply id).</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlite.sqliteconnection.SQLiteConnection.html#guessClass">
+      <tt>guessClass</tt>
+    </a>
+    <a href="sqlobject/sqlite/sqliteconnection.py.html?f=383&amp;l=399#383">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlite.sqliteconnection.SQLiteConnection.html#close">
       <tt>close</tt>
     </a>
@@ -8020,6 +7927,13 @@ ID names (like ProductID instead of simply id).</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlite.sqliteconnection.SQLiteConnection.html#createIDColumn">
+      <tt>createIDColumn</tt>
+    </a>
+    <a href="sqlobject/sqlite/sqliteconnection.py.html?f=276&amp;l=278#276">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sqlite.sqliteconnection.SQLiteConnection.html#makeConnection">
       <tt>makeConnection</tt>
     </a>
@@ -8031,6 +7945,13 @@ ID names (like ProductID instead of simply id).</span>
       <tt>tableExists</tt>
     </a>
     <a href="sqlobject/sqlite/sqliteconnection.py.html?f=287&amp;l=291#287">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.sqlite.sqliteconnection.SQLiteConnection.html#joinSQLType">
+      <tt>joinSQLType</tt>
+    </a>
+    <a href="sqlobject/sqlite/sqliteconnection.py.html?f=284&amp;l=286#284">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -8093,15 +8014,6 @@ ID names (like ProductID instead of simply id).</span>
     <small></small>
     <ul>
       <li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.dbconnection.DBConnection.html#expireAll">
-      <tt>expireAll</tt>
-    </a>
-    <a href="sqlobject/dbconnection.py.html?f=242&amp;l=250#242">...</a>
-    <small>
-      - <span class="rst">Expire all instances of objects for this connection.</span>
-  </small>
-  </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.dbconnection.DBConnection.html#soClassAdded">
       <tt>soClassAdded</tt>
@@ -8203,6 +8115,13 @@ You can also bind connections on a per-thread basis.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.dbconnection.ConnectionHub.html#getConnection">
+      <tt>getConnection</tt>
+    </a>
+    <a href="sqlobject/dbconnection.py.html?f=909&amp;l=919#909">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.dbconnection.ConnectionHub.html#doInTransaction">
       <tt>doInTransaction</tt>
     </a>
@@ -8253,13 +8172,6 @@ lazily when a class method is accessed)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.dbconnection.ConnWrapper.html#__call__">
-      <tt>__call__</tt>
-    </a>
-    <a href="sqlobject/dbconnection.py.html?f=267&amp;l=270#267">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.dbconnection.ConnWrapper.html#__init__">
       <tt>__init__</tt>
     </a>
@@ -8276,6 +8188,13 @@ lazily when a class method is accessed)</span>
     <small></small>
     <ul>
       <li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.dbconnection.Transaction.html#queryOne">
+      <tt>queryOne</tt>
+    </a>
+    <a href="sqlobject/dbconnection.py.html?f=770&amp;l=773#770">...</a>
+    <small></small>
+  </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.dbconnection.Transaction.html#rollback">
       <tt>rollback</tt>
@@ -8583,13 +8502,6 @@ to the select object.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.dbconnection.DBAPI.html#__del__">
-      <tt>__del__</tt>
-    </a>
-    <a href="sqlobject/dbconnection.py.html?f=673&amp;l=675#673">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.dbconnection.DBAPI.html#queryForSelect">
       <tt>queryForSelect</tt>
     </a>
@@ -8790,6 +8702,13 @@ and this connection.</span>
   </li>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.sybase.sybaseconnection.SybaseConnection.html#delColumn">
+      <tt>delColumn</tt>
+    </a>
+    <a href="sqlobject/sybase/sybaseconnection.py.html?f=131&amp;l=133#131">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.sybase.sybaseconnection.SybaseConnection.html#createIDColumn">
       <tt>createIDColumn</tt>
     </a>
@@ -8801,13 +8720,6 @@ and this connection.</span>
       <tt>createColumn</tt>
     </a>
     <a href="sqlobject/sybase/sybaseconnection.py.html?f=106&amp;l=108#106">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sybase.sybaseconnection.SybaseConnection.html#columnsFromSchema">
-      <tt>columnsFromSchema</tt>
-    </a>
-    <a href="sqlobject/sybase/sybaseconnection.py.html?f=136&amp;l=153#136">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -9171,6 +9083,17 @@ Ahmed MOHAMED ALI &lt;<a href="mailto:ahmedmoali@yahoo.com" class="reference ext
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.maxdb.maxdbconnection.MaxdbConnection.html#guessClass">
+      <tt>guessClass</tt>
+    </a>
+    <a href="sqlobject/maxdb/maxdbconnection.py.html?f=282&amp;l=304#282">...</a>
+    <small>
+      - <span class="rst">An internal method that tries to figure out what Col subclass
+is appropriate given whatever introspective information is
+available -- both very database-specific.</span>
+  </small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.maxdb.maxdbconnection.MaxdbConnection.html#__init__">
       <tt>__init__</tt>
     </a>
@@ -9183,6 +9106,26 @@ Ahmed MOHAMED ALI &lt;<a href="mailto:ahmedmoali@yahoo.com" class="reference ext
     </a>
     <a href="sqlobject/maxdb/maxdbconnection.py.html?f=181&amp;l=183#181">...</a>
     <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.maxdb.maxdbconnection.MaxdbConnection.html#createColumn">
+      <tt>createColumn</tt>
+    </a>
+    <a href="sqlobject/maxdb/maxdbconnection.py.html?f=174&amp;l=176#174">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.maxdb.maxdbconnection.MaxdbConnection.html#createSequenceName">
+      <tt>createSequenceName</tt>
+    </a>
+    <a href="sqlobject/maxdb/maxdbconnection.py.html?f=103&amp;l=112#103">...</a>
+    <small>
+      - <span class="rst">sequence name are builded with the concatenation of the table
+name with '_SEQ' word we truncate the name of the
+sequence_name because sapdb identifier cannot exceed 32
+characters so that the name of the sequence does not exceed 32
+characters</span>
+  </small>
   </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.maxdb.maxdbconnection.MaxdbConnection.html#columnsFromSchema">
@@ -9217,6 +9160,27 @@ Ahmed MOHAMED ALI &lt;<a href="mailto:ahmedmoali@yahoo.com" class="reference ext
       <tt>createIDColumn</tt>
     </a>
     <a href="sqlobject/maxdb/maxdbconnection.py.html?f=177&amp;l=180#177">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.maxdb.maxdbconnection.MaxdbConnection.html#makeConnection">
+      <tt>makeConnection</tt>
+    </a>
+    <a href="sqlobject/maxdb/maxdbconnection.py.html?f=113&amp;l=118#113">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.maxdb.maxdbconnection.MaxdbConnection.html#tableExists">
+      <tt>tableExists</tt>
+    </a>
+    <a href="sqlobject/maxdb/maxdbconnection.py.html?f=202&amp;l=207#202">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.maxdb.maxdbconnection.MaxdbConnection.html#joinSQLType">
+      <tt>joinSQLType</tt>
+    </a>
+    <a href="sqlobject/maxdb/maxdbconnection.py.html?f=199&amp;l=201#199">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -9497,13 +9461,6 @@ depending on how the method was called.</span>
       <tt>avg</tt>
     </a>
     <a href="sqlobject/sresults.py.html?f=259&amp;l=261#259">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.sresults.SelectResults.html#sum">
-      <tt>sum</tt>
-    </a>
-    <a href="sqlobject/sresults.py.html?f=253&amp;l=255#253">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -9984,6 +9941,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.TimestampCol.baseClass.html#createSQL">
+      <tt>createSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=276&amp;l=278#276">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.TimestampCol.baseClass.html#__delete__">
       <tt>__delete__</tt>
     </a>
@@ -9991,21 +9955,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li>
     </ul>
-  </li>
-      <li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.TimestampCol.html#withClass">
-      <tt>withClass</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=418&amp;l=424#418">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.TimestampCol.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=400&amp;l=406#400">...</a>
-    <small></small>
   </li>
     </ul>
   </li><li class="class">
@@ -10033,24 +9982,10 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.BigIntCol.baseClass.html#__init__">
-      <tt>__init__</tt>
+    <a href="class-sqlobject.col.BigIntCol.baseClass.html#getDbEncoding">
+      <tt>getDbEncoding</tt>
     </a>
-    <a href="sqlobject/col.py.html?f=645&amp;l=650#645">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.BigIntCol.baseClass.html#maxdbCreateSQL">
-      <tt>maxdbCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=348&amp;l=350#348">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.BigIntCol.baseClass.html#firebirdCreateSQL">
-      <tt>firebirdCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=339&amp;l=347#339">...</a>
+    <a href="sqlobject/col.py.html?f=379&amp;l=394#379">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -10068,17 +10003,17 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.BigIntCol.baseClass.html#__get__">
+      <tt>__get__</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=351&amp;l=368#351">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.BigIntCol.baseClass.html#autoConstraints">
       <tt>autoConstraints</tt>
     </a>
     <a href="sqlobject/col.py.html?f=651&amp;l=653#651">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.BigIntCol.baseClass.html#postgresCreateSQL">
-      <tt>postgresCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=326&amp;l=328#326">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -10093,20 +10028,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>createValidators</tt>
     </a>
     <a href="sqlobject/col.py.html?f=654&amp;l=657#654">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.BigIntCol.baseClass.html#addSQLAttrs">
-      <tt>addSQLAttrs</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=658&amp;l=670#658">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.BigIntCol.baseClass.html#createSQL">
-      <tt>createSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=276&amp;l=278#276">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -10172,13 +10093,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOCurrencyCol.html#maxdbCreateSQL">
-      <tt>maxdbCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=348&amp;l=350#348">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SOCurrencyCol.html#sqliteCreateSQL">
       <tt>sqliteCreateSQL</tt>
     </a>
@@ -10190,6 +10104,20 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>mysqlCreateSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOCurrencyCol.html#__get__">
+      <tt>__get__</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=351&amp;l=368#351">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOCurrencyCol.html#autoConstraints">
+      <tt>autoConstraints</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=244&amp;l=246#244">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -10217,6 +10145,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SODecimalStringCol.html#__set__">
+      <tt>__set__</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=369&amp;l=375#369">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SODecimalStringCol.html#sqliteCreateSQL">
       <tt>sqliteCreateSQL</tt>
     </a>
@@ -10228,13 +10163,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>mysqlCreateSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SODecimalStringCol.html#createSQL">
-      <tt>createSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=276&amp;l=278#276">...</a>
     <small></small>
   </li>
     </ul>
@@ -10277,6 +10205,20 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.StringCol.baseClass.html#maxdbCreateSQL">
+      <tt>maxdbCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=348&amp;l=350#348">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.StringCol.baseClass.html#sqliteCreateSQL">
+      <tt>sqliteCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=329&amp;l=331#329">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.StringCol.baseClass.html#mysqlCreateSQL">
       <tt>mysqlCreateSQL</tt>
     </a>
@@ -10288,6 +10230,20 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>__get__</tt>
     </a>
     <a href="sqlobject/col.py.html?f=351&amp;l=368#351">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.StringCol.baseClass.html#autoConstraints">
+      <tt>autoConstraints</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=460&amp;l=465#460">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.StringCol.baseClass.html#sybaseCreateSQL">
+      <tt>sybaseCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=332&amp;l=334#332">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -10338,6 +10294,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>mssqlCreateSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=335&amp;l=338#335">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOStringLikeCol.html#getDbEncoding">
+      <tt>getDbEncoding</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=379&amp;l=394#379">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -10435,13 +10398,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOIntCol.html#sybaseCreateSQL">
-      <tt>sybaseCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=332&amp;l=334#332">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SOIntCol.html#addSQLAttrs">
       <tt>addSQLAttrs</tt>
     </a>
@@ -10526,13 +10482,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.TimedeltaCol.baseClass.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=86&amp;l=225#86">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.col.TimedeltaCol.baseClass.html#maxdbCreateSQL">
       <tt>maxdbCreateSQL</tt>
     </a>
@@ -10551,13 +10500,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>mysqlCreateSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.TimedeltaCol.baseClass.html#__get__">
-      <tt>__get__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=351&amp;l=368#351">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -10597,14 +10539,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
   </li>
     </ul>
   </li>
-      <li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.TimedeltaCol.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=400&amp;l=406#400">...</a>
-    <small></small>
-  </li>
     </ul>
   </li><li class="class">
     <span class="prefix">C</span>
@@ -10631,6 +10565,27 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SetCol.baseClass.html#mssqlCreateSQL">
+      <tt>mssqlCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=335&amp;l=338#335">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SetCol.baseClass.html#getDbEncoding">
+      <tt>getDbEncoding</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=379&amp;l=394#379">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SetCol.baseClass.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=1062&amp;l=1067#1062">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SetCol.baseClass.html#sqliteCreateSQL">
       <tt>sqliteCreateSQL</tt>
     </a>
@@ -10638,38 +10593,10 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SetCol.baseClass.html#__get__">
-      <tt>__get__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=351&amp;l=368#351">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SetCol.baseClass.html#autoConstraints">
-      <tt>autoConstraints</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=1068&amp;l=1070#1068">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SetCol.baseClass.html#postgresCreateSQL">
-      <tt>postgresCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=326&amp;l=328#326">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SetCol.baseClass.html#sybaseCreateSQL">
       <tt>sybaseCreateSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=332&amp;l=334#332">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SetCol.baseClass.html#firebirdCreateSQL">
-      <tt>firebirdCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=339&amp;l=347#339">...</a>
     <small></small>
   </li>
     </ul>
@@ -10738,10 +10665,10 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOCol.html#__set__">
-      <tt>__set__</tt>
+    <a href="class-sqlobject.col.SOCol.html#__get__">
+      <tt>__get__</tt>
     </a>
-    <a href="sqlobject/col.py.html?f=369&amp;l=375#369">...</a>
+    <a href="sqlobject/col.py.html?f=351&amp;l=368#351">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -10783,6 +10710,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOBLOBCol.html#mysqlCreateSQL">
+      <tt>mysqlCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SOBLOBCol.html#sybaseCreateSQL">
       <tt>sybaseCreateSQL</tt>
     </a>
@@ -10805,6 +10739,14 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <a href="sqlobject/col.py.html?f=1457&amp;l=1459#1457">...</a>
     <small></small>
     <ul>
+      <li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.CurrencyCol.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=400&amp;l=406#400">...</a>
+    <small></small>
+  </li>
     </ul>
   </li><li class="class">
     <span class="prefix">C</span>
@@ -10839,13 +10781,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.KeyCol.baseClass.html#mssqlCreateSQL">
-      <tt>mssqlCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=335&amp;l=338#335">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.col.KeyCol.baseClass.html#__init__">
       <tt>__init__</tt>
     </a>
@@ -10867,6 +10802,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.KeyCol.baseClass.html#postgresCreateSQL">
+      <tt>postgresCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=326&amp;l=328#326">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.KeyCol.baseClass.html#sybaseCreateSQL">
       <tt>sybaseCreateSQL</tt>
     </a>
@@ -10874,10 +10816,10 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.KeyCol.baseClass.html#__delete__">
-      <tt>__delete__</tt>
+    <a href="class-sqlobject.col.KeyCol.baseClass.html#firebirdCreateSQL">
+      <tt>firebirdCreateSQL</tt>
     </a>
-    <a href="sqlobject/col.py.html?f=376&amp;l=378#376">...</a>
+    <a href="sqlobject/col.py.html?f=339&amp;l=347#339">...</a>
     <small></small>
   </li>
     </ul>
@@ -10905,20 +10847,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>getDbEncoding</tt>
     </a>
     <a href="sqlobject/col.py.html?f=379&amp;l=394#379">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOMediumIntCol.html#maxdbCreateSQL">
-      <tt>maxdbCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=348&amp;l=350#348">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOMediumIntCol.html#mysqlCreateSQL">
-      <tt>mysqlCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11025,6 +10953,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.DateCol.baseClass.html#mysqlCreateSQL">
+      <tt>mysqlCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.DateCol.baseClass.html#autoConstraints">
       <tt>autoConstraints</tt>
     </a>
@@ -11080,13 +11015,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.PickleCol.baseClass.html#mysqlCreateSQL">
-      <tt>mysqlCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.col.PickleCol.baseClass.html#sybaseCreateSQL">
       <tt>sybaseCreateSQL</tt>
     </a>
@@ -11105,6 +11033,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>createSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=276&amp;l=278#276">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.PickleCol.baseClass.html#__delete__">
+      <tt>__delete__</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=376&amp;l=378#376">...</a>
     <small></small>
   </li>
     </ul>
@@ -11182,6 +11117,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOBoolCol.html#postgresCreateSQL">
+      <tt>postgresCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=326&amp;l=328#326">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SOBoolCol.html#sybaseCreateSQL">
       <tt>sybaseCreateSQL</tt>
     </a>
@@ -11207,38 +11149,10 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.DecimalCol.baseClass.html#__set__">
-      <tt>__set__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=369&amp;l=375#369">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.col.DecimalCol.baseClass.html#mssqlCreateSQL">
       <tt>mssqlCreateSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=335&amp;l=338#335">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.DecimalCol.baseClass.html#getDbEncoding">
-      <tt>getDbEncoding</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=379&amp;l=394#379">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.DecimalCol.baseClass.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=1431&amp;l=1439#1431">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.DecimalCol.baseClass.html#maxdbCreateSQL">
-      <tt>maxdbCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=348&amp;l=350#348">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11260,20 +11174,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>autoConstraints</tt>
     </a>
     <a href="sqlobject/col.py.html?f=244&amp;l=246#244">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.DecimalCol.baseClass.html#sybaseCreateSQL">
-      <tt>sybaseCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=332&amp;l=334#332">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.DecimalCol.baseClass.html#createSQL">
-      <tt>createSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=276&amp;l=278#276">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11302,14 +11202,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <a href="sqlobject/col.py.html?f=1344&amp;l=1346#1344">...</a>
     <small></small>
     <ul>
-      <li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.TimeCol.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=400&amp;l=406#400">...</a>
-    <small></small>
-  </li>
     </ul>
   </li><li class="class">
     <span class="prefix">C</span>
@@ -11393,6 +11285,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.TinyIntCol.baseClass.html#firebirdCreateSQL">
+      <tt>firebirdCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=339&amp;l=347#339">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.TinyIntCol.baseClass.html#sqliteCreateSQL">
       <tt>sqliteCreateSQL</tt>
     </a>
@@ -11418,13 +11317,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>sybaseCreateSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=332&amp;l=334#332">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.TinyIntCol.baseClass.html#createValidators">
-      <tt>createValidators</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=654&amp;l=657#654">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11454,20 +11346,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOForeignKey.html#mssqlCreateSQL">
-      <tt>mssqlCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=927&amp;l=937#927">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOForeignKey.html#getDbEncoding">
-      <tt>getDbEncoding</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=379&amp;l=394#379">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SOForeignKey.html#sqliteCreateSQL">
       <tt>sqliteCreateSQL</tt>
     </a>
@@ -11479,6 +11357,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>__get__</tt>
     </a>
     <a href="sqlobject/col.py.html?f=351&amp;l=368#351">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOForeignKey.html#sybaseCreateReferenceConstraint">
+      <tt>sybaseCreateReferenceConstraint</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=923&amp;l=926#923">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11506,6 +11391,14 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <a href="sqlobject/col.py.html?f=1506&amp;l=1508#1506">...</a>
     <small></small>
     <ul>
+      <li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.DecimalStringCol.html#withClass">
+      <tt>withClass</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=418&amp;l=424#418">...</a>
+    <small></small>
+  </li>
     </ul>
   </li><li class="class">
     <span class="prefix">C</span>
@@ -11517,24 +11410,17 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOEnumCol.html#__set__">
-      <tt>__set__</tt>
+    <a href="class-sqlobject.col.SOEnumCol.html#__init__">
+      <tt>__init__</tt>
     </a>
-    <a href="sqlobject/col.py.html?f=369&amp;l=375#369">...</a>
+    <a href="sqlobject/col.py.html?f=982&amp;l=987#982">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOEnumCol.html#mysqlCreateSQL">
-      <tt>mysqlCreateSQL</tt>
+    <a href="class-sqlobject.col.SOEnumCol.html#sqliteCreateSQL">
+      <tt>sqliteCreateSQL</tt>
     </a>
-    <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOEnumCol.html#createValidators">
-      <tt>createValidators</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=991&amp;l=995#991">...</a>
+    <a href="sqlobject/col.py.html?f=329&amp;l=331#329">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11542,13 +11428,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>firebirdCreateSQL</tt>
     </a>
     <a href="sqlobject/col.py.html?f=339&amp;l=347#339">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOEnumCol.html#createSQL">
-      <tt>createSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=276&amp;l=278#276">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11585,6 +11464,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SODateTimeCol.html#mysqlCreateSQL">
+      <tt>mysqlCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SODateTimeCol.html#firebirdCreateSQL">
       <tt>firebirdCreateSQL</tt>
     </a>
@@ -11601,6 +11487,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
     <ul>
       <li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.DateTimeCol.html#withClass">
+      <tt>withClass</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=418&amp;l=424#418">...</a>
+    <small></small>
+  </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.col.DateTimeCol.html#now">
       <tt>now</tt>
@@ -11619,10 +11512,10 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.ForeignKey.html#withClass">
-      <tt>withClass</tt>
+    <a href="class-sqlobject.col.ForeignKey.html#__init__">
+      <tt>__init__</tt>
     </a>
-    <a href="sqlobject/col.py.html?f=418&amp;l=424#418">...</a>
+    <a href="sqlobject/col.py.html?f=961&amp;l=963#961">...</a>
     <small></small>
   </li>
     </ul>
@@ -11636,24 +11529,17 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOSmallIntCol.html#mssqlCreateSQL">
+      <tt>mssqlCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=335&amp;l=338#335">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.col.SOSmallIntCol.html#getDbEncoding">
       <tt>getDbEncoding</tt>
     </a>
     <a href="sqlobject/col.py.html?f=379&amp;l=394#379">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOSmallIntCol.html#maxdbCreateSQL">
-      <tt>maxdbCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=348&amp;l=350#348">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOSmallIntCol.html#firebirdCreateSQL">
-      <tt>firebirdCreateSQL</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=339&amp;l=347#339">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11664,10 +11550,24 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.col.SOSmallIntCol.html#__get__">
-      <tt>__get__</tt>
+    <a href="class-sqlobject.col.SOSmallIntCol.html#mysqlCreateSQL">
+      <tt>mysqlCreateSQL</tt>
     </a>
-    <a href="sqlobject/col.py.html?f=351&amp;l=368#351">...</a>
+    <a href="sqlobject/col.py.html?f=323&amp;l=325#323">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOSmallIntCol.html#autoConstraints">
+      <tt>autoConstraints</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=651&amp;l=653#651">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOSmallIntCol.html#sybaseCreateSQL">
+      <tt>sybaseCreateSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=332&amp;l=334#332">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -11675,6 +11575,20 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>addSQLAttrs</tt>
     </a>
     <a href="sqlobject/col.py.html?f=658&amp;l=670#658">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOSmallIntCol.html#createSQL">
+      <tt>createSQL</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=276&amp;l=278#276">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.col.SOSmallIntCol.html#__delete__">
+      <tt>__delete__</tt>
+    </a>
+    <a href="sqlobject/col.py.html?f=376&amp;l=378#376">...</a>
     <small></small>
   </li>
     </ul>
@@ -11686,21 +11600,6 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <a href="sqlobject/col.py.html?f=396&amp;l=435#396">...</a>
     <small></small>
     <ul>
-      <li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.Col.html#withClass">
-      <tt>withClass</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=418&amp;l=424#418">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.col.Col.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/col.py.html?f=400&amp;l=406#400">...</a>
-    <small></small>
-  </li>
     </ul>
   </li><li class="class">
     <span class="prefix">C</span>
@@ -11777,6 +11676,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     </a>
     <a href="sqlobject/joins.py.html?f=86&amp;l=88#86">...</a>
     <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.MultipleJoin.baseClass.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=131&amp;l=147#131">...</a>
+    <small></small>
   </li>
     </ul>
   </li>
@@ -11841,6 +11747,14 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <a href="sqlobject/joins.py.html?f=468&amp;l=497#468">...</a>
     <small></small>
     <ul>
+      <li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.OneToMany.factory_class.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=470&amp;l=479#470">...</a>
+    <small></small>
+  </li>
     </ul>
   </li>
     </ul>
@@ -11862,10 +11776,38 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.RelatedJoin.baseClass.html#hasIntermediateTable">
+      <tt>hasIntermediateTable</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=209&amp;l=211#209">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
     <a href="class-sqlobject.joins.RelatedJoin.baseClass.html#add">
       <tt>add</tt>
     </a>
     <a href="sqlobject/joins.py.html?f=232&amp;l=239#232">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.RelatedJoin.baseClass.html#remove">
+      <tt>remove</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=224&amp;l=231#224">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.RelatedJoin.baseClass.html#performJoin">
+      <tt>performJoin</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=212&amp;l=223#212">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.RelatedJoin.baseClass.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=185&amp;l=197#185">...</a>
     <small></small>
   </li>
     </ul>
@@ -11902,8 +11844,30 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     </a>
     <a href="sqlobject/joins.py.html?f=86&amp;l=88#86">...</a>
     <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.SQLMultipleJoin.baseClass.html#performJoin">
+      <tt>performJoin</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=170&amp;l=178#170">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.SQLMultipleJoin.baseClass.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=131&amp;l=147#131">...</a>
+    <small></small>
   </li>
     </ul>
+  </li>
+      <li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.SQLMultipleJoin.html#withClass">
+      <tt>withClass</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=38&amp;l=47#38">...</a>
+    <small></small>
   </li>
     </ul>
   </li><li class="class">
@@ -11960,24 +11924,10 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.joins.ManyToMany.factory_class.html#event_CreateTableSignalPost">
-      <tt>event_CreateTableSignalPost</tt>
-    </a>
-    <a href="sqlobject/joins.py.html?f=405&amp;l=409#405">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
     <a href="class-sqlobject.joins.ManyToMany.factory_class.html#event_CreateTableSignal">
       <tt>event_CreateTableSignal</tt>
     </a>
     <a href="sqlobject/joins.py.html?f=400&amp;l=404#400">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.joins.ManyToMany.factory_class.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/joins.py.html?f=339&amp;l=356#339">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -12008,10 +11958,10 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <ul>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.joins.SQLRelatedJoin.baseClass.html#add">
-      <tt>add</tt>
+    <a href="class-sqlobject.joins.SQLRelatedJoin.baseClass.html#hasIntermediateTable">
+      <tt>hasIntermediateTable</tt>
     </a>
-    <a href="sqlobject/joins.py.html?f=232&amp;l=239#232">...</a>
+    <a href="sqlobject/joins.py.html?f=209&amp;l=211#209">...</a>
     <small></small>
   </li>
     </ul>
@@ -12022,6 +11972,13 @@ or a dot-q attribute (like Table.q.aColumn)</span>
       <tt>withClass</tt>
     </a>
     <a href="sqlobject/joins.py.html?f=38&amp;l=47#38">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.joins.SQLRelatedJoin.html#__init__">
+      <tt>__init__</tt>
+    </a>
+    <a href="sqlobject/joins.py.html?f=22&amp;l=27#22">...</a>
     <small></small>
   </li>
     </ul>
@@ -12041,22 +11998,15 @@ or a dot-q attribute (like Table.q.aColumn)</span>
     <a href="sqlobject/joins.py.html?f=305&amp;l=329#305">...</a>
     <small></small>
     <ul>
-    </ul>
-  </li>
       <li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.joins.SingleJoin.html#withClass">
-      <tt>withClass</tt>
+    <a href="class-sqlobject.joins.SingleJoin.baseClass.html#hasIntermediateTable">
+      <tt>hasIntermediateTable</tt>
     </a>
-    <a href="sqlobject/joins.py.html?f=38&amp;l=47#38">...</a>
+    <a href="sqlobject/joins.py.html?f=86&amp;l=88#86">...</a>
     <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.joins.SingleJoin.html#__init__">
-      <tt>__init__</tt>
-    </a>
-    <a href="sqlobject/joins.py.html?f=22&amp;l=27#22">...</a>
-    <small></small>
+  </li>
+    </ul>
   </li>
     </ul>
   </li>
