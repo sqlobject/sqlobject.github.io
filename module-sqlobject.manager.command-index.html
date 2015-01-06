@@ -679,13 +679,6 @@ directory (if it can).  For display purposes.</span>
     </a>
     <a href="sqlobject/manager/command.py.html?f=311&amp;l=367#311">...</a>
     <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.manager.command.Command.html#load_options_from_egg">
-      <tt>load_options_from_egg</tt>
-    </a>
-    <a href="sqlobject/manager/command.py.html?f=492&amp;l=500#492">...</a>
-    <small></small>
   </li>
     </ul>
   </li><li class="class">
@@ -734,13 +727,6 @@ directory (if it can).  For display purposes.</span>
       <tt>classes_from_package</tt>
     </a>
     <a href="sqlobject/manager/command.py.html?f=449&amp;l=478#449">...</a>
-    <small></small>
-  </li><li class="routine">
-    <span class="prefix">f</span>
-    <a href="class-sqlobject.manager.command.CommandDrop.html#classes_from_module">
-      <tt>classes_from_module</tt>
-    </a>
-    <a href="sqlobject/manager/command.py.html?f=368&amp;l=383#368">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
@@ -874,11 +860,16 @@ directory (if it can).  For display purposes.</span>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>
-    <a href="class-sqlobject.manager.command.CommandRecord.html#classes">
-      <tt>classes</tt>
+    <a href="class-sqlobject.manager.command.CommandRecord.html#orderClassesByDependencyLevel">
+      <tt>orderClassesByDependencyLevel</tt>
     </a>
-    <a href="sqlobject/manager/command.py.html?f=311&amp;l=367#311">...</a>
-    <small></small>
+    <a href="sqlobject/manager/command.py.html?f=187&amp;l=261#187">...</a>
+    <small>
+      - <span class="rst">Return classes ordered by their depth in the class dependency
+tree (this is <em>not</em> the inheritance tree), from the
+top level (independant) classes to the deepest level.
+The dependency tree is defined by the foreign key relations.</span>
+  </small>
   </li><li class="routine">
     <span class="prefix">f</span>
     <a href="class-sqlobject.manager.command.CommandRecord.html#load_options_from_egg">
@@ -945,6 +936,25 @@ directory (if it can).  For display purposes.</span>
       <tt>update_db</tt>
     </a>
     <a href="sqlobject/manager/command.py.html?f=1049&amp;l=1065#1049">...</a>
+    <small></small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.manager.command.CommandUpgrade.html#orderClassesByDependencyLevel">
+      <tt>orderClassesByDependencyLevel</tt>
+    </a>
+    <a href="sqlobject/manager/command.py.html?f=187&amp;l=261#187">...</a>
+    <small>
+      - <span class="rst">Return classes ordered by their depth in the class dependency
+tree (this is <em>not</em> the inheritance tree), from the
+top level (independant) classes to the deepest level.
+The dependency tree is defined by the foreign key relations.</span>
+  </small>
+  </li><li class="routine">
+    <span class="prefix">f</span>
+    <a href="class-sqlobject.manager.command.CommandUpgrade.html#base_dir">
+      <tt>base_dir</tt>
+    </a>
+    <a href="sqlobject/manager/command.py.html?f=1071&amp;l=1080#1071">...</a>
     <small></small>
   </li><li class="routine">
     <span class="prefix">f</span>

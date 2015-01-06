@@ -48,19 +48,6 @@ class MyTable(SQLObject):
 </li>
 <li><p class="first">SQLObject.fastInsert().</p>
 </li>
-<li><p class="first">List databases in the connection.</p>
-</li>
-<li><p class="first">List tables/indices in the DB. The query in MySQL is <tt class="docutils literal">SHOW TABLES</tt>;
-in SQLite it is</p>
-<blockquote>
-<p>SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;</p>
-</blockquote>
-<p>and in Postgres it is something like</p>
-<blockquote>
-<p>SELECT c.relname FROM pg_class c, pg_type t
-WHERE c.reltype = t.oid AND t.typname = 'table'.</p>
-</blockquote>
-</li>
 <li><p class="first">IntervalCol</p>
 </li>
 <li><p class="first">TimedeltaCol</p>
@@ -113,9 +100,6 @@ generating query strings.</p>
 based on ForeignKey/MultipleJoin/RelatedJoin.</p>
 </li>
 <li><p class="first">Deprecate, then remove connectionForOldURI.</p>
-</li>
-<li><p class="first">Python 3.0+. For an attempt to port FormEncode to py3k see
-<a href="https://bitbucket.org/fetchinson/formencode-py3k" class="reference external">https://bitbucket.org/fetchinson/formencode-py3k</a></p>
 </li>
 <li><p class="first">Switch from setuptools to distribute.</p>
 </li>

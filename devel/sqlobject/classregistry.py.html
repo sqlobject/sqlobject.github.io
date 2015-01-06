@@ -87,7 +87,7 @@ function show_line_range() {
 <a class="lnum" href="#15" name="15">0015</a><span class="string">&#0160;&#0160;&#0160;&#0160;&gt;&gt;&gt;&#0160;import&#0160;classregistry</span><br />
 <a class="lnum" href="#16" name="16">0016</a><span class="string">&#0160;&#0160;&#0160;&#0160;&gt;&gt;&gt;&#0160;registry&#0160;=&#0160;classregistry.registry('MyModules')</span><br />
 <a class="lnum" href="#17" name="17">0017</a><span class="string">&#0160;&#0160;&#0160;&#0160;&gt;&gt;&gt;&#0160;def&#0160;afterMyClassExists(cls):</span><br />
-<a class="lnum" href="#18" name="18">0018</a><span class="string">&#0160;&#0160;&#0160;&#0160;...&#0160;&#0160;&#0160;&#0160;print&#0160;'Class&#0160;finally&#0160;exists:',&#0160;cls</span><br />
+<a class="lnum" href="#18" name="18">0018</a><span class="string">&#0160;&#0160;&#0160;&#0160;...&#0160;&#0160;&#0160;&#0160;print('Class&#0160;finally&#0160;exists:&#0160;%s'&#0160;%&#0160;cls)</span><br />
 <a class="lnum" href="#19" name="19">0019</a><span class="string">&#0160;&#0160;&#0160;&#0160;&gt;&gt;&gt;&#0160;registry.addClassCallback('MyClass',&#0160;afterMyClassExists)</span><br />
 <a class="lnum" href="#20" name="20">0020</a><span class="string">&#0160;&#0160;&#0160;&#0160;&gt;&gt;&gt;&#0160;class&#0160;MyClass:</span><br />
 <a class="lnum" href="#21" name="21">0021</a><span class="string">&#0160;&#0160;&#0160;&#0160;...&#0160;&#0160;&#0160;&#0160;pass</span><br />
