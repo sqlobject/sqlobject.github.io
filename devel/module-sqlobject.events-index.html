@@ -53,7 +53,7 @@
     <a href="class-sqlobject.events.RowCreateSignal.html">
       <tt>RowCreateSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=71&amp;l=83#71">...</a>
+    <a href="sqlobject/events.py.html?f=79&amp;l=91#79">...</a>
     <small>
       - <span class="rst">Called before an instance is created, with the class as the
 sender.  Called with the arguments <tt class="docutils literal">(instance, kwargs, post_funcs)</tt>.
@@ -69,7 +69,7 @@ functions appended to it, and are called with the arguments
     <a href="class-sqlobject.events.CreateTableSignal.html">
       <tt>CreateTableSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=173&amp;l=185#173">...</a>
+    <a href="sqlobject/events.py.html?f=190&amp;l=202#190">...</a>
     <small>
       - <span class="rst">Called when a table is created.  If <tt class="docutils literal"><span class="pre">ifNotExists==True</span></tt> and the
 table exists, this event is not called.</span>
@@ -81,7 +81,7 @@ table exists, this event is not called.</span>
     <a href="class-sqlobject.events.RowDestroyedSignal.html">
       <tt>RowDestroyedSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=119&amp;l=129#119">...</a>
+    <a href="sqlobject/events.py.html?f=131&amp;l=141#131">...</a>
     <small>
       - <span class="rst">Called after an instance is deleted.  Sender is the instance's
 class.  Arguments are <tt class="docutils literal">(instance)</tt>.</span>
@@ -93,7 +93,7 @@ class.  Arguments are <tt class="docutils literal">(instance)</tt>.</span>
     <a href="class-sqlobject.events.AddColumnSignal.html">
       <tt>AddColumnSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=149&amp;l=158#149">...</a>
+    <a href="sqlobject/events.py.html?f=164&amp;l=173#164">...</a>
     <small>
       - <span class="rst">Called when a column is added to a class, with arguments <tt class="docutils literal">(cls,
 connection, column_name, column_definition, changeSchema,
@@ -107,7 +107,7 @@ and is called for each column after class creation.</span>
     <a href="class-sqlobject.events.DeleteColumnSignal.html">
       <tt>DeleteColumnSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=159&amp;l=169#159">...</a>
+    <a href="sqlobject/events.py.html?f=175&amp;l=185#175">...</a>
     <small>
       - <span class="rst">Called when a column is removed from a class, with the arguments
 <tt class="docutils literal">(cls, connection, column_name, so_column_obj, post_funcs)</tt>.
@@ -122,7 +122,7 @@ implicitly removed by setting it to <tt class="docutils literal">None</tt>).</sp
     <a href="class-sqlobject.events.DropTableSignal.html">
       <tt>DropTableSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=186&amp;l=195#186">...</a>
+    <a href="sqlobject/events.py.html?f=204&amp;l=213#204">...</a>
     <small>
       - <span class="rst">Called when a table is dropped.  If <tt class="docutils literal"><span class="pre">ifExists==True</span></tt> and the
 table doesn't exist, this event is not called.</span>
@@ -134,7 +134,7 @@ table doesn't exist, this event is not called.</span>
     <a href="class-sqlobject.events.RowCreatedSignal.html">
       <tt>RowCreatedSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=83&amp;l=95#83">...</a>
+    <a href="sqlobject/events.py.html?f=93&amp;l=105#93">...</a>
     <small>
       - <span class="rst">Called after an instance is created, with the class as the
 sender.  Called with the arguments <tt class="docutils literal">(instance, kwargs, post_funcs)</tt>.
@@ -150,7 +150,7 @@ functions appended to it, and are called with the arguments
     <a href="class-sqlobject.events.RowDestroySignal.html">
       <tt>RowDestroySignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=98&amp;l=118#98">...</a>
+    <a href="sqlobject/events.py.html?f=109&amp;l=129#109">...</a>
     <small>
       - <span class="rst">Called before an instance is deleted.  Sender is the instance's
 class.  Arguments are <tt class="docutils literal">(instance, post_funcs)</tt>.</span>
@@ -162,7 +162,7 @@ class.  Arguments are <tt class="docutils literal">(instance, post_funcs)</tt>.<
     <a href="class-sqlobject.events.ClassCreateSignal.html">
       <tt>ClassCreateSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=34&amp;l=51#34">...</a>
+    <a href="sqlobject/events.py.html?f=38&amp;l=55#38">...</a>
     <small>
       - <span class="rst">Signal raised after class creation.  The sender is the superclass
 (in case of multiple superclasses, the first superclass).  The
@@ -179,7 +179,7 @@ appended to it.</span>
     <a href="class-sqlobject.events.Signal.html">
       <tt>Signal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=26&amp;l=33#26">...</a>
+    <a href="sqlobject/events.py.html?f=29&amp;l=36#29">...</a>
     <small>
       - <span class="rst">Base event for all SQLObject events.</span>
   </small>
@@ -190,7 +190,7 @@ appended to it.</span>
     <a href="class-sqlobject.events.RowUpdateSignal.html">
       <tt>RowUpdateSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=130&amp;l=138#130">...</a>
+    <a href="sqlobject/events.py.html?f=143&amp;l=151#143">...</a>
     <small>
       - <span class="rst">Called when an instance is updated through a call to <tt class="docutils literal">.set()</tt>
 (or a column attribute assignment).  The arguments are
@@ -205,7 +205,7 @@ current values, simply look at <tt class="docutils literal">instance</tt>.</span
     <a href="class-sqlobject.events.RowUpdatedSignal.html">
       <tt>RowUpdatedSignal</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=139&amp;l=148#139">...</a>
+    <a href="sqlobject/events.py.html?f=153&amp;l=162#153">...</a>
     <small>
       - <span class="rst">Called when an instance is updated through a call to <tt class="docutils literal">.set()</tt>
 (or a column attribute assignment).  The arguments are
@@ -222,7 +222,7 @@ updated; Works better with lazyUpdate = True.</span>
     <a href="module-sqlobject.events.html#listen">
       <tt>listen</tt>
     </a>
-    <a href="sqlobject/events.py.html?f=10&amp;l=22#10">...</a>
+    <a href="sqlobject/events.py.html?f=12&amp;l=24#12">...</a>
     <small>
       - <span class="rst">Listen for the given <tt class="docutils literal">signal</tt> on the SQLObject subclass
 <tt class="docutils literal">soClass</tt>, calling <tt class="docutils literal">receiver()</tt> when <tt class="docutils literal">send(soClass, signal,

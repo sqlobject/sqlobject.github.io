@@ -1,0 +1,102 @@
+<html><head><title>/home/phd/current/SQLObject/SQLObject/sqlobject/compat.py</title>
+        <script type="text/javascript"><!--
+        
+function show_line_range() {
+    var href = document.location.href;
+    if (href.indexOf('?') == -1) {
+        return;
+    }
+    var qs = href.substring(href.indexOf('?')+1);
+    if (qs.indexOf('#') >= 0) {
+        qs = qs.substring(0, qs.indexOf('#'));
+    }
+    var first = qs.match(/f=(\d+)/)[1];
+    var last = qs.match(/l=(\d+)/)[1];
+    if (! first || ! last) {
+        return;
+    }
+    var anchors = document.getElementsByTagName('A');
+    var container = document.createElement('DIV');
+    container.className = 'highlighted';
+    var children = [];
+    var start = null;
+    var parent = null;
+    var highlight = false;
+    for (var i = 0; i < anchors.length; i++) {
+        var el = anchors[i];
+        if (el.getAttribute('name') == first) {
+            start = el.previousSibling;
+            parent = el.parentNode;
+            highlight = true;
+        }
+        if (el.getAttribute('name') == last) {
+            break;
+        }
+        if (highlight) {
+            children[children.length] = el;
+            el = el.nextSibling;
+            while (el && el.tagName != 'A') {
+                children[children.length] = el;
+                el = el.nextSibling;
+            }
+        }
+    }
+    for (i=0; i<children.length; i++) {
+        container.appendChild(children[i]);
+    }
+    if (start) {
+        start.parentNode.insertBefore(container, start.nextSibling);
+    } else {
+        parent.insertBefore(container, parent.childNodes[0]);
+    }
+}
+
+        // --></script>
+        <style>
+        div.python {
+          color: #333
+        }
+        div.python a.lnum {
+          color: #555;
+          background-color: #eee;
+          border-right: 1px solid #999;
+          padding-right: 2px;
+          margin-right: 4px;
+        }
+        div.python span.comment { color: #933 }
+        div.python span.keyword { color: #a3e; font-weight: bold  }
+        div.python span.op { color: #c96 }
+        div.python span.string { color: #6a6 }
+        div.python span.name { }
+        div.python span.text { color: #333 }
+        div.highlighted { background-color: #ff9; border: 1px solid #009 }
+        </style></head><body onload="show_line_range()"><div class="python"><code><a class="lnum" href="#1" name="1">0001</a><span class="keyword">import</span>&#0160;<span class="name">sys</span><br />
+<a class="lnum" href="#2" name="2">0002</a><span class="keyword">import</span>&#0160;<span class="name">types</span><br />
+<a class="lnum" href="#3" name="3">0003</a><br />
+<a class="lnum" href="#4" name="4">0004</a><span class="comment">#&#0160;Credit&#0160;to&#0160;six&#0160;authors:&#0160;http://pypi.python.org/pypi/six</span><br />
+<a class="lnum" href="#5" name="5">0005</a><span class="comment">#&#0160;License:&#0160;MIT</span><br />
+<a class="lnum" href="#6" name="6">0006</a><br />
+<a class="lnum" href="#7" name="7">0007</a><br />
+<a class="lnum" href="#8" name="8">0008</a><span class="keyword">def</span>&#0160;<span class="name">with_metaclass</span><span class="op">(</span><span class="name">meta</span><span class="op">,</span>&#0160;<span class="op">*</span><span class="name">bases</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#9" name="9">0009</a>&#0160;&#0160;&#0160;&#0160;<span class="string">"""Create&#0160;a&#0160;base&#0160;class&#0160;with&#0160;a&#0160;metaclass."""</span><br />
+<a class="lnum" href="#10" name="10">0010</a>&#0160;&#0160;&#0160;&#0160;<span class="comment">#&#0160;This&#0160;requires&#0160;a&#0160;bit&#0160;of&#0160;explanation:&#0160;the&#0160;basic&#0160;idea&#0160;is&#0160;to&#0160;make&#0160;a&#0160;dummy</span><br />
+<a class="lnum" href="#11" name="11">0011</a>&#0160;&#0160;&#0160;&#0160;<span class="comment">#&#0160;metaclass&#0160;for&#0160;one&#0160;level&#0160;of&#0160;class&#0160;instantiation&#0160;that&#0160;replaces&#0160;itself&#0160;with</span><br />
+<a class="lnum" href="#12" name="12">0012</a>&#0160;&#0160;&#0160;&#0160;<span class="comment">#&#0160;the&#0160;actual&#0160;metaclass.</span><br />
+<a class="lnum" href="#13" name="13">0013</a><br />
+<a class="lnum" href="#14" name="14">0014</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">class</span>&#0160;<span class="name">metaclass</span><span class="op">(</span><span class="name">meta</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#15" name="15">0015</a>&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;<span class="keyword">def</span>&#0160;<span class="name">__new__</span><span class="op">(</span><span class="name">cls</span><span class="op">,</span>&#0160;<span class="name">name</span><span class="op">,</span>&#0160;<span class="name">this_bases</span><span class="op">,</span>&#0160;<span class="name">d</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#16" name="16">0016</a>&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;&#0160;<span class="keyword">return</span>&#0160;<span class="name">meta</span><span class="op">(</span><span class="name">name</span><span class="op">,</span>&#0160;<span class="name">bases</span><span class="op">,</span>&#0160;<span class="name">d</span><span class="op">)</span><br />
+<a class="lnum" href="#17" name="17">0017</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">return</span>&#0160;<span class="name">type</span><span class="op">.</span><span class="name">__new__</span><span class="op">(</span><span class="name">metaclass</span><span class="op">,</span>&#0160;<span class="string">'temporary_class'</span><span class="op">,</span>&#0160;<span class="op">(</span><span class="op">)</span><span class="op">,</span>&#0160;<span class="op">{</span><span class="op">}</span><span class="op">)</span><br />
+<a class="lnum" href="#18" name="18">0018</a><br />
+<a class="lnum" href="#19" name="19">0019</a><span class="comment">#&#0160;Compatability&#0160;definitions&#0160;(inspired&#0160;by&#0160;six)</span><br />
+<a class="lnum" href="#20" name="20">0020</a><span class="keyword">if</span>&#0160;<span class="name">sys</span><span class="op">.</span><span class="name">version_info</span><span class="op">[</span><span class="number">0</span><span class="op">]</span>&#0160;<span class="op">&lt;</span>&#0160;<span class="number">3</span><span class="op">:</span><br />
+<a class="lnum" href="#21" name="21">0021</a>&#0160;&#0160;&#0160;&#0160;<span class="comment">#&#0160;disable&#0160;flake8&#0160;checks&#0160;on&#0160;python&#0160;3</span><br />
+<a class="lnum" href="#22" name="22">0022</a>&#0160;&#0160;&#0160;&#0160;<span class="name">string_type</span>&#0160;<span class="op">=</span>&#0160;<span class="name">basestring</span>&#0160;&#0160;<span class="comment">#&#0160;noqa</span><br />
+<a class="lnum" href="#23" name="23">0023</a>&#0160;&#0160;&#0160;&#0160;<span class="name">unicode_type</span>&#0160;<span class="op">=</span>&#0160;<span class="name">unicode</span>&#0160;&#0160;<span class="comment">#&#0160;noqa</span><br />
+<a class="lnum" href="#24" name="24">0024</a>&#0160;&#0160;&#0160;&#0160;<span class="name">class_types</span>&#0160;<span class="op">=</span>&#0160;<span class="op">(</span><span class="name">type</span><span class="op">,</span>&#0160;<span class="name">types</span><span class="op">.</span><span class="name">ClassType</span><span class="op">)</span><br />
+<a class="lnum" href="#25" name="25">0025</a>&#0160;&#0160;&#0160;&#0160;<span class="name">buffer_type</span>&#0160;<span class="op">=</span>&#0160;<span class="name">buffer</span>&#0160;&#0160;<span class="comment">#&#0160;noqa</span><br />
+<a class="lnum" href="#26" name="26">0026</a><span class="keyword">else</span><span class="op">:</span><br />
+<a class="lnum" href="#27" name="27">0027</a>&#0160;&#0160;&#0160;&#0160;<span class="name">string_type</span>&#0160;<span class="op">=</span>&#0160;<span class="name">str</span><br />
+<a class="lnum" href="#28" name="28">0028</a>&#0160;&#0160;&#0160;&#0160;<span class="name">unicode_type</span>&#0160;<span class="op">=</span>&#0160;<span class="name">str</span><br />
+<a class="lnum" href="#29" name="29">0029</a>&#0160;&#0160;&#0160;&#0160;<span class="name">class_types</span>&#0160;<span class="op">=</span>&#0160;<span class="op">(</span><span class="name">type</span><span class="op">,</span>&#0160;<span class="op">)</span><br />
+<a class="lnum" href="#30" name="30">0030</a>&#0160;&#0160;&#0160;&#0160;<span class="name">buffer_type</span>&#0160;<span class="op">=</span>&#0160;<span class="name">memoryview</span></code></div></body></html>
