@@ -34,98 +34,98 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents:</p>
 <ul class="simple">
-<li><a href="#author-site-and-license" class="reference internal" id="id14">Author, Site, and License</a></li>
-<li><a href="#introduction" class="reference internal" id="id15">Introduction</a></li>
-<li><a href="#requirements" class="reference internal" id="id16">Requirements</a></li>
-<li><a href="#compared-to-other-database-wrappers" class="reference internal" id="id17">Compared To Other Database Wrappers</a></li>
-<li><a href="#using-sqlobject-an-introduction" class="reference internal" id="id18">Using SQLObject: An Introduction</a><ul>
-<li><a href="#declaring-a-connection" class="reference internal" id="id19">Declaring a Connection</a></li>
-<li><a href="#declaring-the-class" class="reference internal" id="id20">Declaring the Class</a></li>
-<li><a href="#using-the-class" class="reference internal" id="id21">Using the Class</a></li>
-<li><a href="#selecting-multiple-objects" class="reference internal" id="id22">Selecting Multiple Objects</a><ul>
-<li><a href="#q-magic" class="reference internal" id="id23">q-magic</a></li>
-<li><a href="#selectby-method" class="reference internal" id="id24">selectBy Method</a></li>
+<li><a href="#author-site-and-license" class="reference internal" id="id9">Author, Site, and License</a></li>
+<li><a href="#introduction" class="reference internal" id="id10">Introduction</a></li>
+<li><a href="#requirements" class="reference internal" id="id11">Requirements</a></li>
+<li><a href="#compared-to-other-database-wrappers" class="reference internal" id="id12">Compared To Other Database Wrappers</a></li>
+<li><a href="#using-sqlobject-an-introduction" class="reference internal" id="id13">Using SQLObject: An Introduction</a><ul>
+<li><a href="#declaring-a-connection" class="reference internal" id="id14">Declaring a Connection</a></li>
+<li><a href="#declaring-the-class" class="reference internal" id="id15">Declaring the Class</a></li>
+<li><a href="#using-the-class" class="reference internal" id="id16">Using the Class</a></li>
+<li><a href="#selecting-multiple-objects" class="reference internal" id="id17">Selecting Multiple Objects</a><ul>
+<li><a href="#q-magic" class="reference internal" id="id18">q-magic</a></li>
+<li><a href="#selectby-method" class="reference internal" id="id19">selectBy Method</a></li>
 </ul>
 </li>
-<li><a href="#lazy-updates" class="reference internal" id="id25">Lazy Updates</a></li>
-<li><a href="#one-to-many-relationships" class="reference internal" id="id26">One-to-Many Relationships</a></li>
-<li><a href="#many-to-many-relationships" class="reference internal" id="id27">Many-to-Many Relationships</a></li>
-<li><a href="#selecting-objects-using-relationships" class="reference internal" id="id28">Selecting Objects Using Relationships</a></li>
-<li><a href="#class-sqlmeta" class="reference internal" id="id29">Class sqlmeta</a><ul>
-<li><a href="#using-sqlmeta" class="reference internal" id="id30">Using sqlmeta</a></li>
-<li><a href="#j-magic" class="reference internal" id="id31">j-magic</a></li>
+<li><a href="#lazy-updates" class="reference internal" id="id20">Lazy Updates</a></li>
+<li><a href="#one-to-many-relationships" class="reference internal" id="id21">One-to-Many Relationships</a></li>
+<li><a href="#many-to-many-relationships" class="reference internal" id="id22">Many-to-Many Relationships</a></li>
+<li><a href="#selecting-objects-using-relationships" class="reference internal" id="id23">Selecting Objects Using Relationships</a></li>
+<li><a href="#class-sqlmeta" class="reference internal" id="id24">Class sqlmeta</a><ul>
+<li><a href="#using-sqlmeta" class="reference internal" id="id25">Using sqlmeta</a></li>
+<li><a href="#j-magic" class="reference internal" id="id26">j-magic</a></li>
 </ul>
 </li>
-<li><a href="#sqlobject-class" class="reference internal" id="id32">SQLObject Class</a></li>
-<li><a href="#customizing-the-objects" class="reference internal" id="id33">Customizing the Objects</a><ul>
-<li><a href="#initializing-the-objects" class="reference internal" id="id34">Initializing the Objects</a></li>
-<li><a href="#adding-magic-attributes-properties" class="reference internal" id="id35">Adding Magic Attributes (properties)</a></li>
-<li><a href="#overriding-column-attributes" class="reference internal" id="id36">Overriding Column Attributes</a></li>
-<li><a href="#undefined-attributes" class="reference internal" id="id37">Undefined attributes</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#reference" class="reference internal" id="id38">Reference</a><ul>
-<li><a href="#col-class-specifying-columns" class="reference internal" id="id39">Col Class: Specifying Columns</a><ul>
-<li><a href="#column-types" class="reference internal" id="id40">Column Types</a></li>
-</ul>
-</li>
-<li><a href="#relationships-between-classes-tables" class="reference internal" id="id41">Relationships Between Classes/Tables</a><ul>
-<li><a href="#foreignkey" class="reference internal" id="id42">ForeignKey</a></li>
-<li><a href="#multiplejoin-and-sqlmultiplejoin-one-to-many" class="reference internal" id="id43">MultipleJoin and SQLMultipleJoin: One-to-Many</a></li>
-<li><a href="#relatedjoin-and-sqlrelatedjoin-many-to-many" class="reference internal" id="id44">RelatedJoin and SQLRelatedJoin: Many-to-Many</a></li>
-<li><a href="#singlejoin-one-to-one" class="reference internal" id="id45">SingleJoin: One-to-One</a></li>
-</ul>
-</li>
-<li><a href="#connection-pooling" class="reference internal" id="id46">Connection pooling</a></li>
-<li><a href="#transactions" class="reference internal" id="id47">Transactions</a></li>
-<li><a href="#automatic-schema-generation" class="reference internal" id="id48">Automatic Schema Generation</a><ul>
-<li><a href="#indexes" class="reference internal" id="id49">Indexes</a></li>
-<li><a href="#creating-and-dropping-tables" class="reference internal" id="id50">Creating and Dropping Tables</a></li>
+<li><a href="#sqlobject-class" class="reference internal" id="id27">SQLObject Class</a></li>
+<li><a href="#customizing-the-objects" class="reference internal" id="id28">Customizing the Objects</a><ul>
+<li><a href="#initializing-the-objects" class="reference internal" id="id29">Initializing the Objects</a></li>
+<li><a href="#adding-magic-attributes-properties" class="reference internal" id="id30">Adding Magic Attributes (properties)</a></li>
+<li><a href="#overriding-column-attributes" class="reference internal" id="id31">Overriding Column Attributes</a></li>
+<li><a href="#undefined-attributes" class="reference internal" id="id32">Undefined attributes</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#dynamic-classes" class="reference internal" id="id51">Dynamic Classes</a><ul>
-<li><a href="#automatic-class-generation" class="reference internal" id="id52">Automatic Class Generation</a></li>
-<li><a href="#runtime-column-and-join-changes" class="reference internal" id="id53">Runtime Column and Join Changes</a></li>
+<li><a href="#reference" class="reference internal" id="id33">Reference</a><ul>
+<li><a href="#col-class-specifying-columns" class="reference internal" id="id34">Col Class: Specifying Columns</a><ul>
+<li><a href="#column-types" class="reference internal" id="id35">Column Types</a></li>
 </ul>
 </li>
-<li><a href="#legacy-database-schemas" class="reference internal" id="id54">Legacy Database Schemas</a><ul>
-<li><a href="#sqlobject-requirements" class="reference internal" id="id55">SQLObject requirements</a><ul>
-<li><a href="#workaround-for-primary-keys-made-up-of-multiple-columns" class="reference internal" id="id56">Workaround for primary keys made up of multiple columns</a></li>
+<li><a href="#relationships-between-classes-tables" class="reference internal" id="id36">Relationships Between Classes/Tables</a><ul>
+<li><a href="#foreignkey" class="reference internal" id="id37">ForeignKey</a></li>
+<li><a href="#multiplejoin-and-sqlmultiplejoin-one-to-many" class="reference internal" id="id38">MultipleJoin and SQLMultipleJoin: One-to-Many</a></li>
+<li><a href="#relatedjoin-and-sqlrelatedjoin-many-to-many" class="reference internal" id="id39">RelatedJoin and SQLRelatedJoin: Many-to-Many</a></li>
+<li><a href="#singlejoin-one-to-one" class="reference internal" id="id40">SingleJoin: One-to-One</a></li>
 </ul>
 </li>
-<li><a href="#changing-the-naming-style" class="reference internal" id="id57">Changing the Naming Style</a></li>
-<li><a href="#irregular-naming" class="reference internal" id="id58">Irregular Naming</a></li>
-<li><a href="#non-integer-keys" class="reference internal" id="id59">Non-Integer Keys</a></li>
+<li><a href="#connection-pooling" class="reference internal" id="id41">Connection pooling</a></li>
+<li><a href="#transactions" class="reference internal" id="id42">Transactions</a></li>
+<li><a href="#automatic-schema-generation" class="reference internal" id="id43">Automatic Schema Generation</a><ul>
+<li><a href="#indexes" class="reference internal" id="id44">Indexes</a></li>
+<li><a href="#creating-and-dropping-tables" class="reference internal" id="id45">Creating and Dropping Tables</a></li>
 </ul>
 </li>
-<li><a href="#dbconnection-database-connections" class="reference internal" id="id60">DBConnection: Database Connections</a><ul>
-<li><a href="#id3" class="reference internal" id="id61">MySQL</a></li>
-<li><a href="#postgres" class="reference internal" id="id62">Postgres</a></li>
-<li><a href="#id4" class="reference internal" id="id63">SQLite</a></li>
-<li><a href="#id5" class="reference internal" id="id64">Firebird</a></li>
-<li><a href="#id7" class="reference internal" id="id65">Sybase</a></li>
-<li><a href="#id9" class="reference internal" id="id66">MAX DB</a></li>
-<li><a href="#ms-sql-server" class="reference internal" id="id67">MS SQL Server</a></li>
 </ul>
 </li>
-<li><a href="#events-signals" class="reference internal" id="id68">Events (signals)</a></li>
-<li><a href="#exported-symbols" class="reference internal" id="id69">Exported Symbols</a><ul>
-<li><a href="#left-join-and-other-joins" class="reference internal" id="id70">LEFT JOIN and other JOINs</a></li>
-<li><a href="#how-can-i-join-a-table-with-itself" class="reference internal" id="id71">How can I join a table with itself?</a></li>
-<li><a href="#can-i-use-a-join-with-aliases" class="reference internal" id="id72">Can I use a JOIN() with aliases?</a></li>
-<li><a href="#subqueries-subselects" class="reference internal" id="id73">Subqueries (subselects)</a></li>
-<li><a href="#utilities" class="reference internal" id="id74">Utilities</a></li>
-<li><a href="#sqlbuilder" class="reference internal" id="id75">SQLBuilder</a></li>
+<li><a href="#dynamic-classes" class="reference internal" id="id46">Dynamic Classes</a><ul>
+<li><a href="#automatic-class-generation" class="reference internal" id="id47">Automatic Class Generation</a></li>
+<li><a href="#runtime-column-and-join-changes" class="reference internal" id="id48">Runtime Column and Join Changes</a></li>
+</ul>
+</li>
+<li><a href="#legacy-database-schemas" class="reference internal" id="id49">Legacy Database Schemas</a><ul>
+<li><a href="#sqlobject-requirements" class="reference internal" id="id50">SQLObject requirements</a><ul>
+<li><a href="#workaround-for-primary-keys-made-up-of-multiple-columns" class="reference internal" id="id51">Workaround for primary keys made up of multiple columns</a></li>
+</ul>
+</li>
+<li><a href="#changing-the-naming-style" class="reference internal" id="id52">Changing the Naming Style</a></li>
+<li><a href="#irregular-naming" class="reference internal" id="id53">Irregular Naming</a></li>
+<li><a href="#non-integer-keys" class="reference internal" id="id54">Non-Integer Keys</a></li>
+</ul>
+</li>
+<li><a href="#dbconnection-database-connections" class="reference internal" id="id55">DBConnection: Database Connections</a><ul>
+<li><a href="#id3" class="reference internal" id="id56">MySQL</a></li>
+<li><a href="#postgres" class="reference internal" id="id57">Postgres</a></li>
+<li><a href="#id4" class="reference internal" id="id58">SQLite</a></li>
+<li><a href="#id5" class="reference internal" id="id59">Firebird</a></li>
+<li><a href="#id6" class="reference internal" id="id60">Sybase</a></li>
+<li><a href="#id7" class="reference internal" id="id61">MAX DB</a></li>
+<li><a href="#ms-sql-server" class="reference internal" id="id62">MS SQL Server</a></li>
+</ul>
+</li>
+<li><a href="#events-signals" class="reference internal" id="id63">Events (signals)</a></li>
+<li><a href="#exported-symbols" class="reference internal" id="id64">Exported Symbols</a><ul>
+<li><a href="#left-join-and-other-joins" class="reference internal" id="id65">LEFT JOIN and other JOINs</a></li>
+<li><a href="#how-can-i-join-a-table-with-itself" class="reference internal" id="id66">How can I join a table with itself?</a></li>
+<li><a href="#can-i-use-a-join-with-aliases" class="reference internal" id="id67">Can I use a JOIN() with aliases?</a></li>
+<li><a href="#subqueries-subselects" class="reference internal" id="id68">Subqueries (subselects)</a></li>
+<li><a href="#utilities" class="reference internal" id="id69">Utilities</a></li>
+<li><a href="#sqlbuilder" class="reference internal" id="id70">SQLBuilder</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="author-site-and-license">
-<h1><a href="#id14" class="toc-backref">Author, Site, and License</a></h1>
+<h1><a href="#id9" class="toc-backref">Author, Site, and License</a></h1>
 <p>SQLObject is by Ian Bicking (<a href="mailto:ianb@colorstudy.com" class="reference external">ianb@colorstudy.com</a>) and <a href="Authors.html" class="reference external">Contributors</a>.  The website is <a href="http://sqlobject.org" class="reference external">sqlobject.org</a>.</p>
 <p>The code is licensed under the <a href="http://www.gnu.org/copyleft/lesser.html" class="reference external">Lesser General Public License</a>
 (LGPL).</p>
@@ -135,7 +135,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.</p>
 </div>
 <div class="section" id="introduction">
-<h1><a href="#id15" class="toc-backref">Introduction</a></h1>
+<h1><a href="#id10" class="toc-backref">Introduction</a></h1>
 <p>SQLObject is an <em>object-relational mapper</em> for <a href="http://python.org" class="reference external">Python</a> programming
 language.  It allows you to translate RDBMS table rows into Python objects,
 and manipulate those objects to transparently manipulate the database.</p>
@@ -149,16 +149,16 @@ textually, your SQL queries.  This also allows non-SQL databases to be
 used with the same query syntax.</p>
 </div>
 <div class="section" id="requirements">
-<h1><a href="#id16" class="toc-backref">Requirements</a></h1>
+<h1><a href="#id11" class="toc-backref">Requirements</a></h1>
 <p>Currently SQLObject supports <a href="http://mysql.com" class="reference external">MySQL</a> via <a href="http://sourceforge.net/projects/mysql-python/" class="reference external">MySQLdb</a> aka MySQL-python,
-<a href="http://postgresql.org" class="reference external">PostgreSQL</a> via <a href="http://initd.org/projects/psycopg1" class="reference external">psycopg1</a> or <a href="http://initd.org/projects/psycopg2" class="reference external">psycopg2</a>, <a href="http://sqlite.org" class="reference external">SQLite</a> via <a href="http://initd.org/projects/pysqlite" class="reference external">PySQLite</a>,
-<a href="http://firebird.sourceforge.net" class="reference external">Firebird</a> via <a href="http://kinterbasdb.sourceforge.net/" class="reference external">kinterbasdb</a>, <a href="http://www.mysql.com/products/maxdb/" class="reference external">MAX DB</a> (also known as SAP DB) via <a href="http://www.sapdb.org/sapdbPython.html" class="reference external">sapdb</a>,
+<a href="http://postgresql.org" class="reference external">PostgreSQL</a> via <a href="http://initd.org/projects/psycopg1" class="reference external">psycopg1</a> or <a href="http://initd.org/projects/psycopg2" class="reference external">psycopg2</a>, <a href="http://sqlite.org" class="reference external">SQLite</a> via <a href="http://initd.org/projects/pysqlite" class="reference external">PySQLite</a>, <a href="http://firebird.sourceforge.net" class="reference external">Firebird</a>
+via <a href="http://www.firebirdsql.org/en/devel-python-driver/" class="reference external">fdb</a> or <a href="http://kinterbasdb.sourceforge.net/" class="reference external">kinterbasdb</a>, <a href="http://www.mysql.com/products/maxdb/" class="reference external">MAX DB</a> (also known as SAP DB) via <a href="http://www.sapdb.org/sapdbPython.html" class="reference external">sapdb</a>,
 Sybase via <a href="http://www.object-craft.com.au/projects/sybase/" class="reference external">Sybase</a>, and <a href="http://www.microsoft.com/sql/" class="reference external">MSSQL Server</a> via <a href="http://pymssql.sourceforge.net/" class="reference external">pymssql</a> (+ <a href="http://www.freetds.org/" class="reference external">FreeTDS</a>) or
-<a href="http://adodbapi.sourceforge.net/" class="reference external">ADODBAPI</a> (Win32).</p>
+<a href="http://adodbapi.sourceforge.net/" class="reference external">adodbapi</a> (Win32).</p>
 <p>Python 2.6, 2.7 or 3.4+ is required.</p>
 </div>
 <div class="section" id="compared-to-other-database-wrappers">
-<h1><a href="#id17" class="toc-backref">Compared To Other Database Wrappers</a></h1>
+<h1><a href="#id12" class="toc-backref">Compared To Other Database Wrappers</a></h1>
 <p>There are several object-relational mappers (ORM) for Python.  I
 honestly can't comment deeply on the quality of those packages, but
 I'll try to place SQLObject in perspective.</p>
@@ -202,7 +202,7 @@ does not have to be designed with SQLObject in mind, and the resulting
 classes do not have to inherit the database's naming schemes.</p>
 </div>
 <div class="section" id="using-sqlobject-an-introduction">
-<h1><a href="#id18" class="toc-backref">Using SQLObject: An Introduction</a></h1>
+<h1><a href="#id13" class="toc-backref">Using SQLObject: An Introduction</a></h1>
 <p>Let's start off quickly.  We'll generally just import everything from
 the <tt class="docutils literal">sqlobject</tt> class:</p>
 <pre class="literal-block">
@@ -210,7 +210,7 @@ the <tt class="docutils literal">sqlobject</tt> class:</p>
 >>> import sys, os
 </pre>
 <div class="section" id="declaring-a-connection">
-<h2><a href="#id19" class="toc-backref">Declaring a Connection</a></h2>
+<h2><a href="#id14" class="toc-backref">Declaring a Connection</a></h2>
 <p>The connection URI must follow the standard URI syntax:</p>
 <pre class="literal-block">
 scheme://[user[:password]@]host[:port]/database[?parameters]
@@ -248,7 +248,7 @@ string; an empty string for False.</p>
 will, by default, use this connection we've just set up.</p>
 </div>
 <div class="section" id="declaring-the-class">
-<h2><a href="#id20" class="toc-backref">Declaring the Class</a></h2>
+<h2><a href="#id15" class="toc-backref">Declaring the Class</a></h2>
 <p>We'll develop a simple addressbook-like database.  We could create the
 tables ourselves, and just have SQLObject access those tables, but
 let's have SQLObject do that work.  First, the class:</p>
@@ -296,7 +296,7 @@ terribly).</p>
 always called <tt class="docutils literal">.id</tt> from Python.</p>
 </div>
 <div class="section" id="using-the-class">
-<h2><a href="#id21" class="toc-backref">Using the Class</a></h2>
+<h2><a href="#id16" class="toc-backref">Using the Class</a></h2>
 <p>Now that you have a class, how will you use it?  We'll be considering
 the class defined above.</p>
 <p>To create a new object (and row), use class instantiation, like:</p>
@@ -395,7 +395,7 @@ with non-database properties (there's no benefit, but it helps hide
 the difference between database and non-database attributes).</p>
 </div>
 <div class="section" id="selecting-multiple-objects">
-<h2><a href="#id22" class="toc-backref">Selecting Multiple Objects</a></h2>
+<h2><a href="#id17" class="toc-backref">Selecting Multiple Objects</a></h2>
 <p>While the full power of all the kinds of joins you can do with a
 relational database are not revealed in SQLObject, a simple <tt class="docutils literal">SELECT</tt>
 is available.</p>
@@ -499,7 +499,7 @@ will be very cheap.</p>
 <p>For more information on the where clause in the queries, see the
 <a href="SQLBuilder.html" class="reference external">SQLBuilder documentation</a>.</p>
 <div class="section" id="q-magic">
-<h3><a href="#id23" class="toc-backref">q-magic</a></h3>
+<h3><a href="#id18" class="toc-backref">q-magic</a></h3>
 <p>Please note the use of the <cite>q</cite> attribute in examples above. <cite>q</cite> is an
 object that returns special objects to construct SQL expressions.
 Operations on objects returned by <cite>q-magic</cite> are not evaluated immediately
@@ -516,7 +516,7 @@ Person.q.firstName=="John"</blockquote>
 the backend.</p>
 </div>
 <div class="section" id="selectby-method">
-<h3><a href="#id24" class="toc-backref">selectBy Method</a></h3>
+<h3><a href="#id19" class="toc-backref">selectBy Method</a></h3>
 <p>An alternative to <tt class="docutils literal">.select</tt> is <tt class="docutils literal">.selectBy</tt>.  It works like:</p>
 <blockquote>
 <pre class="doctest-block">
@@ -529,7 +529,7 @@ can slice it, count it, order it, etc.</p>
 </div>
 </div>
 <div class="section" id="lazy-updates">
-<h2><a href="#id25" class="toc-backref">Lazy Updates</a></h2>
+<h2><a href="#id20" class="toc-backref">Lazy Updates</a></h2>
 <p>By default SQLObject sends an <tt class="docutils literal">UPDATE</tt> to the database for every
 attribute you set, or every time you call <tt class="docutils literal">.set()</tt>.  If you want to
 avoid this many updates, add <tt class="docutils literal">lazyUpdate = True</tt> to your class <a href="#class-sqlmeta" class="reference internal">sqlmeta
@@ -543,7 +543,7 @@ indicates if there are pending updates.  Inserts are still done
 immediately; there's no way to do lazy inserts at this time.</p>
 </div>
 <div class="section" id="one-to-many-relationships">
-<h2><a href="#id26" class="toc-backref">One-to-Many Relationships</a></h2>
+<h2><a href="#id21" class="toc-backref">One-to-Many Relationships</a></h2>
 <p>An address book is nothing without addresses.</p>
 <p>First, let's define the new address table.  People can have multiple
 addresses, of course:</p>
@@ -617,7 +617,7 @@ unchanged from above, but the returned iterator has many additional useful metho
 </div>
 </div>
 <div class="section" id="many-to-many-relationships">
-<h2><a href="#id27" class="toc-backref">Many-to-Many Relationships</a></h2>
+<h2><a href="#id22" class="toc-backref">Many-to-Many Relationships</a></h2>
 <p>For this example we will have user and role objects.  The two have a
 many-to-many relationship, which is represented with the
 <cite>RelatedJoin</cite>.</p>
@@ -725,7 +725,7 @@ keyword argument to override this).  Its use:</p>
 </blockquote>
 </div>
 <div class="section" id="selecting-objects-using-relationships">
-<h2><a href="#id28" class="toc-backref">Selecting Objects Using Relationships</a></h2>
+<h2><a href="#id23" class="toc-backref">Selecting Objects Using Relationships</a></h2>
 <p>An select expression can refer to multiple classes, like:</p>
 <pre class="literal-block">
 >>> Person._connection.debug = False # Needed for doctests
@@ -754,7 +754,7 @@ SQLObject will automatically figure out what extra classes you might
 have used.</p>
 </div>
 <div class="section" id="class-sqlmeta">
-<h2><a href="#id29" class="toc-backref">Class sqlmeta</a></h2>
+<h2><a href="#id24" class="toc-backref">Class sqlmeta</a></h2>
 <p>This new class is available starting with SQLObject 0.7 and allows
 specifying metadata in a clearer way, without polluting the class
 namespace with more attributes.</p>
@@ -853,7 +853,7 @@ in SQLObject 0.8.</p>
 get inherited, e.g. you can't access via the sqlmeta.columns dictionary
 the parent's class column objects.</p>
 <div class="section" id="using-sqlmeta">
-<h3><a href="#id30" class="toc-backref">Using sqlmeta</a></h3>
+<h3><a href="#id25" class="toc-backref">Using sqlmeta</a></h3>
 <p>To use sqlmeta you should write code like this example:</p>
 <pre class="literal-block">
 class MyClass(SQLObject):
@@ -881,7 +881,7 @@ also telling that <tt class="docutils literal">MyClass</tt> won't have any cache
 you ask for some information it will be retrieved from the database.</p>
 </div>
 <div class="section" id="j-magic">
-<h3><a href="#id31" class="toc-backref">j-magic</a></h3>
+<h3><a href="#id26" class="toc-backref">j-magic</a></h3>
 <p>There is a magic attribute <cite>j</cite> similar to <a href="#q-magic" class="reference internal">q</a> with attributes for
 ForeignKey and SQLMultipleJoin/SQLRelatedJoin, providing a shorthand for
 the SQLBuilder join expressions to traverse the given relationship. For
@@ -891,7 +891,7 @@ SQLMultipleJoin.</p>
 </div>
 </div>
 <div class="section" id="sqlobject-class">
-<h2><a href="#id32" class="toc-backref">SQLObject Class</a></h2>
+<h2><a href="#id27" class="toc-backref">SQLObject Class</a></h2>
 <p>There is one special attribute - <cite>_connection</cite>. It is the connection
 defined for the table.</p>
 <dl class="docutils">
@@ -909,13 +909,13 @@ advantage, besides saving a lot of typing.</p>
 </dl>
 </div>
 <div class="section" id="customizing-the-objects">
-<h2><a href="#id33" class="toc-backref">Customizing the Objects</a></h2>
+<h2><a href="#id28" class="toc-backref">Customizing the Objects</a></h2>
 <p>While we haven't done so in the examples, you can include your own
 methods in the class definition.  Writing your own methods should be
 obvious enough (just do so like in any other class), but there are
 some other details to be aware of.</p>
 <div class="section" id="initializing-the-objects">
-<h3><a href="#id34" class="toc-backref">Initializing the Objects</a></h3>
+<h3><a href="#id29" class="toc-backref">Initializing the Objects</a></h3>
 <p>There are two ways SQLObject instances can come into existence: they
 can be fetched from the database, or they can be inserted into the
 database.  In both cases a new Python object is created.  This makes
@@ -928,7 +928,7 @@ selectResults=None)</tt>, though you may just want to use <tt class="docutils li
 <tt class="docutils literal">SQLObject._init(self, *args, **kw)</tt> if you override the method!</p>
 </div>
 <div class="section" id="adding-magic-attributes-properties">
-<h3><a href="#id35" class="toc-backref">Adding Magic Attributes (properties)</a></h3>
+<h3><a href="#id30" class="toc-backref">Adding Magic Attributes (properties)</a></h3>
 <p>You can use all the normal techniques for defining methods in this
 new-style class, including <cite>classmethod</cite>, <cite>staticmethod</cite>, and
 <cite>property</cite>, but you can also use a shortcut.  If you have a method
@@ -974,7 +974,7 @@ use any one of them without using the others.  So you could define
 just a <tt class="docutils literal">_get_attr</tt> method so that <tt class="docutils literal">attr</tt> was read-only.</p>
 </div>
 <div class="section" id="overriding-column-attributes">
-<h3><a href="#id36" class="toc-backref">Overriding Column Attributes</a></h3>
+<h3><a href="#id31" class="toc-backref">Overriding Column Attributes</a></h3>
 <p>It's a little more complicated if you want to override the behavior of
 an database column attribute.  For instance, imagine there's special
 code you want to run whenever someone's name changes.  In many systems
@@ -1043,7 +1043,7 @@ database).</p>
 </div>
 </div>
 <div class="section" id="undefined-attributes">
-<h3><a href="#id37" class="toc-backref">Undefined attributes</a></h3>
+<h3><a href="#id32" class="toc-backref">Undefined attributes</a></h3>
 <p>There's one more thing  worth telling, because you may something get
 strange results when making a typo. SQLObject won't ever complain or
 raise any error when setting a previously undefined attribute; it will
@@ -1058,12 +1058,12 @@ why you don't get that value set in your DB.</p>
 </div>
 </div>
 <div class="section" id="reference">
-<h1><a href="#id38" class="toc-backref">Reference</a></h1>
+<h1><a href="#id33" class="toc-backref">Reference</a></h1>
 <p>The instructions above should tell you enough to get you started, and
 be useful for many situations.  Now we'll show how to specify the
 class more completely.</p>
 <div class="section" id="col-class-specifying-columns">
-<h2><a href="#id39" class="toc-backref">Col Class: Specifying Columns</a></h2>
+<h2><a href="#id34" class="toc-backref">Col Class: Specifying Columns</a></h2>
 <p>The list of columns is a list of <cite>Col</cite> objects.  These objects don't
 have functionality in themselves, but give you a way to specify the
 column.</p>
@@ -1120,7 +1120,7 @@ list of validators, i.e. its <tt class="docutils literal">from_python()</tt> met
 <tt class="docutils literal">to_python()</tt> last.</dd>
 </dl>
 <div class="section" id="column-types">
-<h3><a href="#id40" class="toc-backref">Column Types</a></h3>
+<h3><a href="#id35" class="toc-backref">Column Types</a></h3>
 <p>The <cite>ForeignKey</cite> class should be used instead of <cite>Col</cite> when the column
 is a reference to another table/class.  It is generally used like
 <tt class="docutils literal"><span class="pre">ForeignKey('Role')</span></tt>, in this instance to create a reference to a
@@ -1240,9 +1240,9 @@ MyTable.select((MyTable.q.name + MyTable.q.surname) == u'value'.encode(dbEncodin
 </div>
 </div>
 <div class="section" id="relationships-between-classes-tables">
-<h2><a href="#id41" class="toc-backref">Relationships Between Classes/Tables</a></h2>
+<h2><a href="#id36" class="toc-backref">Relationships Between Classes/Tables</a></h2>
 <div class="section" id="foreignkey">
-<h3><a href="#id42" class="toc-backref">ForeignKey</a></h3>
+<h3><a href="#id37" class="toc-backref">ForeignKey</a></h3>
 <p>You can use the <cite>ForeignKey</cite> to handle foreign references in a table,
 but for back references and many-to-many relationships you'll use
 joins.</p>
@@ -1277,7 +1277,7 @@ the reference to person will be set to <cite>NULL</cite>/<cite>None</cite> (<tt 
 </dl>
 </div>
 <div class="section" id="multiplejoin-and-sqlmultiplejoin-one-to-many">
-<h3><a href="#id43" class="toc-backref">MultipleJoin and SQLMultipleJoin: One-to-Many</a></h3>
+<h3><a href="#id38" class="toc-backref">MultipleJoin and SQLMultipleJoin: One-to-Many</a></h3>
 <p>See <a href="#one-to-many-relationships" class="reference internal">One-to-Many Relationships</a> for an example of one-to-many
 relationships.</p>
 <p>MultipleJoin returns a list of results, while SQLMultipleJoin returns a
@@ -1308,7 +1308,7 @@ created automatically, and is normally implied (i.e., <tt class="docutils litera
 </dl>
 </div>
 <div class="section" id="relatedjoin-and-sqlrelatedjoin-many-to-many">
-<h3><a href="#id44" class="toc-backref">RelatedJoin and SQLRelatedJoin: Many-to-Many</a></h3>
+<h3><a href="#id39" class="toc-backref">RelatedJoin and SQLRelatedJoin: Many-to-Many</a></h3>
 <p>See <a href="#many-to-many-relationships" class="reference internal">Many-to-Many Relationships</a> for examples of using many-to-many joins.</p>
 <p>RelatedJoin returns a list of results, while SQLRelatedJoin returns a
 SelectResults object.</p>
@@ -1372,12 +1372,12 @@ class Role(SQLObject):
 </pre>
 </div>
 <div class="section" id="singlejoin-one-to-one">
-<h3><a href="#id45" class="toc-backref">SingleJoin: One-to-One</a></h3>
+<h3><a href="#id40" class="toc-backref">SingleJoin: One-to-One</a></h3>
 <p>Similar to <cite>MultipleJoin</cite>, but returns just one object, not a list.</p>
 </div>
 </div>
 <div class="section" id="connection-pooling">
-<h2><a href="#id46" class="toc-backref">Connection pooling</a></h2>
+<h2><a href="#id41" class="toc-backref">Connection pooling</a></h2>
 <p>Connection object acquires a new low-level DB API connection from the pool
 and stores it; the low-level connection is removed from the pool;
 "releasing" means "return it to the pool". For single-threaded programs
@@ -1387,7 +1387,7 @@ disabled pooling (by setting conn._pool = None) the connection will be
 closed instead of returning to the pool.</p>
 </div>
 <div class="section" id="transactions">
-<h2><a href="#id47" class="toc-backref">Transactions</a></h2>
+<h2><a href="#id42" class="toc-backref">Transactions</a></h2>
 <p>Transaction support in SQLObject is left to the database.
 Transactions can be used like:</p>
 <pre class="literal-block">
@@ -1419,12 +1419,12 @@ returned. If an error occurs during call to the callable it rolls the
 transaction back and reraise the exception.</p>
 </div>
 <div class="section" id="automatic-schema-generation">
-<h2><a href="#id48" class="toc-backref">Automatic Schema Generation</a></h2>
+<h2><a href="#id43" class="toc-backref">Automatic Schema Generation</a></h2>
 <p>All the connections support creating and dropping tables based on the
 class definition.  First you have to prepare your class definition,
 which means including type information in your columns.</p>
 <div class="section" id="indexes">
-<h3><a href="#id49" class="toc-backref">Indexes</a></h3>
+<h3><a href="#id44" class="toc-backref">Indexes</a></h3>
 <p>You can also define indexes for your tables, which is only meaningful
 when creating your tables through SQLObject (SQLObject relies on the
 database to implement the indexes).  You do this again with attribute
@@ -1456,7 +1456,7 @@ characters.  Only MySQL supports this, but it is ignored in other
 databases.</p>
 </div>
 <div class="section" id="creating-and-dropping-tables">
-<h3><a href="#id50" class="toc-backref">Creating and Dropping Tables</a></h3>
+<h3><a href="#id45" class="toc-backref">Creating and Dropping Tables</a></h3>
 <p>To create a table call <cite>createTable</cite>.  It takes two arguments:</p>
 <dl class="docutils">
 <dt><cite>ifNotExists</cite>:</dt>
@@ -1473,12 +1473,12 @@ self-explanatory.</p>
 </div>
 </div>
 <div class="section" id="dynamic-classes">
-<h1><a href="#id51" class="toc-backref">Dynamic Classes</a></h1>
+<h1><a href="#id46" class="toc-backref">Dynamic Classes</a></h1>
 <p>SQLObject classes can be manipulated dynamically.  This leaves open
 the possibility of constructing SQLObject classes from an XML file,
 from database introspection, or from a graphical interface.</p>
 <div class="section" id="automatic-class-generation">
-<h2><a href="#id52" class="toc-backref">Automatic Class Generation</a></h2>
+<h2><a href="#id47" class="toc-backref">Automatic Class Generation</a></h2>
 <p>SQLObject can read the table description from the database, and fill
 in the class columns (as would normally be described in the <cite>_columns</cite>
 attribute).  Do this like:</p>
@@ -1491,7 +1491,7 @@ class Person(SQLObject):
 columns will be added.</p>
 </div>
 <div class="section" id="runtime-column-and-join-changes">
-<h2><a href="#id53" class="toc-backref">Runtime Column and Join Changes</a></h2>
+<h2><a href="#id48" class="toc-backref">Runtime Column and Join Changes</a></h2>
 <p>You can add and remove columns to your class at runtime.  Such changes
 will effect all instances, since changes are made in place to the
 class.  There are two methods of the <a href="#class-sqlmeta" class="reference internal">class sqlmeta object</a>,
@@ -1511,12 +1511,12 @@ object out of the <cite>sqlmeta.joins</cite> attribute.</p>
 </div>
 </div>
 <div class="section" id="legacy-database-schemas">
-<h1><a href="#id54" class="toc-backref">Legacy Database Schemas</a></h1>
+<h1><a href="#id49" class="toc-backref">Legacy Database Schemas</a></h1>
 <p>Often you will have a database that already exists, and does not use
 the naming conventions that SQLObject expects, or does not use any
 naming convention at all.</p>
 <div class="section" id="sqlobject-requirements">
-<h2><a href="#id55" class="toc-backref">SQLObject requirements</a></h2>
+<h2><a href="#id50" class="toc-backref">SQLObject requirements</a></h2>
 <p>While SQLObject tries not to make too many requirements on your
 schema, some assumptions are made.  Some of these may be relaxed in
 the future.</p>
@@ -1538,7 +1538,7 @@ immutable (that won't change).</p>
 (case-insensitive).  This restriction will probably be removed in the
 next release.</p>
 <div class="section" id="workaround-for-primary-keys-made-up-of-multiple-columns">
-<h3><a href="#id56" class="toc-backref">Workaround for primary keys made up of multiple columns</a></h3>
+<h3><a href="#id51" class="toc-backref">Workaround for primary keys made up of multiple columns</a></h3>
 <p>If the database table/view has ONE NUMERIC Primary Key then sqlmeta - idName
 should be used to map the table column name to SQLObject id column.</p>
 <p>If the Primary Key consists only of number columns it is possible to create a
@@ -1580,7 +1580,7 @@ Note: no leading '1' and no padding necessary for ean numbers</blockquote>
 </div>
 </div>
 <div class="section" id="changing-the-naming-style">
-<h2><a href="#id57" class="toc-backref">Changing the Naming Style</a></h2>
+<h2><a href="#id52" class="toc-backref">Changing the Naming Style</a></h2>
 <p>By default names in SQLObject are expected to be mixed case in Python
 (like <tt class="docutils literal">mixedCase</tt>), and underscore-separated in SQL (like
 <tt class="docutils literal">mixed_case</tt>).  This applies to table and column names.  The primary
@@ -1616,11 +1616,11 @@ __connection__.style = MixedCaseStyle(longID=True)
 </pre>
 </div>
 <div class="section" id="irregular-naming">
-<h2><a href="#id58" class="toc-backref">Irregular Naming</a></h2>
+<h2><a href="#id53" class="toc-backref">Irregular Naming</a></h2>
 <p>This is now covered in the <a href="#class-sqlmeta" class="reference internal">Class sqlmeta</a> section.</p>
 </div>
 <div class="section" id="non-integer-keys">
-<h2><a href="#id59" class="toc-backref">Non-Integer Keys</a></h2>
+<h2><a href="#id54" class="toc-backref">Non-Integer Keys</a></h2>
 <p>While not strictly a legacy database issue, this fits into the category of
 "irregularities".  If you use non-integer keys, all primary key management
 is up to you.  You must create the table yourself (SQLObject can create
@@ -1630,7 +1630,7 @@ tables with int or str IDs), and when you create instances you must pass a
 </div>
 </div>
 <div class="section" id="dbconnection-database-connections">
-<h1><a href="#id60" class="toc-backref">DBConnection: Database Connections</a></h1>
+<h1><a href="#id55" class="toc-backref">DBConnection: Database Connections</a></h1>
 <p>The <cite>DBConnection</cite> module currently has six external classes,
 <cite>MySQLConnection</cite>, <cite>PostgresConnection</cite>, <cite>SQLiteConnection</cite>,
 <cite>SybaseConnection</cite>, <cite>MaxdbConnection</cite>, <cite>MSSQLConnection</cite>.</p>
@@ -1663,7 +1663,7 @@ __connection__ = "sqlite:/:memory:?debug=1&amp;logger=TEST&amp;loglevel=debug"
 </pre>
 <p>The code redirects SQLObject debug messages to the <cite>test.log</cite> file.</p>
 <div class="section" id="id3">
-<h2><a href="#id61" class="toc-backref">MySQL</a></h2>
+<h2><a href="#id56" class="toc-backref">MySQL</a></h2>
 <p><cite>MySQLConnection</cite> takes the keyword arguments <cite>host</cite>, <cite>port</cite>, <cite>db</cite>, <cite>user</cite>,
 and <cite>password</cite>, just like <cite>MySQLdb.connect</cite> does.</p>
 <p>MySQLConnection supports all the features, though MySQL only supports
@@ -1695,7 +1695,7 @@ connection = MySQLConnection(user='foo', db='somedb', conv=conversions)
 </pre>
 </div>
 <div class="section" id="postgres">
-<h2><a href="#id62" class="toc-backref">Postgres</a></h2>
+<h2><a href="#id57" class="toc-backref">Postgres</a></h2>
 <p><cite>PostgresConnection</cite> takes a single connection string, like
 <tt class="docutils literal">"dbname=something user=some_user"</tt>, just like <cite>psycopg.connect</cite>.
 You can also use the same keyword arguments as for <cite>MySQLConnection</cite>,
@@ -1708,7 +1708,7 @@ list of driver names. Possible drivers are: <tt class="docutils literal">psycopg
 <tt class="docutils literal">psycopg</tt>.</p>
 </div>
 <div class="section" id="id4">
-<h2><a href="#id63" class="toc-backref">SQLite</a></h2>
+<h2><a href="#id58" class="toc-backref">SQLite</a></h2>
 <p><cite>SQLiteConnection</cite> takes the a single string, which is the path to the
 database file.</p>
 <p>SQLite puts all data into one file, with a journal file that is opened
@@ -1724,7 +1724,7 @@ of driver names. Possible drivers are: <tt class="docutils literal">pysqlite2</t
 sqlite3 and sqlite in that order.</p>
 </div>
 <div class="section" id="id5">
-<h2><a href="#id64" class="toc-backref">Firebird</a></h2>
+<h2><a href="#id59" class="toc-backref">Firebird</a></h2>
 <p><cite>FirebirdConnection</cite> takes the arguments <cite>host</cite>, <cite>db</cite>, <cite>user</cite> (default
 <tt class="docutils literal">"sysdba"</tt>), <cite>password</cite> (default <tt class="docutils literal">"masterkey"</tt>).</p>
 <p>Firebird supports all the features.  Support is still young, so there
@@ -1732,7 +1732,7 @@ may be some issues, especially with concurrent access, and especially
 using lazy selects.  Try <tt class="docutils literal"><span class="pre">list(MyClass.select())</span></tt> to avoid
 concurrent cursors if you have problems (using <tt class="docutils literal">list()</tt> will
 pre-fetch all the results of a select).</p>
-<p>Firebird support uses the <a href="http://kinterbasdb.sourceforge.net/" class="reference external">kinterbasdb</a> Python library.</p>
+<p>Firebird support uses <a href="http://www.firebirdsql.org/en/devel-python-driver/" class="reference external">fdb</a> or <a href="http://kinterbasdb.sourceforge.net/" class="reference external">kinterbasdb</a> Python library.</p>
 <p>There could be a problem if one tries to connect to a server running on w32
 from a program running on Unix; the problem is how to specify the database
 so that SQLObject correctly parses it. Vertical bar is replaces by
@@ -1754,8 +1754,8 @@ recognised.</p>
 implementation restriction for index</em>, see <a href="http://www.volny.cz/iprenosil/interbase/ip_ib_indexcalculator.htm" class="reference external">this page</a> to understand
 the restrictions on your indexing.</p>
 </div>
-<div class="section" id="id7">
-<h2><a href="#id65" class="toc-backref">Sybase</a></h2>
+<div class="section" id="id6">
+<h2><a href="#id60" class="toc-backref">Sybase</a></h2>
 <p><cite>SybaseConnection</cite> takes the arguments <cite>host</cite>, <cite>db</cite>, <cite>user</cite>, and
 <cite>password</cite>.  It also takes the extra boolean argument <cite>locking</cite> (default
 True), which is passed through when performing a connection.  You may
@@ -1763,8 +1763,8 @@ use a False value for <cite>locking</cite> if you are not using multiple threads
 for a slight performance boost.</p>
 <p>It uses the <a href="http://www.object-craft.com.au/projects/sybase/" class="reference external">Sybase</a> module.</p>
 </div>
-<div class="section" id="id9">
-<h2><a href="#id66" class="toc-backref">MAX DB</a></h2>
+<div class="section" id="id7">
+<h2><a href="#id61" class="toc-backref">MAX DB</a></h2>
 <p>MAX DB, also known as SAP DB, is available from a partnership of SAP
 and MySQL.  It takes the typical arguments: <cite>host</cite>, <cite>database</cite>,
 <cite>user</cite>, <cite>password</cite>.  It also takes the arguments <cite>sqlmode</cite> (default
@@ -1773,7 +1773,7 @@ when creating the connection to the database.</p>
 <p>It uses the <a href="http://www.sapdb.org/sapdbPython.html" class="reference external">sapdb</a> module.</p>
 </div>
 <div class="section" id="ms-sql-server">
-<h2><a href="#id67" class="toc-backref">MS SQL Server</a></h2>
+<h2><a href="#id62" class="toc-backref">MS SQL Server</a></h2>
 <p>The <cite>MSSQLConnection</cite> objects wants to use new style connection strings
 in the format of</p>
 <p>mssql://user:pass@host:port/db</p>
@@ -1788,7 +1788,7 @@ of driver names. Possible drivers are: <tt class="docutils literal">adodb</tt> (
 </div>
 </div>
 <div class="section" id="events-signals">
-<h1><a href="#id68" class="toc-backref">Events (signals)</a></h1>
+<h1><a href="#id63" class="toc-backref">Events (signals)</a></h1>
 <p>Signals are a mechanism to be notified when data or schema changes happen
 through SQLObject. This may be useful for doing custom data validation,
 logging changes, setting default attributes, etc. Some of what signals can
@@ -1819,7 +1819,7 @@ listen(created_listener, Users, RowCreatedSignal)
 </pre>
 </div>
 <div class="section" id="exported-symbols">
-<h1><a href="#id69" class="toc-backref">Exported Symbols</a></h1>
+<h1><a href="#id64" class="toc-backref">Exported Symbols</a></h1>
 <p>You can use <tt class="docutils literal">from sqlobject import *</tt>, though you don't have to.  It
 exports a minimal number of symbols.  The symbols exported:</p>
 <p>From <cite>sqlobject.main</cite>:</p>
@@ -1865,7 +1865,7 @@ exports a minimal number of symbols.  The symbols exported:</p>
 <li><cite>func</cite></li>
 </ul>
 <div class="section" id="left-join-and-other-joins">
-<h2><a href="#id70" class="toc-backref">LEFT JOIN and other JOINs</a></h2>
+<h2><a href="#id65" class="toc-backref">LEFT JOIN and other JOINs</a></h2>
 <p>First look in the <a href="FAQ.html#how-can-i-do-a-left-join" class="reference external">FAQ</a>, question "How can I do a LEFT JOIN?"</p>
 <p>Still here? Well. To perform a JOIN use one of the JOIN helpers from
 <a href="SQLBuilder.html" class="reference external">SQLBuilder</a>. Pass an instance of the helper to .select()
@@ -1904,7 +1904,7 @@ FULLJOINOn, FULLOUTERJOINOn, INNERJOINUsing, LEFTJOINUsing, LEFTOUTERJOINUsing,
 RIGHTJOINUsing, RIGHTOUTERJOINUsing, FULLJOINUsing, FULLOUTERJOINUsing.</p>
 </div>
 <div class="section" id="how-can-i-join-a-table-with-itself">
-<h2><a href="#id71" class="toc-backref">How can I join a table with itself?</a></h2>
+<h2><a href="#id66" class="toc-backref">How can I join a table with itself?</a></h2>
 <p>Use Alias from <a href="SQLBuilder.html" class="reference external">SQLBuilder</a>. Example:</p>
 <pre class="literal-block">
 from sqlobject.sqlbuilder import Alias
@@ -1918,7 +1918,7 @@ WHERE my_table.name = my_table_alias.value;
 </pre>
 </div>
 <div class="section" id="can-i-use-a-join-with-aliases">
-<h2><a href="#id72" class="toc-backref">Can I use a JOIN() with aliases?</a></h2>
+<h2><a href="#id67" class="toc-backref">Can I use a JOIN() with aliases?</a></h2>
 <p>Sure! That's a situation the JOINs and aliases were primary developed
 for.  Code:</p>
 <pre class="literal-block">
@@ -1936,7 +1936,7 @@ WHERE my_table.name == other_table.value AND
 </pre>
 </div>
 <div class="section" id="subqueries-subselects">
-<h2><a href="#id73" class="toc-backref">Subqueries (subselects)</a></h2>
+<h2><a href="#id68" class="toc-backref">Subqueries (subselects)</a></h2>
 <p>You can run queries with subqueries (subselects) on those DBMS that can do
 subqueries (MySQL supports subqueries from version 4.1).</p>
 <p>Use corresponding classes and functions from <a href="SQLBuilder.html" class="reference external">SQLBuilder</a>:</p>
@@ -1958,7 +1958,7 @@ columns the inner query returns.</p>
 used with comparison operators, like this: <tt class="docutils literal">somevalue = <span class="pre">ANY(Select(...))</span></tt>.</p>
 </div>
 <div class="section" id="utilities">
-<h2><a href="#id74" class="toc-backref">Utilities</a></h2>
+<h2><a href="#id69" class="toc-backref">Utilities</a></h2>
 <p>Some useful utility functions are included with SQLObject.  For more
 information see their module docstrings.</p>
 <ul class="simple">
@@ -1966,7 +1966,7 @@ information see their module docstrings.</p>
 </ul>
 </div>
 <div class="section" id="sqlbuilder">
-<h2><a href="#id75" class="toc-backref">SQLBuilder</a></h2>
+<h2><a href="#id70" class="toc-backref">SQLBuilder</a></h2>
 <p>For more information on SQLBuilder, read the <a href="SQLBuilder.html" class="reference external">SQLBuilder
 Documentation</a>.</p>
 <a href="http://sourceforge.net/projects/sqlobject" class="reference external image-reference"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=74338&amp;type=10" alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" style="width: 80px; height: 15px;" class="noborder align-center"></a>
