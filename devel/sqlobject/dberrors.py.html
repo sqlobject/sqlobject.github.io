@@ -77,50 +77,51 @@ function show_line_range() {
 <a class="lnum" href="#5" name="5">0005</a><span class="string">&#0160;&#0160;&#0160;http://www.python.org/topics/database/DatabaseAPI-2.0.html</span><br />
 <a class="lnum" href="#6" name="6">0006</a><span class="string">"""</span><br />
 <a class="lnum" href="#7" name="7">0007</a><br />
-<a class="lnum" href="#8" name="8">0008</a><span class="keyword">import</span>&#0160;<span class="name">sys</span><br />
-<a class="lnum" href="#9" name="9">0009</a><span class="keyword">if</span>&#0160;<span class="name">sys</span><span class="op">.</span><span class="name">version_info</span><span class="op">[</span><span class="number">0</span><span class="op">]</span>&#0160;<span class="op">&gt;=</span>&#0160;<span class="number">3</span><span class="op">:</span><br />
-<a class="lnum" href="#10" name="10">0010</a>&#0160;&#0160;&#0160;&#0160;<span class="name">StandardError</span>&#0160;<span class="op">=</span>&#0160;<span class="name">Exception</span><br />
-<a class="lnum" href="#11" name="11">0011</a><br />
+<a class="lnum" href="#8" name="8">0008</a><span class="keyword">from</span>&#0160;<span class="name">sqlobject</span><span class="op">.</span><span class="name">compat</span>&#0160;<span class="keyword">import</span>&#0160;<span class="name">PY2</span><br />
+<a class="lnum" href="#9" name="9">0009</a><br />
+<a class="lnum" href="#10" name="10">0010</a><span class="keyword">if</span>&#0160;<span class="keyword">not</span>&#0160;<span class="name">PY2</span><span class="op">:</span><br />
+<a class="lnum" href="#11" name="11">0011</a>&#0160;&#0160;&#0160;&#0160;<span class="name">StandardError</span>&#0160;<span class="op">=</span>&#0160;<span class="name">Exception</span><br />
 <a class="lnum" href="#12" name="12">0012</a><br />
-<a class="lnum" href="#13" name="13">0013</a><span class="keyword">class</span>&#0160;<span class="name">Error</span><span class="op">(</span><span class="name">StandardError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#14" name="14">0014</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#15" name="15">0015</a><br />
+<a class="lnum" href="#13" name="13">0013</a><br />
+<a class="lnum" href="#14" name="14">0014</a><span class="keyword">class</span>&#0160;<span class="name">Error</span><span class="op">(</span><span class="name">StandardError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#15" name="15">0015</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#16" name="16">0016</a><br />
-<a class="lnum" href="#17" name="17">0017</a><span class="keyword">class</span>&#0160;<span class="name">Warning</span><span class="op">(</span><span class="name">StandardError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#18" name="18">0018</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#19" name="19">0019</a><br />
+<a class="lnum" href="#17" name="17">0017</a><br />
+<a class="lnum" href="#18" name="18">0018</a><span class="keyword">class</span>&#0160;<span class="name">Warning</span><span class="op">(</span><span class="name">StandardError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#19" name="19">0019</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#20" name="20">0020</a><br />
-<a class="lnum" href="#21" name="21">0021</a><span class="keyword">class</span>&#0160;<span class="name">InterfaceError</span><span class="op">(</span><span class="name">Error</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#22" name="22">0022</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#23" name="23">0023</a><br />
+<a class="lnum" href="#21" name="21">0021</a><br />
+<a class="lnum" href="#22" name="22">0022</a><span class="keyword">class</span>&#0160;<span class="name">InterfaceError</span><span class="op">(</span><span class="name">Error</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#23" name="23">0023</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#24" name="24">0024</a><br />
-<a class="lnum" href="#25" name="25">0025</a><span class="keyword">class</span>&#0160;<span class="name">DatabaseError</span><span class="op">(</span><span class="name">Error</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#26" name="26">0026</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#27" name="27">0027</a><br />
+<a class="lnum" href="#25" name="25">0025</a><br />
+<a class="lnum" href="#26" name="26">0026</a><span class="keyword">class</span>&#0160;<span class="name">DatabaseError</span><span class="op">(</span><span class="name">Error</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#27" name="27">0027</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#28" name="28">0028</a><br />
-<a class="lnum" href="#29" name="29">0029</a><span class="keyword">class</span>&#0160;<span class="name">InternalError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#30" name="30">0030</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#31" name="31">0031</a><br />
+<a class="lnum" href="#29" name="29">0029</a><br />
+<a class="lnum" href="#30" name="30">0030</a><span class="keyword">class</span>&#0160;<span class="name">InternalError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#31" name="31">0031</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#32" name="32">0032</a><br />
-<a class="lnum" href="#33" name="33">0033</a><span class="keyword">class</span>&#0160;<span class="name">OperationalError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#34" name="34">0034</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#35" name="35">0035</a><br />
+<a class="lnum" href="#33" name="33">0033</a><br />
+<a class="lnum" href="#34" name="34">0034</a><span class="keyword">class</span>&#0160;<span class="name">OperationalError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#35" name="35">0035</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#36" name="36">0036</a><br />
-<a class="lnum" href="#37" name="37">0037</a><span class="keyword">class</span>&#0160;<span class="name">ProgrammingError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#38" name="38">0038</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#39" name="39">0039</a><br />
+<a class="lnum" href="#37" name="37">0037</a><br />
+<a class="lnum" href="#38" name="38">0038</a><span class="keyword">class</span>&#0160;<span class="name">ProgrammingError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#39" name="39">0039</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#40" name="40">0040</a><br />
-<a class="lnum" href="#41" name="41">0041</a><span class="keyword">class</span>&#0160;<span class="name">IntegrityError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#42" name="42">0042</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#43" name="43">0043</a><br />
+<a class="lnum" href="#41" name="41">0041</a><br />
+<a class="lnum" href="#42" name="42">0042</a><span class="keyword">class</span>&#0160;<span class="name">IntegrityError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#43" name="43">0043</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#44" name="44">0044</a><br />
-<a class="lnum" href="#45" name="45">0045</a><span class="keyword">class</span>&#0160;<span class="name">DataError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#46" name="46">0046</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#47" name="47">0047</a><br />
+<a class="lnum" href="#45" name="45">0045</a><br />
+<a class="lnum" href="#46" name="46">0046</a><span class="keyword">class</span>&#0160;<span class="name">DataError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#47" name="47">0047</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#48" name="48">0048</a><br />
-<a class="lnum" href="#49" name="49">0049</a><span class="keyword">class</span>&#0160;<span class="name">NotSupportedError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#50" name="50">0050</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
-<a class="lnum" href="#51" name="51">0051</a><br />
+<a class="lnum" href="#49" name="49">0049</a><br />
+<a class="lnum" href="#50" name="50">0050</a><span class="keyword">class</span>&#0160;<span class="name">NotSupportedError</span><span class="op">(</span><span class="name">DatabaseError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#51" name="51">0051</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span><br />
 <a class="lnum" href="#52" name="52">0052</a><br />
-<a class="lnum" href="#53" name="53">0053</a><span class="keyword">class</span>&#0160;<span class="name">DuplicateEntryError</span><span class="op">(</span><span class="name">IntegrityError</span><span class="op">)</span><span class="op">:</span><br />
-<a class="lnum" href="#54" name="54">0054</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span></code></div></body></html>
+<a class="lnum" href="#53" name="53">0053</a><br />
+<a class="lnum" href="#54" name="54">0054</a><span class="keyword">class</span>&#0160;<span class="name">DuplicateEntryError</span><span class="op">(</span><span class="name">IntegrityError</span><span class="op">)</span><span class="op">:</span><br />
+<a class="lnum" href="#55" name="55">0055</a>&#0160;&#0160;&#0160;&#0160;<span class="keyword">pass</span></code></div></body></html>
