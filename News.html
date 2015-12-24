@@ -143,6 +143,8 @@
 <li>Add function col.use_microseconds(True/False). Default is to use
 microseconds (True).</li>
 <li>For MSSQL use datetime2(6) and time(6) columns.</li>
+<li>Columns for ForeignKey are created using idType of the referenced
+table.</li>
 </ul>
 </div>
 <div class="section" id="minor-features">
@@ -164,6 +166,8 @@ format means ticks.</li>
 <h2>Tests</h2>
 <ul class="simple">
 <li>Speedup SQLite connections in tests -- merged from <a href="#sqlobject-1-7-6" class="reference internal">SQLObject 1.7.6</a>.</li>
+<li>Added new test helper setupCyclicClasses to setup classes with mutual
+references.</li>
 </ul>
 </div>
 </div>
