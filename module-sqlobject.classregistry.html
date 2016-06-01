@@ -61,7 +61,7 @@ created on demand.</p>
 >>> import classregistry
 >>> registry = classregistry.registry('MyModules')
 >>> def afterMyClassExists(cls):
-...    print 'Class finally exists:', cls
+...    print('Class finally exists: %s' % cls)
 >>> registry.addClassCallback('MyClass', afterMyClassExists)
 >>> class MyClass:
 ...    pass
@@ -93,7 +93,7 @@ Class finally exists: MyClass
     <a name="registry"></a>
     <h4 class="pudge-member-name"><span class="prefix">f</span>
       <tt><a href="module-sqlobject.classregistry.html#registry" class="pudge-obj-link">registry</a>(self, item)</tt>
-      <a href="sqlobject/classregistry.py.html?f=126&amp;l=130#126" title="View Source">...</a>
+      <a href="sqlobject/classregistry.py.html?f=128&amp;l=132#128" title="View Source">...</a>
     </h4>
     <div class="pudge-section rst">
     </div>
@@ -101,7 +101,7 @@ Class finally exists: MyClass
     <a name="findClass"></a>
     <h4 class="pudge-member-name"><span class="prefix">f</span>
       <tt><a href="module-sqlobject.classregistry.html#findClass" class="pudge-obj-link">findClass</a>(name, class_registry=None)</tt>
-      <a href="sqlobject/classregistry.py.html?f=134&amp;l=136#134" title="View Source">...</a>
+      <a href="sqlobject/classregistry.py.html?f=137&amp;l=139#137" title="View Source">...</a>
     </h4>
     <div class="pudge-section rst">
     </div>
@@ -112,7 +112,7 @@ Class finally exists: MyClass
     <h4 class="pudge-member-name"><span class="prefix">C</span>
       <tt>
         <a href="class-sqlobject.classregistry.ClassRegistry.html" class="pudge-obj-link">ClassRegistry</a>(...)</tt>
-      <a href="sqlobject/classregistry.py.html?f=27&amp;l=113#27" class="pudge-member-view-source" title="View Source">...</a>
+      <a href="sqlobject/classregistry.py.html?f=28&amp;l=114#28" class="pudge-member-view-source" title="View Source">...</a>
     </h4>
     <div class="pudge-section rst">
     <p class="pudge-member-blurb">

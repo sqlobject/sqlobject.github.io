@@ -55,15 +55,6 @@ normal).  The return value is ignored; if the attribute wishes to
 change the value in the class, it must call <tt class="docutils literal">setattr(added_class,
 name, new_value)</tt>.</p>
 <p>BoundAttribute is a class that facilitates lazy attribute creation.</p>
-<p><tt class="docutils literal">bind_attributes(cls, new_attrs)</tt> is a function that looks for
-attributes with this special method.  <tt class="docutils literal">new_attrs</tt> is a dictionary,
-as typically passed into <tt class="docutils literal">__classinit__</tt> with declarative (calling
-<tt class="docutils literal">bind_attributes</tt> in <tt class="docutils literal">__classinit__</tt> would be typical).</p>
-<p>Note if you do this that attributes defined in a superclass will not
-be rebound in subclasses.  If you want to rebind attributes in
-subclasses, use <tt class="docutils literal">bind_attributes_local</tt>, which adds a
-<tt class="docutils literal">__bound_attributes__</tt> variable to your class to track these active
-attributes.</p>
   </div>
   <hr>
     <a name="attributes"></a>
@@ -82,7 +73,7 @@ attributes.</p>
     <h4 class="pudge-member-name"><span class="prefix">C</span>
       <tt>
         <a href="class-sqlobject.boundattributes.BoundAttribute.html" class="pudge-obj-link">BoundAttribute</a>(...)</tt>
-      <a href="sqlobject/boundattributes.py.html?f=32&amp;l=116#32" class="pudge-member-view-source" title="View Source">...</a>
+      <a href="sqlobject/boundattributes.py.html?f=22&amp;l=106#22" class="pudge-member-view-source" title="View Source">...</a>
     </h4>
     <div class="pudge-section rst">
     <p class="pudge-member-blurb">
@@ -106,7 +97,7 @@ just resets the attribute to whatever <tt class="docutils literal">make_object</
     <h4 class="pudge-member-name"><span class="prefix">C</span>
       <tt>
         <a href="class-sqlobject.boundattributes.BoundFactory.html" class="pudge-obj-link">BoundFactory</a>(...)</tt>
-      <a href="sqlobject/boundattributes.py.html?f=117&amp;l=134#117" class="pudge-member-view-source" title="View Source">...</a>
+      <a href="sqlobject/boundattributes.py.html?f=108&amp;l=125#108" class="pudge-member-view-source" title="View Source">...</a>
     </h4>
     <div class="pudge-section rst">
     <p class="pudge-member-blurb">

@@ -72,8 +72,6 @@ make ConnectionHub a context manager instead of .doInTransaction().</p>
 </li>
 <li><p class="first">Make version_info a namedtuple.</p>
 </li>
-<li><p class="first">Stop supporting Python 2.6: restore using urllib.splituser in _parseURI.</p>
-</li>
 <li><p class="first">Expression columns - in SELECT but not in INSERT/UPDATE. Something like this:</p>
 <pre class="literal-block">
 class MyClass(SQLObject):
@@ -109,8 +107,6 @@ based on ForeignKey/MultipleJoin/RelatedJoin.</p>
 </li>
 <li><p class="first">Pure Python Mysql Interface: <a href="https://github.com/nasi/MyPy" class="reference external">https://github.com/nasi/MyPy</a></p>
 </li>
-<li><p class="first">PyMySQL: <a href="https://github.com/PyMySQL/PyMySQL" class="reference external">https://github.com/PyMySQL/PyMySQL</a></p>
-</li>
 <li><p class="first">pg8000 driver: <a href="http://code.google.com/p/pg8000/" class="reference external">http://code.google.com/p/pg8000/</a></p>
 </li>
 <li><p class="first">py-postgresql driver: <a href="http://python.projects.postgresql.org/" class="reference external">http://python.projects.postgresql.org/</a></p>
@@ -124,14 +120,12 @@ internal attributes.</p>
 <li><p class="first">Or move column values access to a separate namespace, e.g. .c:
 row.c.column.</p>
 </li>
-<li><p class="first">Convert documentation to <a href="http://sphinx.pocoo.org/index.html" class="reference external">Sphinx</a> format and publish it on
-<a href="http://readthedocs.org/" class="reference external">http://readthedocs.org/</a></p>
+<li><p class="first">More documentation.</p>
 </li>
-</ul>
-<ul class="simple">
-<li>More documentation. Wiki. Trac.</li>
-<li>RSS 2.0 and Atom news feeds.</li>
-<li>Use <a href="http://www.webwareforpython.org/DBUtils" class="reference external">DBUtils</a>, especially SolidConnection.</li>
+<li><p class="first">RSS 2.0 and Atom news feeds.</p>
+</li>
+<li><p class="first">Use <a href="http://www.webwareforpython.org/DBUtils" class="reference external">DBUtils</a>, especially SolidConnection.</p>
+</li>
 </ul>
 <ul class="simple">
 <li><tt class="docutils literal">_fromDatabase</tt> currently doesn't support IDs that don't fit into
