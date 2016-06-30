@@ -35,15 +35,13 @@
 <p class="topic-title first">Contents</p>
 <ul class="simple">
 <li><a href="#development-installation" class="reference internal" id="id1">Development Installation</a></li>
-<li><a href="#style-guide" class="reference internal" id="id2">Style Guide</a></li>
-<li><a href="#testing" class="reference internal" id="id3">Testing</a></li>
-<li><a href="#documentation" class="reference internal" id="id4">Documentation</a></li>
+<li><a href="#architecture" class="reference internal" id="id2">Architecture</a></li>
+<li><a href="#style-guide" class="reference internal" id="id3">Style Guide</a></li>
+<li><a href="#testing" class="reference internal" id="id4">Testing</a></li>
+<li><a href="#documentation" class="reference internal" id="id5">Documentation</a></li>
 </ul>
 </div>
-<p id="start">These are some notes on developing SQLObject.  I'll try to expand them
-as things come up.</p>
-<blockquote>
--- Ian Bicking</blockquote>
+<p id="start">These are some notes on developing SQLObject.</p>
 <div class="section" id="development-installation">
 <h1>Development Installation</h1>
 <p>First install <a href="http://www.formencode.org/en/latest/download.html" class="reference external">FormEncode</a>:</p>
@@ -54,12 +52,40 @@ $ sudo python setup.py develop
 </pre>
 <p>Then do the same for SQLObject:</p>
 <pre class="literal-block">
-$ git clone git clone git://git.code.sf.net/p/sqlobject/sqlobject
+$ git clone git clone git://github.com/sqlobject/sqlobject
 $ cd sqlobject
 $ sudo python setup.py develop
 </pre>
+<p>Or rather fork it and clone your fork. To develop a feature or a bugfix
+create a separate branch, push it to your fork and create a pull request
+to the original repo. That way CI will be triggered to test your code.</p>
 <p>Voila!  The packages are globally installed, but the files from the
 checkout were not copied into <tt class="docutils literal"><span class="pre">site-packages</span></tt>.  See <a href="http://pythonhosted.org/setuptools/" class="reference external">setuptools</a> for more.</p>
+</div>
+<div class="section" id="architecture">
+<h1>Architecture</h1>
+<p>There are four main kinds of objects in SQLObject: tables, columns,
+connections and converters.</p>
+<p>Tables-related objects are in sqlobject/main.py module. There are two
+main classes: SQLObject and sqlmeta; the latter is not a metaclass but a
+parent class for sqlmeta attribute in every class - the authors tried to
+move there all attributes and methods not directly related to columns to
+avoid cluttering table namespace.</p>
+<p>Columns are instances of classes from sqlobject/col.py. There are two
+classes for every column: one is for user to include into an instance of
+SQLObject, an instance of the other is automatically created by
+SQLObject metaclass. The two classes are names SOCol and Col; for
+example, SOBoolCol and BoolCol.</p>
+<p>Connections are instances of DBConnection class (from
+sqlobject/dbconnection.py ) and its concrete descendants. DBConnection
+contains generic code for generating SQL, working with transactions and
+so on. Concrete connection classes (like PostgresConnection and
+SQLiteConnection) provides backend-specific functionality.</p>
+<p>Converters from sqlobject/converters.py aren't visible to the user. They
+are used behind the scene to convert object to SQL strings. The most
+elaborated converter there is StringConverters. Yes, it converts strings
+to strings. It converts python strings to SQL strings using
+backend-specific quoting rules.</p>
 </div>
 <div class="section" id="style-guide">
 <h1>Style Guide</h1>
@@ -175,7 +201,7 @@ underscores (smushedwords).</p>
 <p>Tests are important.  Tests keep everything from falling apart.  All
 new additions should have tests.</p>
 <p>Testing uses py.test, an alternative to <tt class="docutils literal">unittest</tt>.  It is available at
-<a href="http://pytest.org/" class="reference external">http://pytest.org/</a> and <a href="http://pypi.python.org/pypi/pytest" class="reference external">http://pypi.python.org/pypi/pytest</a>.  Read its <a href="http://pytest.org/latest/getting-started.html" class="reference external">getting
+<a href="http://pytest.org/" class="reference external">http://pytest.org/</a> and <a href="https://pypi.python.org/pypi/pytest" class="reference external">https://pypi.python.org/pypi/pytest</a>.  Read its <a href="http://pytest.org/latest/getting-started.html" class="reference external">getting
 started</a> document for more.</p>
 <p>To actually run the test, you have to give it a database to connect to.
 You do so with the option <tt class="docutils literal"><span class="pre">-D</span></tt>. You can either give a complete URI or
@@ -206,8 +232,8 @@ exercised, even if the tests are absolutely complete.</p>
 <h1>Documentation</h1>
 <p>Please write documentation.  Documentation should live in the docs/
 directory.  Pudge converts documentation from Restructured Text to
-HTML.  It presently requires kid 0.9.3, which must be obtained
-separately (for instance, from <a href="http://pypi.python.org/pypi/kid/0.9.3" class="reference external">http://pypi.python.org/pypi/kid/0.9.3</a>)</p>
+HTML.  It presently requires kid 0.9.6, which must be obtained
+separately (for instance, from <a href="https://pypi.python.org/pypi/kid/0.9.6" class="reference external">https://pypi.python.org/pypi/kid/0.9.6</a>).</p>
 <a href="https://sourceforge.net/projects/sqlobject" class="reference external image-reference"><img src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" style="width: 80px; height: 15px;" class="noborder align-center"></a>
 </div>
 </div></div>
