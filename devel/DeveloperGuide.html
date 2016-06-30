@@ -66,22 +66,22 @@ checkout were not copied into <tt class="docutils literal"><span class="pre">sit
 <h1>Architecture</h1>
 <p>There are four main kinds of objects in SQLObject: tables, columns,
 connections and converters.</p>
-<p>Tables-related objects are in sqlobject/main.py module. There are two
+<p>Tables-related objects are in <a href="sqlobject/main.py.html" class="reference external">sqlobject/main.py</a> module. There are two
 main classes: SQLObject and sqlmeta; the latter is not a metaclass but a
 parent class for sqlmeta attribute in every class - the authors tried to
 move there all attributes and methods not directly related to columns to
 avoid cluttering table namespace.</p>
-<p>Columns are instances of classes from sqlobject/col.py. There are two
+<p>Columns are instances of classes from <a href="sqlobject/col.py.html" class="reference external">sqlobject/col.py</a>. There are two
 classes for every column: one is for user to include into an instance of
 SQLObject, an instance of the other is automatically created by
 SQLObject metaclass. The two classes are names SOCol and Col; for
 example, SOBoolCol and BoolCol.</p>
 <p>Connections are instances of DBConnection class (from
-sqlobject/dbconnection.py ) and its concrete descendants. DBConnection
+<a href="sqlobject/dbconnection.py.html" class="reference external">sqlobject/dbconnection.py</a>) and its concrete descendants. DBConnection
 contains generic code for generating SQL, working with transactions and
 so on. Concrete connection classes (like PostgresConnection and
 SQLiteConnection) provides backend-specific functionality.</p>
-<p>Converters from sqlobject/converters.py aren't visible to the user. They
+<p>Converters from <a href="sqlobject/converters.py.html" class="reference external">sqlobject/converters.py</a> aren't visible to the user. They
 are used behind the scene to convert object to SQL strings. The most
 elaborated converter there is StringConverters. Yes, it converts strings
 to strings. It converts python strings to SQL strings using
@@ -99,7 +99,7 @@ running <tt class="docutils literal">flake8 <span class="pre">--install-hook</sp
 <ul>
 <li><p class="first"><strong>No tabs</strong>.  Not anywhere.  Always indent with 4 spaces.</p>
 </li>
-<li><p class="first">I don't stress too much on line length.  But try to break lines up
+<li><p class="first">We don't stress too much on line length.  But try to break lines up
 by grouping with parenthesis instead of with backslashes (if you
 can).  Do asserts like:</p>
 <pre class="literal-block">
@@ -120,7 +120,7 @@ Break it out and use a variable.</p>
 sqlobject import *</tt> so names should be fairly distinct, or they
 shouldn't be exported in <tt class="docutils literal">sqlobject.__init__</tt>.</p>
 </li>
-<li><p class="first">I'm very picky about whitespace.  There's one and only one right way
+<li><p class="first">We're very picky about whitespace.  There's one and only one right way
 to do it.  Good examples:</p>
 <pre class="literal-block">
 short = 3
@@ -144,9 +144,9 @@ func(a,b)
 func( a, b )
 [ 1, 2, 3 ]
 </pre>
-<p>To me, the poor use of whitespace seems lazy.  I'll think less of
-your code (justified or not) for this very trivial reason.  I will
-fix all your code for you if you don't do it yourself, because I
+<p>To us, the poor use of whitespace seems lazy.  We'll think less of
+your code (justified or not) for this very trivial reason.  We will
+fix all your code for you if you don't do it yourself, because we
 can't bear to look at sloppy whitespace.</p>
 </li>
 <li><p class="first">Use <tt class="docutils literal">@@</tt> to mark something that is suboptimal, or where you have a
@@ -221,8 +221,8 @@ named feature.  What backends support what is defined at the top of
 <p>If you <tt class="docutils literal">import *</tt> you'll also get py.test's version of <a href="http://pytest.org/latest/assert.html#assertions-about-expected-exceptions" class="reference external">raises</a>, an
 <tt class="docutils literal">inserts</tt> function that can create instances for you, and a couple
 miscellaneous functions.</p>
-<p>If you submit a patch or implement a feature without a test, I'll be
-forced to write the test.  That's no fun for me, to just be writing
+<p>If you submit a patch or implement a feature without a test, we'll be
+forced to write the test.  That's no fun for us, to just be writing
 tests.  So please, write tests; everything at least needs to be
 exercised, even if the tests are absolutely complete.</p>
 <p>We now use Travis CI to run tests. See the status:</p>
