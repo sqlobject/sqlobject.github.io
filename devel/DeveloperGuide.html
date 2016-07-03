@@ -35,10 +35,13 @@
 <p class="topic-title first">Contents</p>
 <ul class="simple">
 <li><a href="#development-installation" class="reference internal" id="id1">Development Installation</a></li>
-<li><a href="#architecture" class="reference internal" id="id2">Architecture</a></li>
-<li><a href="#style-guide" class="reference internal" id="id3">Style Guide</a></li>
-<li><a href="#testing" class="reference internal" id="id4">Testing</a></li>
-<li><a href="#documentation" class="reference internal" id="id5">Documentation</a></li>
+<li><a href="#architecture" class="reference internal" id="id2">Architecture</a><ul>
+<li><a href="#columns-validators-and-converters" class="reference internal" id="id3">Columns, validators and converters</a></li>
+</ul>
+</li>
+<li><a href="#style-guide" class="reference internal" id="id4">Style Guide</a></li>
+<li><a href="#testing" class="reference internal" id="id5">Testing</a></li>
+<li><a href="#documentation" class="reference internal" id="id6">Documentation</a></li>
 </ul>
 </div>
 <p id="start">These are some notes on developing SQLObject.</p>
@@ -64,28 +67,59 @@ checkout were not copied into <tt class="docutils literal"><span class="pre">sit
 </div>
 <div class="section" id="architecture">
 <h1>Architecture</h1>
-<p>There are four main kinds of objects in SQLObject: tables, columns,
-connections and converters.</p>
+<p>There are three main kinds of objects in SQLObject: tables, columns and
+connections.</p>
 <p>Tables-related objects are in <a href="sqlobject/main.py.html" class="reference external">sqlobject/main.py</a> module. There are two
-main classes: SQLObject and sqlmeta; the latter is not a metaclass but a
-parent class for sqlmeta attribute in every class - the authors tried to
-move there all attributes and methods not directly related to columns to
-avoid cluttering table namespace.</p>
+main classes: <tt class="docutils literal">SQLObject</tt> and <tt class="docutils literal">sqlmeta</tt>; the latter is not a
+metaclass but a parent class for <tt class="docutils literal">sqlmeta</tt> attribute in every class -
+the authors tried to move there all attributes and methods not directly
+related to columns to avoid cluttering table namespace.</p>
+<p>Connections are instances of <tt class="docutils literal">DBConnection</tt> class (from
+<a href="sqlobject/dbconnection.py.html" class="reference external">sqlobject/dbconnection.py</a>) and its concrete descendants.
+<tt class="docutils literal">DBConnection</tt> contains generic code for generating SQL, working with
+transactions and so on. Concrete connection classes (like
+<tt class="docutils literal">PostgresConnection</tt> and <tt class="docutils literal">SQLiteConnection</tt>) provide
+backend-specific functionality.</p>
+<div class="section" id="columns-validators-and-converters">
+<h2>Columns, validators and converters</h2>
 <p>Columns are instances of classes from <a href="sqlobject/col.py.html" class="reference external">sqlobject/col.py</a>. There are two
 classes for every column: one is for user to include into an instance of
 SQLObject, an instance of the other is automatically created by
-SQLObject metaclass. The two classes are names SOCol and Col; for
-example, SOBoolCol and BoolCol.</p>
-<p>Connections are instances of DBConnection class (from
-<a href="sqlobject/dbconnection.py.html" class="reference external">sqlobject/dbconnection.py</a>) and its concrete descendants. DBConnection
-contains generic code for generating SQL, working with transactions and
-so on. Concrete connection classes (like PostgresConnection and
-SQLiteConnection) provides backend-specific functionality.</p>
-<p>Converters from <a href="sqlobject/converters.py.html" class="reference external">sqlobject/converters.py</a> aren't visible to the user. They
-are used behind the scene to convert object to SQL strings. The most
-elaborated converter there is StringConverters. Yes, it converts strings
-to strings. It converts python strings to SQL strings using
-backend-specific quoting rules.</p>
+SQLObject's metaclass. The two classes are usually named <tt class="docutils literal">Col</tt> and
+<tt class="docutils literal">SOCol</tt>; for example, <tt class="docutils literal">BoolCol</tt> and <tt class="docutils literal">SOBoolCol</tt>. User-visible
+classes, descendants of <tt class="docutils literal">Col</tt>, seldom contain any code; the main code
+for a column is in <tt class="docutils literal">SOCol</tt> descendants and in validators.</p>
+<p>Every column has a list of validators. Validators validate input data
+and convert input data to python data and back. Every validator must
+have methods <tt class="docutils literal">from_python</tt> and <tt class="docutils literal">to_python</tt>. The former converts data
+from python to internal representation that will be converted by
+converters to SQL strings. The latter converts data from SQL data to
+python. Also please bear in mind that validators can receive <tt class="docutils literal">None</tt>
+(for SQL <tt class="docutils literal">NULL</tt>) and <tt class="docutils literal">SQLExpression</tt> (an object that represents
+SQLObject expressions); both objects must be passed unchanged by
+validators.</p>
+<p>Converters from <a href="sqlobject/converters.py.html" class="reference external">sqlobject/converters.py</a> aren't visible to users. They
+are used behind the scene to convert objects returned by validators to
+backend-specific SQL strings. The most elaborated converter is
+<tt class="docutils literal">StringLikeConverter</tt>. Yes, it converts strings to strings. It
+converts python strings to SQL strings using backend-specific quoting
+rules.</p>
+<p>Let look into <tt class="docutils literal">BoolCol</tt> as an example. The very <tt class="docutils literal">BoolCol</tt> doesn't
+have any code. <tt class="docutils literal">SOBoolCol</tt> has a method to create <tt class="docutils literal">BoolValidator</tt>
+and methods to create backend-specific column type. <tt class="docutils literal">BoolValidator</tt>
+has identical methods <tt class="docutils literal">from_python</tt> and <tt class="docutils literal">to_python</tt>; the method
+passes <tt class="docutils literal">None</tt>, <tt class="docutils literal">SQLExpression</tt> and bool values unchanged; int and
+objects that have method <tt class="docutils literal">__nonzero__</tt> are converted to bool; other
+objects trigger validation error. Bool values that are returned by call
+to <tt class="docutils literal">from_python</tt> will be converted to SQL strings by
+<tt class="docutils literal">BoolConverter</tt>; bool values from <tt class="docutils literal">to_python</tt> (is is supposed they
+are originated from the backend via DB API driver) are passed to the
+application.</p>
+<p>Objects that are returned from <tt class="docutils literal">from_python</tt> must be registered with
+converters. Another approach for <tt class="docutils literal">from_python</tt> is to return an object
+that has <tt class="docutils literal">__sqlrepr__</tt> method. Such objects convert to SQL strings
+themselves, converters are not used.</p>
+</div>
 </div>
 <div class="section" id="style-guide">
 <h1>Style Guide</h1>
