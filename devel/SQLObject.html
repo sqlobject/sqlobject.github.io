@@ -1236,7 +1236,13 @@ MyTable.select((MyTable.q.name + MyTable.q.surname) == u'value')
 MyTable.select((MyTable.q.name + MyTable.q.surname) == u'value'.encode(dbEncoding))
 </pre>
 </dd>
+<dt><cite>UuidCol</cite>:</dt>
+<dd>A column for UUID. On Postgres uses 'UUID' data type, on all other</dd>
 </dl>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">docs/SQLObject.txt</tt>, line 1274)</p>
+Definition list ends without a blank line; unexpected unindent.</div>
+<p>backends uses VARCHAR(36).</p>
 </div>
 </div>
 <div class="section" id="relationships-between-classes-tables">
