@@ -32,8 +32,12 @@
       <div id="content"><div class="rst-doc">
   <h1 class="pudge-member-page-heading">Download SQLObject</h1>
   <p>The latest releases are always available on the <a href="https://pypi.python.org/pypi/SQLObject" class="reference external">Python Package Index</a>, and is installable
-with <a href="http://pythonhosted.org/setuptools/easy_install.html" class="reference external">easy_install</a>.</p>
+with <a href="https://pip.pypa.io/en/latest/" class="reference external">pip</a> or <a href="https://setuptools.readthedocs.io/en/latest/easy_install.html" class="reference external">easy_install</a>.</p>
 <p>You can install the latest release with:</p>
+<pre class="literal-block">
+pip -U SQLObject
+</pre>
+<p>or:</p>
 <pre class="literal-block">
 easy_install -U SQLObject
 </pre>
@@ -47,7 +51,8 @@ easy_install SQLObject==bugfix
 </pre>
 <p>If you want to require a specific revision (because, for instance, you
 need a bugfix that hasn't appeared in a release), you can put this in
-your <a href="http://pythonhosted.org/setuptools/" class="reference external">setuptools</a> using <tt class="docutils literal">setup.py</tt> file:</p>
+your <a href="https://setuptools.readthedocs.io/en/latest/index.html" class="reference external">setuptools</a> using
+<tt class="docutils literal">setup.py</tt> file:</p>
 <pre class="literal-block">
 setup(...
   install_requires=["SQLObject==bugfix,>=0.7.1dev-r1485"],
@@ -60,7 +65,7 @@ specific version, and "bugfix" is just a kind of label for a way of
 acquiring the version (it points to a branch in the repository).</p>
 <div class="section" id="repositories">
 <h1>Repositories</h1>
-<p>The SQLObject <a href="http://git-scm.com/" class="reference external">git</a> repositories are located at
+<p>The SQLObject <a href="https://git-scm.com/" class="reference external">git</a> repositories are located at
 <a href="https://sourceforge.net/p/sqlobject/_list/git" class="reference external">https://sourceforge.net/p/sqlobject/_list/git</a> and
 <a href="https://github.com/sqlobject" class="reference external">https://github.com/sqlobject</a></p>
 <p>Before switching to git development was performed at the <a href="https://subversion.apache.org/" class="reference external">Subversion</a> repository that is still located at

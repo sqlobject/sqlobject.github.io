@@ -63,7 +63,7 @@ $ sudo python setup.py develop
 create a separate branch, push it to your fork and create a pull request
 to the original repo. That way CI will be triggered to test your code.</p>
 <p>Voila!  The packages are globally installed, but the files from the
-checkout were not copied into <tt class="docutils literal"><span class="pre">site-packages</span></tt>.  See <a href="http://pythonhosted.org/setuptools/" class="reference external">setuptools</a> for more.</p>
+checkout were not copied into <tt class="docutils literal"><span class="pre">site-packages</span></tt>.  See <a href="https://setuptools.readthedocs.io/en/latest/index.html" class="reference external">setuptools</a> for more.</p>
 </div>
 <div class="section" id="architecture">
 <h1>Architecture</h1>
@@ -123,7 +123,7 @@ themselves, converters are not used.</p>
 </div>
 <div class="section" id="style-guide">
 <h1>Style Guide</h1>
-<p>Generally you should follow the recommendations in <a href="http://www.python.org/peps/pep-0008.html" class="reference external">PEP 8</a>, the
+<p>Generally you should follow the recommendations in <a href="http://www.python.org/dev/peps/pep-0008/" class="reference external">PEP 8</a>, the
 Python Style Guide.  Some things to take particular note of:</p>
 <ul class="simple">
 <li>With a few exceptions sources must be <a href="https://gitlab.com/pycqa/flake8" class="reference external">flake8</a>-clean (and hence
@@ -234,9 +234,9 @@ underscores (smushedwords).</p>
 <h1>Testing</h1>
 <p>Tests are important.  Tests keep everything from falling apart.  All
 new additions should have tests.</p>
-<p>Testing uses py.test, an alternative to <tt class="docutils literal">unittest</tt>.  It is available at
-<a href="http://pytest.org/" class="reference external">http://pytest.org/</a> and <a href="https://pypi.python.org/pypi/pytest" class="reference external">https://pypi.python.org/pypi/pytest</a>.  Read its <a href="http://pytest.org/latest/getting-started.html" class="reference external">getting
-started</a> document for more.</p>
+<p>Testing uses py.test, an alternative to <tt class="docutils literal">unittest</tt>.  It is available
+at <a href="http://pytest.org/" class="reference external">http://pytest.org/</a> and <a href="https://pypi.python.org/pypi/pytest" class="reference external">https://pypi.python.org/pypi/pytest</a>.  Read its
+<a href="http://docs.pytest.org/en/latest/getting-started.html" class="reference external">getting started</a> document for more.</p>
 <p>To actually run the test, you have to give it a database to connect to.
 You do so with the option <tt class="docutils literal"><span class="pre">-D</span></tt>. You can either give a complete URI or
 one of several shortcuts like <tt class="docutils literal">mysql</tt> (these shortcuts are defined in
@@ -252,7 +252,7 @@ avoid recreating tables if not necessary.</p>
 <p><tt class="docutils literal">supports(featureName)</tt> checks if the database backend supports the
 named feature.  What backends support what is defined at the top of
 <tt class="docutils literal">dbtest</tt>.</p>
-<p>If you <tt class="docutils literal">import *</tt> you'll also get py.test's version of <a href="http://pytest.org/latest/assert.html#assertions-about-expected-exceptions" class="reference external">raises</a>, an
+<p>If you <tt class="docutils literal">import *</tt> you'll also get py.test's version of <a href="http://docs.pytest.org/en/latest/assert.html#assertions-about-expected-exceptions" class="reference external">raises</a>, an
 <tt class="docutils literal">inserts</tt> function that can create instances for you, and a couple
 miscellaneous functions.</p>
 <p>If you submit a patch or implement a feature without a test, we'll be
@@ -261,7 +261,7 @@ tests.  So please, write tests; everything at least needs to be
 exercised, even if the tests are absolutely complete.</p>
 <p>We now use Travis CI to run tests. See the status:</p>
 <a href="https://travis-ci.org/sqlobject/sqlobject" class="reference external image-reference"><img src="https://travis-ci.org/sqlobject/sqlobject.svg?branch=master" alt="https://travis-ci.org/sqlobject/sqlobject.svg?branch=master"></a>
-<p>To avoid triggering unnecessary test run at Travis add text <a href="https://docs.travis-ci.com/user/customizing-the-build/#Skipping-a-build" class="reference external">[ci skip]</a>
+<p>To avoid triggering unnecessary test run at Travis add text <a href="https://docs.travis-ci.com/user/customizing-the-build/#skipping-a-build" class="reference external">[ci skip]</a>
 anywhere in your commit messages for commits that don't change code
 (documentation updates and such).</p>
 </div>

@@ -127,7 +127,7 @@
 <div class="section" id="author-site-and-license">
 <h1><a href="#id9" class="toc-backref">Author, Site, and License</a></h1>
 <p>SQLObject is by Ian Bicking (<a href="mailto:ianb@colorstudy.com" class="reference external">ianb@colorstudy.com</a>) and <a href="Authors.html" class="reference external">Contributors</a>.  The website is <a href="http://sqlobject.org" class="reference external">sqlobject.org</a>.</p>
-<p>The code is licensed under the <a href="http://www.gnu.org/copyleft/lesser.html" class="reference external">Lesser General Public License</a>
+<p>The code is licensed under the <a href="https://www.gnu.org/copyleft/lesser.html" class="reference external">Lesser General Public License</a>
 (LGPL).</p>
 <p>This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -136,7 +136,7 @@ GNU Lesser General Public License for more details.</p>
 </div>
 <div class="section" id="introduction">
 <h1><a href="#id10" class="toc-backref">Introduction</a></h1>
-<p>SQLObject is an <em>object-relational mapper</em> for <a href="http://python.org" class="reference external">Python</a> programming
+<p>SQLObject is an <em>object-relational mapper</em> for <a href="https://www.python.org/" class="reference external">Python</a> programming
 language.  It allows you to translate RDBMS table rows into Python objects,
 and manipulate those objects to transparently manipulate the database.</p>
 <p>In using SQLObject, you will create a class definition that will
@@ -150,10 +150,10 @@ used with the same query syntax.</p>
 </div>
 <div class="section" id="requirements">
 <h1><a href="#id11" class="toc-backref">Requirements</a></h1>
-<p>Currently SQLObject supports <a href="http://mysql.com" class="reference external">MySQL</a> via <a href="https://sourceforge.net/projects/mysql-python/" class="reference external">MySQLdb</a> aka MySQL-python,
-<a href="http://postgresql.org" class="reference external">PostgreSQL</a> via <a href="http://initd.org/projects/psycopg1" class="reference external">psycopg1</a> or <a href="http://initd.org/projects/psycopg2" class="reference external">psycopg2</a>, <a href="http://sqlite.org" class="reference external">SQLite</a> via <a href="http://initd.org/projects/pysqlite" class="reference external">PySQLite</a>, <a href="http://firebird.sourceforge.net" class="reference external">Firebird</a>
-via <a href="http://www.firebirdsql.org/en/devel-python-driver/" class="reference external">fdb</a> or <a href="http://kinterbasdb.sourceforge.net/" class="reference external">kinterbasdb</a>, <a href="http://www.mysql.com/products/maxdb/" class="reference external">MAX DB</a> (also known as SAP DB) via <a href="http://www.sapdb.org/sapdbPython.html" class="reference external">sapdb</a>,
-Sybase via <a href="http://www.object-craft.com.au/projects/sybase/" class="reference external">Sybase</a>, and <a href="http://www.microsoft.com/sql/" class="reference external">MSSQL Server</a> via <a href="http://pymssql.sourceforge.net/" class="reference external">pymssql</a> (+ <a href="http://www.freetds.org/" class="reference external">FreeTDS</a>) or
+<p>Currently SQLObject supports <a href="https://www.mysql.com/" class="reference external">MySQL</a> via <a href="https://sourceforge.net/projects/mysql-python/" class="reference external">MySQLdb</a> aka MySQL-python,
+<a href="https://postgresql.org" class="reference external">PostgreSQL</a> via <a href="http://initd.org/psycopg/" class="reference external">psycopg2</a> or psycopg1, <a href="https://sqlite.org/" class="reference external">SQLite</a> via <a href="https://github.com/ghaering/pysqlite" class="reference external">PySQLite</a>, <a href="http://www.firebirdsql.org/en/python-driver/" class="reference external">Firebird</a>
+via <a href="http://www.firebirdsql.org/en/devel-python-driver/" class="reference external">fdb</a> or <a href="http://kinterbasdb.sourceforge.net/" class="reference external">kinterbasdb</a>, <a href="http://maxdb.sap.com/" class="reference external">MAX DB</a> (also known as SAP DB) via <a href="http://maxdb.sap.com/doc/7_8/50/01923f25b842438a408805774f6989/frameset.htm" class="reference external">sapdb</a>,
+Sybase via <a href="http://www.object-craft.com.au/projects/sybase/" class="reference external">Sybase</a>, and <a href="http://www.microsoft.com/sql/" class="reference external">MSSQL Server</a> via <a href="http://www.pymssql.org/en/latest/index.html" class="reference external">pymssql</a> (+ <a href="http://www.freetds.org/" class="reference external">FreeTDS</a>) or
 <a href="http://adodbapi.sourceforge.net/" class="reference external">adodbapi</a> (Win32).</p>
 <p>Python 2.6, 2.7 or 3.4+ is required.</p>
 </div>
@@ -185,7 +185,7 @@ access as well)</p>
 <p>SQLObject is, to my knowledge, unique in using metaclasses to
 facilitate this seamless integration.  Some other ORMs use code
 generation to create an interface, expressing the schema in a CSV or
-XML file (for example, MiddleKit, part of <a href="http://webware.sourceforge.net" class="reference external">Webware</a>).  By using
+XML file (for example, MiddleKit, part of <a href="http://webware.sourceforge.net/" class="reference external">Webware</a>).  By using
 metaclasses you are able to comfortably define your schema in the
 Python source code.  No code generation, no weird tools, no
 compilation step.</p>
@@ -1104,11 +1104,11 @@ You can use classes (defined below) for this, but if those don't
 work it's sometimes easiest just to use <cite>sqlType</cite>.  Only necessary
 if SQLObject is creating your tables.</dd>
 <dt><cite>validator</cite>:</dt>
-<dd><a href="http://formencode.org/" class="reference external">formencode</a>-like <a href="http://formencode.org/Validator.html" class="reference external">validator</a>. Making long story short, this is
+<dd><a href="http://formencode.org/" class="reference external">formencode</a>-like <a href="http://www.formencode.org/en/latest/Validator.html" class="reference external">validator</a>. Making long story short, this is
 an object that provides <tt class="docutils literal">to_python()</tt> and <tt class="docutils literal">from_python()</tt>
 to validate <em>and</em> convert (adapt or cast) the values when they are
 read/written from/to the database. You should see <a href="http://formencode.org/" class="reference external">formencode</a>
-<a href="http://formencode.org/Validator.html" class="reference external">validator</a> documentation for more details. This validator is appended
+<a href="http://www.formencode.org/en/latest/Validator.html" class="reference external">validator</a> documentation for more details. This validator is appended
 to the end of the list of the list of column validators. If the column
 has a list of validators their <tt class="docutils literal">from_python()</tt> methods are ran from
 the beginnig of the list to the end; <tt class="docutils literal">to_python()</tt> in the reverse
@@ -1190,6 +1190,13 @@ can check for referential integrity using the keyword argument <cite>cascade</ci
 please see <a href="#foreignkey" class="reference internal">ForeignKey</a> for details.</dd>
 <dt><cite>IntCol</cite>:</dt>
 <dd>Integers.</dd>
+<dt><cite>JsonbCol</cite>:</dt>
+<dd>A column for jsonb objects. Only supported on Postgres.
+Any Python object that can be serialized with json.dumps can be stored.</dd>
+<dt><cite>JSONCol</cite>:</dt>
+<dd>A universal json column that converts simple Python objects (None,
+bool, int, float, long, dict, list, str/unicode to/from JSON using
+json.dumps/loads. A subclass of StringCol.</dd>
 <dt><cite>PickleCol</cite>:</dt>
 <dd>An extension of BLOBCol; this column can store/retrieve any Python object;
 it actually (un)pickles the object from/to string and stores/retrieves the
@@ -1237,12 +1244,9 @@ MyTable.select((MyTable.q.name + MyTable.q.surname) == u'value'.encode(dbEncodin
 </pre>
 </dd>
 <dt><cite>UuidCol</cite>:</dt>
-<dd>A column for UUID. On Postgres uses 'UUID' data type, on all other</dd>
+<dd>A column for UUID. On Postgres uses 'UUID' data type, on all other
+backends uses VARCHAR(36).</dd>
 </dl>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">docs/SQLObject.txt</tt>, line 1274)</p>
-Definition list ends without a blank line; unexpected unindent.</div>
-<p>backends uses VARCHAR(36).</p>
 </div>
 </div>
 <div class="section" id="relationships-between-classes-tables">
@@ -1709,7 +1713,7 @@ and a dsn string will be constructed.</p>
 <p>PostgresConnection supports transactions and all other features.</p>
 <p>The user can choose a DB API driver for PostgreSQL by using a <tt class="docutils literal">driver</tt>
 parameter in DB URI or PostgresConnection that can be a comma-separated
-list of driver names. Possible drivers are: <tt class="docutils literal">psycopg2</tt>, <tt class="docutils literal">psycopg1</tt>,
+list of driver names. Possible drivers are: <tt class="docutils literal">psycopg2</tt>, psycopg1,
 <tt class="docutils literal">psycopg</tt> (tries psycopg2 and psycopg1), <tt class="docutils literal">pygresql</tt>. Default is
 <tt class="docutils literal">psycopg</tt>.</p>
 </div>
@@ -1747,7 +1751,7 @@ character and must not be processed.</p>
 <p>The most correct way to fix the problem is to connect to the DB using
 a database name, not a file name. In the Firebird a DBA can set an alias
 instead of database name in the aliases.conf file</p>
-<p>Example from <a href="http://www.janus-software.com/fbmanual/manual.php?book=admin&amp;topic=4" class="reference external">Firebird 2.0 Administrators Manual</a>:</p>
+<p>Example from <a href="http://www.firebirdmanual.com/firebird/en/firebird-manual/2" class="reference external">Firebird 2.0 Administrators Manual</a>:</p>
 <pre class="literal-block">
 # fbdb1 is on a Windows server:
 fbdb1 = c:\Firebird\sample\Employee.fdb
@@ -1776,7 +1780,7 @@ and MySQL.  It takes the typical arguments: <cite>host</cite>, <cite>database</c
 <cite>user</cite>, <cite>password</cite>.  It also takes the arguments <cite>sqlmode</cite> (default
 <tt class="docutils literal">"internal"</tt>), <cite>isolation</cite>, and <cite>timeout</cite>, which are passed through
 when creating the connection to the database.</p>
-<p>It uses the <a href="http://www.sapdb.org/sapdbPython.html" class="reference external">sapdb</a> module.</p>
+<p>It uses the <a href="http://maxdb.sap.com/doc/7_8/50/01923f25b842438a408805774f6989/frameset.htm" class="reference external">sapdb</a> module.</p>
 </div>
 <div class="section" id="ms-sql-server">
 <h2><a href="#id62" class="toc-backref">MS SQL Server</a></h2>
@@ -1786,7 +1790,7 @@ in the format of</p>
 <p>This will then be mapped to either the correct driver format.  If running
 SQL Server on a "named" port, make sure to specify the port number in the
 URI.</p>
-<p>The two drivers currently supported are <a href="http://adodbapi.sourceforge.net/" class="reference external">adodbapi</a> and <a href="http://pymssql.sourceforge.net/" class="reference external">pymssql</a>.</p>
+<p>The two drivers currently supported are <a href="http://adodbapi.sourceforge.net/" class="reference external">adodbapi</a> and <a href="http://www.pymssql.org/en/latest/index.html" class="reference external">pymssql</a>.</p>
 <p>The user can choose a DB API driver for MSSQL by using a <tt class="docutils literal">driver</tt>
 parameter in DB URI or MSSQLConnection that can be a comma-separated list
 of driver names. Possible drivers are: <tt class="docutils literal">adodb</tt> (alias <tt class="docutils literal">adodbapi</tt>) and
@@ -1968,7 +1972,7 @@ used with comparison operators, like this: <tt class="docutils literal">somevalu
 <p>Some useful utility functions are included with SQLObject.  For more
 information see their module docstrings.</p>
 <ul class="simple">
-<li><a href="http://sqlobject.org/module-sqlobject.util.csvexport.html" class="reference external">sqlobject.util.csvexport</a></li>
+<li><a href="module-sqlobject.util.csvexport.html" class="reference external">sqlobject.util.csvexport</a></li>
 </ul>
 </div>
 <div class="section" id="sqlbuilder">

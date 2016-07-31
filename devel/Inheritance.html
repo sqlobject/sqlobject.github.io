@@ -198,9 +198,9 @@ for role in Role.select():
 </div>
 <div class="section" id="who-what-and-how">
 <h2>Who, What and How</h2>
-<p>Daniel Savard has implemented inheritance for SQLObject. According to
-<a href="http://www.objectmatter.com/vbsf/docs/maptool/ormapping.html" class="reference external">ObjectMatter</a> this is a kind of vertical inheritance. The only difference
-is that objects reference their leaves, not parents. Links to parents are
+<p>Daniel Savard has implemented inheritance for SQLObject. In <a href="https://cayenne.apache.org/docs/3.0/modeling-inheritance.html" class="reference external">terms of
+ORM</a> this is a kind of vertical inheritance. The only difference is
+that objects reference their leaves, not parents. Links to parents are
 reconstructed at run-time using the hierarchy of Python classes.</p>
 <ul class="simple">
 <li>As suggested by Ian Bicking, each child class now has the same
