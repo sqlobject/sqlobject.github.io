@@ -60,6 +60,9 @@
 <li>Add JsonbCol. Only for PostgreSQL.
 Requires psycopg2 >= 2.5.4 and PostgreSQL >= 9.2.</li>
 <li>Add JSONCol, a universal json column.</li>
+<li>For Python >= 3.4 minimal FormEncode version is now 1.3.1.</li>
+<li>If mxDateTime is in use, convert timedelta (returned by MySQL) to
+mxDateTime.Time.</li>
 </ul>
 </div>
 <div class="section" id="documentation">
@@ -68,6 +71,7 @@ Requires psycopg2 >= 2.5.4 and PostgreSQL >= 9.2.</li>
 <li>Developer's Guide extended to explain SQLObject architecture and how
 to create a new column type.</li>
 <li>Fix URLs that can be found; remove missing links.</li>
+<li>Rename reStructuredText file from *.txt to *.rst.</li>
 </ul>
 </div>
 <div class="section" id="source-code">
@@ -79,8 +83,10 @@ to create a new column type.</li>
 <div class="section" id="tests">
 <h2>Tests</h2>
 <ul class="simple">
+<li>Test are now run at Circle CI.</li>
 <li>Use pytest-cov for test coverage. Report test coverage
 via coveralls.io and codecov.io.</li>
+<li>Install mxDateTime to run date/time tests with it.</li>
 </ul>
 </div>
 </div>
