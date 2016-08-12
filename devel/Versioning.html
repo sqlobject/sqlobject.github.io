@@ -39,10 +39,22 @@
 <td>David Turner, The Open Planning Project</td></tr>
 </tbody>
 </table>
-  <div class="section" id="versioning">
-<h1>Versioning</h1>
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a href="#versioning" class="reference internal" id="id2">Versioning</a><ul>
+<li><a href="#why" class="reference internal" id="id3">Why</a></li>
+<li><a href="#how" class="reference internal" id="id4">How</a></li>
+<li><a href="#inheritance" class="reference internal" id="id5">Inheritance</a></li>
+<li><a href="#version-tables" class="reference internal" id="id6">Version Tables</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="versioning">
+<h1><a href="#id2" class="toc-backref">Versioning</a></h1>
 <div class="section" id="why">
-<h2>Why</h2>
+<h2><a href="#id3" class="toc-backref">Why</a></h2>
 <p>You have a table where rows can be altered, such as a table of wiki
 pages.  You want to retain a history of changes for auditing, backup,
 or tracking purposes.</p>
@@ -53,7 +65,7 @@ object.  SQLObject's versioning module does this for you.  And it even
 works with inheritance!</p>
 </div>
 <div class="section" id="how">
-<h2>How</h2>
+<h2><a href="#id4" class="toc-backref">How</a></h2>
 <p>Here's how to set it up:</p>
 <pre class="literal-block">
 class MyClass(SQLObject):
@@ -76,7 +88,7 @@ assert mc.name == "fleem"
 </pre>
 </div>
 <div class="section" id="inheritance">
-<h2>Inheritance</h2>
+<h2><a href="#id5" class="toc-backref">Inheritance</a></h2>
 <p>There are three ways versioning can be used with <a href="Inheritance.html" class="reference external">inheritance</a>:</p>
 <ol class="arabic">
 <li><p class="first">Parent versioned, children unversioned:</p>
@@ -110,7 +122,7 @@ Base data, and a change to a Child only creates a new Child version, not
 a new Base version.</p>
 </div>
 <div class="section" id="version-tables">
-<h2>Version Tables</h2>
+<h2><a href="#id6" class="toc-backref">Version Tables</a></h2>
 <p>Versions are stored in a special table which is created when the table
 for a versioned class is created.  Version tables are not altered when
 the main table is altered, so if you add a column to your main class,

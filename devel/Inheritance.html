@@ -39,10 +39,21 @@
 <td>Daniel Savard, XSOLI Inc.</td></tr>
 </tbody>
 </table>
-  <div class="section" id="inheritance">
-<h1>Inheritance</h1>
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a href="#inheritance" class="reference internal" id="id1">Inheritance</a><ul>
+<li><a href="#why" class="reference internal" id="id2">Why</a></li>
+<li><a href="#who-what-and-how" class="reference internal" id="id3">Who, What and How</a></li>
+<li><a href="#limitations-and-notes" class="reference internal" id="id4">Limitations and notes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="inheritance">
+<h1><a href="#id1" class="toc-backref">Inheritance</a></h1>
 <div class="section" id="why">
-<h2>Why</h2>
+<h2><a href="#id2" class="toc-backref">Why</a></h2>
 <p>Imagine you have a list of persons, and every person plays a certain role.
 Some persons are students, some are professors, some are employees. Every
 role has different attributes. Students are known by their department and
@@ -197,7 +208,7 @@ for role in Role.select():
 </pre>
 </div>
 <div class="section" id="who-what-and-how">
-<h2>Who, What and How</h2>
+<h2><a href="#id3" class="toc-backref">Who, What and How</a></h2>
 <p>Daniel Savard has implemented inheritance for SQLObject. In <a href="https://cayenne.apache.org/docs/3.0/modeling-inheritance.html" class="reference external">terms of
 ORM</a> this is a kind of vertical inheritance. The only difference is
 that objects reference their leaves, not parents. Links to parents are
@@ -303,7 +314,7 @@ AND employee.position = 'Chief' AND person.id = employee.id
 </pre>
 </div>
 <div class="section" id="limitations-and-notes">
-<h2>Limitations and notes</h2>
+<h2><a href="#id4" class="toc-backref">Limitations and notes</a></h2>
 <ul class="simple">
 <li>Only single inheritance will work.  It is not possible to inherit
 from multiple SQLObject classes.</li>
