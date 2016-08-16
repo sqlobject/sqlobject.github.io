@@ -510,8 +510,9 @@ though; see the description of the <a href="SQLObject.html#column-types" class="
 </ul>
 <ul class="simple">
 <li>Date/time validators, converters, tests.</li>
-<li>Both <a href="http://www.egenix.com/files/python/mxDateTime.html" class="reference external">mxDateTime</a> and <a href="http://python.org/doc/current/lib/module-datetime.html" class="reference external">datetime</a> supported
-for <tt class="docutils literal">DateTimeCol</tt>.</li>
+<li>Both <a href="https://www.egenix.com/products/python/mxBase/mxDateTime/" class="reference external">mxDateTime</a> and
+<a href="http://docs.python.org/library/datetime.html" class="reference external">datetime</a>
+supported for <tt class="docutils literal">DateTimeCol</tt>.</li>
 <li>Added <tt class="docutils literal">BLOBCol</tt>, for binary data.</li>
 <li>Added <tt class="docutils literal">PickleCol</tt>, to transparently pickle and unpickle data from
 column.</li>
@@ -523,17 +524,17 @@ underscore removed).</li>
 <tt class="docutils literal"><span class="pre">cls.select().max(columnName)</span></tt>: <tt class="docutils literal">.max()</tt>, <tt class="docutils literal">.min()</tt>,
 <tt class="docutils literal">.avg()</tt>.</li>
 <li><tt class="docutils literal">ConnectionHub</tt> aka <tt class="docutils literal">sqlhub</tt> (@@: Needs documentation)</li>
-<li>Command-line client <a href="http://sqlobject.org/docs/sqlobject-admin.html" class="reference external">sqlobject-admin</a>.</li>
+<li>Command-line client <a href="http://sqlobject.org/sqlobject-admin.html" class="reference external">sqlobject-admin</a>.</li>
 <li><tt class="docutils literal">StringCol</tt> has <tt class="docutils literal">char_binary</tt> attribute, for explicit case
 handling in MySQL.</li>
 <li>Various joins now supported (LEFT, RIGHT, STRAIGHT, INNER, OUTER,
-CROSS): see <a href="http://sqlobject.org/docs/SQLObject.html#left-join-and-other-joins" class="reference external">documentation</a>.
+CROSS): see <a href="http://sqlobject.org/SQLObject.html#left-join-and-other-joins" class="reference external">documentation</a>.
 Aliases for joining a table with itself.</li>
-<li>Subqueries/subselects (<a href="http://sqlobject.org/docs/SQLObject.html#subqueries-subselects" class="reference external">see docs</a>).</li>
+<li>Subqueries/subselects (<a href="http://sqlobject.org/SQLObject.html#subqueries-subselects" class="reference external">see docs</a>).</li>
 <li>Select results support <tt class="docutils literal">.filter(extra_query)</tt></li>
 <li><tt class="docutils literal">SQLMultipleJoin</tt> and <tt class="docutils literal">SQLRelatedJoin</tt>, like <tt class="docutils literal">MultipleJoin</tt>
 and <tt class="docutils literal">RelatedJoin</tt>, except return select results (@@: Document).</li>
-<li><a href="http://sqlobject.org/docs/SQLObject.html#singlejoin-one-to-one" class="reference external">SingleJoin</a>.</li>
+<li><a href="http://sqlobject.org/SQLObject.html#singlejoin-one-to-one" class="reference external">SingleJoin</a>.</li>
 <li>Columns retain their order from the class definition to table
 creation.</li>
 <li>SQLObject now depends on the <a href="http://formencode.org" class="reference external">FormEncode</a>
@@ -552,7 +553,7 @@ instances were created on demand, as select results were
 pulled out row-by-row.  The previous lazy behavior is available with
 the method <tt class="docutils literal">lazyIter</tt>, used like <tt class="docutils literal">for obj in
 <span class="pre">MyClass.select().lazyIter():</span> ...</tt>.</li>
-<li>Test framework now uses <a href="http://codespeak.net/py/current/doc/test.html" class="reference external">py.test</a>.</li>
+<li>Test framework now uses <a href="http://pytest.org/" class="reference external">py.test</a>.</li>
 <li>SQLObject now uses a simpler metaclass
 (<tt class="docutils literal">sqlobject.declarative.DeclarativeMeta</tt>).</li>
 <li>autoCommit and queryIns ?? (@@: expand)</li>
@@ -577,7 +578,7 @@ local_infile).</li>
 using whatever date/time module you are using (good for use as a
 default).</li>
 <li>Inherited classes fetched more efficiently (fewer queries).</li>
-<li>Decimal converter to create <a href="http://python.org/doc/current/lib/module-decimal.html" class="reference external">decimal objects</a>.</li>
+<li>Decimal converter to create <a href="http://docs.python.org/library/decimal.html" class="reference external">decimal objects</a>.</li>
 <li>Repository rearranged (now in
 <tt class="docutils literal"><span class="pre">http://svn.colorstudy.com/SQLObject/trunk</span></tt>).</li>
 </ul>
