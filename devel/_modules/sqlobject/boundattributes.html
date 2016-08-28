@@ -1,0 +1,219 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.boundattributes &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.boundattributes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Bound attributes are attributes that are bound to a specific class and</span>
+<span class="sd">a specific name.  In SQLObject a typical example is a column object,</span>
+<span class="sd">which knows its name and class.</span>
+
+<span class="sd">A bound attribute should define a method ``__addtoclass__(added_class,</span>
+<span class="sd">name)`` (attributes without this method will simply be treated as</span>
+<span class="sd">normal).  The return value is ignored; if the attribute wishes to</span>
+<span class="sd">change the value in the class, it must call ``setattr(added_class,</span>
+<span class="sd">name, new_value)``.</span>
+
+<span class="sd">BoundAttribute is a class that facilitates lazy attribute creation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">declarative</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">events</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BoundAttribute&#39;</span><span class="p">,</span> <span class="s1">&#39;BoundFactory&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="BoundAttribute"><a class="viewcode-back" href="../../api/sqlobject.boundattributes.html#sqlobject.boundattributes.BoundAttribute">[docs]</a><span class="k">class</span> <span class="nc">BoundAttribute</span><span class="p">(</span><span class="n">declarative</span><span class="o">.</span><span class="n">Declarative</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a declarative class that passes all the values given to it</span>
+<span class="sd">    to another object.  So you can pass it arguments (via</span>
+<span class="sd">    __init__/__call__) or give it the equivalent of keyword arguments</span>
+<span class="sd">    through subclassing.  Then a bound object will be added in its</span>
+<span class="sd">    place.</span>
+
+<span class="sd">    To hook this other object in, override ``make_object(added_class,</span>
+<span class="sd">    name, **attrs)`` and maybe ``set_object(added_class, name,</span>
+<span class="sd">    **attrs)`` (the default implementation of ``set_object``</span>
+<span class="sd">    just resets the attribute to whatever ``make_object`` returned).</span>
+
+<span class="sd">    Also see ``BoundFactory``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_private_variables</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">&#39;_private_variables&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_all_attributes&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;__classinit__&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;__addtoclass__&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_add_attrs&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;set_object&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;make_object&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;clone_in_subclass&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">_all_attrs</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">clone_for_subclass</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">__classinit__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
+        <span class="n">declarative</span><span class="o">.</span><span class="n">Declarative</span><span class="o">.</span><span class="n">__classinit__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_all_attrs</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_add_attrs</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__instanceinit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
+        <span class="n">declarative</span><span class="o">.</span><span class="n">Declarative</span><span class="o">.</span><span class="n">__instanceinit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;_all_attrs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_add_attrs</span><span class="p">(</span><span class="n">this_object</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
+        <span class="n">private</span> <span class="o">=</span> <span class="n">this_object</span><span class="o">.</span><span class="n">_private_variables</span>
+        <span class="n">all_attrs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">this_object</span><span class="o">.</span><span class="n">_all_attrs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">new_attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">private</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_attrs</span><span class="p">:</span>
+                <span class="n">all_attrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">all_attrs</span><span class="p">)</span>
+
+    <span class="nd">@declarative</span><span class="o">.</span><span class="n">classinstancemethod</span>
+    <span class="k">def</span> <span class="nf">__addtoclass__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">added_class</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="n">me</span> <span class="o">=</span> <span class="bp">self</span> <span class="ow">or</span> <span class="n">cls</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">me</span><span class="o">.</span><span class="n">_all_attrs</span><span class="p">:</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;added_class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">added_class</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;attr_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr_name</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">make_object</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone_for_subclass</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">on_rebind</span><span class="p">(</span><span class="n">new_class_name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span>
+                          <span class="n">post_funcs</span><span class="p">,</span> <span class="n">early_funcs</span><span class="p">):</span>
+                <span class="k">def</span> <span class="nf">rebind</span><span class="p">(</span><span class="n">new_class</span><span class="p">):</span>
+                    <span class="n">me</span><span class="o">.</span><span class="n">set_object</span><span class="p">(</span>
+                        <span class="n">new_class</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span>
+                        <span class="n">me</span><span class="o">.</span><span class="n">make_object</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">))</span>
+                <span class="n">post_funcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rebind</span><span class="p">)</span>
+            <span class="n">events</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">receiver</span><span class="o">=</span><span class="n">on_rebind</span><span class="p">,</span> <span class="n">soClass</span><span class="o">=</span><span class="n">added_class</span><span class="p">,</span>
+                          <span class="n">signal</span><span class="o">=</span><span class="n">events</span><span class="o">.</span><span class="n">ClassCreateSignal</span><span class="p">,</span> <span class="n">weak</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">me</span><span class="o">.</span><span class="n">set_object</span><span class="p">(</span><span class="n">added_class</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BoundAttribute.set_object"><a class="viewcode-back" href="../../api/sqlobject.boundattributes.html#sqlobject.boundattributes.BoundAttribute.set_object">[docs]</a>    <span class="k">def</span> <span class="nf">set_object</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">added_class</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">added_class</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BoundAttribute.make_object"><a class="viewcode-back" href="../../api/sqlobject.boundattributes.html#sqlobject.boundattributes.BoundAttribute.make_object">[docs]</a>    <span class="k">def</span> <span class="nf">make_object</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">added_class</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;_all_attrs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="BoundFactory"><a class="viewcode-back" href="../../api/sqlobject.boundattributes.html#sqlobject.boundattributes.BoundFactory">[docs]</a><span class="k">class</span> <span class="nc">BoundFactory</span><span class="p">(</span><span class="n">BoundAttribute</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This will bind the attribute to whatever is given by</span>
+<span class="sd">    ``factory_class``.  This factory should be a callable with the</span>
+<span class="sd">    signature ``factory_class(added_class, attr_name, *args, **kw)``.</span>
+
+<span class="sd">    The factory will be reinvoked (and the attribute rebound) for</span>
+<span class="sd">    every subclassing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">factory_class</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_private_variables</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">BoundAttribute</span><span class="o">.</span><span class="n">_private_variables</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;factory_class&#39;</span><span class="p">,))</span>
+
+<div class="viewcode-block" id="BoundFactory.make_object"><a class="viewcode-back" href="../../api/sqlobject.boundattributes.html#sqlobject.boundattributes.BoundFactory.make_object">[docs]</a>    <span class="k">def</span> <span class="nf">make_object</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">added_class</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">factory_class</span><span class="p">(</span><span class="n">added_class</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

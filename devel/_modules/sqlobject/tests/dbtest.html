@@ -1,0 +1,450 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.dbtest &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.tests.dbtest</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The framework for making database tests.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">py.test</span> <span class="k">import</span> <span class="n">raises</span><span class="p">,</span> <span class="n">skip</span>
+<span class="kn">import</span> <span class="nn">sqlobject</span>
+<span class="kn">import</span> <span class="nn">sqlobject.conftest</span> <span class="k">as</span> <span class="nn">conftest</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;win&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getcwd</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">getcwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">supportsMatrix defines what database backends support what features.</span>
+<span class="sd">Each feature has a name, if you see a key like &#39;+featureName&#39; then</span>
+<span class="sd">only the databases listed support the feature.  Conversely,</span>
+<span class="sd">&#39;-featureName&#39; means all databases *except* the ones listed support</span>
+<span class="sd">the feature.  The databases are given by their SQLObject string name,</span>
+<span class="sd">separated by spaces.</span>
+
+<span class="sd">The function supports(featureName) returns True or False based on this,</span>
+<span class="sd">and you can use it like::</span>
+
+<span class="sd">    def test_featureX():</span>
+<span class="sd">        if not supports(&#39;featureX&#39;):</span>
+<span class="sd">            py.test.skip(&quot;Doesn&#39;t support featureX&quot;)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">supportsMatrix</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;+exceptions&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql postgres sqlite&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-transactions&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql rdbhost&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-dropTableCascade&#39;</span><span class="p">:</span> <span class="s1">&#39;sybase mssql mysql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-expressionIndex&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql sqlite firebird mssql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-blobData&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql rdbhost&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-decimalColumn&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-emptyTable&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-limitSelect&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;+schema&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;+memorydb&#39;</span><span class="p">:</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="setupClass"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.setupClass">[docs]</a><span class="k">def</span> <span class="nf">setupClass</span><span class="p">(</span><span class="n">soClasses</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Makes sure the classes have a corresponding and correct table.</span>
+<span class="sd">    This won&#39;t recreate the table if it already exists.  It will check</span>
+<span class="sd">    that the table is properly defined (in case you change your table</span>
+<span class="sd">    definition).</span>
+
+<span class="sd">    You can provide a single class or a list of classes; if a list</span>
+<span class="sd">    then classes will be created in the order you provide, and</span>
+<span class="sd">    destroyed in the opposite order.  So if class A depends on class</span>
+<span class="sd">    B, then do setupClass([B, A]) and B won&#39;t be destroyed or cleared</span>
+<span class="sd">    until after A is destroyed or cleared.</span>
+
+<span class="sd">    If force is true, then the database will be recreated no matter</span>
+<span class="sd">    what.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">hub</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">soClasses</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">soClasses</span> <span class="o">=</span> <span class="p">[</span><span class="n">soClasses</span><span class="p">]</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">soClass</span> <span class="ow">in</span> <span class="n">soClasses</span><span class="p">:</span>
+        <span class="c1"># This would be an alternate way to register connections:</span>
+        <span class="c1"># try:</span>
+        <span class="c1">#    hub</span>
+        <span class="c1"># except NameError:</span>
+        <span class="c1">#    hub = sqlobject.dbconnection.ConnectionHub()</span>
+        <span class="c1"># soClass._connection = hub</span>
+        <span class="c1"># hub.threadConnection = connection</span>
+        <span class="c1"># hub.processConnection = connection</span>
+        <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+    <span class="n">installOrClear</span><span class="p">(</span><span class="n">soClasses</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">soClasses</span></div>
+
+
+<span class="k">def</span> <span class="nf">speedupSQLiteConnection</span><span class="p">(</span><span class="n">connection</span><span class="p">):</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;PRAGMA synchronous=OFF&quot;</span><span class="p">)</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;PRAGMA count_changes=OFF&quot;</span><span class="p">)</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;PRAGMA journal_mode=MEMORY&quot;</span><span class="p">)</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;PRAGMA temp_store=MEMORY&quot;</span><span class="p">)</span>
+
+<span class="n">installedDBFilename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;dbs_data.tmp&#39;</span><span class="p">)</span>
+
+<span class="n">installedDBTracker</span> <span class="o">=</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">connectionForURI</span><span class="p">(</span>
+    <span class="s1">&#39;sqlite:///&#39;</span> <span class="o">+</span> <span class="n">installedDBFilename</span><span class="p">)</span>
+<span class="n">speedupSQLiteConnection</span><span class="p">(</span><span class="n">installedDBTracker</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="getConnection"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.getConnection">[docs]</a><span class="k">def</span> <span class="nf">getConnection</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">getConnectionURI</span><span class="p">()</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">connectionForURI</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">conftest</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">show_sql</span><span class="p">:</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">conftest</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">show_sql_output</span><span class="p">:</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">debugOutput</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">conn</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">:</span>
+        <span class="n">speedupSQLiteConnection</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">conn</span></div>
+
+
+<div class="viewcode-block" id="getConnectionURI"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.getConnectionURI">[docs]</a><span class="k">def</span> <span class="nf">getConnectionURI</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">conftest</span><span class="o">.</span><span class="n">option</span><span class="o">.</span><span class="n">Database</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">conftest</span><span class="o">.</span><span class="n">connectionShortcuts</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">conftest</span><span class="o">.</span><span class="n">connectionShortcuts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">name</span></div>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># At least this module should be importable...</span>
+    <span class="c1"># The module was imported during documentation building</span>
+    <span class="k">if</span> <span class="s1">&#39;sphinx&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not open database: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">InstalledTestDatabase</span><span class="p">(</span><span class="n">sqlobject</span><span class="o">.</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This table is set up in SQLite (always, regardless of --Database) and</span>
+<span class="sd">    tracks what tables have been set up in the &#39;real&#39; database.  This</span>
+<span class="sd">    way we don&#39;t keep recreating the tables over and over when there</span>
+<span class="sd">    are multiple tests that use a table.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_connection</span> <span class="o">=</span> <span class="n">installedDBTracker</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">StringCol</span><span class="p">(</span><span class="n">notNull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">createSQL</span> <span class="o">=</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">StringCol</span><span class="p">(</span><span class="n">notNull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">connectionURI</span> <span class="o">=</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">StringCol</span><span class="p">(</span><span class="n">notNull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">installOrClear</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClasses</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+        <span class="nb">reversed</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">soClasses</span><span class="p">)[:]</span>
+        <span class="nb">reversed</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="c1"># If anything needs to be dropped, they all must be dropped</span>
+        <span class="c1"># But if we&#39;re forcing it, then we&#39;ll always drop</span>
+        <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
+            <span class="n">any_drops</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">any_drops</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">soClass</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">:</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span>
+                <span class="n">table_name</span><span class="o">=</span><span class="n">table</span><span class="p">,</span>
+                <span class="n">connectionURI</span><span class="o">=</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">uri</span><span class="p">()))</span>
+            <span class="k">if</span> <span class="n">items</span><span class="p">:</span>
+                <span class="n">instance</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">sql</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">createSQL</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sql</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">newSQL</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">createTableSQL</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sql</span> <span class="o">!=</span> <span class="n">newSQL</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sql</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">instance</span><span class="o">.</span><span class="n">destroySelf</span><span class="p">()</span>
+                <span class="n">any_drops</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">for</span> <span class="n">soClass</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">any_drops</span><span class="p">:</span>
+                    <span class="n">cls</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cls</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">soClass</span> <span class="ow">in</span> <span class="n">soClasses</span><span class="p">:</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+                <span class="n">cls</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the given table in its database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">+</span> <span class="s1">&#39;Create&#39;</span><span class="p">,</span>
+                      <span class="kc">None</span><span class="p">)</span>
+        <span class="n">all_extra</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">sql</span><span class="p">:</span>
+            <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sql</span><span class="p">,</span> <span class="n">extra_sql</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">createTableSQL</span><span class="p">()</span>
+            <span class="n">soClass</span><span class="o">.</span><span class="n">createTable</span><span class="p">(</span><span class="n">applyConstraints</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">all_extra</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">extra_sql</span><span class="p">)</span>
+        <span class="n">cls</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+            <span class="n">createSQL</span><span class="o">=</span><span class="n">sql</span><span class="p">,</span>
+            <span class="n">connectionURI</span><span class="o">=</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">uri</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">extra_sql</span> <span class="ow">in</span> <span class="n">all_extra</span><span class="p">:</span>
+            <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">extra_sql</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Drops a the given table from its database</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">+</span> <span class="s1">&#39;Drop&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sql</span><span class="p">:</span>
+            <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">soClass</span><span class="o">.</span><span class="n">dropTable</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all the rows from a table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">soClass</span><span class="o">.</span><span class="n">clearTable</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This sets up *this* table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">):</span>
+            <span class="n">cls</span><span class="o">.</span><span class="n">createTable</span><span class="p">()</span>
+
+<span class="n">installOrClear</span> <span class="o">=</span> <span class="n">InstalledTestDatabase</span><span class="o">.</span><span class="n">installOrClear</span>
+
+
+<div class="viewcode-block" id="Dummy"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.Dummy">[docs]</a><span class="k">class</span> <span class="nc">Dummy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used for creating fake objects; a really poor &#39;mock object&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kw</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="inserts"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.inserts">[docs]</a><span class="k">def</span> <span class="nf">inserts</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a bunch of rows.</span>
+
+<span class="sd">    You can use it like::</span>
+
+<span class="sd">        inserts(Person, [{&#39;fname&#39;: &#39;blah&#39;, &#39;lname&#39;: &#39;doe&#39;}, ...])</span>
+
+<span class="sd">    Or::</span>
+
+<span class="sd">        inserts(Person, [(&#39;blah&#39;, &#39;doe&#39;)], schema=</span>
+<span class="sd">                [&#39;fname&#39;, &#39;lname&#39;])</span>
+
+<span class="sd">    If you give a single string for the `schema` then it&#39;ll split</span>
+<span class="sd">    that string to get the list of column names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">schema</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">keywordData</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">itemDict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+                <span class="n">itemDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="n">keywordData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itemDict</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">keywordData</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cls</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="supports"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.supports">[docs]</a><span class="k">def</span> <span class="nf">supports</span><span class="p">(</span><span class="n">feature</span><span class="p">):</span>
+    <span class="n">dbName</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="n">supportsMatrix</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;+&#39;</span> <span class="o">+</span> <span class="n">feature</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">notSupport</span> <span class="o">=</span> <span class="n">supportsMatrix</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">feature</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">support</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dbName</span> <span class="ow">in</span> <span class="n">support</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">support</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">notSupport</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dbName</span> <span class="ow">in</span> <span class="n">notSupport</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">notSupport</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">notSupport</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">support</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">&quot;The supportMatrix does not list this feature: </span><span class="si">%r</span><span class="s2">&quot;</span>
+        <span class="o">%</span> <span class="n">feature</span><span class="p">)</span></div>
+
+
+<span class="c1"># To avoid name clashes:</span>
+<span class="n">_inserts</span> <span class="o">=</span> <span class="n">inserts</span>
+
+
+<span class="k">def</span> <span class="nf">setSQLiteConnectionFactory</span><span class="p">(</span><span class="n">TableClass</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">sqlobject.sqlite.sqliteconnection</span> <span class="k">import</span> <span class="n">SQLiteConnection</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">TableClass</span><span class="o">.</span><span class="n">_connection</span>
+    <span class="n">TableClass</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">SQLiteConnection</span><span class="p">(</span>
+        <span class="n">filename</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span> <span class="n">debugOutput</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">debugOutput</span><span class="p">,</span>
+        <span class="n">cache</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">cache</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">style</span><span class="p">,</span> <span class="n">autoCommit</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">autoCommit</span><span class="p">,</span>
+        <span class="n">debugThreading</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">debugThreading</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">registry</span><span class="p">,</span>
+        <span class="n">factory</span><span class="o">=</span><span class="n">factory</span>
+    <span class="p">)</span>
+    <span class="n">speedupSQLiteConnection</span><span class="p">(</span><span class="n">TableClass</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+    <span class="n">installOrClear</span><span class="p">([</span><span class="n">TableClass</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="deprecated_module"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.deprecated_module">[docs]</a><span class="k">def</span> <span class="nf">deprecated_module</span><span class="p">():</span>
+    <span class="n">sqlobject</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warnings_level</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sqlobject</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">exception_level</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="setup_module"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.setup_module">[docs]</a><span class="k">def</span> <span class="nf">setup_module</span><span class="p">(</span><span class="n">mod</span><span class="p">):</span>
+    <span class="c1"># modules with &#39;_old&#39; test backward compatible methods, so they</span>
+    <span class="c1"># don&#39;t get warnings or errors.</span>
+    <span class="n">mod_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mod_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/py&#39;</span><span class="p">):</span>
+        <span class="n">mod_name</span> <span class="o">=</span> <span class="n">mod_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">mod_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_old&#39;</span><span class="p">):</span>
+        <span class="n">sqlobject</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warnings_level</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">sqlobject</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">exception_level</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sqlobject</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warnings_level</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">sqlobject</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">exception_level</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="teardown_module"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.teardown_module">[docs]</a><span class="k">def</span> <span class="nf">teardown_module</span><span class="p">(</span><span class="n">mod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">sqlobject</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warnings_level</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sqlobject</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">exception_level</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="setupLogging"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.setupLogging">[docs]</a><span class="k">def</span> <span class="nf">setupLogging</span><span class="p">():</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">] </span><span class="si">%(name)s</span><span class="s1"> </span><span class="si">%(levelname)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+    <span class="n">hdlr</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">hdlr</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+    <span class="n">hdlr</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NOTSET</span><span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">hdlr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="setupCyclicClasses"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.setupCyclicClasses">[docs]</a><span class="k">def</span> <span class="nf">setupCyclicClasses</span><span class="p">(</span><span class="o">*</span><span class="n">classes</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;dropTableCascade&#39;</span><span class="p">):</span>
+        <span class="n">skip</span><span class="p">(</span><span class="s2">&quot;dropTableCascade isn&#39;t supported&quot;</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">soClass</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+        <span class="n">soClass</span><span class="o">.</span><span class="n">setConnection</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="n">soClass</span><span class="o">.</span><span class="n">dropTable</span><span class="p">(</span><span class="n">ifExists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">soClass</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+        <span class="n">constraints</span> <span class="o">+=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">createTable</span><span class="p">(</span><span class="n">ifNotExists</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                           <span class="n">applyConstraints</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">constraint</span> <span class="ow">in</span> <span class="n">constraints</span><span class="p">:</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">constraint</span><span class="p">)</span></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Dummy&#39;</span><span class="p">,</span> <span class="s1">&#39;deprecated_module&#39;</span><span class="p">,</span> <span class="s1">&#39;getConnection&#39;</span><span class="p">,</span> <span class="s1">&#39;getConnectionURI&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;inserts&#39;</span><span class="p">,</span> <span class="s1">&#39;raises&#39;</span><span class="p">,</span> <span class="s1">&#39;setupClass&#39;</span><span class="p">,</span> <span class="s1">&#39;setupCyclicClasses&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;setupLogging&#39;</span><span class="p">,</span> <span class="s1">&#39;setup_module&#39;</span><span class="p">,</span> <span class="s1">&#39;supports&#39;</span><span class="p">,</span> <span class="s1">&#39;teardown_module&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

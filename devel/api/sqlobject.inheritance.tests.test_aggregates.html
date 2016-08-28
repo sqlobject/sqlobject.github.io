@@ -1,0 +1,298 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.inheritance.tests.test_aggregates module &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.inheritance.tests.test_aggregates.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.inheritance.tests.test_aggregates">
+<span id="sqlobject-inheritance-tests-test-aggregates-module"></span><h1>sqlobject.inheritance.tests.test_aggregates module<a class="headerlink" href="#module-sqlobject.inheritance.tests.test_aggregates" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_aggregates.</code><code class="descname">TestAggregate1</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_aggregates.html#TestAggregate1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject" title="sqlobject.inheritance.InheritableSQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.InheritableSQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.childName">
+<code class="descname">childName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.j">
+<code class="descname">j</code><em class="property"> = test_aggregate1</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.q">
+<code class="descname">q</code><em class="property"> = test_aggregate1</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.InheritableSQLMeta</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {'TestAggregate2': &lt;class 'sqlobject.inheritance.tests.test_aggregates.TestAggregate2'&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'childName': &lt;StringCol b4dd444cL childName&gt;, 'value1': &lt;IntCol b58d598cL value1&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOIntCol value1&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'childName': &lt;SOStringCol childName default=None&gt;, 'value1': &lt;SOIntCol value1&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.parentClass">
+<code class="descname">parentClass</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1" title="sqlobject.inheritance.tests.test_aggregates.TestAggregate1"><code class="xref py py-class docutils literal"><span class="pre">TestAggregate1</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'test_aggregate1'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate1.value1">
+<code class="descclassname">TestAggregate1.</code><code class="descname">value1</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1.value1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_aggregates.</code><code class="descname">TestAggregate2</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_aggregates.html#TestAggregate2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1" title="sqlobject.inheritance.tests.test_aggregates.TestAggregate1"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.tests.test_aggregates.TestAggregate1</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.childName">
+<code class="descname">childName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.j">
+<code class="descname">j</code><em class="property"> = test_aggregate2</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.q">
+<code class="descname">q</code><em class="property"> = test_aggregate2</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlobject.declarative.sqlmeta</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = 'TestAggregate2'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'value2': &lt;IntCol b632c14cL value2&gt;, 'childName': &lt;StringCol b520d62cL childName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOIntCol value2&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'value2': &lt;SOIntCol value2&gt;, 'childName': &lt;SOStringCol childName default=None&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.parentClass">
+<code class="descname">parentClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate1" title="sqlobject.inheritance.tests.test_aggregates.TestAggregate1"><code class="xref py py-class docutils literal"><span class="pre">TestAggregate1</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2" title="sqlobject.inheritance.tests.test_aggregates.TestAggregate2"><code class="xref py py-class docutils literal"><span class="pre">TestAggregate2</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'test_aggregate2'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.value1">
+<code class="descclassname">TestAggregate2.</code><code class="descname">value1</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.value1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_aggregates.TestAggregate2.value2">
+<code class="descclassname">TestAggregate2.</code><code class="descname">value2</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.TestAggregate2.value2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.inheritance.tests.test_aggregates.test_aggregates">
+<code class="descclassname">sqlobject.inheritance.tests.test_aggregates.</code><code class="descname">test_aggregates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_aggregates.html#test_aggregates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_aggregates.test_aggregates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

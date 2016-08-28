@@ -1,0 +1,471 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.cache &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.cache</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This implements the instance caching in SQLObject.  Caching is</span>
+<span class="sd">relatively aggressive.  All objects are retained so long as they are</span>
+<span class="sd">in memory, by keeping weak references to objects.  We also keep other</span>
+<span class="sd">objects in a cache that doesn&#39;t allow them to be garbage collected</span>
+<span class="sd">(unless caching is turned off).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="k">import</span> <span class="n">ref</span>
+
+
+<div class="viewcode-block" id="CacheFactory"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory">[docs]</a><span class="k">class</span> <span class="nc">CacheFactory</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CacheFactory caches object creation.  Each object should be</span>
+<span class="sd">    referenced by a single hashable ID (note tuples of hashable</span>
+<span class="sd">    values are also hashable).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cullFrequency</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">cullFraction</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                 <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Every cullFrequency times that an item is retrieved from</span>
+<span class="sd">        this cache, the cull method is called.</span>
+
+<span class="sd">        The cull method then expires an arbitrary fraction of</span>
+<span class="sd">        the cached objects.  The idea is at no time will the cache</span>
+<span class="sd">        be entirely emptied, placing a potentially high load at that</span>
+<span class="sd">        moment, but everything object will have its time to go</span>
+<span class="sd">        eventually.  The fraction is given as an integer, and one</span>
+<span class="sd">        in that many objects are expired (i.e., the default is 1/2</span>
+<span class="sd">        of objects are expired).</span>
+
+<span class="sd">        By setting cache to False, items won&#39;t be cached.</span>
+
+<span class="sd">        However, in all cases a weak reference is kept to created</span>
+<span class="sd">        objects, and if the object hasn&#39;t been garbage collected</span>
+<span class="sd">        it will be returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cullFrequency</span> <span class="o">=</span> <span class="n">cullFrequency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cullOffset</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cullFraction</span> <span class="o">=</span> <span class="n">cullFraction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span> <span class="o">=</span> <span class="n">cache</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CacheFactory.tryGet"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.tryGet">[docs]</a>    <span class="k">def</span> <span class="nf">tryGet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This returns None, or the object in cache.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+            <span class="c1"># it&#39;s actually a weakref:</span>
+            <span class="k">return</span> <span class="n">value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CacheFactory.get"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method can cause deadlocks!  tryGet is safer</span>
+
+<span class="sd">        This returns the object found in cache, or None.  If None,</span>
+<span class="sd">        then the cache will remain locked!  This is so that the</span>
+<span class="sd">        calling function can create the object in a threadsafe manner</span>
+<span class="sd">        before releasing the lock.  You should use this like (note</span>
+<span class="sd">        that ``cache`` is actually a CacheSet object in this</span>
+<span class="sd">        example)::</span>
+
+<span class="sd">          obj = cache.get(some_id, my_class)</span>
+<span class="sd">          if obj is None:</span>
+<span class="sd">              try:</span>
+<span class="sd">                  obj = create_object(some_id)</span>
+<span class="sd">                  cache.put(some_id, my_class, obj)</span>
+<span class="sd">              finally:</span>
+<span class="sd">                  cache.finishPut(cls)</span>
+
+<span class="sd">        This method checks both the main cache (which retains</span>
+<span class="sd">        references) and the &#39;expired&#39; cache, which retains only weak</span>
+<span class="sd">        references.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cullFrequency</span><span class="p">:</span>
+                <span class="c1"># Two threads could hit the cull in a row, but</span>
+                <span class="c1"># that&#39;s not so bad.  At least by setting cullCount</span>
+                <span class="c1"># back to zero right away we avoid this.  The cull</span>
+                <span class="c1"># method has a lock, so it&#39;s threadsafe.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cull</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">val</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]()</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">val</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]()</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">val</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]()</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">val</span></div>
+
+<div class="viewcode-block" id="CacheFactory.put"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Puts an object into the cache.  Should only be called after</span>
+<span class="sd">        .get(), so that duplicate objects don&#39;t end up in the cache.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CacheFactory.finishPut"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.finishPut">[docs]</a>    <span class="k">def</span> <span class="nf">finishPut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Releases the lock that is retained when .get() is called and</span>
+<span class="sd">        returns None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheFactory.created"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.created">[docs]</a>    <span class="k">def</span> <span class="nf">created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inserts and object into the cache.  Should be used when no one</span>
+<span class="sd">        else knows about the object yet, so there cannot be any object</span>
+<span class="sd">        already in the cache.  After a database INSERT is an example</span>
+<span class="sd">        of this situation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cullFrequency</span><span class="p">:</span>
+                <span class="c1"># Two threads could hit the cull in a row, but</span>
+                <span class="c1"># that&#39;s not so bad.  At least by setting cullCount</span>
+                <span class="c1"># back to zero right away we avoid this.  The cull</span>
+                <span class="c1"># method has a lock, so it&#39;s threadsafe.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cull</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cullCount</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CacheFactory.cull"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.cull">[docs]</a>    <span class="k">def</span> <span class="nf">cull</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs through the cache and expires objects</span>
+
+<span class="sd">        E.g., if ``cullFraction`` is 3, then every third object is moved to</span>
+<span class="sd">        the &#39;expired&#39; (aka weakref) cache.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># remove dead references from the expired cache</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="n">key</span><span class="p">]()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cullOffset</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cullFraction</span><span class="p">):</span>
+                <span class="nb">id</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="c1"># create a weakref, then remove from the cache</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="nb">id</span><span class="p">])</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+
+                <span class="c1"># the object may have been gc&#39;d when removed from the cache</span>
+                <span class="c1"># above, no need to place in expiredCache</span>
+                <span class="k">if</span> <span class="n">obj</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+            <span class="c1"># This offset tries to balance out which objects we</span>
+            <span class="c1"># expire, so no object will just hang out in the cache</span>
+            <span class="c1"># forever.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cullOffset</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cullOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cullFraction</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheFactory.clear"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes everything from the cache.  Warning!  This can cause</span>
+<span class="sd">        duplicate objects in memory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheFactory.expire"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.expire">[docs]</a>    <span class="k">def</span> <span class="nf">expire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Expires a single object.  Typically called after a delete.</span>
+<span class="sd">        Doesn&#39;t even keep a weakref.  (@@: bad name?)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheFactory.expireAll"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.expireAll">[docs]</a>    <span class="k">def</span> <span class="nf">expireAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Expires all objects, moving them all into the expired/weakref</span>
+<span class="sd">        cache.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheFactory.allIDs"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.allIDs">[docs]</a>    <span class="k">def</span> <span class="nf">allIDs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the IDs of all objects in the cache.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="nb">all</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">all</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">value</span><span class="p">():</span>
+                <span class="nb">all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span></div>
+
+<div class="viewcode-block" id="CacheFactory.getAll"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheFactory.getAll">[docs]</a>    <span class="k">def</span> <span class="nf">getAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return all the objects in the cache.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">:</span>
+            <span class="nb">all</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">all</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expiredCache</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">value</span><span class="p">():</span>
+                <span class="nb">all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">all</span></div></div>
+
+
+<div class="viewcode-block" id="CacheSet"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet">[docs]</a><span class="k">class</span> <span class="nc">CacheSet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A CacheSet is used to collect and maintain a series of caches.  In</span>
+<span class="sd">    SQLObject, there is one CacheSet per connection, and one Cache</span>
+<span class="sd">    in the CacheSet for each class, since IDs are not unique across</span>
+<span class="sd">    classes.  It contains methods similar to Cache, but that take</span>
+<span class="sd">    a ``cls`` argument.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caches</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kw</span> <span class="o">=</span> <span class="n">kw</span>
+
+<div class="viewcode-block" id="CacheSet.get"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">CacheFactory</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CacheSet.put"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CacheSet.finishPut"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.finishPut">[docs]</a>    <span class="k">def</span> <span class="nf">finishPut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">finishPut</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheSet.created"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.created">[docs]</a>    <span class="k">def</span> <span class="nf">created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">CacheFactory</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CacheSet.expire"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.expire">[docs]</a>    <span class="k">def</span> <span class="nf">expire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="CacheSet.clear"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cache</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheSet.tryGet"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.tryGet">[docs]</a>    <span class="k">def</span> <span class="nf">tryGet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tryGetByName</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CacheSet.tryGetByName"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.tryGetByName">[docs]</a>    <span class="k">def</span> <span class="nf">tryGetByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">clsname</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">clsname</span><span class="p">]</span><span class="o">.</span><span class="n">tryGet</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="CacheSet.allIDs"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.allIDs">[docs]</a>    <span class="k">def</span> <span class="nf">allIDs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">allIDs</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="CacheSet.allSubCaches"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.allSubCaches">[docs]</a>    <span class="k">def</span> <span class="nf">allSubCaches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheSet.allSubCachesByClassNames"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.allSubCachesByClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">allSubCachesByClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span></div>
+
+<div class="viewcode-block" id="CacheSet.weakrefAll"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.weakrefAll">[docs]</a>    <span class="k">def</span> <span class="nf">weakrefAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Move all objects in the cls (or if not given, then in all</span>
+<span class="sd">        classes) to the weakref dictionary, where they can be</span>
+<span class="sd">        collected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cache</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">cache</span><span class="o">.</span><span class="n">expireAll</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">expireAll</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CacheSet.getAll"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.getAll">[docs]</a>    <span class="k">def</span> <span class="nf">getAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns all instances in the cache for the given class or all</span>
+<span class="sd">        classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">cache</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cache</span><span class="o">.</span><span class="n">getAll</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">results</span>
+        <span class="k">elif</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">getAll</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

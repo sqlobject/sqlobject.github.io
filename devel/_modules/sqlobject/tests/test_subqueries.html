@@ -1,0 +1,234 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_subqueries &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.tests.test_subqueries</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span>
+<span class="kn">from</span> <span class="nn">sqlobject.sqlbuilder</span> <span class="k">import</span> <span class="n">EXISTS</span><span class="p">,</span> <span class="n">IN</span><span class="p">,</span> <span class="n">LEFTOUTERJOINOn</span><span class="p">,</span> <span class="n">NOTEXISTS</span><span class="p">,</span> \
+    <span class="n">Outer</span><span class="p">,</span> <span class="n">Select</span>
+<span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
+
+
+<span class="c1">########################################</span>
+<span class="c1"># Subqueries (subselects)</span>
+<span class="c1">########################################</span>
+
+
+<div class="viewcode-block" id="TestIn1"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.TestIn1">[docs]</a><span class="k">class</span> <span class="nc">TestIn1</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">col1</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestIn2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.TestIn2">[docs]</a><span class="k">class</span> <span class="nc">TestIn2</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">col2</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TestOuter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.TestOuter">[docs]</a><span class="k">class</span> <span class="nc">TestOuter</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">fk</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;TestIn1&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestIn1</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestIn2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="insert"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.insert">[docs]</a><span class="k">def</span> <span class="nf">insert</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">TestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">TestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">TestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+    <span class="n">TestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">TestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">TestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_1syntax_in"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_1syntax_in">[docs]</a><span class="k">def</span> <span class="nf">test_1syntax_in</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)))</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM test_in1 WHERE test_in1.col1 IN &quot;</span> \
+        <span class="s2">&quot;(SELECT test_in2.col2 FROM test_in2)&quot;</span>
+
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">select</span><span class="p">()))</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM test_in1 WHERE test_in1.col1 IN &quot;</span> \
+        <span class="s2">&quot;(SELECT test_in2.id FROM test_in2 WHERE 1 = 1)&quot;</span></div>
+
+
+<div class="viewcode-block" id="test_2perform_in"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_2perform_in">[docs]</a><span class="k">def</span> <span class="nf">test_2perform_in</span><span class="p">():</span>
+    <span class="n">insert</span><span class="p">()</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)))</span>
+    <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="test_3syntax_exists"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_3syntax_exists">[docs]</a><span class="k">def</span> <span class="nf">test_3syntax_exists</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
+        <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">TestIn1</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">))))</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM test_in1 WHERE NOT EXISTS &quot;</span> \
+        <span class="s2">&quot;(SELECT test_in2.col2 FROM test_in2 &quot;</span> \
+        <span class="s2">&quot;WHERE ((test_in1.col1) = (test_in2.col2)))&quot;</span>
+
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestOuter</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestOuter</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
+        <span class="n">Select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span>
+               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">TestOuter</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">fk</span> <span class="o">==</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">))))</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;SELECT test_outer.id, test_outer.fk_id &quot;</span> \
+        <span class="s2">&quot;FROM test_outer WHERE NOT EXISTS &quot;</span> \
+        <span class="s2">&quot;(SELECT test_in1.col1 FROM test_in1 &quot;</span> \
+        <span class="s2">&quot;WHERE ((test_outer.fk_id) = (test_in1.id)))&quot;</span></div>
+
+
+<div class="viewcode-block" id="test_4perform_exists"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_4perform_exists">[docs]</a><span class="k">def</span> <span class="nf">test_4perform_exists</span><span class="p">():</span>
+    <span class="n">insert</span><span class="p">()</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">EXISTS</span><span class="p">(</span>
+        <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">TestIn1</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">))))</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">select</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestOuter</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestOuter</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
+        <span class="n">Select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span>
+               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">TestOuter</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">fkID</span> <span class="o">==</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">))))</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">select</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="test_4syntax_direct"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_4syntax_direct">[docs]</a><span class="k">def</span> <span class="nf">test_4syntax_direct</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM test_in1 WHERE ((test_in1.col1) = &quot;</span> \
+        <span class="s2">&quot;(SELECT test_in2.col2 FROM test_in2 &quot;</span> \
+        <span class="s2">&quot;WHERE ((test_in2.col2) = (&#39;test&#39;))))&quot;</span></div>
+
+
+<div class="viewcode-block" id="test_4perform_direct"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_4perform_direct">[docs]</a><span class="k">def</span> <span class="nf">test_4perform_direct</span><span class="p">():</span>
+    <span class="n">insert</span><span class="p">()</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
+    <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="test_5perform_direct"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_5perform_direct">[docs]</a><span class="k">def</span> <span class="nf">test_5perform_direct</span><span class="p">():</span>
+    <span class="n">insert</span><span class="p">()</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
+    <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="test_6syntax_join"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_6syntax_join">[docs]</a><span class="k">def</span> <span class="nf">test_6syntax_join</span><span class="p">():</span>
+    <span class="n">insert</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">LEFTOUTERJOINOn</span><span class="p">(</span><span class="n">TestIn2</span><span class="p">,</span> <span class="n">TestIn1</span><span class="p">,</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">),</span> <span class="n">join</span><span class="o">=</span><span class="n">j</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM test_in1 WHERE ((test_in1.col1) = &quot;</span> \
+        <span class="s2">&quot;(SELECT test_in2.col2 FROM test_in2 &quot;</span> \
+        <span class="s2">&quot;LEFT OUTER JOIN test_in1 ON ((test_in1.col1) = (test_in2.col2)) &quot;</span> \
+        <span class="s2">&quot;WHERE ((test_in2.col2) = (&#39;test&#39;))))&quot;</span></div>
+
+
+<div class="viewcode-block" id="test_6perform_join"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_6perform_join">[docs]</a><span class="k">def</span> <span class="nf">test_6perform_join</span><span class="p">():</span>
+    <span class="n">insert</span><span class="p">()</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">LEFTOUTERJOINOn</span><span class="p">(</span><span class="n">TestIn2</span><span class="p">,</span> <span class="n">TestIn1</span><span class="p">,</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">),</span> <span class="n">join</span><span class="o">=</span><span class="n">j</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

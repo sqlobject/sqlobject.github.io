@@ -1,0 +1,240 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.sresults module &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.sresults.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.sresults">
+<span id="sqlobject-sresults-module"></span><h1>sqlobject.sresults module<a class="headerlink" href="#module-sqlobject.sresults" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sqlobject.sresults.SelectResults">
+<em class="property">class </em><code class="descclassname">sqlobject.sresults.</code><code class="descname">SelectResults</code><span class="sig-paren">(</span><em>sourceClass</em>, <em>clause</em>, <em>clauseTables=None</em>, <em>**ops</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.sresults.SelectResults.IterationClass">
+<code class="descname">IterationClass</code><a class="headerlink" href="#sqlobject.sresults.SelectResults.IterationClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Iteration</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.accumulate">
+<code class="descname">accumulate</code><span class="sig-paren">(</span><em>*expressions</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.accumulate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.accumulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use accumulate expression(s) to select result
+using another SQL select through current
+connection.
+Return the accumulate result</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.accumulateMany">
+<code class="descname">accumulateMany</code><span class="sig-paren">(</span><em>*attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.accumulateMany"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.accumulateMany" title="Permalink to this definition">¶</a></dt>
+<dd><p>Making the expressions for count/sum/min/max/avg
+of a given select result attributes.
+<cite>attributes</cite> must be a list/tuple of pairs (func_name, attribute);
+<cite>attribute</cite> can be a column name (like &#8216;a_column&#8217;)
+or a dot-q attribute (like Table.q.aColumn)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.accumulateOne">
+<code class="descname">accumulateOne</code><span class="sig-paren">(</span><em>func_name</em>, <em>attribute</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.accumulateOne"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.accumulateOne" title="Permalink to this definition">¶</a></dt>
+<dd><p>Making the sum/min/max/avg of a given select result attribute.
+<cite>attribute</cite> can be a column name (like &#8216;a_column&#8217;)
+or a dot-q attribute (like Table.q.aColumn)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.avg">
+<code class="descname">avg</code><span class="sig-paren">(</span><em>attribute</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.avg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.clone">
+<code class="descname">clone</code><span class="sig-paren">(</span><em>**newOps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.clone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.clone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.connection">
+<code class="descname">connection</code><span class="sig-paren">(</span><em>conn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.count">
+<code class="descname">count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counting elements of current select results</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.distinct">
+<code class="descname">distinct</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.distinct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.distinct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>filter_clause</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.getOne">
+<code class="descname">getOne</code><span class="sig-paren">(</span><em>default=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.getOne"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.getOne" title="Permalink to this definition">¶</a></dt>
+<dd><p>If a query is expected to only return a single value,
+using <code class="docutils literal"><span class="pre">.getOne()</span></code> will return just that value.</p>
+<p>If not results are found, <code class="docutils literal"><span class="pre">SQLObjectNotFound</span></code> will be
+raised, unless you pass in a default value (like
+<code class="docutils literal"><span class="pre">.getOne(None)</span></code>).</p>
+<p>If more than one result is returned,
+<code class="docutils literal"><span class="pre">SQLObjectIntegrityError</span></code> will be raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.lazyColumns">
+<code class="descname">lazyColumns</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.lazyColumns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.lazyColumns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.lazyIter">
+<code class="descname">lazyIter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.lazyIter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.lazyIter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator that will lazily pull rows out of the
+database and return SQLObject instances</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.limit">
+<code class="descname">limit</code><span class="sig-paren">(</span><em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.limit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.max">
+<code class="descname">max</code><span class="sig-paren">(</span><em>attribute</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.min">
+<code class="descname">min</code><span class="sig-paren">(</span><em>attribute</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.newClause">
+<code class="descname">newClause</code><span class="sig-paren">(</span><em>new_clause</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.newClause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.newClause" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.orderBy">
+<code class="descname">orderBy</code><span class="sig-paren">(</span><em>orderBy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.orderBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.orderBy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.queryForSelect">
+<code class="descname">queryForSelect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.queryForSelect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.queryForSelect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.reversed">
+<code class="descname">reversed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.reversed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.reversed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sresults.SelectResults.sum">
+<code class="descname">sum</code><span class="sig-paren">(</span><em>attribute</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sresults.html#SelectResults.sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sresults.SelectResults.sum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.sresults.SelectResults.throughTo">
+<code class="descname">throughTo</code><a class="headerlink" href="#sqlobject.sresults.SelectResults.throughTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

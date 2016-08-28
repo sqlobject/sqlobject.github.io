@@ -1,0 +1,284 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.index &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.index</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">count</span>
+<span class="kn">from</span> <span class="nn">.converters</span> <span class="k">import</span> <span class="n">sqlrepr</span>
+
+
+<span class="n">creationOrder</span> <span class="o">=</span> <span class="n">count</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">SODatabaseIndex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">soClass</span><span class="p">,</span>
+                 <span class="n">name</span><span class="p">,</span>
+                 <span class="n">columns</span><span class="p">,</span>
+                 <span class="n">creationOrder</span><span class="p">,</span>
+                 <span class="n">unique</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span> <span class="o">=</span> <span class="n">soClass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convertColumns</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creationOrder</span> <span class="o">=</span> <span class="n">creationOrder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unique</span> <span class="o">=</span> <span class="n">unique</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; object has no attribute &#39;get&#39; &quot;</span>
+                <span class="s2">&quot;(index is not unique)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">connection</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="n">kw</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;You cannot mix named and unnamed arguments&quot;</span><span class="p">)</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;column&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span> <span class="k">if</span> <span class="s1">&#39;column&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">kw</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;get() takes exactly </span><span class="si">%d</span><span class="s2"> argument and an optional &quot;</span>
+                <span class="s2">&quot;named argument &#39;connection&#39; (</span><span class="si">%d</span><span class="s2"> given)&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">kw</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">kw</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">foreignName</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">kw</span><span class="p">[</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">foreignName</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">kw</span><span class="p">[</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span><span class="o">.</span><span class="n">getOne</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">convertColumns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts all the columns to dictionary descriptors;</span>
+<span class="sd">        dereferences string column names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">desc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;column&#39;</span><span class="p">:</span> <span class="n">desc</span><span class="p">}</span>
+            <span class="k">if</span> <span class="s1">&#39;expression&#39;</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="s1">&#39;column&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">,</span> <span class="p">(</span>
+                    <span class="s1">&#39;You cannot provide both an expression and a column &#39;</span>
+                    <span class="s1">&#39;(for </span><span class="si">%s</span><span class="s1"> in index </span><span class="si">%s</span><span class="s1"> in </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span><span class="p">))</span>
+                <span class="k">assert</span> <span class="s1">&#39;length&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">,</span> <span class="p">(</span>
+                    <span class="s1">&#39;length does not apply to expressions (for </span><span class="si">%s</span><span class="s1"> in &#39;</span>
+                    <span class="s1">&#39;index </span><span class="si">%s</span><span class="s1"> in </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span><span class="p">))</span>
+                <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">columnName</span> <span class="o">=</span> <span class="n">desc</span><span class="p">[</span><span class="s1">&#39;column&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">columnName</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">columnName</span> <span class="o">=</span> <span class="n">columnName</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">colDict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span>
+            <span class="k">if</span> <span class="n">columnName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">colDict</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">possible</span> <span class="ow">in</span> <span class="n">colDict</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">possible</span><span class="o">.</span><span class="n">origName</span> <span class="o">==</span> <span class="n">columnName</span><span class="p">:</span>
+                        <span class="n">column</span> <span class="o">=</span> <span class="n">possible</span>
+                        <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># None found</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;The column by the name </span><span class="si">%r</span><span class="s2"> was not found &quot;</span>
+                        <span class="s2">&quot;in the class </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">columnName</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">column</span> <span class="o">=</span> <span class="n">colDict</span><span class="p">[</span><span class="n">columnName</span><span class="p">]</span>
+            <span class="n">desc</span><span class="p">[</span><span class="s1">&#39;column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">column</span>
+            <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new</span>
+
+    <span class="k">def</span> <span class="nf">getExpression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;expression&#39;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">desc</span><span class="p">[</span><span class="s1">&#39;expression&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;expression&#39;</span><span class="p">],</span> <span class="n">db</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sqliteCreateIndexSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique</span><span class="p">:</span>
+            <span class="n">uniqueOrIndex</span> <span class="o">=</span> <span class="s1">&#39;UNIQUE INDEX&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">uniqueOrIndex</span> <span class="o">=</span> <span class="s1">&#39;INDEX&#39;</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;expression&#39;</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+                <span class="n">spec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getExpression</span><span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">spec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;column&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dbName</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;CREATE </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1"> ON </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> \
+              <span class="p">(</span><span class="n">uniqueOrIndex</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+               <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+               <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">spec</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="n">postgresCreateIndexSQL</span> <span class="o">=</span> <span class="n">maxdbCreateIndexSQL</span> <span class="o">=</span> <span class="n">mssqlCreateIndexSQL</span> <span class="o">=</span> \
+        <span class="n">sybaseCreateIndexSQL</span> <span class="o">=</span> <span class="n">firebirdCreateIndexSQL</span> <span class="o">=</span> <span class="n">sqliteCreateIndexSQL</span>
+
+    <span class="k">def</span> <span class="nf">mysqlCreateIndexSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique</span><span class="p">:</span>
+            <span class="n">uniqueOrIndex</span> <span class="o">=</span> <span class="s1">&#39;UNIQUE&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">uniqueOrIndex</span> <span class="o">=</span> <span class="s1">&#39;INDEX&#39;</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;expression&#39;</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+                <span class="n">spec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getExpression</span><span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="s1">&#39;mysql&#39;</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="s1">&#39;length&#39;</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+                <span class="n">spec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">(</span><span class="si">%d</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;column&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dbName</span><span class="p">,</span> <span class="n">desc</span><span class="p">[</span><span class="s1">&#39;length&#39;</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">spec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">desc</span><span class="p">[</span><span class="s1">&#39;column&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dbName</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s1">&#39;ALTER TABLE </span><span class="si">%s</span><span class="s1"> ADD </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> \
+               <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">uniqueOrIndex</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">spec</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="DatabaseIndex"><a class="viewcode-back" href="../../api/sqlobject.index.html#sqlobject.index.DatabaseIndex">[docs]</a><span class="k">class</span> <span class="nc">DatabaseIndex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This takes a variable number of parameters, each of which is a</span>
+<span class="sd">    column for indexing.  Each column may be a column object or the</span>
+<span class="sd">    string name of the column (*not* the database name).  You may also</span>
+<span class="sd">    use dictionaries, to further customize the indexing of the column.</span>
+<span class="sd">    The dictionary may have certain keys:</span>
+
+<span class="sd">    &#39;column&#39;:</span>
+<span class="sd">        The column object or string identifier.</span>
+<span class="sd">    &#39;length&#39;:</span>
+<span class="sd">        MySQL will only index the first N characters if this is</span>
+<span class="sd">        given.  For other databases this is ignored.</span>
+<span class="sd">    &#39;expression&#39;:</span>
+<span class="sd">        You can create an index based on an expression, e.g.,</span>
+<span class="sd">        &#39;lower(column)&#39;.  This can either be a string or a sqlbuilder</span>
+<span class="sd">        expression.</span>
+
+<span class="sd">    Further keys may be added to the column specs in the future.</span>
+
+<span class="sd">    The class also take the keyword argument `unique`; if true then</span>
+<span class="sd">    a UNIQUE index is created.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">baseClass</span> <span class="o">=</span> <span class="n">SODatabaseIndex</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">columns</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;columns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">columns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kw</span> <span class="o">=</span> <span class="n">kw</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creationOrder</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">creationOrder</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DatabaseIndex.setName"><a class="viewcode-back" href="../../api/sqlobject.index.html#sqlobject.index.DatabaseIndex.setName">[docs]</a>    <span class="k">def</span> <span class="nf">setName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> \
+            <span class="s2">&quot;You cannot change a name after it has already been set &quot;</span> \
+            <span class="s2">&quot;(from </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_name</span><span class="p">,</span> <span class="n">_set_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DatabaseIndex.withClass"><a class="viewcode-back" href="../../api/sqlobject.index.html#sqlobject.index.DatabaseIndex.withClass">[docs]</a>    <span class="k">def</span> <span class="nf">withClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">baseClass</span><span class="p">(</span><span class="n">soClass</span><span class="o">=</span><span class="n">soClass</span><span class="p">,</span>
+                              <span class="n">creationOrder</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">creationOrder</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+            <span class="nb">hex</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))[</span><span class="mi">2</span><span class="p">:],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span></div>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DatabaseIndex&#39;</span><span class="p">]</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

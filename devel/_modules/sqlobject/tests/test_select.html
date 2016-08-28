@@ -1,0 +1,313 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_select &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.tests.test_select</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">py.test</span>
+<span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">IntCol</span><span class="p">,</span> <span class="n">LIKE</span><span class="p">,</span> <span class="n">RLIKE</span><span class="p">,</span> <span class="n">SQLObject</span><span class="p">,</span> \
+    <span class="n">SQLObjectIntegrityError</span><span class="p">,</span> <span class="n">SQLObjectNotFound</span><span class="p">,</span> <span class="n">StringCol</span>
+<span class="kn">from</span> <span class="nn">sqlobject.sqlbuilder</span> <span class="k">import</span> <span class="n">func</span>
+<span class="kn">from</span> <span class="nn">.dbtest</span> <span class="k">import</span> <span class="n">raises</span><span class="p">,</span> <span class="n">setupClass</span><span class="p">,</span> <span class="n">supports</span><span class="p">,</span> <span class="n">setSQLiteConnectionFactory</span>
+
+
+<div class="viewcode-block" id="IterTest"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.IterTest">[docs]</a><span class="k">class</span> <span class="nc">IterTest</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">dbName</span><span class="o">=</span><span class="s1">&#39;name_col&#39;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span></div>
+
+
+<span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="setupIter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.setupIter">[docs]</a><span class="k">def</span> <span class="nf">setupIter</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_00_normal"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_00_normal">[docs]</a><span class="k">def</span> <span class="nf">test_00_normal</span><span class="p">():</span>
+    <span class="n">setupIter</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">():</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_00b_lazy"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_00b_lazy">[docs]</a><span class="k">def</span> <span class="nf">test_00b_lazy</span><span class="p">():</span>
+    <span class="n">setupIter</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">lazyColumns</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_01_turn_to_list"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_01_turn_to_list">[docs]</a><span class="k">def</span> <span class="nf">test_01_turn_to_list</span><span class="p">():</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">()):</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_02_generator"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_02_generator">[docs]</a><span class="k">def</span> <span class="nf">test_02_generator</span><span class="p">():</span>
+    <span class="nb">all</span> <span class="o">=</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">all</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_03_ranged_indexed"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_03_ranged_indexed">[docs]</a><span class="k">def</span> <span class="nf">test_03_ranged_indexed</span><span class="p">():</span>
+    <span class="nb">all</span> <span class="o">=</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">all</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+        <span class="nb">all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># test it&#39;s there</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_04_indexed_ended_by_exception"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_04_indexed_ended_by_exception">[docs]</a><span class="k">def</span> <span class="nf">test_04_indexed_ended_by_exception</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;limitSelect&#39;</span><span class="p">):</span>
+        <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;limitSelect isn&#39;t supported&quot;</span><span class="p">)</span>
+    <span class="nb">all</span> <span class="o">=</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">all</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="c1"># Stop the test if it&#39;s gone on too long</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+                <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">assert</span> <span class="n">count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_05_select_limit"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_05_select_limit">[docs]</a><span class="k">def</span> <span class="nf">test_05_select_limit</span><span class="p">():</span>
+    <span class="n">setupIter</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="n">raises</span><span class="p">(</span><span class="ne">AssertionError</span><span class="p">,</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_06_contains"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_06_contains">[docs]</a><span class="k">def</span> <span class="nf">test_06_contains</span><span class="p">():</span>
+    <span class="n">setupIter</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)))))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;a&#39;b&quot;</span><span class="p">))))</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">))))</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="test_07_contains_special"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_07_contains_special">[docs]</a><span class="k">def</span> <span class="nf">test_07_contains_special</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">test&#39;</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;100%&#39;</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;test_&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)))</span> <span class="o">==</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">)))</span> <span class="o">==</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)))</span> <span class="o">==</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="test_select_getOne"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_select_getOne">[docs]</a><span class="k">def</span> <span class="nf">test_select_getOne</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getOne</span><span class="p">()</span> <span class="o">==</span> <span class="n">a</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getOne</span><span class="p">()</span> <span class="o">==</span> <span class="n">b</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">getOne</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="n">raises</span><span class="p">(</span><span class="n">SQLObjectNotFound</span><span class="p">,</span> <span class="s1">&#39;IterTest.selectBy(name=&quot;c&quot;).getOne()&#39;</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+    <span class="n">raises</span><span class="p">(</span><span class="n">SQLObjectIntegrityError</span><span class="p">,</span> <span class="s1">&#39;IterTest.selectBy(name=&quot;b&quot;).getOne()&#39;</span><span class="p">)</span>
+    <span class="n">raises</span><span class="p">(</span><span class="n">SQLObjectIntegrityError</span><span class="p">,</span> <span class="s1">&#39;IterTest.selectBy(name=&quot;b&quot;).getOne(None)&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_selectBy"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_selectBy">[docs]</a><span class="k">def</span> <span class="nf">test_selectBy</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">selectBy</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="test_selectBy_kwargs"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_selectBy_kwargs">[docs]</a><span class="k">def</span> <span class="nf">test_selectBy_kwargs</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+    <span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">IterTest</span><span class="p">,</span> <span class="n">nonexistant</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UniqTest"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.UniqTest">[docs]</a><span class="k">class</span> <span class="nc">UniqTest</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">dbName</span><span class="o">=</span><span class="s1">&#39;name_col&#39;</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_by_uniq"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_by_uniq">[docs]</a><span class="k">def</span> <span class="nf">test_by_uniq</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">UniqTest</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">UniqTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">UniqTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">UniqTest</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">a</span>
+    <span class="k">assert</span> <span class="n">UniqTest</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="n">b</span></div>
+
+
+<div class="viewcode-block" id="Counter2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.Counter2">[docs]</a><span class="k">class</span> <span class="nc">Counter2</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+
+    <span class="n">n1</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">notNull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">notNull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestSelect"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.TestSelect">[docs]</a><span class="k">class</span> <span class="nc">TestSelect</span><span class="p">:</span>
+
+<div class="viewcode-block" id="TestSelect.setup_method"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.TestSelect.setup_method">[docs]</a>    <span class="k">def</span> <span class="nf">setup_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meth</span><span class="p">):</span>
+        <span class="n">setupClass</span><span class="p">(</span><span class="n">Counter2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+                <span class="n">Counter2</span><span class="p">(</span><span class="n">n1</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="n">j</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestSelect.counterEqual"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.TestSelect.counterEqual">[docs]</a>    <span class="k">def</span> <span class="nf">counterEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">counters</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">n1</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">n2</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">counters</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="TestSelect.accumulateEqual"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.TestSelect.accumulateEqual">[docs]</a>    <span class="k">def</span> <span class="nf">accumulateEqual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">counters</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">func</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">n1</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">counters</span><span class="p">])</span> <span class="o">==</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="TestSelect.test_1"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.TestSelect.test_1">[docs]</a>    <span class="k">def</span> <span class="nf">test_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accumulateEqual</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="n">Counter2</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">orderBy</span><span class="o">=</span><span class="s1">&#39;n1&#39;</span><span class="p">),</span>
+                             <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestSelect.test_2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.TestSelect.test_2">[docs]</a>    <span class="k">def</span> <span class="nf">test_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accumulateEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">Counter2</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="test_select_LIKE"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_select_LIKE">[docs]</a><span class="k">def</span> <span class="nf">test_select_LIKE</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;sqlobject&#39;</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;sqlbuilder&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">LIKE</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;sql%&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">LIKE</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;sqlb%&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">LIKE</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;sqlb%&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">LIKE</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;sqlx%&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="test_select_RLIKE"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_select_RLIKE">[docs]</a><span class="k">def</span> <span class="nf">test_select_RLIKE</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">using_sqlite2</span><span class="p">:</span>
+            <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite v2+&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Implement regexp() function for SQLite; only works with PySQLite2</span>
+        <span class="kn">import</span> <span class="nn">re</span>
+
+        <span class="k">def</span> <span class="nf">regexp</span><span class="p">(</span><span class="n">regexp</span><span class="p">,</span> <span class="n">test</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">regexp</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
+
+        <span class="k">def</span> <span class="nf">SQLiteConnectionFactory</span><span class="p">(</span><span class="n">sqlite</span><span class="p">):</span>
+            <span class="k">class</span> <span class="nc">MyConnection</span><span class="p">(</span><span class="n">sqlite</span><span class="o">.</span><span class="n">Connection</span><span class="p">):</span>
+                <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                    <span class="nb">super</span><span class="p">(</span><span class="n">MyConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">create_function</span><span class="p">(</span><span class="s2">&quot;regexp&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">regexp</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">MyConnection</span>
+
+        <span class="n">setSQLiteConnectionFactory</span><span class="p">(</span><span class="n">IterTest</span><span class="p">,</span> <span class="n">SQLiteConnectionFactory</span><span class="p">)</span>
+
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;sqlobject&#39;</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;sqlbuilder&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">RLIKE</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;^sql.*$&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">RLIKE</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;^sqlb.*$&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">RLIKE</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;^sqlb.*$&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">RLIKE</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;^sqlx.*$&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="test_select_sqlbuilder"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_select_sqlbuilder">[docs]</a><span class="k">def</span> <span class="nf">test_select_sqlbuilder</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;sqlobject&#39;</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">u&#39;sqlobject&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_select_perConnection"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_select_perConnection">[docs]</a><span class="k">def</span> <span class="nf">test_select_perConnection</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
+    <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">getOne</span><span class="p">()</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">_perConnection</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

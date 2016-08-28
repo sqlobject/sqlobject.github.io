@@ -1,0 +1,690 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.main module &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sqlobject.main module</a><ul>
+<li><a class="reference internal" href="#sqlobject">SQLObject</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.main.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.main">
+<span id="sqlobject-main-module"></span><h1>sqlobject.main module<a class="headerlink" href="#module-sqlobject.main" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sqlobject">
+<h2>SQLObject<a class="headerlink" href="#sqlobject" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">author:</th><td class="field-body">Ian Bicking &lt;<a class="reference external" href="mailto:ianb&#37;&#52;&#48;colorstudy&#46;com">ianb<span>&#64;</span>colorstudy<span>&#46;</span>com</a>&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>SQLObject is a object-relational mapper.  See SQLObject.html or
+SQLObject.rst for more.</p>
+<p>With the help by Oleg Broytman and many other contributors.
+See Authors.rst.</p>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of the
+License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU Lesser General Public
+License along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,
+USA.</p>
+<dl class="class">
+<dt id="sqlobject.main.NoDefault">
+<em class="property">class </em><code class="descclassname">sqlobject.main.</code><code class="descname">NoDefault</code><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NoDefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.NoDefault" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.main.SQLObject">
+<em class="property">class </em><code class="descclassname">sqlobject.main.</code><code class="descname">SQLObject</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.SelectResultsClass">
+<code class="descname">SelectResultsClass</code><a class="headerlink" href="#sqlobject.main.SQLObject.SelectResultsClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">SelectResults</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.clearTable">
+<em class="property">classmethod </em><code class="descname">clearTable</code><span class="sig-paren">(</span><em>connection=None</em>, <em>clearJoinTables=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.clearTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.clearTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.coerceID">
+<em class="property">classmethod </em><code class="descname">coerceID</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.coerceID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.coerceID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.createIndexes">
+<em class="property">classmethod </em><code class="descname">createIndexes</code><span class="sig-paren">(</span><em>ifNotExists=False</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.createIndexes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.createIndexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.createIndexesSQL">
+<em class="property">classmethod </em><code class="descname">createIndexesSQL</code><span class="sig-paren">(</span><em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.createIndexesSQL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.createIndexesSQL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.createJoinTables">
+<em class="property">classmethod </em><code class="descname">createJoinTables</code><span class="sig-paren">(</span><em>ifNotExists=False</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.createJoinTables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.createJoinTables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.createJoinTablesSQL">
+<em class="property">classmethod </em><code class="descname">createJoinTablesSQL</code><span class="sig-paren">(</span><em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.createJoinTablesSQL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.createJoinTablesSQL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.createTable">
+<em class="property">classmethod </em><code class="descname">createTable</code><span class="sig-paren">(</span><em>ifNotExists=False</em>, <em>createJoinTables=True</em>, <em>createIndexes=True</em>, <em>applyConstraints=True</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.createTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.createTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.createTableSQL">
+<em class="property">classmethod </em><code class="descname">createTableSQL</code><span class="sig-paren">(</span><em>createJoinTables=True</em>, <em>createIndexes=True</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.createTableSQL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.createTableSQL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.delete">
+<em class="property">classmethod </em><code class="descname">delete</code><span class="sig-paren">(</span><em>id</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.deleteBy">
+<em class="property">classmethod </em><code class="descname">deleteBy</code><span class="sig-paren">(</span><em>connection=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.deleteBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.deleteBy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.deleteMany">
+<em class="property">classmethod </em><code class="descname">deleteMany</code><span class="sig-paren">(</span><em>where=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.deleteMany"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.deleteMany" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.main.SQLObject.destroySelf">
+<code class="descname">destroySelf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.destroySelf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.destroySelf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.dropJoinTables">
+<em class="property">classmethod </em><code class="descname">dropJoinTables</code><span class="sig-paren">(</span><em>ifExists=False</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.dropJoinTables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.dropJoinTables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.dropTable">
+<em class="property">classmethod </em><code class="descname">dropTable</code><span class="sig-paren">(</span><em>ifExists=False</em>, <em>dropJoinTables=True</em>, <em>cascade=False</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.dropTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.dropTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.main.SQLObject.expire">
+<code class="descname">expire</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.expire"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.expire" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>id</em>, <em>connection=None</em>, <em>selectResults=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.select">
+<em class="property">classmethod </em><code class="descname">select</code><span class="sig-paren">(</span><em>clause=None</em>, <em>clauseTables=None</em>, <em>orderBy=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>limit=None</em>, <em>lazyColumns=False</em>, <em>reversed=False</em>, <em>distinct=False</em>, <em>connection=None</em>, <em>join=None</em>, <em>forUpdate=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.select" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.selectBy">
+<em class="property">classmethod </em><code class="descname">selectBy</code><span class="sig-paren">(</span><em>connection=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.selectBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.selectBy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.main.SQLObject.set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>_suppress_set_sig=False</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.setConnection">
+<em class="property">classmethod </em><code class="descname">setConnection</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.setConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.setConnection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.main.SQLObject.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>This object is the object we use to keep track of all sorts of
+information.  Subclasses are made for each SQLObject subclass
+(dynamically if necessary), and instances are created to go
+alongside every SQLObject instance.</p>
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.addColumn">
+<em class="property">classmethod </em><code class="descname">addColumn</code><span class="sig-paren">(</span><em>columnDef</em>, <em>changeSchema=False</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.addColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.addColumnsFromDatabase">
+<em class="property">classmethod </em><code class="descname">addColumnsFromDatabase</code><span class="sig-paren">(</span><em>sqlmeta</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.addColumnsFromDatabase" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.addIndex">
+<em class="property">classmethod </em><code class="descname">addIndex</code><span class="sig-paren">(</span><em>indexDef</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.addIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.addJoin">
+<em class="property">classmethod </em><code class="descname">addJoin</code><span class="sig-paren">(</span><em>joinDef</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.addJoin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.main.SQLObject.sqlmeta.asDict">
+<code class="descname">asDict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.asDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the object as a dictionary of columns to values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.cacheValues">
+<code class="descname">cacheValues</code><em class="property"> = True</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.cacheValues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.dbEncoding">
+<code class="descname">dbEncoding</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.dbEncoding" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.defaultOrder">
+<code class="descname">defaultOrder</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.defaultOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.delColumn">
+<em class="property">classmethod </em><code class="descname">delColumn</code><span class="sig-paren">(</span><em>column</em>, <em>changeSchema=False</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.delColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.delJoin">
+<em class="property">classmethod </em><code class="descname">delJoin</code><span class="sig-paren">(</span><em>sqlmeta</em>, <em>joinDef</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.delJoin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.dirty">
+<code class="descname">dirty</code><em class="property"> = False</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.dirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.expireAll">
+<em class="property">classmethod </em><code class="descname">expireAll</code><span class="sig-paren">(</span><em>sqlmeta</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.expireAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expire all instances of this class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.expired">
+<code class="descname">expired</code><em class="property"> = False</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.expired" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.fromDatabase">
+<code class="descname">fromDatabase</code><em class="property"> = False</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.fromDatabase" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.getColumns">
+<em class="property">classmethod </em><code class="descname">getColumns</code><span class="sig-paren">(</span><em>sqlmeta</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.getColumns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.idSequence">
+<code class="descname">idSequence</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.idSequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.idType">
+<code class="descname">idType</code><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.idType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">int</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.lazyUpdate">
+<code class="descname">lazyUpdate</code><em class="property"> = False</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.lazyUpdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.parentClass">
+<code class="descname">parentClass</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.registry">
+<code class="descname">registry</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.registry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.send">
+<em class="property">classmethod </em><code class="descname">send</code><span class="sig-paren">(</span><em>signal</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.send" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlmeta.setClass">
+<em class="property">classmethod </em><code class="descname">setClass</code><span class="sig-paren">(</span><em>soClass</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.setClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.SQLObject.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.SQLObject.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.sqlrepr">
+<em class="property">classmethod </em><code class="descclassname">SQLObject.</code><code class="descname">sqlrepr</code><span class="sig-paren">(</span><em>value</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.sqlrepr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.sqlrepr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.main.SQLObject.sync">
+<code class="descclassname">SQLObject.</code><code class="descname">sync</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.sync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.sync" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.main.SQLObject.syncUpdate">
+<code class="descclassname">SQLObject.</code><code class="descname">syncUpdate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.syncUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.syncUpdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.SQLObject.tableExists">
+<em class="property">classmethod </em><code class="descclassname">SQLObject.</code><code class="descname">tableExists</code><span class="sig-paren">(</span><em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.tableExists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.tableExists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.main.SQLObject.tablesUsedImmediate">
+<code class="descclassname">SQLObject.</code><code class="descname">tablesUsedImmediate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObject.tablesUsedImmediate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObject.tablesUsedImmediate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="sqlobject.main.SQLObjectIntegrityError">
+<em class="property">exception </em><code class="descclassname">sqlobject.main.</code><code class="descname">SQLObjectIntegrityError</code><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObjectIntegrityError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObjectIntegrityError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sqlobject.main.SQLObjectNotFound">
+<em class="property">exception </em><code class="descclassname">sqlobject.main.</code><code class="descname">SQLObjectNotFound</code><a class="reference internal" href="../_modules/sqlobject/main.html#SQLObjectNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.SQLObjectNotFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.LookupError</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.main.getID">
+<code class="descclassname">sqlobject.main.</code><code class="descname">getID</code><span class="sig-paren">(</span><em>obj</em>, <em>refColumn=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#getID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.getID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.main.getObject">
+<code class="descclassname">sqlobject.main.</code><code class="descname">getObject</code><span class="sig-paren">(</span><em>obj</em>, <em>klass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#getObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.getObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlhub">
+<code class="descclassname">sqlobject.main.</code><code class="descname">sqlhub</code><a class="headerlink" href="#sqlobject.main.sqlhub" title="Permalink to this definition">¶</a></dt>
+<dd><p>This object serves as a hub for connections, so that you can pass
+in a ConnectionHub to a SQLObject subclass as though it was a
+connection, but actually bind a real database connection later.
+You can also bind connections on a per-thread basis.</p>
+<p>You must hang onto the original ConnectionHub instance, as you
+cannot retrieve it again from the class or instance.</p>
+<p>To use the hub, do something like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">hub</span> <span class="o">=</span> <span class="n">ConnectionHub</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">_connection</span> <span class="o">=</span> <span class="n">hub</span>
+
+<span class="n">hub</span><span class="o">.</span><span class="n">threadConnection</span> <span class="o">=</span> <span class="n">connectionFromURI</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.main.sqlmeta">
+<em class="property">class </em><code class="descclassname">sqlobject.main.</code><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>This object is the object we use to keep track of all sorts of
+information.  Subclasses are made for each SQLObject subclass
+(dynamically if necessary), and instances are created to go
+alongside every SQLObject instance.</p>
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.addColumn">
+<em class="property">classmethod </em><code class="descname">addColumn</code><span class="sig-paren">(</span><em>columnDef</em>, <em>changeSchema=False</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.addColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.addColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.addColumnsFromDatabase">
+<em class="property">classmethod </em><code class="descname">addColumnsFromDatabase</code><span class="sig-paren">(</span><em>sqlmeta</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.addColumnsFromDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.addColumnsFromDatabase" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.addIndex">
+<em class="property">classmethod </em><code class="descname">addIndex</code><span class="sig-paren">(</span><em>indexDef</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.addIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.addIndex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.addJoin">
+<em class="property">classmethod </em><code class="descname">addJoin</code><span class="sig-paren">(</span><em>joinDef</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.addJoin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.addJoin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.main.sqlmeta.asDict">
+<code class="descname">asDict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.asDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.asDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the object as a dictionary of columns to values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.cacheValues">
+<code class="descname">cacheValues</code><em class="property"> = True</em><a class="headerlink" href="#sqlobject.main.sqlmeta.cacheValues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.main.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.main.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.main.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.dbEncoding">
+<code class="descname">dbEncoding</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.dbEncoding" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.defaultOrder">
+<code class="descname">defaultOrder</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.defaultOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.delColumn">
+<em class="property">classmethod </em><code class="descname">delColumn</code><span class="sig-paren">(</span><em>column</em>, <em>changeSchema=False</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.delColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.delColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.delJoin">
+<em class="property">classmethod </em><code class="descname">delJoin</code><span class="sig-paren">(</span><em>sqlmeta</em>, <em>joinDef</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.delJoin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.delJoin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.dirty">
+<code class="descname">dirty</code><em class="property"> = False</em><a class="headerlink" href="#sqlobject.main.sqlmeta.dirty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.expireAll">
+<em class="property">classmethod </em><code class="descname">expireAll</code><span class="sig-paren">(</span><em>sqlmeta</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.expireAll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.expireAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expire all instances of this class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.expired">
+<code class="descname">expired</code><em class="property"> = False</em><a class="headerlink" href="#sqlobject.main.sqlmeta.expired" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.fromDatabase">
+<code class="descname">fromDatabase</code><em class="property"> = False</em><a class="headerlink" href="#sqlobject.main.sqlmeta.fromDatabase" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.getColumns">
+<em class="property">classmethod </em><code class="descname">getColumns</code><span class="sig-paren">(</span><em>sqlmeta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.getColumns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.getColumns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.idSequence">
+<code class="descname">idSequence</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.idSequence" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.idType">
+<code class="descname">idType</code><a class="headerlink" href="#sqlobject.main.sqlmeta.idType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">int</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.main.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.lazyUpdate">
+<code class="descname">lazyUpdate</code><em class="property"> = False</em><a class="headerlink" href="#sqlobject.main.sqlmeta.lazyUpdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.parentClass">
+<code class="descname">parentClass</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.registry">
+<code class="descname">registry</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.registry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.send">
+<em class="property">classmethod </em><code class="descname">send</code><span class="sig-paren">(</span><em>signal</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.send" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.main.sqlmeta.setClass">
+<em class="property">classmethod </em><code class="descname">setClass</code><span class="sig-paren">(</span><em>soClass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/main.html#sqlmeta.setClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.main.sqlmeta.setClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.main.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.main.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

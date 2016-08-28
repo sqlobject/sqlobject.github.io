@@ -1,0 +1,142 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_combining_joins &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.tests.test_combining_joins</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">ManyToMany</span><span class="p">,</span> <span class="n">OneToMany</span><span class="p">,</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span>
+<span class="kn">from</span> <span class="nn">.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
+
+
+<div class="viewcode-block" id="ComplexGroup"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_combining_joins.html#sqlobject.tests.test_combining_joins.ComplexGroup">[docs]</a><span class="k">class</span> <span class="nc">ComplexGroup</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">complexes</span> <span class="o">=</span> <span class="n">OneToMany</span><span class="p">(</span><span class="s1">&#39;Complex&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_unit_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">complexes</span><span class="o">.</span><span class="n">clause</span> <span class="o">&amp;</span> <span class="n">Complex</span><span class="o">.</span><span class="n">unit_models</span><span class="o">.</span><span class="n">clause</span>
+        <span class="k">return</span> <span class="n">UnitModel</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">q</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Complex"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_combining_joins.html#sqlobject.tests.test_combining_joins.Complex">[docs]</a><span class="k">class</span> <span class="nc">Complex</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">unit_models</span> <span class="o">=</span> <span class="n">ManyToMany</span><span class="p">(</span><span class="s1">&#39;UnitModel&#39;</span><span class="p">)</span>
+    <span class="n">complex_group</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;ComplexGroup&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UnitModel"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_combining_joins.html#sqlobject.tests.test_combining_joins.UnitModel">[docs]</a><span class="k">class</span> <span class="nc">UnitModel</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
+        <span class="n">defaultOrderBy</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">complexes</span> <span class="o">=</span> <span class="n">ManyToMany</span><span class="p">(</span><span class="s1">&#39;Complex&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_join_sqlrepr"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_combining_joins.html#sqlobject.tests.test_combining_joins.test_join_sqlrepr">[docs]</a><span class="k">def</span> <span class="nf">test_join_sqlrepr</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">([</span><span class="n">ComplexGroup</span><span class="p">,</span> <span class="n">UnitModel</span><span class="p">,</span> <span class="n">Complex</span><span class="p">])</span>
+    <span class="n">cg1</span> <span class="o">=</span> <span class="n">ComplexGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cg1&#39;</span><span class="p">)</span>
+    <span class="n">cg2</span> <span class="o">=</span> <span class="n">ComplexGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cg2&#39;</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="n">complex_group</span><span class="o">=</span><span class="n">cg1</span><span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;c2&#39;</span><span class="p">,</span> <span class="n">complex_group</span><span class="o">=</span><span class="n">cg2</span><span class="p">)</span>
+    <span class="n">c3</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;c3&#39;</span><span class="p">,</span> <span class="n">complex_group</span><span class="o">=</span><span class="n">cg2</span><span class="p">)</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">UnitModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;u1&#39;</span><span class="p">)</span>
+    <span class="n">u2</span> <span class="o">=</span> <span class="n">UnitModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;u2&#39;</span><span class="p">)</span>
+    <span class="n">u1</span><span class="o">.</span><span class="n">complexes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+    <span class="n">u1</span><span class="o">.</span><span class="n">complexes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+    <span class="n">u2</span><span class="o">.</span><span class="n">complexes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+    <span class="n">u2</span><span class="o">.</span><span class="n">complexes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c3</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">Complex</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;c1&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span><span class="n">c1</span><span class="p">]</span>
+
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">cg1</span><span class="o">.</span><span class="n">unit_models</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="n">u1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">cg2</span><span class="o">.</span><span class="n">unit_models</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u2</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">cg2</span><span class="o">.</span><span class="n">unit_models</span><span class="o">.</span><span class="n">distinct</span><span class="p">())</span> <span class="o">==</span> <span class="p">[</span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">]</span>
+
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">cg2</span><span class="o">.</span><span class="n">unit_models</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">UnitModel</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;u1&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span><span class="n">u1</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

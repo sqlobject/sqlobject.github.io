@@ -1,0 +1,403 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_auto module &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.tests.test_auto.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.tests.test_auto">
+<span id="sqlobject-tests-test-auto-module"></span><h1>sqlobject.tests.test_auto module<a class="headerlink" href="#module-sqlobject.tests.test_auto" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sqlobject.tests.test_auto.Person">
+<em class="property">class </em><code class="descclassname">sqlobject.tests.test_auto.</code><code class="descname">Person</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#Person"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.Person" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.j">
+<code class="descname">j</code><em class="property"> = person</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.name">
+<code class="descname">name</code><a class="headerlink" href="#sqlobject.tests.test_auto.Person.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.q">
+<code class="descname">q</code><em class="property"> = person</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.sqlmeta" title="sqlobject.main.sqlmeta"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.sqlmeta</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b41f8f0cL name&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol name&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'name': &lt;SOStringCol name&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.defaultOrder">
+<code class="descname">defaultOrder</code><em class="property"> = 'name'</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.defaultOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = 'id'</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.tests.test_auto.Person" title="sqlobject.tests.test_auto.Person"><code class="xref py py-class docutils literal"><span class="pre">Person</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = &lt;sqlobject.styles.MixedCaseUnderscoreStyle object&gt;</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Person.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'person'</em><a class="headerlink" href="#sqlobject.tests.test_auto.Person.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_auto.Phone">
+<em class="property">class </em><code class="descclassname">sqlobject.tests.test_auto.</code><code class="descname">Phone</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#Phone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.Phone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.j">
+<code class="descname">j</code><em class="property"> = phone</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.phone">
+<code class="descname">phone</code><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.phone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.q">
+<code class="descname">q</code><em class="property"> = phone</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.sqlmeta" title="sqlobject.main.sqlmeta"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.sqlmeta</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'phone': &lt;StringCol b41c21ccL phone&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol phone&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'phone': &lt;SOStringCol phone&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.defaultOrder">
+<code class="descname">defaultOrder</code><em class="property"> = 'phone'</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.defaultOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = 'id'</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.tests.test_auto.Phone" title="sqlobject.tests.test_auto.Phone"><code class="xref py py-class docutils literal"><span class="pre">Phone</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = &lt;sqlobject.styles.MixedCaseUnderscoreStyle object&gt;</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.Phone.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'phone'</em><a class="headerlink" href="#sqlobject.tests.test_auto.Phone.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_auto.TestAuto">
+<em class="property">class </em><code class="descclassname">sqlobject.tests.test_auto.</code><code class="descname">TestAuto</code><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestAuto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.mssqlCreate">
+<code class="descname">mssqlCreate</code><em class="property"> = &quot;\n    CREATE TABLE auto_test (\n      auto_id int identity(1,1),\n      first_name VARCHAR(100),\n      last_name VARCHAR(200) NOT NULL,\n      age INT DEFAULT 0,\n      created DATETIME NOT NULL,\n      happy char(1) DEFAULT 'Y' NOT NULL,\n      long_field TEXT,\n      wannahavefun BIT default(0) NOT NULL\n    )\n    &quot;</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.mssqlCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.mssqlDrop">
+<code class="descname">mssqlDrop</code><em class="property"> = '\n    DROP TABLE auto_test\n    '</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.mssqlDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.mysqlCreate">
+<code class="descname">mysqlCreate</code><em class="property"> = &quot;\n    CREATE TABLE IF NOT EXISTS auto_test (\n      auto_id INT AUTO_INCREMENT PRIMARY KEY,\n      first_name VARCHAR(100),\n      last_name VARCHAR(200) NOT NULL,\n      age INT DEFAULT NULL,\n      created DATETIME NOT NULL,\n      happy char(1) DEFAULT 'Y' NOT NULL,\n      long_field TEXT,\n      wannahavefun TINYINT DEFAULT 0 NOT NULL\n    )\n    &quot;</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.mysqlCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.mysqlDrop">
+<code class="descname">mysqlDrop</code><em class="property"> = '\n    DROP TABLE IF EXISTS auto_test\n    '</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.mysqlDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.postgresCreate">
+<code class="descname">postgresCreate</code><em class="property"> = &quot;\n    CREATE TABLE auto_test (\n      auto_id SERIAL PRIMARY KEY,\n      first_name VARCHAR(100),\n      last_name VARCHAR(200) NOT NULL,\n      age INT DEFAULT 0,\n      created TIMESTAMP NOT NULL,\n      happy char(1) DEFAULT 'Y' NOT NULL,\n      long_field TEXT,\n      wannahavefun BOOL DEFAULT FALSE NOT NULL\n    )\n    &quot;</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.postgresCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.postgresDrop">
+<code class="descname">postgresDrop</code><em class="property"> = '\n    DROP TABLE auto_test\n    '</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.postgresDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.rdbhostCreate">
+<code class="descname">rdbhostCreate</code><em class="property"> = &quot;\n    CREATE TABLE auto_test (\n      auto_id SERIAL PRIMARY KEY,\n      first_name VARCHAR(100),\n      last_name VARCHAR(200) NOT NULL,\n      age INT DEFAULT 0,\n      created VARCHAR(40) NOT NULL,\n      happy char(1) DEFAULT 'Y' NOT NULL,\n      long_field TEXT,\n      wannahavefun BOOL DEFAULT FALSE NOT NULL\n    )\n    &quot;</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.rdbhostCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.rdbhostDrop">
+<code class="descname">rdbhostDrop</code><em class="property"> = '\n    DROP TABLE auto_test\n    '</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.rdbhostDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.tests.test_auto.TestAuto.setup_method">
+<code class="descname">setup_method</code><span class="sig-paren">(</span><em>meth</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestAuto.setup_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.setup_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.sqliteCreate">
+<code class="descname">sqliteCreate</code><em class="property"> = &quot;\n    CREATE TABLE auto_test (\n      auto_id INTEGER PRIMARY KEY AUTOINCREMENT ,\n      first_name VARCHAR(100),\n      last_name VARCHAR(200) NOT NULL,\n      age INT DEFAULT NULL,\n      created DATETIME NOT NULL,\n      happy char(1) DEFAULT 'Y' NOT NULL,\n      long_field TEXT,\n      wannahavefun INT DEFAULT 0 NOT NULL\n    )\n    &quot;</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.sqliteCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.sqliteDrop">
+<code class="descname">sqliteDrop</code><em class="property"> = '\n    DROP TABLE auto_test\n    '</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.sqliteDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.sybaseCreate">
+<code class="descname">sybaseCreate</code><em class="property"> = &quot;\n    CREATE TABLE auto_test (\n      auto_id integer,\n      first_name VARCHAR(100),\n      last_name VARCHAR(200) NOT NULL,\n      age INT DEFAULT 0,\n      created DATETIME NOT NULL,\n      happy char(1) DEFAULT 'Y' NOT NULL,\n      long_field TEXT,\n      wannahavefun BIT default(0) NOT NULL\n    )\n    &quot;</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.sybaseCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_auto.TestAuto.sybaseDrop">
+<code class="descname">sybaseDrop</code><em class="property"> = '\n    DROP TABLE auto_test\n    '</em><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.sybaseDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.tests.test_auto.TestAuto.teardown_method">
+<code class="descname">teardown_method</code><span class="sig-paren">(</span><em>meth</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestAuto.teardown_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.teardown_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.tests.test_auto.TestAuto.test_classCreate">
+<code class="descname">test_classCreate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestAuto.test_classCreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestAuto.test_classCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_auto.TestPeople">
+<em class="property">class </em><code class="descclassname">sqlobject.tests.test_auto.</code><code class="descname">TestPeople</code><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestPeople"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestPeople" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sqlobject.tests.test_auto.TestPeople.setup_method">
+<code class="descname">setup_method</code><span class="sig-paren">(</span><em>meth</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestPeople.setup_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestPeople.setup_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.tests.test_auto.TestPeople.test_collidingName">
+<code class="descname">test_collidingName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestPeople.test_collidingName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestPeople.test_collidingName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.tests.test_auto.TestPeople.test_defaultOrder">
+<code class="descname">test_defaultOrder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestPeople.test_defaultOrder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestPeople.test_defaultOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.tests.test_auto.TestPeople.test_dynamicColumn">
+<code class="descname">test_dynamicColumn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestPeople.test_dynamicColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestPeople.test_dynamicColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.tests.test_auto.TestPeople.test_dynamicJoin">
+<code class="descname">test_dynamicJoin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_auto.html#TestPeople.test_dynamicJoin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_auto.TestPeople.test_dynamicJoin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.tests.test_auto.now">
+<code class="descclassname">sqlobject.tests.test_auto.</code><code class="descname">now</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.tests.test_auto.now" title="Permalink to this definition">¶</a></dt>
+<dd><p>[tz] -&gt; new datetime with tz&#8217;s local day and time.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

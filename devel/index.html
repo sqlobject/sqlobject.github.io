@@ -1,123 +1,192 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-<title>SQLObject</title>
-    <link href="layout.css" type="text/css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SQLObject &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="#" />
+    <link rel="next" title="Download SQLObject" href="download.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
   </head>
-  <body>
-    <div id="page">
-      <h1 class="doc-title"><a></a></h1>
-      <div id="navcontainer">
-		    <ul id="navlist">
-          <li class="pagenav">
-            <ul>
-              <li class="page_item">
-                <a href="index.html" title="Project Home / Index">SQLObject</a>
-              </li>
-              <li class="page_item">
-                <a href="module-index.html" title="sqlobject package and module reference">Modules</a>
-              </li>
-              <li>
-                <a href="community.html" title="Mailing List">Discuss</a>
-              </li>
-	      <li>
-	        <a href="SQLObject.html">Documentation</a>
-	      </li>
-            </ul>
-          </li>
-        </ul>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="download.html" title="Download SQLObject"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SQLObject</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="download.html"
+                        title="next chapter">Download SQLObject</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
       </div>
-      <hr>
-      <div id="content">
-  <h1 class="pudge-member-page-heading">
-    SQLObject
-  </h1>
-  <div class="rst-doc">
-    <p>SQLObject is a popular <em>Object Relational Manager</em> for providing an
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sqlobject">
+<h1>SQLObject<a class="headerlink" href="#sqlobject" title="Permalink to this headline">¶</a></h1>
+<p>SQLObject is a popular <em>Object Relational Manager</em> for providing an
 object interface to your database, with tables as classes, rows as
 instances, and columns as attributes.</p>
 <p>SQLObject includes a Python-object-based query language that makes SQL
 more abstract, and provides substantial database independence for
 applications.</p>
 <div class="section" id="documentation">
-<h1>Documentation</h1>
-<ul class="simple">
-<li><a href="download.html" class="reference external">Download</a></li>
-<li><a href="community.html" class="reference external">Mailing list, bugs, etc.</a></li>
-<li><a href="links.html" class="reference external">Related projects and articles</a></li>
-<li><a href="News.html" class="reference external">News and updates</a></li>
-<li><a href="Python3.html" class="reference external">SQLObject and Python 3</a></li>
-<li><a href="SQLObject.html" class="reference external">Main SQLObject documentation</a></li>
-<li><a href="FAQ.html" class="reference external">Frequently Asked Questions</a></li>
-<li><a href="SQLBuilder.html" class="reference external">sqlbuilder documentation</a></li>
-<li><a href="SelectResults.html" class="reference external">select() and SelectResults</a></li>
-<li><a href="sqlobject-admin.html" class="reference external">sqlobject-admin documentation</a></li>
-<li><a href="Inheritance.html" class="reference external">Inheritance</a></li>
-<li><a href="Versioning.html" class="reference external">Versioning</a></li>
-<li><a href="Views.html" class="reference external">Views</a></li>
-<li><a href="DeveloperGuide.html" class="reference external">Developer Guide</a></li>
-<li><a href="Authors.html" class="reference external">Contributors</a></li>
-<li><a href="TODO.html" class="reference external">TODO</a></li>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="download.html">Download SQLObject</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">SQLObject Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="links.html">SQLObject Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="News.html">News</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Python3.html">SQLObject and Python 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SQLObject.html">SQLObject</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">SQLObject FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SQLBuilder.html">SQLBuilder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SelectResults.html">SelectResults: Using Queries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sqlobject-admin.html">The sqlobject-admin Tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Inheritance.html">Inheritance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Versioning.html">Versioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Views.html">Views and SQLObjects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DeveloperGuide.html">SQLObject Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html">TODO</a></li>
 </ul>
 </div>
+</div>
 <div class="section" id="example">
-<h1>Example</h1>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>This is just a snippet that creates a simple class that wraps a table:</p>
-<pre class="literal-block">
->>> from sqlobject import *
->>>
->>> sqlhub.processConnection = connectionForURI('sqlite:/:memory:')
->>>
->>> class Person(SQLObject):
-...     fname = StringCol()
-...     mi = StringCol(length=1, default=None)
-...     lname = StringCol()
-...
->>> Person.createTable()
-</pre>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="o">*</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sqlhub</span><span class="o">.</span><span class="n">processConnection</span> <span class="o">=</span> <span class="n">connectionForURI</span><span class="p">(</span><span class="s1">&#39;sqlite:/:memory:&#39;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">fname</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">mi</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">lname</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">createTable</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>SQLObject supports most database schemas that you already have, and
-can also issue the <tt class="docutils literal">CREATE</tt> statement for you (seen in
-<tt class="docutils literal">Person.createTable()</tt>).</p>
-<p>Here's how you'd use the object:</p>
-<pre class="literal-block">
->>> p = Person(fname="John", lname="Doe")
->>> p
-&lt;Person 1 fname='John' mi=None lname='Doe'>
->>> p.fname
-'John'
->>> p.mi = 'Q'
->>> p2 = Person.get(1)
->>> p2
-&lt;Person 1 fname='John' mi='Q' lname='Doe'>
->>> p is p2
-True
-</pre>
-<a href="https://sourceforge.net/projects/sqlobject" class="reference external image-reference"><img src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" style="width: 80px; height: 15px;" class="noborder align-center"></a>
+can also issue the <code class="docutils literal"><span class="pre">CREATE</span></code> statement for you (seen in
+<code class="docutils literal"><span class="pre">Person.createTable()</span></code>).</p>
+<p>Here&#8217;s how you&#8217;d use the object:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="n">lname</span><span class="o">=</span><span class="s2">&quot;Doe&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span>
+<span class="go">&lt;Person 1 fname=&#39;John&#39; mi=None lname=&#39;Doe&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">fname</span>
+<span class="go">&#39;John&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">mi</span> <span class="o">=</span> <span class="s1">&#39;Q&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span>
+<span class="go">&lt;Person 1 fname=&#39;John&#39; mi=&#39;Q&#39; lname=&#39;Doe&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="ow">is</span> <span class="n">p2</span>
+<span class="go">True</span>
+</pre></div>
 </div>
-  </div>
 </div>
-      <div id="footer">
-        <p style="float: left;">
-          built with 
-          <a href="http://lesscode.org/projects/pudge/">pudge/0.1.3</a> |
-		      original design by 
-          <a href="http://blog.ratterobert.com/">ratter / robert</a>
-	      </p>
-        <div>
-        <br> <!--
-        <a name="search">
-          <form method="get" id="searchform" 
-                action="http://lesscode.org/blog/index.php">
-            <div>
-              <input type="text" value="" name="s" id="s" />
-              <input type="submit" id="searchsubmit" value="Search" />
-            </div>
-          </form>
-        </a> -->
-        <br>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+<a class="reference external image-reference" href="https://sourceforge.net/projects/sqlobject"><img alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" class="noborder align-center" src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" style="width: 80px; height: 15px;" /></a>
+</div>
+</div>
+
+
+          </div>
         </div>
       </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="download.html" title="Download SQLObject"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

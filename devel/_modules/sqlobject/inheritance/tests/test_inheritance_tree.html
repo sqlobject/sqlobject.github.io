@@ -1,0 +1,141 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.inheritance.tests.test_inheritance_tree &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../../index.html" />
+    <link rel="up" title="sqlobject.inheritance" href="../../inheritance.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../inheritance.html" accesskey="U">sqlobject.inheritance</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.inheritance.tests.test_inheritance_tree</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">StringCol</span>
+<span class="kn">from</span> <span class="nn">sqlobject.inheritance</span> <span class="k">import</span> <span class="n">InheritableSQLObject</span>
+<span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
+
+<span class="c1">########################################</span>
+<span class="c1"># Inheritance Tree</span>
+<span class="c1">########################################</span>
+
+
+<div class="viewcode-block" id="Tree1"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_inheritance_tree.html#sqlobject.inheritance.tests.test_inheritance_tree.Tree1">[docs]</a><span class="k">class</span> <span class="nc">Tree1</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
+    <span class="n">aprop</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tree2"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_inheritance_tree.html#sqlobject.inheritance.tests.test_inheritance_tree.Tree2">[docs]</a><span class="k">class</span> <span class="nc">Tree2</span><span class="p">(</span><span class="n">Tree1</span><span class="p">):</span>
+    <span class="n">bprop</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tree3"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_inheritance_tree.html#sqlobject.inheritance.tests.test_inheritance_tree.Tree3">[docs]</a><span class="k">class</span> <span class="nc">Tree3</span><span class="p">(</span><span class="n">Tree1</span><span class="p">):</span>
+    <span class="n">cprop</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tree4"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_inheritance_tree.html#sqlobject.inheritance.tests.test_inheritance_tree.Tree4">[docs]</a><span class="k">class</span> <span class="nc">Tree4</span><span class="p">(</span><span class="n">Tree2</span><span class="p">):</span>
+    <span class="n">dprop</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Tree5"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_inheritance_tree.html#sqlobject.inheritance.tests.test_inheritance_tree.Tree5">[docs]</a><span class="k">class</span> <span class="nc">Tree5</span><span class="p">(</span><span class="n">Tree2</span><span class="p">):</span>
+    <span class="n">eprop</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_tree"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_inheritance_tree.html#sqlobject.inheritance.tests.test_inheritance_tree.test_tree">[docs]</a><span class="k">def</span> <span class="nf">test_tree</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">([</span><span class="n">Tree1</span><span class="p">,</span> <span class="n">Tree2</span><span class="p">,</span> <span class="n">Tree3</span><span class="p">,</span> <span class="n">Tree4</span><span class="p">,</span> <span class="n">Tree5</span><span class="p">])</span>
+
+    <span class="n">Tree1</span><span class="p">(</span><span class="n">aprop</span><span class="o">=</span><span class="s1">&#39;t1&#39;</span><span class="p">)</span>  <span class="c1"># t1</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">Tree2</span><span class="p">(</span><span class="n">aprop</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">,</span> <span class="n">bprop</span><span class="o">=</span><span class="s1">&#39;t2&#39;</span><span class="p">)</span>
+    <span class="n">Tree3</span><span class="p">(</span><span class="n">aprop</span><span class="o">=</span><span class="s1">&#39;t3&#39;</span><span class="p">,</span> <span class="n">cprop</span><span class="o">=</span><span class="s1">&#39;t3&#39;</span><span class="p">)</span>  <span class="c1"># t3</span>
+    <span class="n">t4</span> <span class="o">=</span> <span class="n">Tree4</span><span class="p">(</span><span class="n">aprop</span><span class="o">=</span><span class="s1">&#39;t4&#39;</span><span class="p">,</span> <span class="n">bprop</span><span class="o">=</span><span class="s1">&#39;t4&#39;</span><span class="p">,</span> <span class="n">dprop</span><span class="o">=</span><span class="s1">&#39;t4&#39;</span><span class="p">)</span>
+    <span class="n">t5</span> <span class="o">=</span> <span class="n">Tree5</span><span class="p">(</span><span class="n">aprop</span><span class="o">=</span><span class="s1">&#39;t5&#39;</span><span class="p">,</span> <span class="n">bprop</span><span class="o">=</span><span class="s1">&#39;t5&#39;</span><span class="p">,</span> <span class="n">eprop</span><span class="o">=</span><span class="s1">&#39;t5&#39;</span><span class="p">)</span>
+
+    <span class="c1"># find just the t5 out of childs from Tree2</span>
+    <span class="k">assert</span> <span class="n">t5</span> <span class="o">==</span> <span class="n">Tree1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Tree2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">childName</span> <span class="o">==</span> <span class="s1">&#39;Tree5&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># t2,t4,t5 are all subclasses of Tree1 with t1 childName of &#39;Tree2&#39;</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">Tree1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">Tree1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">childName</span> <span class="o">==</span> <span class="s1">&#39;Tree2&#39;</span><span class="p">,</span> <span class="n">orderBy</span><span class="o">=</span><span class="s2">&quot;aprop&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span><span class="n">t2</span><span class="p">,</span> <span class="n">t4</span><span class="p">,</span> <span class="n">t5</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../inheritance.html" >sqlobject.inheritance</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

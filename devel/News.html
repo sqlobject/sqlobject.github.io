@@ -1,91 +1,186 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-<title>News</title>
-    <link href="layout.css" type="text/css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>News &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
+    <link rel="next" title="SQLObject and Python 3" href="Python3.html" />
+    <link rel="prev" title="SQLObject Links" href="links.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
   </head>
-  <body>
-    <div id="page">
-      <h1 class="doc-title"><a></a></h1>
-      <div id="navcontainer">
-		    <ul id="navlist">
-          <li class="pagenav">
-            <ul>
-              <li class="page_item">
-                <a href="index.html" title="Project Home / Index">SQLObject</a>
-              </li>
-              <li class="page_item">
-                <a href="module-index.html" title="sqlobject package and module reference">Modules</a>
-              </li>
-              <li>
-                <a href="community.html" title="Mailing List">Discuss</a>
-              </li>
-	      <li>
-	        <a href="SQLObject.html">Documentation</a>
-	      </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <hr>
-      <div id="content"><div class="rst-doc">
-  <h1 class="pudge-member-page-heading">News</h1>
-  <div class="contents topic" id="contents">
-<p class="topic-title first">Contents:</p>
-<ul class="simple">
-<li><a href="#sqlobject-3-2-0-master" class="reference internal" id="id4">SQLObject 3.2.0 (master)</a></li>
-<li><a href="#sqlobject-3-1-0" class="reference internal" id="id5">SQLObject 3.1.0</a><ul>
-<li><a href="#features" class="reference internal" id="id6">Features</a></li>
-<li><a href="#documentation" class="reference internal" id="id7">Documentation</a></li>
-<li><a href="#source-code" class="reference internal" id="id8">Source code</a></li>
-<li><a href="#tests" class="reference internal" id="id9">Tests</a></li>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Python3.html" title="SQLObject and Python 3"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="links.html" title="SQLObject Links"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">News</a><ul>
+<li><a class="reference internal" href="#sqlobject-3-2-0-master">SQLObject 3.2.0 (master)</a><ul>
+<li><a class="reference internal" href="#tests">Tests</a></li>
 </ul>
 </li>
-<li><a href="#sqlobject-3-0-0" class="reference internal" id="id10">SQLObject 3.0.0</a><ul>
-<li><a href="#id1" class="reference internal" id="id11">Features</a></li>
-<li><a href="#minor-features" class="reference internal" id="id12">Minor features</a></li>
-<li><a href="#development" class="reference internal" id="id13">Development</a></li>
-<li><a href="#id2" class="reference internal" id="id14">Documentation</a></li>
+<li><a class="reference internal" href="#sqlobject-3-1-0">SQLObject 3.1.0</a><ul>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#source-code">Source code</a></li>
+<li><a class="reference internal" href="#id1">Tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sqlobject-3-0-0">SQLObject 3.0.0</a><ul>
+<li><a class="reference internal" href="#id2">Features</a></li>
+<li><a class="reference internal" href="#minor-features">Minor features</a></li>
+<li><a class="reference internal" href="#development">Development</a></li>
+<li><a class="reference internal" href="#id3">Documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="links.html"
+                        title="previous chapter">SQLObject Links</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Python3.html"
+                        title="next chapter">SQLObject and Python 3</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/News.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="news">
+<h1>News<a class="headerlink" href="#news" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#news" id="id5">News</a><ul>
+<li><a class="reference internal" href="#sqlobject-3-2-0-master" id="id6">SQLObject 3.2.0 (master)</a><ul>
+<li><a class="reference internal" href="#tests" id="id7">Tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sqlobject-3-1-0" id="id8">SQLObject 3.1.0</a><ul>
+<li><a class="reference internal" href="#features" id="id9">Features</a></li>
+<li><a class="reference internal" href="#documentation" id="id10">Documentation</a></li>
+<li><a class="reference internal" href="#source-code" id="id11">Source code</a></li>
+<li><a class="reference internal" href="#id1" id="id12">Tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sqlobject-3-0-0" id="id13">SQLObject 3.0.0</a><ul>
+<li><a class="reference internal" href="#id2" id="id14">Features</a></li>
+<li><a class="reference internal" href="#minor-features" id="id15">Minor features</a></li>
+<li><a class="reference internal" href="#development" id="id16">Development</a></li>
+<li><a class="reference internal" href="#id3" id="id17">Documentation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="sqlobject-3-2-0-master">
-<span id="start"></span><h1>SQLObject 3.2.0 (master)</h1>
+<span id="start"></span><h2>SQLObject 3.2.0 (master)<a class="headerlink" href="#sqlobject-3-2-0-master" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tests">
+<h3>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fix tests under Python 2.7.12 + tox + PostgreSQL.</li>
+<li>Restore mxDateTime installation in tox.ini
+(was removed while egenix.com was down).</li>
+</ul>
+</div>
 </div>
 <div class="section" id="sqlobject-3-1-0">
-<h1>SQLObject 3.1.0</h1>
+<h2>SQLObject 3.1.0<a class="headerlink" href="#sqlobject-3-1-0" title="Permalink to this headline">¶</a></h2>
 <p>Released 16 Aug 2016.</p>
 <div class="section" id="features">
-<h2>Features</h2>
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Add UuidCol.</li>
 <li>Add JsonbCol. Only for PostgreSQL.
-Requires psycopg2 >= 2.5.4 and PostgreSQL >= 9.2.</li>
+Requires psycopg2 &gt;= 2.5.4 and PostgreSQL &gt;= 9.2.</li>
 <li>Add JSONCol, a universal json column.</li>
-<li>For Python >= 3.4 minimal FormEncode version is now 1.3.1.</li>
+<li>For Python &gt;= 3.4 minimal FormEncode version is now 1.3.1.</li>
 <li>If mxDateTime is in use, convert timedelta (returned by MySQL) to
 mxDateTime.Time.</li>
 </ul>
 </div>
 <div class="section" id="documentation">
-<h2>Documentation</h2>
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Developer's Guide extended to explain SQLObject architecture and how
-to create a new column type.</li>
+<li>Developer&#8217;s Guide is extended to explain SQLObject architecture
+and how to create a new column type.</li>
 <li>Fix URLs that can be found; remove missing links.</li>
 <li>Rename reStructuredText files from *.txt to *.rst.</li>
 </ul>
 </div>
 <div class="section" id="source-code">
-<h2>Source code</h2>
+<h3>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Fix all <cite>import *</cite> using <a href="https://github.com/zestyping/star-destroyer" class="reference external">https://github.com/zestyping/star-destroyer</a>.</li>
+<li>Fix all <cite>import *</cite> using <a class="reference external" href="https://github.com/zestyping/star-destroyer">https://github.com/zestyping/star-destroyer</a>.</li>
 </ul>
 </div>
-<div class="section" id="tests">
-<h2>Tests</h2>
+<div class="section" id="id1">
+<h3>Tests<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Tests are now run at Circle CI.</li>
 <li>Use pytest-cov for test coverage. Report test coverage
@@ -95,59 +190,66 @@ via coveralls.io and codecov.io.</li>
 </div>
 </div>
 <div class="section" id="sqlobject-3-0-0">
-<h1>SQLObject 3.0.0</h1>
+<h2>SQLObject 3.0.0<a class="headerlink" href="#sqlobject-3-0-0" title="Permalink to this headline">¶</a></h2>
 <p>Released 1 Jun 2016.</p>
-<div class="section" id="id1">
-<h2>Features</h2>
+<div class="section" id="id2">
+<h3>Features<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Support for Python 2 and Python 3 with one codebase!
-(Python version >= 3.4 currently required.)</li>
+(Python version &gt;= 3.4 currently required.)</li>
 </ul>
 </div>
 <div class="section" id="minor-features">
-<h2>Minor features</h2>
+<h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>PyDispatcher (>=2.0.4) was made an external dependency.</li>
+<li>PyDispatcher (&gt;=2.0.4) was made an external dependency.</li>
 </ul>
 </div>
 <div class="section" id="development">
-<h2>Development</h2>
+<h3>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Source code was made flake8-clean.</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>Documentation</h2>
+<div class="section" id="id3">
+<h3>Documentation<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Documentation is published at <a href="http://sqlobject.readthedocs.org/" class="reference external">http://sqlobject.readthedocs.org/</a> in
+<li>Documentation is published at <a class="reference external" href="http://sqlobject.readthedocs.org/">http://sqlobject.readthedocs.org/</a> in
 Sphinx format.</li>
 </ul>
-<p><a href="News5.html" class="reference external">Older news</a></p>
-<a href="https://sourceforge.net/projects/sqlobject" class="reference external image-reference"><img src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" style="width: 80px; height: 15px;" class="noborder align-center"></a>
+<p><a class="reference external" href="News5.html">Older news</a></p>
+<a class="reference external image-reference" href="https://sourceforge.net/projects/sqlobject"><img alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" class="noborder align-center" src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" style="width: 80px; height: 15px;" /></a>
 </div>
 </div>
-</div></div>
-      <div id="footer">
-        <p style="float: left;">
-          built with 
-          <a href="http://lesscode.org/projects/pudge/">pudge/0.1.3</a> |
-		      original design by 
-          <a href="http://blog.ratterobert.com/">ratter / robert</a>
-	      </p>
-        <div>
-        <br> <!--
-        <a name="search">
-          <form method="get" id="searchform" 
-                action="http://lesscode.org/blog/index.php">
-            <div>
-              <input type="text" value="" name="s" id="s" />
-              <input type="submit" id="searchsubmit" value="Search" />
-            </div>
-          </form>
-        </a> -->
-        <br>
+</div>
+
+
+          </div>
         </div>
       </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Python3.html" title="SQLObject and Python 3"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="links.html" title="SQLObject Links"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

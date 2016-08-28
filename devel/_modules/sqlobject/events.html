@@ -1,0 +1,447 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.events &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.events</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">from</span> <span class="nn">pydispatch</span> <span class="k">import</span> <span class="n">dispatcher</span>
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="k">import</span> <span class="n">ref</span>
+<span class="kn">from</span> <span class="nn">.compat</span> <span class="k">import</span> <span class="n">class_types</span>
+
+
+<span class="n">subclassClones</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="listen"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.listen">[docs]</a><span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">alsoSubclasses</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weak</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Listen for the given ``signal`` on the SQLObject subclass</span>
+<span class="sd">    ``soClass``, calling ``receiver()`` when ``send(soClass, signal,</span>
+<span class="sd">    ...)`` is called.</span>
+
+<span class="sd">    If ``alsoSubclasses`` is true, receiver will also be called when</span>
+<span class="sd">    an event is fired on any subclass.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dispatcher</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="n">signal</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">soClass</span><span class="p">,</span> <span class="n">weak</span><span class="o">=</span><span class="n">weak</span><span class="p">)</span>
+    <span class="n">weakReceiver</span> <span class="o">=</span> <span class="n">ref</span><span class="p">(</span><span class="n">receiver</span><span class="p">)</span>
+    <span class="n">subclassClones</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">weakReceiver</span><span class="p">,</span> <span class="n">signal</span><span class="p">))</span></div>
+
+<span class="c1"># We export this function:</span>
+<span class="n">send</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="o">.</span><span class="n">send</span>
+
+
+<div class="viewcode-block" id="Signal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.Signal">[docs]</a><span class="k">class</span> <span class="nc">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base event for all SQLObject events.</span>
+
+<span class="sd">    In general the sender for these methods is the class, not the</span>
+<span class="sd">    instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ClassCreateSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.ClassCreateSignal">[docs]</a><span class="k">class</span> <span class="nc">ClassCreateSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Signal raised after class creation.  The sender is the superclass</span>
+<span class="sd">    (in case of multiple superclasses, the first superclass).  The</span>
+<span class="sd">    arguments are ``(new_class_name, bases, new_attrs, post_funcs,</span>
+<span class="sd">    early_funcs)``.  ``new_attrs`` is a dictionary and may be modified</span>
+<span class="sd">    (but ``new_class_name`` and ``bases`` are immutable).</span>
+<span class="sd">    ``post_funcs`` is an initially-empty list that can have callbacks</span>
+<span class="sd">    appended to it.</span>
+
+<span class="sd">    Note: at the time this event is called, the new class has not yet</span>
+<span class="sd">    been created.  The functions in ``post_funcs`` will be called</span>
+<span class="sd">    after the class is created, with the single arguments of</span>
+<span class="sd">    ``(new_class)``.  Also, ``early_funcs`` will be called at the</span>
+<span class="sd">    soonest possible time after class creation (``post_funcs`` is</span>
+<span class="sd">    called after the class&#39;s ``__classinit__``).</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<span class="k">def</span> <span class="nf">_makeSubclassConnections</span><span class="p">(</span><span class="n">new_class_name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span>
+                             <span class="n">post_funcs</span><span class="p">,</span> <span class="n">early_funcs</span><span class="p">):</span>
+    <span class="n">early_funcs</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_makeSubclassConnectionsPost</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_makeSubclassConnectionsPost</span><span class="p">(</span><span class="n">new_class</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">cls</span> <span class="ow">in</span> <span class="n">new_class</span><span class="o">.</span><span class="n">__bases__</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">weakReceiver</span><span class="p">,</span> <span class="n">signal</span> <span class="ow">in</span> <span class="n">subclassClones</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">receiver</span> <span class="o">=</span> <span class="n">weakReceiver</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">receiver</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">listen</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span> <span class="n">new_class</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span>
+
+<span class="n">dispatcher</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_makeSubclassConnections</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="n">ClassCreateSignal</span><span class="p">)</span>
+
+
+<span class="c1"># @@: Should there be a class reload event?  This would allow modules</span>
+<span class="c1"># to be reloaded, possibly.  Or it could even be folded into</span>
+<span class="c1"># ClassCreateSignal, since anything that listens to that needs to pay</span>
+<span class="c1"># attention to reloads (or else it is probably buggy).</span>
+
+
+<div class="viewcode-block" id="RowCreateSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.RowCreateSignal">[docs]</a><span class="k">class</span> <span class="nc">RowCreateSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called before an instance is created, with the class as the</span>
+<span class="sd">    sender.  Called with the arguments ``(instance, kwargs, post_funcs)``.</span>
+<span class="sd">    There may be a ``connection`` argument.  ``kwargs``may be usefully</span>
+<span class="sd">    modified.  ``post_funcs`` is a list of callbacks, intended to have</span>
+<span class="sd">    functions appended to it, and are called with the arguments</span>
+<span class="sd">    ``(new_instance)``.</span>
+
+<span class="sd">    Note: this is not called when an instance is created from an</span>
+<span class="sd">    existing database row.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RowCreatedSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.RowCreatedSignal">[docs]</a><span class="k">class</span> <span class="nc">RowCreatedSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called after an instance is created, with the class as the</span>
+<span class="sd">    sender.  Called with the arguments ``(instance, kwargs, post_funcs)``.</span>
+<span class="sd">    There may be a ``connection`` argument.  ``kwargs``may be usefully</span>
+<span class="sd">    modified.  ``post_funcs`` is a list of callbacks, intended to have</span>
+<span class="sd">    functions appended to it, and are called with the arguments</span>
+<span class="sd">    ``(new_instance)``.</span>
+
+<span class="sd">    Note: this is not called when an instance is created from an</span>
+<span class="sd">    existing database row.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="c1"># @@: An event for getting a row?  But for each row, when doing a</span>
+<span class="c1"># select?  For .sync, .syncUpdate, .expire?</span>
+
+
+<div class="viewcode-block" id="RowDestroySignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.RowDestroySignal">[docs]</a><span class="k">class</span> <span class="nc">RowDestroySignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called before an instance is deleted.  Sender is the instance&#39;s</span>
+<span class="sd">    class.  Arguments are ``(instance, post_funcs)``.</span>
+
+<span class="sd">    ``post_funcs`` is a list of callbacks, intended to have</span>
+<span class="sd">    functions appended to it, and are called with arguments ``(instance)``.</span>
+<span class="sd">    If any of the post_funcs raises an exception, the deletion is only</span>
+<span class="sd">    affected if this will prevent a commit.</span>
+
+<span class="sd">    You cannot cancel the delete, but you can raise an exception (which will</span>
+<span class="sd">    probably cancel the delete, but also cause an uncaught exception if not</span>
+<span class="sd">    expected).</span>
+
+<span class="sd">    Note: this is not called when an instance is destroyed through</span>
+<span class="sd">    garbage collection.</span>
+
+<span class="sd">    @@: Should this allow ``instance`` to be a primary key, so that a</span>
+<span class="sd">    row can be deleted without first fetching it?</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RowDestroyedSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.RowDestroyedSignal">[docs]</a><span class="k">class</span> <span class="nc">RowDestroyedSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called after an instance is deleted.  Sender is the instance&#39;s</span>
+<span class="sd">    class.  Arguments are ``(instance)``.</span>
+
+<span class="sd">    This is called before the post_funcs of RowDestroySignal</span>
+
+<span class="sd">    Note: this is not called when an instance is destroyed through</span>
+<span class="sd">    garbage collection.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RowUpdateSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.RowUpdateSignal">[docs]</a><span class="k">class</span> <span class="nc">RowUpdateSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called when an instance is updated through a call to ``.set()``</span>
+<span class="sd">    (or a column attribute assignment).  The arguments are</span>
+<span class="sd">    ``(instance, kwargs)``.  ``kwargs`` can be modified.  This is run</span>
+<span class="sd">    *before* the instance is updated; if you want to look at the</span>
+<span class="sd">    current values, simply look at ``instance``.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RowUpdatedSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.RowUpdatedSignal">[docs]</a><span class="k">class</span> <span class="nc">RowUpdatedSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called when an instance is updated through a call to ``.set()``</span>
+<span class="sd">    (or a column attribute assignment).  The arguments are</span>
+<span class="sd">    ``(instance, post_funcs)``. ``post_funcs`` is a list of callbacks,</span>
+<span class="sd">    intended to have functions appended to it, and are called with the</span>
+<span class="sd">    arguments ``(new_instance)``. This is run *after* the instance is</span>
+<span class="sd">    updated; Works better with lazyUpdate = True.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="AddColumnSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.AddColumnSignal">[docs]</a><span class="k">class</span> <span class="nc">AddColumnSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called when a column is added to a class, with arguments ``(cls,</span>
+<span class="sd">    connection, column_name, column_definition, changeSchema,</span>
+<span class="sd">    post_funcs)``.  This is called *after* the column has been added,</span>
+<span class="sd">    and is called for each column after class creation.</span>
+
+<span class="sd">    post_funcs are called with ``(cls, so_column_obj)``</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="DeleteColumnSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.DeleteColumnSignal">[docs]</a><span class="k">class</span> <span class="nc">DeleteColumnSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called when a column is removed from a class, with the arguments</span>
+<span class="sd">    ``(cls, connection, column_name, so_column_obj, post_funcs)``.</span>
+<span class="sd">    Like ``AddColumnSignal`` this is called after the action has been</span>
+<span class="sd">    performed, and is called for subclassing (when a column is</span>
+<span class="sd">    implicitly removed by setting it to ``None``).</span>
+
+<span class="sd">    post_funcs are called with ``(cls, so_column_obj)``</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+<span class="c1"># @@: Signals for indexes and joins?  These are mostly event consumers,</span>
+<span class="c1"># though.</span>
+
+
+<div class="viewcode-block" id="CreateTableSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.CreateTableSignal">[docs]</a><span class="k">class</span> <span class="nc">CreateTableSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called when a table is created.  If ``ifNotExists==True`` and the</span>
+<span class="sd">    table exists, this event is not called.</span>
+
+<span class="sd">    Called with ``(cls, connection, extra_sql, post_funcs)``.</span>
+<span class="sd">    ``extra_sql`` is a list (which can be appended to) of extra SQL</span>
+<span class="sd">    statements to be run after the table is created.  ``post_funcs``</span>
+<span class="sd">    functions are called with ``(cls, connection)`` after the table</span>
+<span class="sd">    has been created.  Those functions are *not* called simply when</span>
+<span class="sd">    constructing the SQL.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="DropTableSignal"><a class="viewcode-back" href="../../api/sqlobject.events.html#sqlobject.events.DropTableSignal">[docs]</a><span class="k">class</span> <span class="nc">DropTableSignal</span><span class="p">(</span><span class="n">Signal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Called when a table is dropped.  If ``ifExists==True`` and the</span>
+<span class="sd">    table doesn&#39;t exist, this event is not called.</span>
+
+<span class="sd">    Called with ``(cls, connection, extra_sql, post_funcs)``.</span>
+<span class="sd">    ``post_funcs`` functions are called with ``(cls, connection)``</span>
+<span class="sd">    after the table has been dropped.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+<span class="c1">############################################################</span>
+<span class="c1"># Event Debugging</span>
+<span class="c1">############################################################</span>
+
+
+<span class="k">def</span> <span class="nf">summarize_events_by_sender</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prints out a summary of the senders and listeners in the system,</span>
+<span class="sd">    for debugging purposes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+    <span class="n">leader</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">indent</span>
+    <span class="k">if</span> <span class="n">sender</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">send_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">deref</span><span class="p">(</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">senders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sid</span><span class="p">)),</span> <span class="n">listeners</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">sid</span><span class="p">,</span> <span class="n">listeners</span> <span class="ow">in</span> <span class="n">dispatcher</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">deref</span><span class="p">(</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">senders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sid</span><span class="p">))]</span>
+        <span class="k">for</span> <span class="n">sender</span><span class="p">,</span> <span class="n">listeners</span> <span class="ow">in</span> <span class="n">sorted_items</span><span class="p">(</span><span class="n">send_list</span><span class="p">):</span>
+            <span class="n">real_sender</span> <span class="o">=</span> <span class="n">deref</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">real_sender</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="s1">&#39;Sender: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">real_sender</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">leader</span> <span class="o">+</span> <span class="n">header</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">leader</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
+            <span class="n">summarize_events_by_sender</span><span class="p">(</span><span class="n">real_sender</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+                                       <span class="n">indent</span><span class="o">=</span><span class="n">indent</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">signal</span><span class="p">,</span> <span class="n">receivers</span> <span class="ow">in</span> \
+                <span class="n">sorted_items</span><span class="p">(</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">sender</span><span class="p">),</span> <span class="p">[])):</span>
+            <span class="n">receivers</span> <span class="o">=</span> <span class="p">[</span><span class="n">deref</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">receivers</span> <span class="k">if</span> <span class="n">deref</span><span class="p">(</span><span class="n">r</span><span class="p">)]</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="s1">&#39;Signal: </span><span class="si">%s</span><span class="s1"> (</span><span class="si">%i</span><span class="s1"> receivers)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sort_name</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span>
+                                                    <span class="nb">len</span><span class="p">(</span><span class="n">receivers</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">leader</span> <span class="o">+</span> <span class="n">header</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">leader</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">receiver</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">receivers</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sort_name</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">leader</span> <span class="o">+</span> <span class="s1">&#39;  &#39;</span> <span class="o">+</span> <span class="n">nice_repr</span><span class="p">(</span><span class="n">receiver</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">deref</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dispatcher</span><span class="o">.</span><span class="n">WEAKREF_TYPES</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">sorted_items</span><span class="p">(</span><span class="n">a_dict</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a_dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">a_dict</span> <span class="o">=</span> <span class="n">a_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">a_dict</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">sort_name</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+
+<span class="k">def</span> <span class="nf">sort_name</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">_real_dispatcher_send</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="o">.</span><span class="n">send</span>
+<span class="n">_real_dispatcher_sendExact</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="o">.</span><span class="n">sendExact</span>
+<span class="n">_real_dispatcher_connect</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">_real_dispatcher_disconnect</span> <span class="o">=</span> <span class="n">dispatcher</span><span class="o">.</span><span class="n">disconnect</span>
+<span class="n">_debug_enabled</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">debug_events</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">_debug_enabled</span><span class="p">,</span> <span class="n">send</span>
+    <span class="k">if</span> <span class="n">_debug_enabled</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">_debug_enabled</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">dispatcher</span><span class="o">.</span><span class="n">send</span> <span class="o">=</span> <span class="n">send</span> <span class="o">=</span> <span class="n">_debug_send</span>
+    <span class="n">dispatcher</span><span class="o">.</span><span class="n">sendExact</span> <span class="o">=</span> <span class="n">_debug_sendExact</span>
+    <span class="n">dispatcher</span><span class="o">.</span><span class="n">disconnect</span> <span class="o">=</span> <span class="n">_debug_disconnect</span>
+    <span class="n">dispatcher</span><span class="o">.</span><span class="n">connect</span> <span class="o">=</span> <span class="n">_debug_connect</span>
+
+
+<span class="k">def</span> <span class="nf">_debug_send</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">Anonymous</span><span class="p">,</span>
+                <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">named</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;send </span><span class="si">%s</span><span class="s2"> from </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+          <span class="n">nice_repr</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="n">nice_repr</span><span class="p">(</span><span class="n">sender</span><span class="p">),</span>
+          <span class="n">fmt_args</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">named</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">_real_dispatcher_send</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">named</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_debug_sendExact</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">Anonymous</span><span class="p">,</span>
+                     <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">named</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sendExact </span><span class="si">%s</span><span class="s2"> from </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+          <span class="n">nice_repr</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="n">nice_repr</span><span class="p">(</span><span class="n">sender</span><span class="p">),</span> <span class="n">fmt_args</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">name</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">_real_dispatcher_sendExact</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">named</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_debug_connect</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>
+                   <span class="n">weak</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;connect </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> signal </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+          <span class="n">nice_repr</span><span class="p">(</span><span class="n">receiver</span><span class="p">),</span> <span class="n">nice_repr</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="n">nice_repr</span><span class="p">(</span><span class="n">sender</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">_real_dispatcher_connect</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">weak</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_debug_disconnect</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>
+                      <span class="n">weak</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;disconnecting </span><span class="si">%s</span><span class="s2"> from </span><span class="si">%s</span><span class="s2"> signal </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+          <span class="n">nice_repr</span><span class="p">(</span><span class="n">receiver</span><span class="p">),</span> <span class="n">nice_repr</span><span class="p">(</span><span class="n">signal</span><span class="p">),</span> <span class="n">nice_repr</span><span class="p">(</span><span class="n">sender</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">_real_dispatcher_disconnect</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">sender</span><span class="p">,</span> <span class="n">weak</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">fmt_args</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">repr</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arguments</span><span class="p">]</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+        <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">=</span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">items</span><span class="p">())])</span>
+    <span class="k">return</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">nice_repr</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Like repr(), but nicer for debugging here.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">class_types</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">__module__</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;__name__&#39;</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">__globals__</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">__globals__</span><span class="p">[</span><span class="s1">&#39;__name__&#39;</span><span class="p">]],</span>
+                       <span class="n">v</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="n">v</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">__globals__</span><span class="p">[</span><span class="s1">&#39;__name__&#39;</span><span class="p">],</span> <span class="n">v</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1"> of </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">nice_repr</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">__self__</span><span class="o">.</span><span class="n">__class__</span><span class="p">),</span> <span class="n">v</span><span class="o">.</span><span class="n">__func__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+            <span class="n">nice_repr</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">__self__</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;listen&#39;</span><span class="p">,</span> <span class="s1">&#39;send&#39;</span><span class="p">]</span>
+<span class="c1"># Use copy() to avoid &#39;dictionary changed&#39; issues on python 3</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Signal</span><span class="p">):</span>
+        <span class="n">__all__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

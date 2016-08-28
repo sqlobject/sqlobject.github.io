@@ -1,145 +1,219 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-<title>SQLObject Developer Guide</title>
-    <link href="layout.css" type="text/css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SQLObject Developer Guide &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
+    <link rel="next" title="Authors" href="Authors.html" />
+    <link rel="prev" title="Views and SQLObjects" href="Views.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
   </head>
-  <body>
-    <div id="page">
-      <h1 class="doc-title"><a></a></h1>
-      <div id="navcontainer">
-		    <ul id="navlist">
-          <li class="pagenav">
-            <ul>
-              <li class="page_item">
-                <a href="index.html" title="Project Home / Index">SQLObject</a>
-              </li>
-              <li class="page_item">
-                <a href="module-index.html" title="sqlobject package and module reference">Modules</a>
-              </li>
-              <li>
-                <a href="community.html" title="Mailing List">Discuss</a>
-              </li>
-	      <li>
-	        <a href="SQLObject.html">Documentation</a>
-	      </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <hr>
-      <div id="content"><div class="rst-doc">
-  <h1 class="pudge-member-page-heading">SQLObject Developer Guide</h1>
-  <div class="contents topic" id="contents">
-<p class="topic-title first">Contents</p>
-<ul class="simple">
-<li><a href="#development-installation" class="reference internal" id="id1">Development Installation</a></li>
-<li><a href="#architecture" class="reference internal" id="id2">Architecture</a><ul>
-<li><a href="#columns-validators-and-converters" class="reference internal" id="id3">Columns, validators and converters</a></li>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Authors.html" title="Authors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Views.html" title="Views and SQLObjects"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SQLObject Developer Guide</a><ul>
+<li><a class="reference internal" href="#development-installation">Development Installation</a></li>
+<li><a class="reference internal" href="#architecture">Architecture</a><ul>
+<li><a class="reference internal" href="#columns-validators-and-converters">Columns, validators and converters</a></li>
 </ul>
 </li>
-<li><a href="#style-guide" class="reference internal" id="id4">Style Guide</a></li>
-<li><a href="#testing" class="reference internal" id="id5">Testing</a></li>
-<li><a href="#documentation" class="reference internal" id="id6">Documentation</a></li>
+<li><a class="reference internal" href="#style-guide">Style Guide</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Views.html"
+                        title="previous chapter">Views and SQLObjects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Authors.html"
+                        title="next chapter">Authors</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/DeveloperGuide.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sqlobject-developer-guide">
+<h1>SQLObject Developer Guide<a class="headerlink" href="#sqlobject-developer-guide" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#sqlobject-developer-guide" id="id1">SQLObject Developer Guide</a><ul>
+<li><a class="reference internal" href="#development-installation" id="id2">Development Installation</a></li>
+<li><a class="reference internal" href="#architecture" id="id3">Architecture</a><ul>
+<li><a class="reference internal" href="#columns-validators-and-converters" id="id4">Columns, validators and converters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#style-guide" id="id5">Style Guide</a></li>
+<li><a class="reference internal" href="#testing" id="id6">Testing</a></li>
+<li><a class="reference internal" href="#documentation" id="id7">Documentation</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <p id="start">These are some notes on developing SQLObject.</p>
 <div class="section" id="development-installation">
-<h1>Development Installation</h1>
-<p>First install <a href="http://www.formencode.org/en/latest/download.html" class="reference external">FormEncode</a>:</p>
-<pre class="literal-block">
-$ git clone git://github.com/formencode/formencode.git
+<h2>Development Installation<a class="headerlink" href="#development-installation" title="Permalink to this headline">¶</a></h2>
+<p>First install <a class="reference external" href="http://www.formencode.org/en/latest/download.html">FormEncode</a>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ git clone git://github.com/formencode/formencode.git
 $ cd formencode
 $ sudo python setup.py develop
-</pre>
+</pre></div>
+</div>
 <p>Then do the same for SQLObject:</p>
-<pre class="literal-block">
-$ git clone git clone git://github.com/sqlobject/sqlobject
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ git clone git clone git://github.com/sqlobject/sqlobject
 $ cd sqlobject
 $ sudo python setup.py develop
-</pre>
+</pre></div>
+</div>
 <p>Or rather fork it and clone your fork. To develop a feature or a bugfix
 create a separate branch, push it to your fork and create a pull request
 to the original repo. That way CI will be triggered to test your code.</p>
 <p>Voila!  The packages are globally installed, but the files from the
-checkout were not copied into <tt class="docutils literal"><span class="pre">site-packages</span></tt>.  See <a href="https://setuptools.readthedocs.io/en/latest/index.html" class="reference external">setuptools</a> for more.</p>
+checkout were not copied into <code class="docutils literal"><span class="pre">site-packages</span></code>.  See <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/index.html">setuptools</a> for more.</p>
 </div>
 <div class="section" id="architecture">
-<h1>Architecture</h1>
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
 <p>There are three main kinds of objects in SQLObject: tables, columns and
 connections.</p>
-<p>Tables-related objects are in <a href="sqlobject/main.py.html" class="reference external">sqlobject/main.py</a> module. There are two
-main classes: <tt class="docutils literal">SQLObject</tt> and <tt class="docutils literal">sqlmeta</tt>; the latter is not a
-metaclass but a parent class for <tt class="docutils literal">sqlmeta</tt> attribute in every class -
+<p>Tables-related objects are in <a class="reference external" href="sqlobject/main.py.html">sqlobject/main.py</a> module. There are two
+main classes: <code class="docutils literal"><span class="pre">SQLObject</span></code> and <code class="docutils literal"><span class="pre">sqlmeta</span></code>; the latter is not a
+metaclass but a parent class for <code class="docutils literal"><span class="pre">sqlmeta</span></code> attribute in every class -
 the authors tried to move there all attributes and methods not directly
 related to columns to avoid cluttering table namespace.</p>
-<p>Connections are instances of <tt class="docutils literal">DBConnection</tt> class (from
-<a href="sqlobject/dbconnection.py.html" class="reference external">sqlobject/dbconnection.py</a>) and its concrete descendants.
-<tt class="docutils literal">DBConnection</tt> contains generic code for generating SQL, working with
+<p>Connections are instances of <code class="docutils literal"><span class="pre">DBConnection</span></code> class (from
+<a class="reference external" href="sqlobject/dbconnection.py.html">sqlobject/dbconnection.py</a>) and its concrete descendants.
+<code class="docutils literal"><span class="pre">DBConnection</span></code> contains generic code for generating SQL, working with
 transactions and so on. Concrete connection classes (like
-<tt class="docutils literal">PostgresConnection</tt> and <tt class="docutils literal">SQLiteConnection</tt>) provide
+<code class="docutils literal"><span class="pre">PostgresConnection</span></code> and <code class="docutils literal"><span class="pre">SQLiteConnection</span></code>) provide
 backend-specific functionality.</p>
 <div class="section" id="columns-validators-and-converters">
-<h2>Columns, validators and converters</h2>
-<p>Columns are instances of classes from <a href="sqlobject/col.py.html" class="reference external">sqlobject/col.py</a>. There are two
+<h3>Columns, validators and converters<a class="headerlink" href="#columns-validators-and-converters" title="Permalink to this headline">¶</a></h3>
+<p>Columns are instances of classes from <a class="reference external" href="sqlobject/col.py.html">sqlobject/col.py</a>. There are two
 classes for every column: one is for user to include into an instance of
 SQLObject, an instance of the other is automatically created by
-SQLObject's metaclass. The two classes are usually named <tt class="docutils literal">Col</tt> and
-<tt class="docutils literal">SOCol</tt>; for example, <tt class="docutils literal">BoolCol</tt> and <tt class="docutils literal">SOBoolCol</tt>. User-visible
-classes, descendants of <tt class="docutils literal">Col</tt>, seldom contain any code; the main code
-for a column is in <tt class="docutils literal">SOCol</tt> descendants and in validators.</p>
+SQLObject&#8217;s metaclass. The two classes are usually named <code class="docutils literal"><span class="pre">Col</span></code> and
+<code class="docutils literal"><span class="pre">SOCol</span></code>; for example, <code class="docutils literal"><span class="pre">BoolCol</span></code> and <code class="docutils literal"><span class="pre">SOBoolCol</span></code>. User-visible
+classes, descendants of <code class="docutils literal"><span class="pre">Col</span></code>, seldom contain any code; the main code
+for a column is in <code class="docutils literal"><span class="pre">SOCol</span></code> descendants and in validators.</p>
 <p>Every column has a list of validators. Validators validate input data
 and convert input data to python data and back. Every validator must
-have methods <tt class="docutils literal">from_python</tt> and <tt class="docutils literal">to_python</tt>. The former converts data
+have methods <code class="docutils literal"><span class="pre">from_python</span></code> and <code class="docutils literal"><span class="pre">to_python</span></code>. The former converts data
 from python to internal representation that will be converted by
 converters to SQL strings. The latter converts data from SQL data to
-python. Also please bear in mind that validators can receive <tt class="docutils literal">None</tt>
-(for SQL <tt class="docutils literal">NULL</tt>) and <tt class="docutils literal">SQLExpression</tt> (an object that represents
+python. Also please bear in mind that validators can receive <code class="docutils literal"><span class="pre">None</span></code>
+(for SQL <code class="docutils literal"><span class="pre">NULL</span></code>) and <code class="docutils literal"><span class="pre">SQLExpression</span></code> (an object that represents
 SQLObject expressions); both objects must be passed unchanged by
 validators.</p>
-<p>Converters from <a href="sqlobject/converters.py.html" class="reference external">sqlobject/converters.py</a> aren't visible to users. They
+<p>Converters from <a class="reference external" href="sqlobject/converters.py.html">sqlobject/converters.py</a> aren&#8217;t visible to users. They
 are used behind the scene to convert objects returned by validators to
 backend-specific SQL strings. The most elaborated converter is
-<tt class="docutils literal">StringLikeConverter</tt>. Yes, it converts strings to strings. It
+<code class="docutils literal"><span class="pre">StringLikeConverter</span></code>. Yes, it converts strings to strings. It
 converts python strings to SQL strings using backend-specific quoting
 rules.</p>
-<p>Let look into <tt class="docutils literal">BoolCol</tt> as an example. The very <tt class="docutils literal">BoolCol</tt> doesn't
-have any code. <tt class="docutils literal">SOBoolCol</tt> has a method to create <tt class="docutils literal">BoolValidator</tt>
-and methods to create backend-specific column type. <tt class="docutils literal">BoolValidator</tt>
-has identical methods <tt class="docutils literal">from_python</tt> and <tt class="docutils literal">to_python</tt>; the method
-passes <tt class="docutils literal">None</tt>, <tt class="docutils literal">SQLExpression</tt> and bool values unchanged; int and
-objects that have method <tt class="docutils literal">__nonzero__</tt> are converted to bool; other
+<p>Let look into <code class="docutils literal"><span class="pre">BoolCol</span></code> as an example. The very <code class="docutils literal"><span class="pre">BoolCol</span></code> doesn&#8217;t
+have any code. <code class="docutils literal"><span class="pre">SOBoolCol</span></code> has a method to create <code class="docutils literal"><span class="pre">BoolValidator</span></code>
+and methods to create backend-specific column type. <code class="docutils literal"><span class="pre">BoolValidator</span></code>
+has identical methods <code class="docutils literal"><span class="pre">from_python</span></code> and <code class="docutils literal"><span class="pre">to_python</span></code>; the method
+passes <code class="docutils literal"><span class="pre">None</span></code>, <code class="docutils literal"><span class="pre">SQLExpression</span></code> and bool values unchanged; int and
+objects that have method <code class="docutils literal"><span class="pre">__nonzero__</span></code> are converted to bool; other
 objects trigger validation error. Bool values that are returned by call
-to <tt class="docutils literal">from_python</tt> will be converted to SQL strings by
-<tt class="docutils literal">BoolConverter</tt>; bool values from <tt class="docutils literal">to_python</tt> (is is supposed they
+to <code class="docutils literal"><span class="pre">from_python</span></code> will be converted to SQL strings by
+<code class="docutils literal"><span class="pre">BoolConverter</span></code>; bool values from <code class="docutils literal"><span class="pre">to_python</span></code> (is is supposed they
 are originated from the backend via DB API driver) are passed to the
 application.</p>
-<p>Objects that are returned from <tt class="docutils literal">from_python</tt> must be registered with
-converters. Another approach for <tt class="docutils literal">from_python</tt> is to return an object
-that has <tt class="docutils literal">__sqlrepr__</tt> method. Such objects convert to SQL strings
+<p>Objects that are returned from <code class="docutils literal"><span class="pre">from_python</span></code> must be registered with
+converters. Another approach for <code class="docutils literal"><span class="pre">from_python</span></code> is to return an object
+that has <code class="docutils literal"><span class="pre">__sqlrepr__</span></code> method. Such objects convert to SQL strings
 themselves, converters are not used.</p>
 </div>
 </div>
 <div class="section" id="style-guide">
-<h1>Style Guide</h1>
-<p>Generally you should follow the recommendations in <a href="http://www.python.org/dev/peps/pep-0008/" class="reference external">PEP 8</a>, the
+<h2>Style Guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h2>
+<p>Generally you should follow the recommendations in <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">PEP 8</a>, the
 Python Style Guide.  Some things to take particular note of:</p>
 <ul class="simple">
-<li>With a few exceptions sources must be <a href="https://gitlab.com/pycqa/flake8" class="reference external">flake8</a>-clean (and hence
+<li>With a few exceptions sources must be <a class="reference external" href="https://gitlab.com/pycqa/flake8">flake8</a>-clean (and hence
 pep8-clean). Please consider using pre-commit hook installed by
-running <tt class="docutils literal">flake8 <span class="pre">--install-hook</span></tt>.</li>
+running <code class="docutils literal"><span class="pre">flake8</span> <span class="pre">--install-hook</span></code>.</li>
 </ul>
 <ul>
 <li><p class="first"><strong>No tabs</strong>.  Not anywhere.  Always indent with 4 spaces.</p>
 </li>
-<li><p class="first">We don't stress too much on line length.  But try to break lines up
+<li><p class="first">We don&#8217;t stress too much on line length.  But try to break lines up
 by grouping with parenthesis instead of with backslashes (if you
 can).  Do asserts like:</p>
-<pre class="literal-block">
-assert some_condition(a, b), (
-    "Some condition failed, %r isn't right!" % a)
-</pre>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">some_condition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="p">(</span>
+    <span class="s2">&quot;Some condition failed, </span><span class="si">%r</span><span class="s2"> isn&#39;t right!&quot;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">But if you are having problems with line length, maybe you should
 just break the expression up into multiple statements.</p>
@@ -147,54 +221,54 @@ just break the expression up into multiple statements.</p>
 <li><p class="first">Blank lines between methods, unless they are very small and closely
 bound to each other.</p>
 </li>
-<li><p class="first"><em>Never</em> use the form <tt class="docutils literal">condition and trueValue or falseValue</tt>.
+<li><p class="first"><em>Never</em> use the form <code class="docutils literal"><span class="pre">condition</span> <span class="pre">and</span> <span class="pre">trueValue</span> <span class="pre">or</span> <span class="pre">falseValue</span></code>.
 Break it out and use a variable.</p>
 </li>
-<li><p class="first">Careful of namespace pollution.  SQLObject does allow for <tt class="docutils literal">from
-sqlobject import *</tt> so names should be fairly distinct, or they
-shouldn't be exported in <tt class="docutils literal">sqlobject.__init__</tt>.</p>
+<li><p class="first">Careful of namespace pollution.  SQLObject does allow for <code class="docutils literal"><span class="pre">from</span>
+<span class="pre">sqlobject</span> <span class="pre">import</span> <span class="pre">*</span></code> so names should be fairly distinct, or they
+shouldn&#8217;t be exported in <code class="docutils literal"><span class="pre">sqlobject.__init__</span></code>.</p>
 </li>
-<li><p class="first">We're very picky about whitespace.  There's one and only one right way
+<li><p class="first">We&#8217;re very picky about whitespace.  There&#8217;s one and only one right way
 to do it.  Good examples:</p>
-<pre class="literal-block">
-short = 3
-longerVar = 4
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">short</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">longerVar</span> <span class="o">=</span> <span class="mi">4</span>
 
-if x == 4:
-    do stuff
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="n">do</span> <span class="n">stuff</span>
 
-func(arg1='a', arg2='b')
-func((a + b)*10)
-</pre>
+<span class="n">func</span><span class="p">(</span><span class="n">arg1</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">func</span><span class="p">((</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><strong>Bad</strong> examples:</p>
-<pre class="literal-block">
-short    =3
-longerVar=4
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">short</span>    <span class="o">=</span><span class="mi">3</span>
+<span class="n">longerVar</span><span class="o">=</span><span class="mi">4</span>
 
-if x==4: do stuff
+<span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="mi">4</span><span class="p">:</span> <span class="n">do</span> <span class="n">stuff</span>
 
-func(arg1 = 'a', arg2 = 'b')
-func(a,b)
-func( a, b )
-[ 1, 2, 3 ]
-</pre>
-<p>To us, the poor use of whitespace seems lazy.  We'll think less of
+<span class="n">func</span><span class="p">(</span><span class="n">arg1</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">arg2</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="p">)</span>
+<span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>To us, the poor use of whitespace seems lazy.  We&#8217;ll think less of
 your code (justified or not) for this very trivial reason.  We will
-fix all your code for you if you don't do it yourself, because we
-can't bear to look at sloppy whitespace.</p>
+fix all your code for you if you don&#8217;t do it yourself, because we
+can&#8217;t bear to look at sloppy whitespace.</p>
 </li>
-<li><p class="first">Use <tt class="docutils literal">@@</tt> to mark something that is suboptimal, or where you have a
-concern that it's not right.  Try to also date it and put your
+<li><p class="first">Use <code class="docutils literal"><span class="pre">&#64;&#64;</span></code> to mark something that is suboptimal, or where you have a
+concern that it&#8217;s not right.  Try to also date it and put your
 username there.</p>
 </li>
 <li><p class="first">Docstrings are good.  They should look like:</p>
-<pre class="literal-block">
-class AClass(object):
-    """
-    doc string...
-    """
-</pre>
-<p>Don't use single quotes (''').  Don't bother trying make the string
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    doc string...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Don&#8217;t use single quotes (&#8216;&#8217;&#8216;).  Don&#8217;t bother trying make the string
 less vertically compact.</p>
 </li>
 <li><p class="first">Comments go right before the thing they are commenting on.</p>
@@ -204,26 +278,26 @@ only classes are capitalized.  But definitely never methods.</p>
 </li>
 <li><p class="first">mixedCase is preferred.</p>
 </li>
-<li><p class="first">Use <tt class="docutils literal">cls</tt> to refer to a class.  Use <tt class="docutils literal">meta</tt> to refer to a
+<li><p class="first">Use <code class="docutils literal"><span class="pre">cls</span></code> to refer to a class.  Use <code class="docutils literal"><span class="pre">meta</span></code> to refer to a
 metaclass (which also happens to be a class, but calling a metaclass
-<tt class="docutils literal">cls</tt> will be confusing).</p>
+<code class="docutils literal"><span class="pre">cls</span></code> will be confusing).</p>
 </li>
-<li><p class="first">Use <tt class="docutils literal">isinstance</tt> instead of comparing types.  E.g.:</p>
-<pre class="literal-block">
-if isinstance(var, str): ...
-# Bad:
-if type(var) is StringType: ...
-</pre>
+<li><p class="first">Use <code class="docutils literal"><span class="pre">isinstance</span></code> instead of comparing types.  E.g.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span> <span class="o">...</span>
+<span class="c1"># Bad:</span>
+<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="ow">is</span> <span class="n">StringType</span><span class="p">:</span> <span class="o">...</span>
+</pre></div>
+</div>
 </li>
 <li><p class="first">Never, ever use two leading underscores.  This is annoyingly
 private.  If name clashes are a concern, use name mangling instead
-(e.g., <tt class="docutils literal">_SO_blahblah</tt>).  This is essentially the same thing as
-double-underscore, only it's transparent where double underscore
+(e.g., <code class="docutils literal"><span class="pre">_SO_blahblah</span></code>).  This is essentially the same thing as
+double-underscore, only it&#8217;s transparent where double underscore
 obscures.</p>
 </li>
-<li><p class="first">Module names should be unique in the package.  Subpackages shouldn't
+<li><p class="first">Module names should be unique in the package.  Subpackages shouldn&#8217;t
 share module names with sibling or parent packages.  Sadly this
-isn't possible for <tt class="docutils literal">__init__</tt>, but it's otherwise easy enough.</p>
+isn&#8217;t possible for <code class="docutils literal"><span class="pre">__init__</span></code>, but it&#8217;s otherwise easy enough.</p>
 </li>
 <li><p class="first">Module names should be all lower case, and probably have no
 underscores (smushedwords).</p>
@@ -231,77 +305,84 @@ underscores (smushedwords).</p>
 </ul>
 </div>
 <div class="section" id="testing">
-<h1>Testing</h1>
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <p>Tests are important.  Tests keep everything from falling apart.  All
 new additions should have tests.</p>
-<p>Testing uses py.test, an alternative to <tt class="docutils literal">unittest</tt>.  It is available
-at <a href="http://pytest.org/" class="reference external">http://pytest.org/</a> and <a href="https://pypi.python.org/pypi/pytest" class="reference external">https://pypi.python.org/pypi/pytest</a>.  Read its
-<a href="http://docs.pytest.org/en/latest/getting-started.html" class="reference external">getting started</a> document for more.</p>
+<p>Testing uses py.test, an alternative to <code class="docutils literal"><span class="pre">unittest</span></code>.  It is available
+at <a class="reference external" href="http://pytest.org/">http://pytest.org/</a> and <a class="reference external" href="https://pypi.python.org/pypi/pytest">https://pypi.python.org/pypi/pytest</a>.  Read its
+<a class="reference external" href="http://docs.pytest.org/en/latest/getting-started.html">getting started</a> document for more.</p>
 <p>To actually run the test, you have to give it a database to connect to.
-You do so with the option <tt class="docutils literal"><span class="pre">-D</span></tt>. You can either give a complete URI or
-one of several shortcuts like <tt class="docutils literal">mysql</tt> (these shortcuts are defined in
-the top of <tt class="docutils literal">tests/dbtest.py</tt>).</p>
-<p>All the tests are modules in <tt class="docutils literal">sqlobject/tests</tt>.  Each module tests
+You do so with the option <code class="docutils literal"><span class="pre">-D</span></code>. You can either give a complete URI or
+one of several shortcuts like <code class="docutils literal"><span class="pre">mysql</span></code> (these shortcuts are defined in
+the top of <code class="docutils literal"><span class="pre">tests/dbtest.py</span></code>).</p>
+<p>All the tests are modules in <code class="docutils literal"><span class="pre">sqlobject/tests</span></code>.  Each module tests
 one kind of feature, more or less.  If you are testing a module, call
-the test module <tt class="docutils literal">tests/test_modulename.py</tt> -- only modules that
-start with <tt class="docutils literal">test_</tt> will be picked up by py.test.</p>
-<p>The "framework" for testing is in <tt class="docutils literal">tests/dbtest</tt>.  There's a couple of
+the test module <code class="docutils literal"><span class="pre">tests/test_modulename.py</span></code> &#8211; only modules that
+start with <code class="docutils literal"><span class="pre">test_</span></code> will be picked up by py.test.</p>
+<p>The &#8220;framework&#8221; for testing is in <code class="docutils literal"><span class="pre">tests/dbtest</span></code>.  There&#8217;s a couple of
 important functions:</p>
-<p><tt class="docutils literal">setupClass(soClass)</tt> creates the tables for the class.  It tries to
+<p><code class="docutils literal"><span class="pre">setupClass(soClass)</span></code> creates the tables for the class.  It tries to
 avoid recreating tables if not necessary.</p>
-<p><tt class="docutils literal">supports(featureName)</tt> checks if the database backend supports the
+<p><code class="docutils literal"><span class="pre">supports(featureName)</span></code> checks if the database backend supports the
 named feature.  What backends support what is defined at the top of
-<tt class="docutils literal">dbtest</tt>.</p>
-<p>If you <tt class="docutils literal">import *</tt> you'll also get py.test's version of <a href="http://docs.pytest.org/en/latest/assert.html#assertions-about-expected-exceptions" class="reference external">raises</a>, an
-<tt class="docutils literal">inserts</tt> function that can create instances for you, and a couple
+<code class="docutils literal"><span class="pre">dbtest</span></code>.</p>
+<p>If you <code class="docutils literal"><span class="pre">import</span> <span class="pre">*</span></code> you&#8217;ll also get py.test&#8217;s version of <a class="reference external" href="http://docs.pytest.org/en/latest/assert.html#assertions-about-expected-exceptions">raises</a>, an
+<code class="docutils literal"><span class="pre">inserts</span></code> function that can create instances for you, and a couple
 miscellaneous functions.</p>
-<p>If you submit a patch or implement a feature without a test, we'll be
-forced to write the test.  That's no fun for us, to just be writing
+<p>If you submit a patch or implement a feature without a test, we&#8217;ll be
+forced to write the test.  That&#8217;s no fun for us, to just be writing
 tests.  So please, write tests; everything at least needs to be
 exercised, even if the tests are absolutely complete.</p>
 <p>We now use Travis CI and Circle CI to run tests. See the statuses:</p>
-<a href="https://travis-ci.org/sqlobject/sqlobject" class="reference external image-reference"><img src="https://travis-ci.org/sqlobject/sqlobject.svg?branch=master" alt="https://travis-ci.org/sqlobject/sqlobject.svg?branch=master"></a>
-<a href="https://circleci.com/gh/sqlobject/sqlobject" class="reference external image-reference"><img src="https://circleci.com/gh/sqlobject/sqlobject.svg?style=shield" alt="https://circleci.com/gh/sqlobject/sqlobject.svg?style=shield"></a>
-<p>To avoid triggering unnecessary test run at CI services add text <a href="https://docs.travis-ci.com/user/customizing-the-build/#skipping-a-build" class="reference external">[skip ci]</a> or
-<a href="https://circleci.com/docs/skip-a-build/" class="reference external">[ci skip]</a> anywhere in your commit
-messages for commits that don't change code (documentation updates and such).</p>
-<p>We use <a href="https://pypi.python.org/pypi/coverage" class="reference external">coverage.py</a>
+<a class="reference external image-reference" href="https://travis-ci.org/sqlobject/sqlobject"><img alt="https://travis-ci.org/sqlobject/sqlobject.svg?branch=master" src="https://travis-ci.org/sqlobject/sqlobject.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://circleci.com/gh/sqlobject/sqlobject"><img alt="https://circleci.com/gh/sqlobject/sqlobject.svg?style=shield" src="https://circleci.com/gh/sqlobject/sqlobject.svg?style=shield" /></a>
+<p>To avoid triggering unnecessary test run at CI services add text <a class="reference external" href="https://docs.travis-ci.com/user/customizing-the-build/#skipping-a-build">[skip ci]</a> or
+<a class="reference external" href="https://circleci.com/docs/skip-a-build/">[ci skip]</a> anywhere in your commit
+messages for commits that don&#8217;t change code (documentation updates and such).</p>
+<p>We use <a class="reference external" href="https://pypi.python.org/pypi/coverage">coverage.py</a>
 to measures code coverage by tests and upload the result for analyzis to
-<a href="https://coveralls.io/github/sqlobject/sqlobject" class="reference external">Coveralls</a> and
-<a href="https://codecov.io/gh/sqlobject/sqlobject" class="reference external">Codecov</a>:</p>
-<a href="https://coveralls.io/github/sqlobject/sqlobject?branch=master" class="reference external image-reference"><img src="https://coveralls.io/repos/github/sqlobject/sqlobject/badge.svg?branch=master" alt="https://coveralls.io/repos/github/sqlobject/sqlobject/badge.svg?branch=master"></a>
-<a href="https://codecov.io/gh/sqlobject/sqlobject" class="reference external image-reference"><object type="image/svg+xml" data="https://codecov.io/gh/sqlobject/sqlobject/branch/master/graph/badge.svg">https://codecov.io/gh/sqlobject/sqlobject/branch/master/graph/badge.svg</object></a>
+<a class="reference external" href="https://coveralls.io/github/sqlobject/sqlobject">Coveralls</a> and
+<a class="reference external" href="https://codecov.io/gh/sqlobject/sqlobject">Codecov</a>:</p>
+<a class="reference external image-reference" href="https://coveralls.io/github/sqlobject/sqlobject?branch=master"><img alt="https://coveralls.io/repos/github/sqlobject/sqlobject/badge.svg?branch=master" src="https://coveralls.io/repos/github/sqlobject/sqlobject/badge.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/sqlobject/sqlobject"><img alt="https://codecov.io/gh/sqlobject/sqlobject/branch/master/graph/badge.svg" src="https://codecov.io/gh/sqlobject/sqlobject/branch/master/graph/badge.svg" /></a>
 </div>
 <div class="section" id="documentation">
-<h1>Documentation</h1>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <p>Please write documentation.  Documentation should live in the docs/
 directory.  Pudge converts documentation from Restructured Text to
 HTML.  It presently requires kid 0.9.6, which must be obtained
-separately (for instance, from <a href="https://pypi.python.org/pypi/kid/0.9.6" class="reference external">https://pypi.python.org/pypi/kid/0.9.6</a>).</p>
-<a href="https://sourceforge.net/projects/sqlobject" class="reference external image-reference"><img src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" style="width: 80px; height: 15px;" class="noborder align-center"></a>
+separately (for instance, from <a class="reference external" href="https://pypi.python.org/pypi/kid/0.9.6">https://pypi.python.org/pypi/kid/0.9.6</a>).</p>
+<a class="reference external image-reference" href="https://sourceforge.net/projects/sqlobject"><img alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" class="noborder align-center" src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" style="width: 80px; height: 15px;" /></a>
 </div>
-</div></div>
-      <div id="footer">
-        <p style="float: left;">
-          built with 
-          <a href="http://lesscode.org/projects/pudge/">pudge/0.1.3</a> |
-		      original design by 
-          <a href="http://blog.ratterobert.com/">ratter / robert</a>
-	      </p>
-        <div>
-        <br> <!--
-        <a name="search">
-          <form method="get" id="searchform" 
-                action="http://lesscode.org/blog/index.php">
-            <div>
-              <input type="text" value="" name="s" id="s" />
-              <input type="submit" id="searchsubmit" value="Search" />
-            </div>
-          </form>
-        </a> -->
-        <br>
+</div>
+
+
+          </div>
         </div>
       </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Authors.html" title="Authors"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Views.html" title="Views and SQLObjects"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

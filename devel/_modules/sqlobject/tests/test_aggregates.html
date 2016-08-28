@@ -1,0 +1,170 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_aggregates &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.tests.test_aggregates</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">FloatCol</span><span class="p">,</span> <span class="n">IntCol</span><span class="p">,</span> <span class="n">SQLObject</span>
+<span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
+
+
+<span class="c1"># Test MIN, AVG, MAX, COUNT, SUM</span>
+
+
+<div class="viewcode-block" id="IntAccumulator"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_aggregates.html#sqlobject.tests.test_aggregates.IntAccumulator">[docs]</a><span class="k">class</span> <span class="nc">IntAccumulator</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="FloatAccumulator"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_aggregates.html#sqlobject.tests.test_aggregates.FloatAccumulator">[docs]</a><span class="k">class</span> <span class="nc">FloatAccumulator</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">FloatCol</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="test_integer"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_aggregates.html#sqlobject.tests.test_aggregates.test_integer">[docs]</a><span class="k">def</span> <span class="nf">test_integer</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">assert</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span>
+
+    <span class="k">assert</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span>\
+        <span class="nb">max</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">assert</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span>\
+        <span class="nb">sum</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span></div>
+
+
+<div class="viewcode-block" id="floatcmp"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_aggregates.html#sqlobject.tests.test_aggregates.floatcmp">[docs]</a><span class="k">def</span> <span class="nf">floatcmp</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">f1</span> <span class="o">-</span> <span class="n">f2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">f1</span> <span class="o">&lt;</span> <span class="n">f2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="test_float"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_aggregates.html#sqlobject.tests.test_aggregates.test_float">[docs]</a><span class="k">def</span> <span class="nf">test_float</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">FloatAccumulator</span><span class="p">)</span>
+    <span class="n">FloatAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+    <span class="n">FloatAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">2.4</span><span class="p">)</span>
+    <span class="n">FloatAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">3.8</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">floatcmp</span><span class="p">(</span>
+        <span class="n">FloatAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">FloatAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="mf">1.2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">floatcmp</span><span class="p">(</span>
+        <span class="n">FloatAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">FloatAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="mf">2.5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">floatcmp</span><span class="p">(</span>
+        <span class="n">FloatAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">FloatAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="mf">3.8</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">floatcmp</span><span class="p">(</span>
+        <span class="n">FloatAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">FloatAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="mf">7.4</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="test_many"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_aggregates.html#sqlobject.tests.test_aggregates.test_many">[docs]</a><span class="k">def</span> <span class="nf">test_many</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">IntAccumulator</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">IntAccumulator</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">attribute</span> <span class="o">=</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span>
+    <span class="k">assert</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">accumulateMany</span><span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;MIN&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;AVG&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;MAX&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;COUNT&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;SUM&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">IntAccumulator</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">distinct</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">accumulateMany</span><span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;MIN&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;AVG&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;MAX&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;COUNT&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;SUM&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.boundattributes module &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.boundattributes.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.boundattributes">
+<span id="sqlobject-boundattributes-module"></span><h1>sqlobject.boundattributes module<a class="headerlink" href="#module-sqlobject.boundattributes" title="Permalink to this headline">¶</a></h1>
+<p>Bound attributes are attributes that are bound to a specific class and
+a specific name.  In SQLObject a typical example is a column object,
+which knows its name and class.</p>
+<p>A bound attribute should define a method <code class="docutils literal"><span class="pre">__addtoclass__(added_class,</span>
+<span class="pre">name)</span></code> (attributes without this method will simply be treated as
+normal).  The return value is ignored; if the attribute wishes to
+change the value in the class, it must call <code class="docutils literal"><span class="pre">setattr(added_class,</span>
+<span class="pre">name,</span> <span class="pre">new_value)</span></code>.</p>
+<p>BoundAttribute is a class that facilitates lazy attribute creation.</p>
+<dl class="class">
+<dt id="sqlobject.boundattributes.BoundAttribute">
+<em class="property">class </em><code class="descclassname">sqlobject.boundattributes.</code><code class="descname">BoundAttribute</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/boundattributes.html#BoundAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.boundattributes.BoundAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.declarative.html#sqlobject.declarative.Declarative" title="sqlobject.declarative.Declarative"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.declarative.Declarative</span></code></a></p>
+<p>This is a declarative class that passes all the values given to it
+to another object.  So you can pass it arguments (via
+__init__/__call__) or give it the equivalent of keyword arguments
+through subclassing.  Then a bound object will be added in its
+place.</p>
+<p>To hook this other object in, override <code class="docutils literal"><span class="pre">make_object(added_class,</span>
+<span class="pre">name,</span> <span class="pre">**attrs)</span></code> and maybe <code class="docutils literal"><span class="pre">set_object(added_class,</span> <span class="pre">name,</span>
+<span class="pre">**attrs)</span></code> (the default implementation of <code class="docutils literal"><span class="pre">set_object</span></code>
+just resets the attribute to whatever <code class="docutils literal"><span class="pre">make_object</span></code> returned).</p>
+<p>Also see <code class="docutils literal"><span class="pre">BoundFactory</span></code>.</p>
+<dl class="attribute">
+<dt id="sqlobject.boundattributes.BoundAttribute.clone_for_subclass">
+<code class="descname">clone_for_subclass</code><em class="property"> = True</em><a class="headerlink" href="#sqlobject.boundattributes.BoundAttribute.clone_for_subclass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.boundattributes.BoundAttribute.declarative_count">
+<code class="descname">declarative_count</code><em class="property"> = 1</em><a class="headerlink" href="#sqlobject.boundattributes.BoundAttribute.declarative_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.boundattributes.BoundAttribute.make_object">
+<em class="property">classmethod </em><code class="descname">make_object</code><span class="sig-paren">(</span><em>added_class</em>, <em>attr_name</em>, <em>*args</em>, <em>**attrs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/boundattributes.html#BoundAttribute.make_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.boundattributes.BoundAttribute.make_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.boundattributes.BoundAttribute.set_object">
+<em class="property">classmethod </em><code class="descname">set_object</code><span class="sig-paren">(</span><em>added_class</em>, <em>attr_name</em>, <em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/boundattributes.html#BoundAttribute.set_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.boundattributes.BoundAttribute.set_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.boundattributes.BoundFactory">
+<em class="property">class </em><code class="descclassname">sqlobject.boundattributes.</code><code class="descname">BoundFactory</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/boundattributes.html#BoundFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.boundattributes.BoundFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.boundattributes.BoundAttribute" title="sqlobject.boundattributes.BoundAttribute"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.boundattributes.BoundAttribute</span></code></a></p>
+<p>This will bind the attribute to whatever is given by
+<code class="docutils literal"><span class="pre">factory_class</span></code>.  This factory should be a callable with the
+signature <code class="docutils literal"><span class="pre">factory_class(added_class,</span> <span class="pre">attr_name,</span> <span class="pre">*args,</span> <span class="pre">**kw)</span></code>.</p>
+<p>The factory will be reinvoked (and the attribute rebound) for
+every subclassing.</p>
+<dl class="attribute">
+<dt id="sqlobject.boundattributes.BoundFactory.declarative_count">
+<code class="descname">declarative_count</code><em class="property"> = 2</em><a class="headerlink" href="#sqlobject.boundattributes.BoundFactory.declarative_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.boundattributes.BoundFactory.factory_class">
+<code class="descname">factory_class</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.boundattributes.BoundFactory.factory_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.boundattributes.BoundFactory.make_object">
+<code class="descname">make_object</code><span class="sig-paren">(</span><em>added_class</em>, <em>attr_name</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/boundattributes.html#BoundFactory.make_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.boundattributes.BoundFactory.make_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

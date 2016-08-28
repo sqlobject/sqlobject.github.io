@@ -1,44 +1,108 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-<title>Views and SQLObjects</title>
-    <link href="layout.css" type="text/css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Views and SQLObjects &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
+    <link rel="next" title="SQLObject Developer Guide" href="DeveloperGuide.html" />
+    <link rel="prev" title="Versioning" href="Versioning.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
   </head>
-  <body>
-    <div id="page">
-      <h1 class="doc-title"><a></a></h1>
-      <div id="navcontainer">
-		    <ul id="navlist">
-          <li class="pagenav">
-            <ul>
-              <li class="page_item">
-                <a href="index.html" title="Project Home / Index">SQLObject</a>
-              </li>
-              <li class="page_item">
-                <a href="module-index.html" title="sqlobject package and module reference">Modules</a>
-              </li>
-              <li>
-                <a href="community.html" title="Mailing List">Discuss</a>
-              </li>
-	      <li>
-	        <a href="SQLObject.html">Documentation</a>
-	      </li>
-            </ul>
-          </li>
-        </ul>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="DeveloperGuide.html" title="SQLObject Developer Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Versioning.html" title="Versioning"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Views and SQLObjects</a><ul>
+<li><a class="reference internal" href="#viewsqlobject">ViewSQLObject</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Versioning.html"
+                        title="previous chapter">Versioning</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="DeveloperGuide.html"
+                        title="next chapter">SQLObject Developer Guide</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Views.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
       </div>
-      <hr>
-      <div id="content"><div class="rst-doc">
-  <h1 class="pudge-member-page-heading">Views and SQLObjects</h1>
-  <p>In general, if your database backend supports defining views
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="views-and-sqlobjects">
+<h1>Views and SQLObjects<a class="headerlink" href="#views-and-sqlobjects" title="Permalink to this headline">¶</a></h1>
+<p>In general, if your database backend supports defining views
 you may define them outside of SQLObject and treat them
 as a regular table when defining your SQLObject class.</p>
 <div class="section" id="viewsqlobject">
-<h1>ViewSQLObject</h1>
+<h2>ViewSQLObject<a class="headerlink" href="#viewsqlobject" title="Permalink to this headline">¶</a></h2>
 <p>The rest of this document is experimental.</p>
-<p><tt class="docutils literal">from sqlobject.views import *</tt></p>
-<p><tt class="docutils literal">ViewSQLObject</tt> is an attempt to allow defining
+<p><code class="docutils literal"><span class="pre">from</span> <span class="pre">sqlobject.views</span> <span class="pre">import</span> <span class="pre">*</span></code></p>
+<p><code class="docutils literal"><span class="pre">ViewSQLObject</span></code> is an attempt to allow defining
 views that allow you to define a SQL query that acts
 like a SQLObject class. You define columns based on
 other SQLObject classes .q SQLBuilder columns, have columns
@@ -49,65 +113,72 @@ using SQLBuilder expressions.</p>
 use for this idea please bring discussion to the mailing list.</p>
 <p>A short example from the tests will suffice for now.</p>
 <p>Base classes:</p>
-<pre class="literal-block">
-class PhoneNumber(SQLObject):
-  number = StringCol()
-  calls = SQLMultipleJoin('PhoneCall')
-  incoming = SQLMultipleJoin('PhoneCall', joinColumn='toID')
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PhoneNumber</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+  <span class="n">number</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+  <span class="n">calls</span> <span class="o">=</span> <span class="n">SQLMultipleJoin</span><span class="p">(</span><span class="s1">&#39;PhoneCall&#39;</span><span class="p">)</span>
+  <span class="n">incoming</span> <span class="o">=</span> <span class="n">SQLMultipleJoin</span><span class="p">(</span><span class="s1">&#39;PhoneCall&#39;</span><span class="p">,</span> <span class="n">joinColumn</span><span class="o">=</span><span class="s1">&#39;toID&#39;</span><span class="p">)</span>
 
-class PhoneCall(SQLObject):
-  phoneNumber = ForeignKey('PhoneNumber')
-  to = ForeignKey('PhoneNumber')
-  minutes = IntCol()
-</pre>
-<p>View classes:</p>
-<pre class="literal-block">
-class ViewPhoneCall(ViewSQLObject):
-  class sqlmeta:
-      idName = PhoneCall.q.id
-      clause = PhoneCall.q.phoneNumberID==PhoneNumber.q.id
-
-  minutes = IntCol(dbName=PhoneCall.q.minutes)
-  number = StringCol(dbName=PhoneNumber.q.number)
-  phoneNumber = ForeignKey('PhoneNumber', dbName=PhoneNumber.q.id)
-  call = ForeignKey('PhoneCall', dbName=PhoneCall.q.id)
-
-class ViewPhone(ViewSQLObject):
-  class sqlmeta:
-      idName = PhoneNumber.q.id
-      clause = PhoneCall.q.phoneNumberID==PhoneNumber.q.id
-
-  minutes = IntCol(dbName=func.SUM(PhoneCall.q.minutes))
-  numberOfCalls = IntCol(dbName=func.COUNT(PhoneCall.q.phoneNumberID))
-  number = StringCol(dbName=PhoneNumber.q.number)
-  phoneNumber = ForeignKey('PhoneNumber', dbName=PhoneNumber.q.id)
-  calls = SQLMultipleJoin('PhoneCall', joinColumn='phoneNumberID')
-  vCalls = SQLMultipleJoin('ViewPhoneCall', joinColumn='phoneNumberID')
-</pre>
-<a href="https://sourceforge.net/projects/sqlobject" class="reference external image-reference"><img src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" style="width: 80px; height: 15px;" class="noborder align-center"></a>
+<span class="k">class</span> <span class="nc">PhoneCall</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+  <span class="n">phoneNumber</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;PhoneNumber&#39;</span><span class="p">)</span>
+  <span class="n">to</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;PhoneNumber&#39;</span><span class="p">)</span>
+  <span class="n">minutes</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">()</span>
+</pre></div>
 </div>
-</div></div>
-      <div id="footer">
-        <p style="float: left;">
-          built with 
-          <a href="http://lesscode.org/projects/pudge/">pudge/0.1.3</a> |
-		      original design by 
-          <a href="http://blog.ratterobert.com/">ratter / robert</a>
-	      </p>
-        <div>
-        <br> <!--
-        <a name="search">
-          <form method="get" id="searchform" 
-                action="http://lesscode.org/blog/index.php">
-            <div>
-              <input type="text" value="" name="s" id="s" />
-              <input type="submit" id="searchsubmit" value="Search" />
-            </div>
-          </form>
-        </a> -->
-        <br>
+<p>View classes:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ViewPhoneCall</span><span class="p">(</span><span class="n">ViewSQLObject</span><span class="p">):</span>
+  <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
+      <span class="n">idName</span> <span class="o">=</span> <span class="n">PhoneCall</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
+      <span class="n">clause</span> <span class="o">=</span> <span class="n">PhoneCall</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">phoneNumberID</span><span class="o">==</span><span class="n">PhoneNumber</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
+
+  <span class="n">minutes</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">dbName</span><span class="o">=</span><span class="n">PhoneCall</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">minutes</span><span class="p">)</span>
+  <span class="n">number</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">dbName</span><span class="o">=</span><span class="n">PhoneNumber</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+  <span class="n">phoneNumber</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;PhoneNumber&#39;</span><span class="p">,</span> <span class="n">dbName</span><span class="o">=</span><span class="n">PhoneNumber</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+  <span class="n">call</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;PhoneCall&#39;</span><span class="p">,</span> <span class="n">dbName</span><span class="o">=</span><span class="n">PhoneCall</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ViewPhone</span><span class="p">(</span><span class="n">ViewSQLObject</span><span class="p">):</span>
+  <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
+      <span class="n">idName</span> <span class="o">=</span> <span class="n">PhoneNumber</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
+      <span class="n">clause</span> <span class="o">=</span> <span class="n">PhoneCall</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">phoneNumberID</span><span class="o">==</span><span class="n">PhoneNumber</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
+
+  <span class="n">minutes</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">dbName</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">SUM</span><span class="p">(</span><span class="n">PhoneCall</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">minutes</span><span class="p">))</span>
+  <span class="n">numberOfCalls</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">dbName</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">COUNT</span><span class="p">(</span><span class="n">PhoneCall</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">phoneNumberID</span><span class="p">))</span>
+  <span class="n">number</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">dbName</span><span class="o">=</span><span class="n">PhoneNumber</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+  <span class="n">phoneNumber</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;PhoneNumber&#39;</span><span class="p">,</span> <span class="n">dbName</span><span class="o">=</span><span class="n">PhoneNumber</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+  <span class="n">calls</span> <span class="o">=</span> <span class="n">SQLMultipleJoin</span><span class="p">(</span><span class="s1">&#39;PhoneCall&#39;</span><span class="p">,</span> <span class="n">joinColumn</span><span class="o">=</span><span class="s1">&#39;phoneNumberID&#39;</span><span class="p">)</span>
+  <span class="n">vCalls</span> <span class="o">=</span> <span class="n">SQLMultipleJoin</span><span class="p">(</span><span class="s1">&#39;ViewPhoneCall&#39;</span><span class="p">,</span> <span class="n">joinColumn</span><span class="o">=</span><span class="s1">&#39;phoneNumberID&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="https://sourceforge.net/projects/sqlobject"><img alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" class="noborder align-center" src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" style="width: 80px; height: 15px;" /></a>
+</div>
+</div>
+
+
+          </div>
         </div>
       </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="DeveloperGuide.html" title="SQLObject Developer Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Versioning.html" title="Versioning"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

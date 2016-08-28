@@ -1,99 +1,170 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-<title>Download SQLObject</title>
-    <link href="layout.css" type="text/css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Download SQLObject &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
+    <link rel="next" title="SQLObject Community" href="community.html" />
+    <link rel="prev" title="SQLObject" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
   </head>
-  <body>
-    <div id="page">
-      <h1 class="doc-title"><a></a></h1>
-      <div id="navcontainer">
-		    <ul id="navlist">
-          <li class="pagenav">
-            <ul>
-              <li class="page_item">
-                <a href="index.html" title="Project Home / Index">SQLObject</a>
-              </li>
-              <li class="page_item">
-                <a href="module-index.html" title="sqlobject package and module reference">Modules</a>
-              </li>
-              <li>
-                <a href="community.html" title="Mailing List">Discuss</a>
-              </li>
-	      <li>
-	        <a href="SQLObject.html">Documentation</a>
-	      </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <hr>
-      <div id="content"><div class="rst-doc">
-  <h1 class="pudge-member-page-heading">Download SQLObject</h1>
-  <p>The latest releases are always available on the <a href="https://pypi.python.org/pypi/SQLObject" class="reference external">Python Package Index</a>, and is installable
-with <a href="https://pip.pypa.io/en/latest/" class="reference external">pip</a> or <a href="https://setuptools.readthedocs.io/en/latest/easy_install.html" class="reference external">easy_install</a>.</p>
-<p>You can install the latest release with:</p>
-<pre class="literal-block">
-pip install -U SQLObject
-</pre>
-<p>or:</p>
-<pre class="literal-block">
-easy_install -U SQLObject
-</pre>
-<p>You can install the latest version of SQLObject with:</p>
-<pre class="literal-block">
-easy_install SQLObject==dev
-</pre>
-<p>You can install the latest bug fixing branch with:</p>
-<pre class="literal-block">
-easy_install SQLObject==bugfix
-</pre>
-<p>If you want to require a specific revision (because, for instance, you
-need a bugfix that hasn't appeared in a release), you can put this in
-your <a href="https://setuptools.readthedocs.io/en/latest/index.html" class="reference external">setuptools</a> using
-<tt class="docutils literal">setup.py</tt> file:</p>
-<pre class="literal-block">
-setup(...
-  install_requires=["SQLObject==bugfix,>=0.7.1dev-r1485"],
-)
-</pre>
-<p>This says that you <em>need</em> revision 1485 or higher.  But it also says
-that you can aquire the "bugfix" version to try to get that.  In fact,
-when you install <tt class="docutils literal"><span class="pre">SQLObject==bugfix</span></tt> you will be installing a
-specific version, and "bugfix" is just a kind of label for a way of
-acquiring the version (it points to a branch in the repository).</p>
-<div class="section" id="repositories">
-<h1>Repositories</h1>
-<p>The SQLObject <a href="https://git-scm.com/" class="reference external">git</a> repositories are located at
-<a href="https://sourceforge.net/p/sqlobject/_list/git" class="reference external">https://sourceforge.net/p/sqlobject/_list/git</a> and
-<a href="https://github.com/sqlobject" class="reference external">https://github.com/sqlobject</a></p>
-<p>Before switching to git development was performed at the <a href="https://subversion.apache.org/" class="reference external">Subversion</a> repository that is still located at
-<a href="http://svn.colorstudy.com/SQLObject" class="reference external">http://svn.colorstudy.com/SQLObject</a></p>
-<a href="https://sourceforge.net/projects/sqlobject" class="reference external image-reference"><img src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" style="width: 80px; height: 15px;" class="noborder align-center"></a>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="community.html" title="SQLObject Community"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="SQLObject"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Download SQLObject</a><ul>
+<li><a class="reference internal" href="#repositories">Repositories</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">SQLObject</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="community.html"
+                        title="next chapter">SQLObject Community</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/download.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
 </div>
-</div></div>
-      <div id="footer">
-        <p style="float: left;">
-          built with 
-          <a href="http://lesscode.org/projects/pudge/">pudge/0.1.3</a> |
-		      original design by 
-          <a href="http://blog.ratterobert.com/">ratter / robert</a>
-	      </p>
-        <div>
-        <br> <!--
-        <a name="search">
-          <form method="get" id="searchform" 
-                action="http://lesscode.org/blog/index.php">
-            <div>
-              <input type="text" value="" name="s" id="s" />
-              <input type="submit" id="searchsubmit" value="Search" />
-            </div>
-          </form>
-        </a> -->
-        <br>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="download-sqlobject">
+<h1>Download SQLObject<a class="headerlink" href="#download-sqlobject" title="Permalink to this headline">¶</a></h1>
+<p>The latest releases are always available on the <a class="reference external" href="https://pypi.python.org/pypi/SQLObject">Python Package Index</a>, and is installable
+with <a class="reference external" href="https://pip.pypa.io/en/latest/">pip</a> or <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/easy_install.html">easy_install</a>.</p>
+<p>You can install the latest release with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">SQLObject</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">easy_install</span> <span class="o">-</span><span class="n">U</span> <span class="n">SQLObject</span>
+</pre></div>
+</div>
+<p>You can install the latest version of SQLObject with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">easy_install</span> <span class="n">SQLObject</span><span class="o">==</span><span class="n">dev</span>
+</pre></div>
+</div>
+<p>You can install the latest bug fixing branch with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">easy_install</span> <span class="n">SQLObject</span><span class="o">==</span><span class="n">bugfix</span>
+</pre></div>
+</div>
+<p>If you want to require a specific revision (because, for instance, you
+need a bugfix that hasn&#8217;t appeared in a release), you can put this in
+your <a class="reference external" href="https://setuptools.readthedocs.io/en/latest/index.html">setuptools</a> using
+<code class="docutils literal"><span class="pre">setup.py</span></code> file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span><span class="o">...</span>
+  <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;SQLObject==bugfix,&gt;=0.7.1dev-r1485&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This says that you <em>need</em> revision 1485 or higher.  But it also says
+that you can aquire the &#8220;bugfix&#8221; version to try to get that.  In fact,
+when you install <code class="docutils literal"><span class="pre">SQLObject==bugfix</span></code> you will be installing a
+specific version, and &#8220;bugfix&#8221; is just a kind of label for a way of
+acquiring the version (it points to a branch in the repository).</p>
+<div class="section" id="repositories">
+<h2>Repositories<a class="headerlink" href="#repositories" title="Permalink to this headline">¶</a></h2>
+<p>The SQLObject <a class="reference external" href="https://git-scm.com/">git</a> repositories are located at
+<a class="reference external" href="https://sourceforge.net/p/sqlobject/_list/git">https://sourceforge.net/p/sqlobject/_list/git</a> and
+<a class="reference external" href="https://github.com/sqlobject">https://github.com/sqlobject</a></p>
+<p>Before switching to git development was performed at the <a class="reference external" href="https://subversion.apache.org/">Subversion</a> repository that is still located at
+<a class="reference external" href="http://svn.colorstudy.com/SQLObject">http://svn.colorstudy.com/SQLObject</a></p>
+<a class="reference external image-reference" href="https://sourceforge.net/projects/sqlobject"><img alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" class="noborder align-center" src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" style="width: 80px; height: 15px;" /></a>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="community.html" title="SQLObject Community"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="SQLObject"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
     </div>
   </body>
 </html>

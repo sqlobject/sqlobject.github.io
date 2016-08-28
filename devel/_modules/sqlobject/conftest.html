@@ -1,0 +1,176 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.conftest &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.conftest</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is used by py.test to configure testing for this</span>
+<span class="sd">application.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">py</span>
+<span class="kn">import</span> <span class="nn">sqlobject</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pkg_resources</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># Python 2.2</span>
+    <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">pkg_resources</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;SQLObject&#39;</span><span class="p">)</span>
+
+<span class="c1"># Override some options (doesn&#39;t override command line):</span>
+<span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">exitfirst</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">connectionShortcuts</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;mysql&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql://test@localhost/test&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dbm&#39;</span><span class="p">:</span> <span class="s1">&#39;dbm:///data&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;postgres&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres:///test&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;postgresql&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres:///test&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;rdbhost&#39;</span><span class="p">:</span> <span class="s1">&#39;rdhbost://role:authcode@www.rdbhost.com/&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pygresql&#39;</span><span class="p">:</span> <span class="s1">&#39;pygresql://localhost/test&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sqlite&#39;</span><span class="p">:</span> <span class="s1">&#39;sqlite:/:memory:&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sybase&#39;</span><span class="p">:</span> <span class="s1">&#39;sybase://test:test123@sybase/test?autoCommit=0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;firebird&#39;</span><span class="p">:</span>
+        <span class="s1">&#39;firebird://sysdba:masterkey@localhost/var/lib/firebird/data/test.gdb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mssql&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql://sa:@127.0.0.1/test&#39;</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="pytest_addoption"><a class="viewcode-back" href="../../api/sqlobject.conftest.html#sqlobject.conftest.pytest_addoption">[docs]</a><span class="k">def</span> <span class="nf">pytest_addoption</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add the SQLObject options&quot;&quot;&quot;</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
+        <span class="s1">&#39;-D&#39;</span><span class="p">,</span> <span class="s1">&#39;--Database&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;Database&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;sqlite&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The database to run the tests under (default sqlite).  &quot;</span>
+        <span class="s2">&quot;Can also use an alias from: </span><span class="si">%s</span><span class="s2">&quot;</span>
+        <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">connectionShortcuts</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
+        <span class="s1">&#39;-S&#39;</span><span class="p">,</span> <span class="s1">&#39;--SQL&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;show_sql&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show SQL from statements (when capturing stdout the &quot;</span>
+        <span class="s2">&quot;SQL is only displayed when a test fails)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
+        <span class="s1">&#39;-O&#39;</span><span class="p">,</span> <span class="s1">&#39;--SQL-output&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;show_sql_output&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show output from SQL statements (when capturing &quot;</span>
+        <span class="s2">&quot;stdout the output is only displayed when a test fails)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
+        <span class="s1">&#39;-E&#39;</span><span class="p">,</span> <span class="s1">&#39;--events&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;debug_events&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Debug events (print information about events as they are &quot;</span>
+        <span class="s2">&quot;sent)&quot;</span><span class="p">)</span></div>
+
+<span class="n">option</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="pytest_configure"><a class="viewcode-back" href="../../api/sqlobject.conftest.html#sqlobject.conftest.pytest_configure">[docs]</a><span class="k">def</span> <span class="nf">pytest_configure</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make cmdline arguments available to dbtest&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">option</span>
+    <span class="n">option</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">option</span></div>
+
+
+<div class="viewcode-block" id="SQLObjectClass"><a class="viewcode-back" href="../../api/sqlobject.conftest.html#sqlobject.conftest.SQLObjectClass">[docs]</a><span class="k">class</span> <span class="nc">SQLObjectClass</span><span class="p">(</span><span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">collect</span><span class="o">.</span><span class="n">Class</span><span class="p">):</span>
+<div class="viewcode-block" id="SQLObjectClass.run"><a class="viewcode-back" href="../../api/sqlobject.conftest.html#sqlobject.conftest.SQLObjectClass.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">SQLObject</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">SQLObjectClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div></div>
+
+<span class="n">Class</span> <span class="o">=</span> <span class="n">SQLObjectClass</span>
+
+
+<div class="viewcode-block" id="setup_tests"><a class="viewcode-back" href="../../api/sqlobject.conftest.html#sqlobject.conftest.setup_tests">[docs]</a><span class="k">def</span> <span class="nf">setup_tests</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">debug_events</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">events</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">debug_events</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

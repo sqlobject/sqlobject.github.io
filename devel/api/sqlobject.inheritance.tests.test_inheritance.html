@@ -1,0 +1,328 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.inheritance.tests.test_inheritance module &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.inheritance.tests.test_inheritance.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.inheritance.tests.test_inheritance">
+<span id="sqlobject-inheritance-tests-test-inheritance-module"></span><h1>sqlobject.inheritance.tests.test_inheritance module<a class="headerlink" href="#module-sqlobject.inheritance.tests.test_inheritance" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_inheritance.</code><code class="descname">Employee</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_inheritance.html#Employee"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson" title="sqlobject.inheritance.tests.test_inheritance.InheritablePerson"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.tests.test_inheritance.InheritablePerson</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.firstName">
+<code class="descname">firstName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.firstName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.j">
+<code class="descname">j</code><em class="property"> = employee</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.lastName">
+<code class="descname">lastName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.lastName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.position">
+<code class="descname">position</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.q">
+<code class="descname">q</code><em class="property"> = employee</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlobject.declarative.sqlmeta</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = 'Employee'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'position': &lt;StringCol b4d41becL position&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol position&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'position': &lt;SOStringCol position&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.parentClass">
+<code class="descname">parentClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson" title="sqlobject.inheritance.tests.test_inheritance.InheritablePerson"><code class="xref py py-class docutils literal"><span class="pre">InheritablePerson</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_inheritance.Employee" title="sqlobject.inheritance.tests.test_inheritance.Employee"><code class="xref py py-class docutils literal"><span class="pre">Employee</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'employee'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.Employee.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_inheritance.</code><code class="descname">InheritablePerson</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_inheritance.html#InheritablePerson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject" title="sqlobject.inheritance.InheritableSQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.InheritableSQLObject</span></code></a></p>
+<dl class="classmethod">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.byLastName">
+<em class="property">classmethod </em><code class="descname">byLastName</code><span class="sig-paren">(</span><em>val</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.byLastName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.childName">
+<code class="descname">childName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.firstName">
+<code class="descname">firstName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.firstName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.j">
+<code class="descname">j</code><em class="property"> = inheritable_person</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.lastName">
+<code class="descname">lastName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.lastName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.q">
+<code class="descname">q</code><em class="property"> = inheritable_person</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.InheritableSQLMeta</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {'Employee': &lt;class 'sqlobject.inheritance.tests.test_inheritance.Employee'&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'lastName': &lt;StringCol b5117c8cL lastName&gt;, 'childName': &lt;StringCol b542e9ecL childName&gt;, 'firstName': &lt;StringCol b54eeeccL firstName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol firstName&gt;, &lt;SOStringCol lastName alternate ID&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'lastName': &lt;SOStringCol lastName alternate ID&gt;, 'childName': &lt;SOStringCol childName default=None&gt;, 'firstName': &lt;SOStringCol firstName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.parentClass">
+<code class="descname">parentClass</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson" title="sqlobject.inheritance.tests.test_inheritance.InheritablePerson"><code class="xref py py-class docutils literal"><span class="pre">InheritablePerson</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'inheritable_person'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.InheritablePerson.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.inheritance.tests.test_inheritance.setup">
+<code class="descclassname">sqlobject.inheritance.tests.test_inheritance.</code><code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_inheritance.html#setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.inheritance.tests.test_inheritance.test_addDelColumn">
+<code class="descclassname">sqlobject.inheritance.tests.test_inheritance.</code><code class="descname">test_addDelColumn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_inheritance.html#test_addDelColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.test_addDelColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.inheritance.tests.test_inheritance.test_creation_fail">
+<code class="descclassname">sqlobject.inheritance.tests.test_inheritance.</code><code class="descname">test_creation_fail</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_inheritance.html#test_creation_fail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.test_creation_fail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.inheritance.tests.test_inheritance.test_inheritance">
+<code class="descclassname">sqlobject.inheritance.tests.test_inheritance.</code><code class="descname">test_inheritance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_inheritance.html#test_inheritance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.test_inheritance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.inheritance.tests.test_inheritance.test_inheritance_select">
+<code class="descclassname">sqlobject.inheritance.tests.test_inheritance.</code><code class="descname">test_inheritance_select</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_inheritance.html#test_inheritance_select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_inheritance.test_inheritance_select" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

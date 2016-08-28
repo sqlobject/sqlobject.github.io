@@ -1,0 +1,1200 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.dbconnection &#8212; SQLObject 3.2.0a0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '3.2.0a0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.dbconnection</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">urlparse</span><span class="p">,</span> <span class="n">parse_qsl</span>
+    <span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">unquote</span><span class="p">,</span> <span class="n">quote</span><span class="p">,</span> <span class="n">urlencode</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">urlparse</span><span class="p">,</span> <span class="n">parse_qsl</span><span class="p">,</span> <span class="n">unquote</span><span class="p">,</span> <span class="n">quote</span><span class="p">,</span> <span class="n">urlencode</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">from</span> <span class="nn">.cache</span> <span class="k">import</span> <span class="n">CacheSet</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">classregistry</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">col</span>
+<span class="kn">from</span> <span class="nn">.converters</span> <span class="k">import</span> <span class="n">sqlrepr</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">sqlbuilder</span>
+<span class="kn">from</span> <span class="nn">.util.threadinglocal</span> <span class="k">import</span> <span class="n">local</span> <span class="k">as</span> <span class="n">threading_local</span>
+<span class="kn">from</span> <span class="nn">.compat</span> <span class="k">import</span> <span class="n">PY2</span><span class="p">,</span> <span class="n">string_type</span><span class="p">,</span> <span class="n">unicode_type</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="s2">&quot;DB-API extension cursor.lastrowid used&quot;</span><span class="p">)</span>
+
+<span class="n">_connections</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">_closeConnection</span><span class="p">(</span><span class="n">ref</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">ref</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">conn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="ConsoleWriter"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConsoleWriter">[docs]</a><span class="k">class</span> <span class="nc">ConsoleWriter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">):</span>
+        <span class="c1"># loglevel: None or empty string for stdout; or &#39;stderr&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loglevel</span> <span class="o">=</span> <span class="n">loglevel</span> <span class="ow">or</span> <span class="s2">&quot;stdout&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbEncoding</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="s2">&quot;dbEncoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;ascii&quot;</span>
+
+<div class="viewcode-block" id="ConsoleWriter.write"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConsoleWriter.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="n">logfile</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loglevel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">PY2</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">unicode_type</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbEncoding</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">UnicodeEncodeError</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">text</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Remove u&#39;...&#39; from the repr</span>
+        <span class="n">logfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LogWriter"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.LogWriter">[docs]</a><span class="k">class</span> <span class="nc">LogWriter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loglevel</span> <span class="o">=</span> <span class="n">loglevel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logmethod</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogWriter.write"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.LogWriter.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logmethod</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="makeDebugWriter"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.makeDebugWriter">[docs]</a><span class="k">def</span> <span class="nf">makeDebugWriter</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">loggerName</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">loggerName</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ConsoleWriter</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">logging</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">loggerName</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">LogWriter</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Boolean"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Boolean">[docs]</a><span class="k">class</span> <span class="nc">Boolean</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A bool class that also understands some special string keywords</span>
+
+<span class="sd">    Understands: yes/no, true/false, on/off, 1/0, case ignored.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_keywords</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="s1">&#39;0&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Boolean</span><span class="o">.</span><span class="n">_keywords</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBConnection"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBConnection">[docs]</a><span class="k">class</span> <span class="nc">DBConnection</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debugOutput</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">autoCommit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">debugThreading</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">registry</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">logger</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loglevel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">Boolean</span><span class="p">(</span><span class="n">debug</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debugOutput</span> <span class="o">=</span> <span class="n">Boolean</span><span class="p">(</span><span class="n">debugOutput</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debugThreading</span> <span class="o">=</span> <span class="n">Boolean</span><span class="p">(</span><span class="n">debugThreading</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debugWriter</span> <span class="o">=</span> <span class="n">makeDebugWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">loglevel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doCache</span> <span class="o">=</span> <span class="n">Boolean</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="n">CacheSet</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">doCache</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">style</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connectionNumbers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connectionCount</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="n">Boolean</span><span class="p">(</span><span class="n">autoCommit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registry</span> <span class="o">=</span> <span class="n">registry</span> <span class="ow">or</span> <span class="kc">None</span>
+        <span class="n">classregistry</span><span class="o">.</span><span class="n">registry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="p">)</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">soClassAdded</span><span class="p">)</span>
+        <span class="n">registerConnectionInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">_closeConnection</span><span class="p">,</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+<div class="viewcode-block" id="DBConnection.oldUri"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBConnection.oldUri">[docs]</a>    <span class="k">def</span> <span class="nf">oldUri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">auth</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">:</span>
+                <span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span> <span class="o">+</span> <span class="s1">&#39;@&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span>
+                <span class="s1">&#39;URIs cannot express passwords without usernames&#39;</span><span class="p">)</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">://</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbName</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">:</span>
+                <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;:</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span>
+        <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span>
+        <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">uri</span> <span class="o">+</span> <span class="n">db</span></div>
+
+<div class="viewcode-block" id="DBConnection.uri"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBConnection.uri">[docs]</a>    <span class="k">def</span> <span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">auth</span><span class="p">:</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">:</span>
+                <span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span> <span class="o">+</span> <span class="s1">&#39;@&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span>
+                <span class="s1">&#39;URIs cannot express passwords without usernames&#39;</span><span class="p">)</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">://</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbName</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">:</span>
+                <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;:</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span>
+        <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span>
+        <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">uri</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">db</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DBConnection.connectionFromOldURI"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBConnection.connectionFromOldURI">[docs]</a>    <span class="k">def</span> <span class="nf">connectionFromOldURI</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connectionFromParams</span><span class="p">(</span><span class="o">*</span><span class="n">cls</span><span class="o">.</span><span class="n">_parseOldURI</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DBConnection.connectionFromURI"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBConnection.connectionFromURI">[docs]</a>    <span class="k">def</span> <span class="nf">connectionFromURI</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connectionFromParams</span><span class="p">(</span><span class="o">*</span><span class="n">cls</span><span class="o">.</span><span class="n">_parseURI</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_parseOldURI</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+        <span class="n">schema</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">rest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">),</span> \
+            <span class="s2">&quot;URIs must start with scheme:/ -- &quot;</span> \
+            <span class="s2">&quot;you did not include a / (in </span><span class="si">%r</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">rest</span>
+        <span class="k">if</span> <span class="n">rest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;//&#39;</span><span class="p">):</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">elif</span> <span class="n">rest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;///&#39;</span><span class="p">):</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+            <span class="k">if</span> <span class="n">rest</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">host</span> <span class="o">=</span> <span class="n">rest</span>
+                <span class="n">rest</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">host</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">and</span> <span class="n">host</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">user</span><span class="p">,</span> <span class="n">host</span> <span class="o">=</span> <span class="n">host</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">user</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">password</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">password</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">and</span> <span class="n">host</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">_host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">host</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;port must be integer, &quot;</span>
+                                 <span class="s2">&quot;got &#39;</span><span class="si">%s</span><span class="s2">&#39; instead&quot;</span> <span class="o">%</span> <span class="n">port</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">port</span> <span class="o">&lt;=</span> <span class="mi">65535</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;port must be integer in the range 1-65535, &quot;</span>
+                                 <span class="s2">&quot;got &#39;</span><span class="si">%d</span><span class="s2">&#39; instead&quot;</span> <span class="o">%</span> <span class="n">port</span><span class="p">)</span>
+            <span class="n">host</span> <span class="o">=</span> <span class="n">_host</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">rest</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;|&#39;</span><span class="p">):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rest</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">path</span><span class="p">,</span> <span class="n">arglist</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">arglist</span> <span class="o">=</span> <span class="n">arglist</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">single</span> <span class="ow">in</span> <span class="n">arglist</span><span class="p">:</span>
+                <span class="n">argname</span><span class="p">,</span> <span class="n">argvalue</span> <span class="o">=</span> <span class="n">single</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">argvalue</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">argvalue</span><span class="p">)</span>
+                <span class="n">args</span><span class="p">[</span><span class="n">argname</span><span class="p">]</span> <span class="o">=</span> <span class="n">argvalue</span>
+        <span class="k">return</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_parseURI</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
+        <span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+            <span class="c1"># In python 2.6, urlparse only parses the uri completely</span>
+            <span class="c1"># for certain schemes, so we force the scheme to</span>
+            <span class="c1"># something that will be parsed correctly</span>
+            <span class="n">scheme</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">scheme</span>
+            <span class="n">parsed</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">uri</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">scheme</span><span class="p">,</span> <span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">host</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">path</span>
+        <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">username</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">password</span><span class="p">:</span>
+            <span class="n">password</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">port</span><span class="p">:</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parsed</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="c1"># Preserve backward compatibility with URIs like /C|/path;</span>
+            <span class="c1"># replace &#39;|&#39; by &#39;:&#39;</span>
+            <span class="k">if</span> <span class="n">path</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;|&#39;</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">path</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+            <span class="c1"># Remove leading slash</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;:&#39;</span><span class="p">):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="n">query</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">query</span>
+        <span class="c1"># hash-tag / fragment is ignored</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">query</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parse_qsl</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+                <span class="n">args</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span>
+
+<div class="viewcode-block" id="DBConnection.soClassAdded"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBConnection.soClassAdded">[docs]</a>    <span class="k">def</span> <span class="nf">soClassAdded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is called for each new class; we use this opportunity</span>
+<span class="sd">        to create an instance method that is bound to the class</span>
+<span class="sd">        and this connection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="p">(</span>
+            <span class="s2">&quot;Connection </span><span class="si">%r</span><span class="s2"> already has an attribute with the name &quot;</span>
+            <span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> (and you just created the conflicting class </span><span class="si">%r</span><span class="s2">)&quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">soClass</span><span class="p">))</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">ConnWrapper</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="DBConnection.expireAll"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBConnection.expireAll">[docs]</a>    <span class="k">def</span> <span class="nf">expireAll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Expire all instances of objects for this connection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cache_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span>
+        <span class="n">cache_set</span><span class="o">.</span><span class="n">weakrefAll</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cache_set</span><span class="o">.</span><span class="n">getAll</span><span class="p">():</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">expire</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="ConnWrapper"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnWrapper">[docs]</a><span class="k">class</span> <span class="nc">ConnWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This represents a SQLObject class that is bound to a specific</span>
+<span class="sd">    connection (instances have a connection instance variable, but</span>
+<span class="sd">    classes are global, so this is binds the connection variable</span>
+<span class="sd">    lazily when a class method is accessed)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># @@: methods that take connection arguments should be explicitly</span>
+    <span class="c1"># marked up instead of the implicit use of a connection argument</span>
+    <span class="c1"># and inspect.getargspec()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_soClass</span> <span class="o">=</span> <span class="n">soClass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;connection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_soClass</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="n">meth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_soClass</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meth</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">):</span>
+            <span class="c1"># We don&#39;t need to wrap non-methods</span>
+            <span class="k">return</span> <span class="n">meth</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">takes_conn</span> <span class="o">=</span> <span class="n">meth</span><span class="o">.</span><span class="n">takes_connection</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">args</span><span class="p">,</span> <span class="n">varargs</span><span class="p">,</span> <span class="n">varkw</span><span class="p">,</span> <span class="n">defaults</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">meth</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="ow">not</span> <span class="n">varkw</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">varargs</span><span class="p">,</span> <span class="p">(</span>
+                <span class="s2">&quot;I cannot tell whether I must wrap this method, &quot;</span>
+                <span class="s2">&quot;because it takes **kw: </span><span class="si">%r</span><span class="s2">&quot;</span>
+                <span class="o">%</span> <span class="n">meth</span><span class="p">)</span>
+            <span class="n">takes_conn</span> <span class="o">=</span> <span class="s1">&#39;connection&#39;</span> <span class="ow">in</span> <span class="n">args</span>
+            <span class="n">meth</span><span class="o">.</span><span class="n">__func__</span><span class="o">.</span><span class="n">takes_connection</span> <span class="o">=</span> <span class="n">takes_conn</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">takes_conn</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">meth</span>
+        <span class="k">return</span> <span class="n">ConnMethodWrapper</span><span class="p">(</span><span class="n">meth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConnMethodWrapper"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnMethodWrapper">[docs]</a><span class="k">class</span> <span class="nc">ConnMethodWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;connection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;Wrapped </span><span class="si">%r</span><span class="s1"> with connection </span><span class="si">%r</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBAPI"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI">[docs]</a><span class="k">class</span> <span class="nc">DBAPI</span><span class="p">(</span><span class="n">DBConnection</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subclass must define a `makeConnection()` method, which</span>
+<span class="sd">    returns a newly-created connection object.</span>
+
+<span class="sd">    ``queryInsertID`` must also be defined.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dbName</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_poolLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+        <span class="n">DBConnection</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_binaryType</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_runWithConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meth</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getConnection</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">meth</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">releaseConnection</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span>
+
+<div class="viewcode-block" id="DBAPI.getConnection"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.getConnection">[docs]</a>    <span class="k">def</span> <span class="nf">getConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_poolLock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">:</span>
+                <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">makeConnection</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_connectionNumbers</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">conn</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connectionCount</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_connectionCount</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;ACQUIRE&#39;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39; pool=[</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connectionNumbers</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">)])</span>
+                            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;Pool&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">conn</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_poolLock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DBAPI.releaseConnection"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.releaseConnection">[docs]</a>    <span class="k">def</span> <span class="nf">releaseConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">explicit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">explicit</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;RELEASE (explicit)&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;RELEASE (implicit, autocommit=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39; no pooling&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39; pool=[</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connectionNumbers</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">)])</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;Pool&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">supportTransactions</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">explicit</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">==</span> <span class="s1">&#39;exception&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s1">&#39;auto/exception&#39;</span><span class="p">,</span> <span class="s1">&#39;ROLLBACK&#39;</span><span class="p">)</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Object used outside of a transaction; &#39;</span>
+                                <span class="s1">&#39;implicit COMMIT or ROLLBACK not allowed&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;COMMIT&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s1">&#39;autocommit&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;ROLLBACK&#39;</span><span class="p">)</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">conn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">:</span>
+                <span class="c1"># @@: We can get duplicate releasing of connections with</span>
+                <span class="c1"># the __del__ in Iteration (unfortunately, not sure why</span>
+                <span class="c1"># it happens)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DBAPI.printDebug"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.printDebug">[docs]</a>    <span class="k">def</span> <span class="nf">printDebug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;query&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Pool&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">!=</span> <span class="s1">&#39;Pool&#39;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;query&#39;</span><span class="p">:</span>
+            <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;: &#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;-&gt;&#39;</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connectionNumbers</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">conn</span><span class="p">)]</span>
+        <span class="n">spaces</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugThreading</span><span class="p">:</span>
+            <span class="n">threadName</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">currentThread</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+            <span class="n">threadName</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">threadName</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">threadName</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">threadName</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(n)2i%(threadName)s</span><span class="s1">/</span><span class="si">%(name)s%(spaces)s%(sep)s</span><span class="s1"> </span><span class="si">%(s)s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debugWriter</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_executeRetry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">cursor</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="s1">&#39;QueryR&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;Query&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_executeRetry</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">(),</span> <span class="n">s</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DBAPI.query"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_runWithConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_queryAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;QueryAll&#39;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_executeRetry</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugOutput</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;QueryAll&#39;</span><span class="p">,</span> <span class="s1">&#39;result&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="DBAPI.queryAll"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.queryAll">[docs]</a>    <span class="k">def</span> <span class="nf">queryAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_runWithConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_queryAll</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_queryAllDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Like queryAll, but returns (description, rows), where the</span>
+<span class="sd">        description is cursor.description (which gives row types)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;QueryAllDesc&#39;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_executeRetry</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugOutput</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;QueryAll&#39;</span><span class="p">,</span> <span class="s1">&#39;result&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="DBAPI.queryAllDescription"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.queryAllDescription">[docs]</a>    <span class="k">def</span> <span class="nf">queryAllDescription</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_runWithConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_queryAllDescription</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_queryOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="s1">&#39;QueryOne&#39;</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_executeRetry</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugOutput</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;QueryOne&#39;</span><span class="p">,</span> <span class="s1">&#39;result&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="DBAPI.queryOne"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.queryOne">[docs]</a>    <span class="k">def</span> <span class="nf">queryOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_runWithConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_queryOne</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_insertSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;INSERT INTO </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">) VALUES (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">),</span>
+                 <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">])))</span>
+
+<div class="viewcode-block" id="DBAPI.transaction"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.transaction">[docs]</a>    <span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DBAPI.queryInsertID"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.queryInsertID">[docs]</a>    <span class="k">def</span> <span class="nf">queryInsertID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soInstance</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_runWithConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_queryInsertID</span><span class="p">,</span> <span class="n">soInstance</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span>
+                                       <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DBAPI.iterSelect"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.iterSelect">[docs]</a>    <span class="k">def</span> <span class="nf">iterSelect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">select</span><span class="o">.</span><span class="n">IterationClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">getConnection</span><span class="p">(),</span>
+                                     <span class="n">select</span><span class="p">,</span> <span class="n">keepConnection</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DBAPI.accumulateSelect"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.accumulateSelect">[docs]</a>    <span class="k">def</span> <span class="nf">accumulateSelect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="o">*</span><span class="n">expressions</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Apply an accumulate function(s) (SUM, COUNT, MIN, AVG, MAX, etc...)</span>
+<span class="sd">            to the select object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">queryForSelect</span><span class="p">()</span><span class="o">.</span><span class="n">newItems</span><span class="p">(</span><span class="n">expressions</span><span class="p">)</span><span class="o">.</span>\
+            <span class="n">unlimited</span><span class="p">()</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryOne</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">expressions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+<div class="viewcode-block" id="DBAPI.queryForSelect"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.queryForSelect">[docs]</a>    <span class="k">def</span> <span class="nf">queryForSelect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">select</span><span class="o">.</span><span class="n">queryForSelect</span><span class="p">())</span></div>
+
+    <span class="k">def</span> <span class="nf">_SO_createJoinTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">join</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SO_createJoinTableSQL</span><span class="p">(</span><span class="n">join</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_createJoinTableSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">join</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;CREATE TABLE </span><span class="si">%s</span><span class="s1"> (</span><span class="se">\n</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="se">\n</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="n">join</span><span class="o">.</span><span class="n">intermediateTable</span><span class="p">,</span>
+                 <span class="n">join</span><span class="o">.</span><span class="n">joinColumn</span><span class="p">,</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">joinSQLType</span><span class="p">(</span><span class="n">join</span><span class="p">),</span>
+                 <span class="n">join</span><span class="o">.</span><span class="n">otherColumn</span><span class="p">,</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">joinSQLType</span><span class="p">(</span><span class="n">join</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_dropJoinTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">join</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DROP TABLE </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">join</span><span class="o">.</span><span class="n">intermediateTable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_SO_createIndex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">createIndexSQL</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+
+<div class="viewcode-block" id="DBAPI.createIndexSQL"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createIndexSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createIndexSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Implement in subclasses&#39;</span></div>
+
+<div class="viewcode-block" id="DBAPI.createTable"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createTable">[docs]</a>    <span class="k">def</span> <span class="nf">createTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">createSql</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createTableSQL</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">createSql</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">constraints</span></div>
+
+<div class="viewcode-block" id="DBAPI.createReferenceConstraints"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createReferenceConstraints">[docs]</a>    <span class="k">def</span> <span class="nf">createReferenceConstraints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">refConstraints</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createReferenceConstraint</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+                          <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span>
+                          <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">SOForeignKey</span><span class="p">)]</span>
+        <span class="n">refConstraintDefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">constraint</span> <span class="k">for</span> <span class="n">constraint</span> <span class="ow">in</span> <span class="n">refConstraints</span>
+                             <span class="k">if</span> <span class="n">constraint</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">refConstraintDefs</span></div>
+
+<div class="viewcode-block" id="DBAPI.createSQL"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">tableCreateSQLs</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">,</span> <span class="s1">&#39;createSQL&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tableCreateSQLs</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tableCreateSQLs</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)),</span> <span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.sqlmeta.createSQL must be a str, list, dict or tuple.&#39;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tableCreateSQLs</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">tableCreateSQLs</span> <span class="o">=</span> <span class="n">tableCreateSQLs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tableCreateSQLs</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">tableCreateSQLs</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableCreateSQLs</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tableCreateSQLs</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">tableCreateSQLs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tableCreateSQLs</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tableCreateSQLs</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="p">(</span>
+                <span class="s1">&#39;Unable to create a list from </span><span class="si">%s</span><span class="s1">.sqlmeta.createSQL&#39;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">tableCreateSQLs</span> <span class="ow">or</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="DBAPI.createTableSQL"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createTableSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createTableSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createReferenceConstraints</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+        <span class="n">extraSQL</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createSQL</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+        <span class="n">createSql</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;CREATE TABLE </span><span class="si">%s</span><span class="s1"> (</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                     <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">createColumns</span><span class="p">(</span><span class="n">soClass</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">createSql</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">+</span> <span class="n">extraSQL</span></div>
+
+<div class="viewcode-block" id="DBAPI.createColumns"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createColumns">[docs]</a>    <span class="k">def</span> <span class="nf">createColumns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">columnDefs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createIDColumn</span><span class="p">(</span><span class="n">soClass</span><span class="p">)]</span> \
+            <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createColumn</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+               <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;    </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">columnDefs</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="DBAPI.createReferenceConstraint"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createReferenceConstraint">[docs]</a>    <span class="k">def</span> <span class="nf">createReferenceConstraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Implement in subclasses&quot;</span></div>
+
+<div class="viewcode-block" id="DBAPI.createColumn"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createColumn">[docs]</a>    <span class="k">def</span> <span class="nf">createColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Implement in subclasses&quot;</span></div>
+
+<div class="viewcode-block" id="DBAPI.dropTable"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.dropTable">[docs]</a>    <span class="k">def</span> <span class="nf">dropTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DROP TABLE </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tableName</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DBAPI.clearTable"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.clearTable">[docs]</a>    <span class="k">def</span> <span class="nf">clearTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">):</span>
+        <span class="c1"># 3-03 @@: Should this have a WHERE 1 = 1 or similar</span>
+        <span class="c1"># clause?  In some configurations without the WHERE clause</span>
+        <span class="c1"># the query won&#39;t go through, but maybe we shouldn&#39;t override</span>
+        <span class="c1"># that.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DELETE FROM </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tableName</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DBAPI.createBinary"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createBinary">[docs]</a>    <span class="k">def</span> <span class="nf">createBinary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a binary object wrapper for the given database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Default is Binary() function from the connection driver.</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+    <span class="c1"># The _SO_* series of methods are sorts of &quot;friend&quot; methods</span>
+    <span class="c1"># with SQLObject.  They grab values from the SQLObject instances</span>
+    <span class="c1"># or classes freely, but keep the SQLObject class from accessing</span>
+    <span class="c1"># the database directly.  This way no SQL is actually created</span>
+    <span class="c1"># in the SQLObject class.</span>
+
+    <span class="k">def</span> <span class="nf">_SO_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;UPDATE </span><span class="si">%s</span><span class="s2"> SET </span><span class="si">%s</span><span class="s2"> WHERE </span><span class="si">%s</span><span class="s2"> = (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+                    <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> = (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                               <span class="k">for</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]),</span>
+                    <span class="n">so</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">id</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_selectOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="n">columnNames</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SO_selectOneAlt</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">columnNames</span><span class="p">,</span> <span class="n">so</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">so</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_SO_selectOneAlt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="n">columnNames</span><span class="p">,</span> <span class="n">condition</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">columnNames</span><span class="p">:</span>
+            <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">string_type</span><span class="p">)</span> <span class="ow">and</span>
+                       <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLConstant</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span>
+                       <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">columnNames</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">columns</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryOne</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">Select</span><span class="p">(</span>
+            <span class="n">columns</span><span class="p">,</span> <span class="n">staticTables</span><span class="o">=</span><span class="p">[</span><span class="n">so</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">],</span> <span class="n">clause</span><span class="o">=</span><span class="n">condition</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">so</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DELETE FROM </span><span class="si">%s</span><span class="s2"> WHERE </span><span class="si">%s</span><span class="s2"> = (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+                    <span class="n">so</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">id</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_selectJoin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="s2">&quot;SELECT </span><span class="si">%s</span><span class="s2"> FROM </span><span class="si">%s</span><span class="s2"> WHERE </span><span class="si">%s</span><span class="s2"> = (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">,</span>
+                              <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+                              <span class="n">column</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_intermediateJoin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">getColumn</span><span class="p">,</span> <span class="n">joinColumn</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="s2">&quot;SELECT </span><span class="si">%s</span><span class="s2"> FROM </span><span class="si">%s</span><span class="s2"> WHERE </span><span class="si">%s</span><span class="s2"> = (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="n">getColumn</span><span class="p">,</span>
+                              <span class="n">table</span><span class="p">,</span>
+                              <span class="n">joinColumn</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_intermediateDelete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">firstColumn</span><span class="p">,</span> <span class="n">firstValue</span><span class="p">,</span>
+                               <span class="n">secondColumn</span><span class="p">,</span> <span class="n">secondValue</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DELETE FROM </span><span class="si">%s</span><span class="s2"> WHERE </span><span class="si">%s</span><span class="s2"> = (</span><span class="si">%s</span><span class="s2">) AND </span><span class="si">%s</span><span class="s2"> = (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">table</span><span class="p">,</span>
+                    <span class="n">firstColumn</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">firstValue</span><span class="p">),</span>
+                    <span class="n">secondColumn</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">secondValue</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_intermediateInsert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">firstColumn</span><span class="p">,</span> <span class="n">firstValue</span><span class="p">,</span>
+                               <span class="n">secondColumn</span><span class="p">,</span> <span class="n">secondValue</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;INSERT INTO </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">) VALUES (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">table</span><span class="p">,</span>
+                    <span class="n">firstColumn</span><span class="p">,</span>
+                    <span class="n">secondColumn</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">firstValue</span><span class="p">),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">secondValue</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_SO_columnClause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">kw</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">main</span>
+        <span class="n">ops</span> <span class="o">=</span> <span class="p">{</span><span class="kc">None</span><span class="p">:</span> <span class="s2">&quot;IS&quot;</span><span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">,</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">soColumn</span> <span class="ow">in</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">soColumn</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">soColumn</span><span class="o">.</span><span class="n">from_python</span><span class="p">:</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">soColumn</span><span class="o">.</span><span class="n">from_python</span><span class="p">(</span>
+                        <span class="n">val</span><span class="p">,</span>
+                        <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectState</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">soColumn</span><span class="o">.</span><span class="n">dbName</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">soColumn</span><span class="o">.</span><span class="n">foreignName</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">soColumn</span><span class="o">.</span><span class="n">foreignName</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">main</span><span class="o">.</span><span class="n">SQLObject</span><span class="p">):</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">soColumn</span><span class="o">.</span><span class="n">dbName</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">soColumn</span><span class="o">.</span><span class="n">dbName</span><span class="p">,</span> <span class="n">obj</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">kw</span><span class="p">:</span>
+            <span class="c1"># pick the first key from kw to use to raise the error,</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;got an unexpected keyword argument(s): &quot;</span>
+                            <span class="s2">&quot;</span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">kw</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="s1">&#39; AND &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+             <span class="p">(</span><span class="n">dbName</span><span class="p">,</span> <span class="n">ops</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+             <span class="k">for</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span>
+             <span class="ow">in</span> <span class="n">data</span><span class="p">])</span>
+
+<div class="viewcode-block" id="DBAPI.sqlrepr"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.sqlrepr">[docs]</a>    <span class="k">def</span> <span class="nf">sqlrepr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbName</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DBAPI.close"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_pool&#39;</span><span class="p">):</span>
+            <span class="c1"># Probably there was an exception while creating this</span>
+            <span class="c1"># instance, so it is incomplete.</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_poolLock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">:</span>  <span class="c1"># _pool could be filled in a different thread</span>
+                <span class="k">return</span>
+            <span class="n">conns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">[:]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pool</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="n">conns</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">del</span> <span class="n">conn</span>
+            <span class="k">del</span> <span class="n">conns</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_poolLock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DBAPI.createEmptyDatabase"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI.createEmptyDatabase">[docs]</a>    <span class="k">def</span> <span class="nf">createEmptyDatabase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an empty database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="Iteration"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Iteration">[docs]</a><span class="k">class</span> <span class="nc">Iteration</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbconn</span><span class="p">,</span> <span class="n">rawconn</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">keepConnection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbconn</span> <span class="o">=</span> <span class="n">dbconn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rawconn</span> <span class="o">=</span> <span class="n">rawconn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="n">select</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keepConnection</span> <span class="o">=</span> <span class="n">keepConnection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="n">rawconn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbconn</span><span class="o">.</span><span class="n">queryForSelect</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dbconn</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="n">dbconn</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">rawconn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;Select&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbconn</span><span class="o">.</span><span class="n">_executeRetry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawconn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Iteration.next"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Iteration.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lazyColumns&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                              <span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbconn</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                              <span class="n">selectResults</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                                              <span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbconn</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">obj</span></div>
+
+    <span class="k">def</span> <span class="nf">_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;query&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># already cleaned up</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keepConnection</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbconn</span><span class="o">.</span><span class="n">releaseConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawconn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbconn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rawconn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Transaction"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction">[docs]</a><span class="k">class</span> <span class="nc">Transaction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbConnection</span><span class="p">):</span>
+        <span class="c1"># this is to skip __del__ in case of an exception in this __init__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span> <span class="o">=</span> <span class="n">dbConnection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">dbConnection</span><span class="o">.</span><span class="n">getConnection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_setAutoCommit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="n">CacheSet</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">dbConnection</span><span class="o">.</span><span class="n">doCache</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deletedCache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Transaction.assertActive"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.assertActive">[docs]</a>    <span class="k">def</span> <span class="nf">assertActive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span><span class="p">,</span> \
+            <span class="s2">&quot;This transaction has already gone through ROLLBACK; &quot;</span> \
+            <span class="s2">&quot;begin another transaction&quot;</span></div>
+
+<div class="viewcode-block" id="Transaction.query"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertActive</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Transaction.queryAll"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.queryAll">[docs]</a>    <span class="k">def</span> <span class="nf">queryAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertActive</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_queryAll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Transaction.queryOne"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.queryOne">[docs]</a>    <span class="k">def</span> <span class="nf">queryOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertActive</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_queryOne</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Transaction.queryInsertID"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.queryInsertID">[docs]</a>    <span class="k">def</span> <span class="nf">queryInsertID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soInstance</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertActive</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_queryInsertID</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="n">soInstance</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Transaction.iterSelect"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.iterSelect">[docs]</a>    <span class="k">def</span> <span class="nf">iterSelect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertActive</span><span class="p">()</span>
+        <span class="c1"># We can&#39;t keep the cursor open with results in a transaction,</span>
+        <span class="c1"># because we might want to use the connection while we&#39;re</span>
+        <span class="c1"># still iterating through the results.</span>
+        <span class="c1"># @@: But would it be okay for psycopg, with threadsafety</span>
+        <span class="c1"># level 2?</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">select</span><span class="o">.</span><span class="n">IterationClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span>
+                                               <span class="n">select</span><span class="p">,</span> <span class="n">keepConnection</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span></div>
+
+    <span class="k">def</span> <span class="nf">_SO_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">):</span>
+        <span class="n">cls</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="k">if</span> <span class="n">cls</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deletedCache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deletedCache</span><span class="p">[</span><span class="n">cls</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deletedCache</span><span class="p">[</span><span class="n">cls</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
+            <span class="n">meth</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_SO_delete</span><span class="o">.</span><span class="n">__func__</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">meth</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_SO_delete</span><span class="o">.</span><span class="n">__func__</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">meth</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Transaction.commit"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.commit">[docs]</a>    <span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">close</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span><span class="p">:</span>
+            <span class="c1"># @@: is it okay to get extraneous commits?</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;COMMIT&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">subCaches</span> <span class="o">=</span> <span class="p">[(</span><span class="n">sub</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sub</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">allIDs</span><span class="p">())</span>
+                     <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">allSubCachesByClassNames</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="n">subCaches</span><span class="o">.</span><span class="n">extend</span><span class="p">([(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deletedCache</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="k">for</span> <span class="n">cls</span><span class="p">,</span> <span class="n">ids</span> <span class="ow">in</span> <span class="n">subCaches</span><span class="p">:</span>
+            <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+                <span class="n">inst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">tryGetByName</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">inst</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">inst</span><span class="o">.</span><span class="n">expire</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">close</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_makeObsolete</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Transaction.rollback"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.rollback">[docs]</a>    <span class="k">def</span> <span class="nf">rollback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span><span class="p">:</span>
+            <span class="c1"># @@: is it okay to get extraneous rollbacks?</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;ROLLBACK&#39;</span><span class="p">)</span>
+        <span class="n">subCaches</span> <span class="o">=</span> <span class="p">[(</span><span class="n">sub</span><span class="p">,</span> <span class="n">sub</span><span class="o">.</span><span class="n">allIDs</span><span class="p">())</span> <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">allSubCaches</span><span class="p">()]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">subCache</span><span class="p">,</span> <span class="n">ids</span> <span class="ow">in</span> <span class="n">subCaches</span><span class="p">:</span>
+            <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+                <span class="n">inst</span> <span class="o">=</span> <span class="n">subCache</span><span class="o">.</span><span class="n">tryGet</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">inst</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">inst</span><span class="o">.</span><span class="n">expire</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_makeObsolete</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If nothing else works, let the parent connection handle it.</span>
+<span class="sd">        Except with this transaction as &#39;self&#39;.  Poor man&#39;s</span>
+<span class="sd">        acquisition?  Bad programming?  Okay, maybe.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertActive</span><span class="p">()</span>
+        <span class="n">attr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">__func__</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">ConnWrapper</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">ConnWrapper</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">_soClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">attr</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
+                <span class="n">meth</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">meth</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">meth</span>
+
+    <span class="k">def</span> <span class="nf">_makeObsolete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">autoCommit</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_setAutoCommit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">releaseConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span>
+                                             <span class="n">explicit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deletedCache</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="Transaction.begin"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.begin">[docs]</a>    <span class="k">def</span> <span class="nf">begin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># @@: Should we do this, or should begin() be a no-op when we&#39;re</span>
+        <span class="c1"># not already obsolete?</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span><span class="p">,</span> \
+            <span class="s2">&quot;You cannot begin a new transaction session &quot;</span> \
+            <span class="s2">&quot;without rolling back this one&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">getConnection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dbConnection</span><span class="o">.</span><span class="n">_setAutoCommit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obsolete</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Transaction.close"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.Transaction.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;You cannot just close transaction - &#39;</span>
+                        <span class="s1">&#39;you should either call rollback(), commit() &#39;</span>
+                        <span class="s1">&#39;or commit(close=True) &#39;</span>
+                        <span class="s1">&#39;to close the underlying connection.&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ConnectionHub"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnectionHub">[docs]</a><span class="k">class</span> <span class="nc">ConnectionHub</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This object serves as a hub for connections, so that you can pass</span>
+<span class="sd">    in a ConnectionHub to a SQLObject subclass as though it was a</span>
+<span class="sd">    connection, but actually bind a real database connection later.</span>
+<span class="sd">    You can also bind connections on a per-thread basis.</span>
+
+<span class="sd">    You must hang onto the original ConnectionHub instance, as you</span>
+<span class="sd">    cannot retrieve it again from the class or instance.</span>
+
+<span class="sd">    To use the hub, do something like::</span>
+
+<span class="sd">        hub = ConnectionHub()</span>
+<span class="sd">        class MyClass(SQLObject):</span>
+<span class="sd">            _connection = hub</span>
+
+<span class="sd">        hub.threadConnection = connectionFromURI(&#39;...&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threadingLocal</span> <span class="o">=</span> <span class="n">threading_local</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># I&#39;m a little surprised we have to do this, but apparently</span>
+        <span class="c1"># the object&#39;s private dictionary of attributes doesn&#39;t</span>
+        <span class="c1"># override this descriptor.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;_connection&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;_connection&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getConnection</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;_connection&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="ConnectionHub.getConnection"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnectionHub.getConnection">[docs]</a>    <span class="k">def</span> <span class="nf">getConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">threadingLocal</span><span class="o">.</span><span class="n">connection</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">processConnection</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                    <span class="s2">&quot;No connection has been defined for this thread &quot;</span>
+                    <span class="s2">&quot;or process&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionHub.doInTransaction"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnectionHub.doInTransaction">[docs]</a>    <span class="k">def</span> <span class="nf">doInTransaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This routine can be used to run a function in a transaction,</span>
+<span class="sd">        rolling the transaction back if any exception is raised from</span>
+<span class="sd">        that function, and committing otherwise.</span>
+
+<span class="sd">        Use like::</span>
+
+<span class="sd">            sqlhub.doInTransaction(process_request, os.environ)</span>
+
+<span class="sd">        This will run ``process_request(os.environ)``.  The return</span>
+<span class="sd">        value will be preserved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># @@: In Python 2.5, something usable with with: should also</span>
+        <span class="c1"># be added.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">old_conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threadingLocal</span><span class="o">.</span><span class="n">connection</span>
+            <span class="n">old_conn_is_threading</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">old_conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processConnection</span>
+            <span class="n">old_conn_is_threading</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">old_conn</span><span class="o">.</span><span class="n">transaction</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">old_conn_is_threading</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threadConnection</span> <span class="o">=</span> <span class="n">conn</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processConnection</span> <span class="o">=</span> <span class="n">conn</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+                <span class="k">raise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">close</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">value</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">old_conn_is_threading</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">threadConnection</span> <span class="o">=</span> <span class="n">old_conn</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">processConnection</span> <span class="o">=</span> <span class="n">old_conn</span></div>
+
+    <span class="k">def</span> <span class="nf">_set_threadConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threadingLocal</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_get_threadConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">threadingLocal</span><span class="o">.</span><span class="n">connection</span>
+
+    <span class="k">def</span> <span class="nf">_del_threadConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">threadingLocal</span><span class="o">.</span><span class="n">connection</span>
+
+    <span class="n">threadConnection</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_threadConnection</span><span class="p">,</span>
+                                <span class="n">_set_threadConnection</span><span class="p">,</span>
+                                <span class="n">_del_threadConnection</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConnectionURIOpener"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnectionURIOpener">[docs]</a><span class="k">class</span> <span class="nc">ConnectionURIOpener</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schemeBuilders</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instanceNames</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cachedURIs</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="ConnectionURIOpener.registerConnection"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnectionURIOpener.registerConnection">[docs]</a>    <span class="k">def</span> <span class="nf">registerConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schemes</span><span class="p">,</span> <span class="n">builder</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">uriScheme</span> <span class="ow">in</span> <span class="n">schemes</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">uriScheme</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemeBuilders</span> \
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemeBuilders</span><span class="p">[</span><span class="n">uriScheme</span><span class="p">]</span> <span class="ow">is</span> <span class="n">builder</span><span class="p">,</span> \
+                <span class="s2">&quot;A driver has already been registered &quot;</span> \
+                <span class="s2">&quot;for the URI scheme </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">uriScheme</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">schemeBuilders</span><span class="p">[</span><span class="n">uriScheme</span><span class="p">]</span> <span class="o">=</span> <span class="n">builder</span></div>
+
+<div class="viewcode-block" id="ConnectionURIOpener.registerConnectionInstance"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnectionURIOpener.registerConnectionInstance">[docs]</a>    <span class="k">def</span> <span class="nf">registerConnectionInstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instanceNames</span> <span class="ow">or</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">instanceNames</span><span class="p">[</span><span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="ow">is</span> <span class="n">cls</span>  <span class="c1"># noqa</span>
+                <span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A instance has already been registered &quot;</span>
+                <span class="s2">&quot;with the name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> \
+                <span class="s2">&quot;You cannot include &#39;:&#39; &quot;</span> \
+                <span class="s2">&quot;in your class names (</span><span class="si">%r</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">cls</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># noqa</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">instanceNames</span><span class="p">[</span><span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">inst</span></div>
+
+<div class="viewcode-block" id="ConnectionURIOpener.connectionForURI"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnectionURIOpener.connectionForURI">[docs]</a>    <span class="k">def</span> <span class="nf">connectionForURI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">oldUri</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;?&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uri</span><span class="p">:</span>
+                <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urlencode</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="n">urlencode</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">uri</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cachedURIs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cachedURIs</span><span class="p">[</span><span class="n">uri</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">uri</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">scheme</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">connCls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbConnectionForScheme</span><span class="p">(</span><span class="n">scheme</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">oldUri</span><span class="p">:</span>
+                <span class="n">conn</span> <span class="o">=</span> <span class="n">connCls</span><span class="o">.</span><span class="n">connectionFromOldURI</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">conn</span> <span class="o">=</span> <span class="n">connCls</span><span class="o">.</span><span class="n">connectionFromURI</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># We just have a name, not a URI</span>
+            <span class="k">assert</span> <span class="n">uri</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instanceNames</span><span class="p">,</span> \
+                <span class="s2">&quot;No SQLObject driver exists under the name </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">uri</span>
+            <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instanceNames</span><span class="p">[</span><span class="n">uri</span><span class="p">]</span>
+        <span class="c1"># @@: Do we care if we clobber another connection?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cachedURIs</span><span class="p">[</span><span class="n">uri</span><span class="p">]</span> <span class="o">=</span> <span class="n">conn</span>
+        <span class="k">return</span> <span class="n">conn</span></div>
+
+<div class="viewcode-block" id="ConnectionURIOpener.dbConnectionForScheme"><a class="viewcode-back" href="../../api/sqlobject.dbconnection.html#sqlobject.dbconnection.ConnectionURIOpener.dbConnectionForScheme">[docs]</a>    <span class="k">def</span> <span class="nf">dbConnectionForScheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">scheme</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemeBuilders</span><span class="p">,</span> <span class="p">(</span>
+            <span class="s2">&quot;No SQLObject driver exists for </span><span class="si">%s</span><span class="s2"> (only </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">scheme</span><span class="p">,</span>
+                <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schemeBuilders</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemeBuilders</span><span class="p">[</span><span class="n">scheme</span><span class="p">]()</span></div></div>
+
+<span class="n">TheURIOpener</span> <span class="o">=</span> <span class="n">ConnectionURIOpener</span><span class="p">()</span>
+
+<span class="n">registerConnection</span> <span class="o">=</span> <span class="n">TheURIOpener</span><span class="o">.</span><span class="n">registerConnection</span>
+<span class="n">registerConnectionInstance</span> <span class="o">=</span> <span class="n">TheURIOpener</span><span class="o">.</span><span class="n">registerConnectionInstance</span>
+<span class="n">connectionForURI</span> <span class="o">=</span> <span class="n">TheURIOpener</span><span class="o">.</span><span class="n">connectionForURI</span>
+<span class="n">dbConnectionForScheme</span> <span class="o">=</span> <span class="n">TheURIOpener</span><span class="o">.</span><span class="n">dbConnectionForScheme</span>
+
+<span class="c1"># Register DB URI schemas -- do import for side effects</span>
+<span class="c1"># noqa is a directive for flake8 to ignore seemingly unused imports</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">firebird</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">maxdb</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">mssql</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">mysql</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">postgres</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">rdbhost</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">sqlite</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">sybase</span>  <span class="c1"># noqa</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">SQLObject 3.2.0a0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>
