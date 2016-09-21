@@ -73,27 +73,27 @@
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span>
 
 
-<div class="viewcode-block" id="Test1"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.Test1">[docs]</a><span class="k">class</span> <span class="nc">Test1</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTest1"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.SOTest1">[docs]</a><span class="k">class</span> <span class="nc">SOTest1</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
         <span class="n">createSQL</span> <span class="o">=</span> <span class="s2">&quot;CREATE SEQUENCE db_test1_seq;&quot;</span>
     <span class="n">test1</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Test2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.Test2">[docs]</a><span class="k">class</span> <span class="nc">Test2</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTest2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.SOTest2">[docs]</a><span class="k">class</span> <span class="nc">SOTest2</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
         <span class="n">createSQL</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CREATE SEQUENCE db_test2_seq;&quot;</span><span class="p">,</span>
                      <span class="s2">&quot;ALTER TABLE test2 ADD CHECK(test2 != &#39;&#39;);&quot;</span><span class="p">]</span>
     <span class="n">test2</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Test3"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.Test3">[docs]</a><span class="k">class</span> <span class="nc">Test3</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTest3"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.SOTest3">[docs]</a><span class="k">class</span> <span class="nc">SOTest3</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
         <span class="n">createSQL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;postgres&#39;</span><span class="p">:</span> <span class="s1">&#39;CREATE SEQUENCE db_test3_seq;&#39;</span><span class="p">,</span>
                      <span class="s1">&#39;mysql&#39;</span><span class="p">:</span> <span class="s1">&#39;CREATE SEQUENCE db_test3_seq;&#39;</span><span class="p">}</span>
     <span class="n">test3</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Test4"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.Test4">[docs]</a><span class="k">class</span> <span class="nc">Test4</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTest4"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.SOTest4">[docs]</a><span class="k">class</span> <span class="nc">SOTest4</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
         <span class="n">createSQL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;postgres&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CREATE SEQUENCE db_test4_seq;&#39;</span><span class="p">,</span>
                                   <span class="s2">&quot;ALTER TABLE test4 ADD CHECK(test4 != &#39;&#39;);&quot;</span><span class="p">],</span>
@@ -101,7 +101,7 @@
     <span class="n">test4</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Test5"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.Test5">[docs]</a><span class="k">class</span> <span class="nc">Test5</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTest5"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlobject_admin.html#sqlobject.tests.test_sqlobject_admin.SOTest5">[docs]</a><span class="k">class</span> <span class="nc">SOTest5</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
         <span class="n">createSQL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mysql&#39;</span><span class="p">:</span> <span class="s1">&#39;CREATE SEQUENCE db_test5_seq;&#39;</span><span class="p">}</span>
     <span class="n">test5</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>

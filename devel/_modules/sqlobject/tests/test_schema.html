@@ -77,7 +77,7 @@
 <span class="c1">########################################</span>
 
 
-<div class="viewcode-block" id="TestSchema"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_schema.html#sqlobject.tests.test_schema.TestSchema">[docs]</a><span class="k">class</span> <span class="nc">TestSchema</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestSchema"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_schema.html#sqlobject.tests.test_schema.SOTestSchema">[docs]</a><span class="k">class</span> <span class="nc">SOTestSchema</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">foo</span> <span class="o">=</span> <span class="n">UnicodeCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span></div>
 
 
@@ -89,10 +89,10 @@
     <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;CREATE SCHEMA test&#39;</span><span class="p">)</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;SET search_path TO test&#39;</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSchema</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">TestSchema</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="n">conn</span>
-    <span class="n">TestSchema</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">conn</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM test.test_schema&quot;</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSchema</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">SOTestSchema</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="n">conn</span>
+    <span class="n">SOTestSchema</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">conn</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM test.so_test_schema&quot;</span><span class="p">)</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;SET search_path TO public&#39;</span><span class="p">)</span></div>
 </pre></div>

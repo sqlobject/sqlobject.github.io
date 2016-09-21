@@ -71,7 +71,7 @@
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
 
 
-<div class="viewcode-block" id="TestPlainAndNonPlainSetter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_setters.html#sqlobject.tests.test_setters.TestPlainAndNonPlainSetter">[docs]</a><span class="k">class</span> <span class="nc">TestPlainAndNonPlainSetter</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestPlainAndNonPlainSetter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_setters.html#sqlobject.tests.test_setters.SOTestPlainAndNonPlainSetter">[docs]</a><span class="k">class</span> <span class="nc">SOTestPlainAndNonPlainSetter</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">firstName</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">dbName</span><span class="o">=</span><span class="s1">&#39;fname_col&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">lastName</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">dbName</span><span class="o">=</span><span class="s1">&#39;lname_col&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
@@ -85,8 +85,8 @@
 
 
 <div class="viewcode-block" id="test_create"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_setters.html#sqlobject.tests.test_setters.test_create">[docs]</a><span class="k">def</span> <span class="nf">test_create</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestPlainAndNonPlainSetter</span><span class="p">)</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">TestPlainAndNonPlainSetter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;John Doe&#39;</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestPlainAndNonPlainSetter</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">SOTestPlainAndNonPlainSetter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;John Doe&#39;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">firstName</span> <span class="o">==</span> <span class="s1">&#39;John&#39;</span>
     <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">lastName</span> <span class="o">==</span> <span class="s1">&#39;Doe&#39;</span>
     <span class="k">assert</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;John Doe&#39;</span></div>

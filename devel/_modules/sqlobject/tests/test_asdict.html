@@ -76,14 +76,14 @@
 <span class="c1">########################################</span>
 
 
-<div class="viewcode-block" id="TestAsDict"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_asdict.html#sqlobject.tests.test_asdict.TestAsDict">[docs]</a><span class="k">class</span> <span class="nc">TestAsDict</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestAsDict"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_asdict.html#sqlobject.tests.test_asdict.SOTestAsDict">[docs]</a><span class="k">class</span> <span class="nc">SOTestAsDict</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">name2</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_asDict"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_asdict.html#sqlobject.tests.test_asdict.test_asDict">[docs]</a><span class="k">def</span> <span class="nf">test_asDict</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestAsDict</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">t1</span> <span class="o">=</span> <span class="n">TestAsDict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="n">name2</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestAsDict</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">SOTestAsDict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="n">name2</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">t1</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">asDict</span><span class="p">()</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="n">name2</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 </pre></div>
 

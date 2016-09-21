@@ -77,30 +77,30 @@
     <span class="n">_LikeQuoted</span>
 
 
-<div class="viewcode-block" id="TestClass"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.TestClass">[docs]</a><span class="k">class</span> <span class="nc">TestClass</span><span class="p">:</span>
+<div class="viewcode-block" id="SOTestClass"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.SOTestClass">[docs]</a><span class="k">class</span> <span class="nc">SOTestClass</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;TestClass&gt;&#39;</span></div>
+        <span class="k">return</span> <span class="s1">&#39;&lt;SOTestClass&gt;&#39;</span></div>
 
 
-<div class="viewcode-block" id="TestClassConverter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.TestClassConverter">[docs]</a><span class="k">def</span> <span class="nf">TestClassConverter</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestClassConverter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.SOTestClassConverter">[docs]</a><span class="k">def</span> <span class="nf">SOTestClassConverter</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
 
-<span class="n">registerConverter</span><span class="p">(</span><span class="n">TestClass</span><span class="p">,</span> <span class="n">TestClassConverter</span><span class="p">)</span>
+<span class="n">registerConverter</span><span class="p">(</span><span class="n">SOTestClass</span><span class="p">,</span> <span class="n">SOTestClassConverter</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="NewTestClass"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.NewTestClass">[docs]</a><span class="k">class</span> <span class="nc">NewTestClass</span><span class="p">:</span>
+<div class="viewcode-block" id="NewSOTestClass"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.NewSOTestClass">[docs]</a><span class="k">class</span> <span class="nc">NewSOTestClass</span><span class="p">:</span>
 
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="nb">type</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;NewTestClass&gt;&#39;</span></div>
+        <span class="k">return</span> <span class="s1">&#39;&lt;NewSOTestClass&gt;&#39;</span></div>
 
 
-<div class="viewcode-block" id="NewTestClassConverter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.NewTestClassConverter">[docs]</a><span class="k">def</span> <span class="nf">NewTestClassConverter</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+<div class="viewcode-block" id="NewSOTestClassConverter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.NewSOTestClassConverter">[docs]</a><span class="k">def</span> <span class="nf">NewSOTestClassConverter</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
 
-<span class="n">registerConverter</span><span class="p">(</span><span class="n">NewTestClass</span><span class="p">,</span> <span class="n">NewTestClassConverter</span><span class="p">)</span>
+<span class="n">registerConverter</span><span class="p">(</span><span class="n">NewSOTestClass</span><span class="p">,</span> <span class="n">NewSOTestClassConverter</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_sqlrepr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
@@ -190,12 +190,12 @@
 
 
 <div class="viewcode-block" id="test_instance"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.test_instance">[docs]</a><span class="k">def</span> <span class="nf">test_instance</span><span class="p">():</span>
-    <span class="n">instance</span> <span class="o">=</span> <span class="n">TestClass</span><span class="p">()</span>
+    <span class="n">instance</span> <span class="o">=</span> <span class="n">SOTestClass</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="o">==</span> <span class="nb">repr</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_newstyle"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.test_newstyle">[docs]</a><span class="k">def</span> <span class="nf">test_newstyle</span><span class="p">():</span>
-    <span class="n">instance</span> <span class="o">=</span> <span class="n">NewTestClass</span><span class="p">()</span>
+    <span class="n">instance</span> <span class="o">=</span> <span class="n">NewSOTestClass</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="o">==</span> <span class="nb">repr</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span></div>
 
 

@@ -72,7 +72,7 @@
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">getConnection</span><span class="p">,</span> <span class="n">setupClass</span>
 
 
-<div class="viewcode-block" id="TestSOListMySQL"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_mysql.html#sqlobject.tests.test_mysql.TestSOListMySQL">[docs]</a><span class="k">class</span> <span class="nc">TestSOListMySQL</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestSOListMySQL"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_mysql.html#sqlobject.tests.test_mysql.SOTestSOListMySQL">[docs]</a><span class="k">class</span> <span class="nc">SOTestSOListMySQL</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">pass</span></div>
 
 
@@ -87,8 +87,8 @@
     <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;mysql&quot;</span><span class="p">:</span>
         <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require MySQL&quot;</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSOListMySQL</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">TestSOListMySQL</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span> <span class="ow">in</span> <span class="n">connection</span><span class="o">.</span><span class="n">listTables</span><span class="p">()</span></div>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSOListMySQL</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">SOTestSOListMySQL</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span> <span class="ow">in</span> <span class="n">connection</span><span class="o">.</span><span class="n">listTables</span><span class="p">()</span></div>
 </pre></div>
 
           </div>

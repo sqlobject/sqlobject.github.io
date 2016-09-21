@@ -74,33 +74,33 @@
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">getConnection</span><span class="p">,</span> <span class="n">raises</span><span class="p">,</span> <span class="n">setupClass</span>
 
 
-<div class="viewcode-block" id="TestSQLBuilder"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlbuilder.html#sqlobject.tests.test_sqlbuilder.TestSQLBuilder">[docs]</a><span class="k">class</span> <span class="nc">TestSQLBuilder</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestSQLBuilder"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlbuilder.html#sqlobject.tests.test_sqlbuilder.SOTestSQLBuilder">[docs]</a><span class="k">class</span> <span class="nc">SOTestSQLBuilder</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="test_Select"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlbuilder.html#sqlobject.tests.test_sqlbuilder.test_Select">[docs]</a><span class="k">def</span> <span class="nf">test_Select</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSQLBuilder</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSQLBuilder</span><span class="p">)</span>
 
     <span class="n">select1</span> <span class="o">=</span> <span class="n">Select</span><span class="p">([</span><span class="n">const</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="n">MAX</span><span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">salary</span><span class="p">)],</span>
                      <span class="n">staticTables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;employees&#39;</span><span class="p">])</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">select1</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;SELECT id, MAX(salary) FROM employees&#39;</span>
 
-    <span class="n">select2</span> <span class="o">=</span> <span class="n">Select</span><span class="p">([</span><span class="n">TestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">TestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">])</span>
+    <span class="n">select2</span> <span class="o">=</span> <span class="n">Select</span><span class="p">([</span><span class="n">SOTestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">SOTestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">])</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">select2</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s1">&#39;SELECT test_sql_builder.name, test_sql_builder.value &#39;</span> \
-        <span class="s1">&#39;FROM test_sql_builder&#39;</span>
+        <span class="s1">&#39;SELECT so_test_sql_builder.name, so_test_sql_builder.value &#39;</span> \
+        <span class="s1">&#39;FROM so_test_sql_builder&#39;</span>
 
     <span class="n">union</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">select1</span><span class="p">,</span> <span class="n">select2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">union</span><span class="p">)</span> <span class="o">==</span> \
         <span class="s1">&#39;SELECT id, MAX(salary) FROM employees &#39;</span> \
-        <span class="s1">&#39;UNION SELECT test_sql_builder.name, test_sql_builder.value &#39;</span> \
-        <span class="s1">&#39;FROM test_sql_builder&#39;</span>
+        <span class="s1">&#39;UNION SELECT so_test_sql_builder.name, so_test_sql_builder.value &#39;</span> \
+        <span class="s1">&#39;FROM so_test_sql_builder&#39;</span>
 
-    <span class="n">union</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">TestSQLBuilder</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">queryForSelect</span><span class="p">())</span>
+    <span class="n">union</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">SOTestSQLBuilder</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">queryForSelect</span><span class="p">())</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">union</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s1">&#39;SELECT test_sql_builder.id, test_sql_builder.name, &#39;</span> \
-        <span class="s1">&#39;test_sql_builder.value FROM test_sql_builder WHERE 1 = 1&#39;</span></div>
+        <span class="s1">&#39;SELECT so_test_sql_builder.id, so_test_sql_builder.name, &#39;</span> \
+        <span class="s1">&#39;so_test_sql_builder.value FROM so_test_sql_builder WHERE 1 = 1&#39;</span></div>
 
 
 <div class="viewcode-block" id="test_empty_AND"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlbuilder.html#sqlobject.tests.test_sqlbuilder.test_empty_AND">[docs]</a><span class="k">def</span> <span class="nf">test_empty_AND</span><span class="p">():</span>
@@ -118,11 +118,11 @@
 
 
 <div class="viewcode-block" id="test_modulo"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlbuilder.html#sqlobject.tests.test_sqlbuilder.test_modulo">[docs]</a><span class="k">def</span> <span class="nf">test_modulo</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSQLBuilder</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">TestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;mysql&#39;</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;((MOD(test_sql_builder.value, 2)) = (0))&quot;</span>
-    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">TestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;(((test_sql_builder.value) % (2)) = (0))&quot;</span></div>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSQLBuilder</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">SOTestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;mysql&#39;</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;((MOD(so_test_sql_builder.value, 2)) = (0))&quot;</span>
+    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">SOTestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;(((so_test_sql_builder.value) % (2)) = (0))&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_str_or_sqlrepr"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlbuilder.html#sqlobject.tests.test_sqlbuilder.test_str_or_sqlrepr">[docs]</a><span class="k">def</span> <span class="nf">test_str_or_sqlrepr</span><span class="p">():</span>
@@ -160,18 +160,18 @@
 
 
 <div class="viewcode-block" id="test_CONCAT"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlbuilder.html#sqlobject.tests.test_sqlbuilder.test_CONCAT">[docs]</a><span class="k">def</span> <span class="nf">test_CONCAT</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSQLBuilder</span><span class="p">)</span>
-    <span class="n">TestSQLBuilder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSQLBuilder</span><span class="p">)</span>
+    <span class="n">SOTestSQLBuilder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="s1">&#39;mysql&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;CONCAT(&#39;a&#39;, &#39;b&#39;)&quot;</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;&#39;a&#39; || &#39;b&#39;&quot;</span>
-    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;prefix&#39;</span><span class="p">,</span> <span class="n">TestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="s1">&#39;mysql&#39;</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;CONCAT(&#39;prefix&#39;, test_sql_builder.name)&quot;</span>
-    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;prefix&#39;</span><span class="p">,</span> <span class="n">TestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;&#39;prefix&#39; || test_sql_builder.name&quot;</span>
+    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;prefix&#39;</span><span class="p">,</span> <span class="n">SOTestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="s1">&#39;mysql&#39;</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;CONCAT(&#39;prefix&#39;, so_test_sql_builder.name)&quot;</span>
+    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;prefix&#39;</span><span class="p">,</span> <span class="n">SOTestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="o">==</span> \
+        <span class="s2">&quot;&#39;prefix&#39; || so_test_sql_builder.name&quot;</span>
 
-    <span class="n">select</span> <span class="o">=</span> <span class="n">Select</span><span class="p">([</span><span class="n">CONCAT</span><span class="p">(</span><span class="n">TestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;-suffix&#39;</span><span class="p">)],</span>
-                    <span class="n">staticTables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;test_sql_builder&#39;</span><span class="p">])</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">Select</span><span class="p">([</span><span class="n">CONCAT</span><span class="p">(</span><span class="n">SOTestSQLBuilder</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;-suffix&#39;</span><span class="p">)],</span>
+                    <span class="n">staticTables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;so_test_sql_builder&#39;</span><span class="p">])</span>
     <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">select</span><span class="p">))</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>

@@ -71,18 +71,18 @@
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
 
 
-<div class="viewcode-block" id="TestComparison"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_comparison.html#sqlobject.tests.test_comparison.TestComparison">[docs]</a><span class="k">class</span> <span class="nc">TestComparison</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestComparison"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_comparison.html#sqlobject.tests.test_comparison.SOTestComparison">[docs]</a><span class="k">class</span> <span class="nc">SOTestComparison</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="test_eq"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_comparison.html#sqlobject.tests.test_comparison.test_eq">[docs]</a><span class="k">def</span> <span class="nf">test_eq</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestComparison</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">t1</span> <span class="o">=</span> <span class="n">TestComparison</span><span class="p">()</span>
-    <span class="n">t2</span> <span class="o">=</span> <span class="n">TestComparison</span><span class="p">()</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestComparison</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">SOTestComparison</span><span class="p">()</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">SOTestComparison</span><span class="p">()</span>
 
-    <span class="n">TestComparison</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-    <span class="n">t3</span> <span class="o">=</span> <span class="n">TestComparison</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">t4</span> <span class="o">=</span> <span class="n">TestComparison</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">SOTestComparison</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">t3</span> <span class="o">=</span> <span class="n">SOTestComparison</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">t4</span> <span class="o">=</span> <span class="n">SOTestComparison</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="k">assert</span> <span class="n">t1</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">t3</span><span class="o">.</span><span class="n">id</span>
     <span class="k">assert</span> <span class="n">t2</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">t4</span><span class="o">.</span><span class="n">id</span>

@@ -73,24 +73,24 @@
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">raises</span><span class="p">,</span> <span class="n">setupClass</span>
 
 
-<div class="viewcode-block" id="TestAggregate1"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_aggregates.html#sqlobject.inheritance.tests.test_aggregates.TestAggregate1">[docs]</a><span class="k">class</span> <span class="nc">TestAggregate1</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestAggregate1"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_aggregates.html#sqlobject.inheritance.tests.test_aggregates.SOTestAggregate1">[docs]</a><span class="k">class</span> <span class="nc">SOTestAggregate1</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
     <span class="n">value1</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="TestAggregate2"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_aggregates.html#sqlobject.inheritance.tests.test_aggregates.TestAggregate2">[docs]</a><span class="k">class</span> <span class="nc">TestAggregate2</span><span class="p">(</span><span class="n">TestAggregate1</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestAggregate2"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_aggregates.html#sqlobject.inheritance.tests.test_aggregates.SOTestAggregate2">[docs]</a><span class="k">class</span> <span class="nc">SOTestAggregate2</span><span class="p">(</span><span class="n">SOTestAggregate1</span><span class="p">):</span>
     <span class="n">value2</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="test_aggregates"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_aggregates.html#sqlobject.inheritance.tests.test_aggregates.test_aggregates">[docs]</a><span class="k">def</span> <span class="nf">test_aggregates</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">([</span><span class="n">TestAggregate1</span><span class="p">,</span> <span class="n">TestAggregate2</span><span class="p">])</span>
+    <span class="n">setupClass</span><span class="p">([</span><span class="n">SOTestAggregate1</span><span class="p">,</span> <span class="n">SOTestAggregate2</span><span class="p">])</span>
 
-    <span class="n">TestAggregate1</span><span class="p">(</span><span class="n">value1</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">TestAggregate2</span><span class="p">(</span><span class="n">value1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">value2</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">SOTestAggregate1</span><span class="p">(</span><span class="n">value1</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">SOTestAggregate2</span><span class="p">(</span><span class="n">value1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">value2</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="n">TestAggregate1</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="s2">&quot;value1&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-    <span class="k">assert</span> <span class="n">TestAggregate2</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="s2">&quot;value1&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-    <span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="n">TestAggregate2</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s2">&quot;value2&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">TestAggregate2</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">TestAggregate2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">12</span></div>
+    <span class="k">assert</span> <span class="n">SOTestAggregate1</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="s2">&quot;value1&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">SOTestAggregate2</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="s2">&quot;value1&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="n">SOTestAggregate2</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="s2">&quot;value2&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">SOTestAggregate2</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">SOTestAggregate2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">12</span></div>
 </pre></div>
 
           </div>

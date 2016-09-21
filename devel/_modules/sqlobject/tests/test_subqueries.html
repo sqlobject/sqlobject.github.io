@@ -78,133 +78,136 @@
 <span class="c1">########################################</span>
 
 
-<div class="viewcode-block" id="TestIn1"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.TestIn1">[docs]</a><span class="k">class</span> <span class="nc">TestIn1</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestIn1"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.SOTestIn1">[docs]</a><span class="k">class</span> <span class="nc">SOTestIn1</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">col1</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="TestIn2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.TestIn2">[docs]</a><span class="k">class</span> <span class="nc">TestIn2</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestIn2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.SOTestIn2">[docs]</a><span class="k">class</span> <span class="nc">SOTestIn2</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">col2</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="TestOuter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.TestOuter">[docs]</a><span class="k">class</span> <span class="nc">TestOuter</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
-    <span class="n">fk</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;TestIn1&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="SOTestOuter"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.SOTestOuter">[docs]</a><span class="k">class</span> <span class="nc">SOTestOuter</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">fk</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;SOTestIn1&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestIn1</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestIn2</span><span class="p">)</span></div>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="insert"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.insert">[docs]</a><span class="k">def</span> <span class="nf">insert</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">TestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="n">TestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">TestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
-    <span class="n">TestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="n">TestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">TestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+    <span class="n">SOTestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">SOTestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">SOTestIn1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+    <span class="n">SOTestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">SOTestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">SOTestIn2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_1syntax_in"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_1syntax_in">[docs]</a><span class="k">def</span> <span class="nf">test_1syntax_in</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)))</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_in1 WHERE test_in1.col1 IN &quot;</span> \
-        <span class="s2">&quot;(SELECT test_in2.col2 FROM test_in2)&quot;</span>
+        <span class="s2">&quot;SELECT so_test_in1.id, so_test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_in1 WHERE so_test_in1.col1 IN &quot;</span> \
+        <span class="s2">&quot;(SELECT so_test_in2.col2 FROM so_test_in2)&quot;</span>
 
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">select</span><span class="p">()))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">SOTestIn2</span><span class="o">.</span><span class="n">select</span><span class="p">()))</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_in1 WHERE test_in1.col1 IN &quot;</span> \
-        <span class="s2">&quot;(SELECT test_in2.id FROM test_in2 WHERE 1 = 1)&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_in1.id, so_test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_in1 WHERE so_test_in1.col1 IN &quot;</span> \
+        <span class="s2">&quot;(SELECT so_test_in2.id FROM so_test_in2 WHERE 1 = 1)&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_2perform_in"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_2perform_in">[docs]</a><span class="k">def</span> <span class="nf">test_2perform_in</span><span class="p">():</span>
     <span class="n">insert</span><span class="p">()</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IN</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)))</span>
     <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="test_3syntax_exists"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_3syntax_exists">[docs]</a><span class="k">def</span> <span class="nf">test_3syntax_exists</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
-        <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
-               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">TestIn1</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">))))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
+        <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">))))</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_in1 WHERE NOT EXISTS &quot;</span> \
-        <span class="s2">&quot;(SELECT test_in2.col2 FROM test_in2 &quot;</span> \
-        <span class="s2">&quot;WHERE ((test_in1.col1) = (test_in2.col2)))&quot;</span>
+        <span class="s2">&quot;SELECT so_test_in1.id, so_test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_in1 WHERE NOT EXISTS &quot;</span> \
+        <span class="s2">&quot;(SELECT so_test_in2.col2 FROM so_test_in2 &quot;</span> \
+        <span class="s2">&quot;WHERE ((so_test_in1.col1) = (so_test_in2.col2)))&quot;</span>
 
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestOuter</span><span class="p">)</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestOuter</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
-        <span class="n">Select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span>
-               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">TestOuter</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">fk</span> <span class="o">==</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">))))</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestOuter</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestOuter</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
+        <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span>
+               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">SOTestOuter</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">fk</span> <span class="o">==</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">))))</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_outer.id, test_outer.fk_id &quot;</span> \
-        <span class="s2">&quot;FROM test_outer WHERE NOT EXISTS &quot;</span> \
-        <span class="s2">&quot;(SELECT test_in1.col1 FROM test_in1 &quot;</span> \
-        <span class="s2">&quot;WHERE ((test_outer.fk_id) = (test_in1.id)))&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_outer.id, so_test_outer.fk_id &quot;</span> \
+        <span class="s2">&quot;FROM so_test_outer WHERE NOT EXISTS &quot;</span> \
+        <span class="s2">&quot;(SELECT so_test_in1.col1 FROM so_test_in1 &quot;</span> \
+        <span class="s2">&quot;WHERE ((so_test_outer.fk_id) = (so_test_in1.id)))&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_4perform_exists"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_4perform_exists">[docs]</a><span class="k">def</span> <span class="nf">test_4perform_exists</span><span class="p">():</span>
     <span class="n">insert</span><span class="p">()</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">EXISTS</span><span class="p">(</span>
-        <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
-               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">TestIn1</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">))))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">EXISTS</span><span class="p">(</span>
+        <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">))))</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">select</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
 
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestOuter</span><span class="p">)</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestOuter</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
-        <span class="n">Select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span>
-               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">TestOuter</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">fkID</span> <span class="o">==</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">))))</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestOuter</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestOuter</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">NOTEXISTS</span><span class="p">(</span>
+        <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span>
+               <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">Outer</span><span class="p">(</span><span class="n">SOTestOuter</span><span class="p">)</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">fkID</span> <span class="o">==</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">))))</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">select</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span></div>
 
 
 <div class="viewcode-block" id="test_4syntax_direct"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_4syntax_direct">[docs]</a><span class="k">def</span> <span class="nf">test_4syntax_direct</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
-                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                              <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_in1 WHERE ((test_in1.col1) = &quot;</span> \
-        <span class="s2">&quot;(SELECT test_in2.col2 FROM test_in2 &quot;</span> \
-        <span class="s2">&quot;WHERE ((test_in2.col2) = (&#39;test&#39;))))&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_in1.id, so_test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_in1 WHERE ((so_test_in1.col1) = &quot;</span> \
+        <span class="s2">&quot;(SELECT so_test_in2.col2 FROM so_test_in2 &quot;</span> \
+        <span class="s2">&quot;WHERE ((so_test_in2.col2) = (&#39;test&#39;))))&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_4perform_direct"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_4perform_direct">[docs]</a><span class="k">def</span> <span class="nf">test_4perform_direct</span><span class="p">():</span>
     <span class="n">insert</span><span class="p">()</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
-                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                              <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
     <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span></div>
 
 
 <div class="viewcode-block" id="test_5perform_direct"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_5perform_direct">[docs]</a><span class="k">def</span> <span class="nf">test_5perform_direct</span><span class="p">():</span>
     <span class="n">insert</span><span class="p">()</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
-                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                              <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">)))</span>
     <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span></div>
 
 
 <div class="viewcode-block" id="test_6syntax_join"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_6syntax_join">[docs]</a><span class="k">def</span> <span class="nf">test_6syntax_join</span><span class="p">():</span>
     <span class="n">insert</span><span class="p">()</span>
-    <span class="n">j</span> <span class="o">=</span> <span class="n">LEFTOUTERJOINOn</span><span class="p">(</span><span class="n">TestIn2</span><span class="p">,</span> <span class="n">TestIn1</span><span class="p">,</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
-                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">),</span> <span class="n">join</span><span class="o">=</span><span class="n">j</span><span class="p">))</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">LEFTOUTERJOINOn</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="p">,</span> <span class="n">SOTestIn1</span><span class="p">,</span>
+                        <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                              <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">),</span> <span class="n">join</span><span class="o">=</span><span class="n">j</span><span class="p">))</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_in1.id, test_in1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_in1 WHERE ((test_in1.col1) = &quot;</span> \
-        <span class="s2">&quot;(SELECT test_in2.col2 FROM test_in2 &quot;</span> \
-        <span class="s2">&quot;LEFT OUTER JOIN test_in1 ON ((test_in1.col1) = (test_in2.col2)) &quot;</span> \
-        <span class="s2">&quot;WHERE ((test_in2.col2) = (&#39;test&#39;))))&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_in1.id, so_test_in1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_in1 WHERE ((so_test_in1.col1) = &quot;</span> \
+        <span class="s2">&quot;(SELECT so_test_in2.col2 FROM so_test_in2 &quot;</span> \
+        <span class="s2">&quot;LEFT OUTER JOIN so_test_in1 ON &quot;</span> \
+        <span class="s2">&quot;((so_test_in1.col1) = (so_test_in2.col2)) &quot;</span> \
+        <span class="s2">&quot;WHERE ((so_test_in2.col2) = (&#39;test&#39;))))&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_6perform_join"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_subqueries.html#sqlobject.tests.test_subqueries.test_6perform_join">[docs]</a><span class="k">def</span> <span class="nf">test_6perform_join</span><span class="p">():</span>
     <span class="n">insert</span><span class="p">()</span>
-    <span class="n">j</span> <span class="o">=</span> <span class="n">LEFTOUTERJOINOn</span><span class="p">(</span><span class="n">TestIn2</span><span class="p">,</span> <span class="n">TestIn1</span><span class="p">,</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
-                            <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">TestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">),</span> <span class="n">join</span><span class="o">=</span><span class="n">j</span><span class="p">))</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">LEFTOUTERJOINOn</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="p">,</span> <span class="n">SOTestIn1</span><span class="p">,</span>
+                        <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestIn1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">SOTestIn1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">Select</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">,</span>
+                              <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">SOTestIn2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">),</span> <span class="n">join</span><span class="o">=</span><span class="n">j</span><span class="p">))</span>
     <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span></div>
 </pre></div>
 

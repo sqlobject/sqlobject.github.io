@@ -73,23 +73,23 @@
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
 
 
-<div class="viewcode-block" id="TestCascade1"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.testDestroyCascade.html#sqlobject.inheritance.tests.testDestroyCascade.TestCascade1">[docs]</a><span class="k">class</span> <span class="nc">TestCascade1</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestCascade1"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.testDestroyCascade.html#sqlobject.inheritance.tests.testDestroyCascade.SOTestCascade1">[docs]</a><span class="k">class</span> <span class="nc">SOTestCascade1</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
     <span class="n">dummy</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="TestCascade2"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.testDestroyCascade.html#sqlobject.inheritance.tests.testDestroyCascade.TestCascade2">[docs]</a><span class="k">class</span> <span class="nc">TestCascade2</span><span class="p">(</span><span class="n">TestCascade1</span><span class="p">):</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;TestCascade3&#39;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="SOTestCascade2"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.testDestroyCascade.html#sqlobject.inheritance.tests.testDestroyCascade.SOTestCascade2">[docs]</a><span class="k">class</span> <span class="nc">SOTestCascade2</span><span class="p">(</span><span class="n">SOTestCascade1</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;SOTestCascade3&#39;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s1">&#39;null&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TestCascade3"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.testDestroyCascade.html#sqlobject.inheritance.tests.testDestroyCascade.TestCascade3">[docs]</a><span class="k">class</span> <span class="nc">TestCascade3</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestCascade3"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.testDestroyCascade.html#sqlobject.inheritance.tests.testDestroyCascade.SOTestCascade3">[docs]</a><span class="k">class</span> <span class="nc">SOTestCascade3</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">dummy</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="test_destroySelf"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.testDestroyCascade.html#sqlobject.inheritance.tests.testDestroyCascade.test_destroySelf">[docs]</a><span class="k">def</span> <span class="nf">test_destroySelf</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">([</span><span class="n">TestCascade1</span><span class="p">,</span> <span class="n">TestCascade3</span><span class="p">,</span> <span class="n">TestCascade2</span><span class="p">])</span>
+    <span class="n">setupClass</span><span class="p">([</span><span class="n">SOTestCascade1</span><span class="p">,</span> <span class="n">SOTestCascade3</span><span class="p">,</span> <span class="n">SOTestCascade2</span><span class="p">])</span>
 
-    <span class="n">c</span> <span class="o">=</span> <span class="n">TestCascade3</span><span class="p">(</span><span class="n">dummy</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">TestCascade2</span><span class="p">(</span><span class="n">cID</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">dummy</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SOTestCascade3</span><span class="p">(</span><span class="n">dummy</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">SOTestCascade2</span><span class="p">(</span><span class="n">cID</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">dummy</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">c</span><span class="o">.</span><span class="n">destroySelf</span><span class="p">()</span></div>
 </pre></div>
 

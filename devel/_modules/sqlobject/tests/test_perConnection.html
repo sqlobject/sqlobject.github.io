@@ -76,17 +76,17 @@
 <span class="c1">########################################</span>
 
 
-<div class="viewcode-block" id="TestPerConnection"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_perConnection.html#sqlobject.tests.test_perConnection.TestPerConnection">[docs]</a><span class="k">class</span> <span class="nc">TestPerConnection</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestPerConnection"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_perConnection.html#sqlobject.tests.test_perConnection.SOTestPerConnection">[docs]</a><span class="k">class</span> <span class="nc">SOTestPerConnection</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">test</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="test_perConnection"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_perConnection.html#sqlobject.tests.test_perConnection.test_perConnection">[docs]</a><span class="k">def</span> <span class="nf">test_perConnection</span><span class="p">():</span>
     <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
-    <span class="n">TestPerConnection</span><span class="o">.</span><span class="n">dropTable</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span> <span class="n">ifExists</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">TestPerConnection</span><span class="o">.</span><span class="n">createTable</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
-    <span class="n">TestPerConnection</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">TestPerConnection</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-        <span class="n">TestPerConnection</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">test</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)))</span> <span class="o">==</span> <span class="mi">1</span></div>
+    <span class="n">SOTestPerConnection</span><span class="o">.</span><span class="n">dropTable</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span> <span class="n">ifExists</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">SOTestPerConnection</span><span class="o">.</span><span class="n">createTable</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
+    <span class="n">SOTestPerConnection</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">SOTestPerConnection</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">SOTestPerConnection</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">test</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)))</span> <span class="o">==</span> <span class="mi">1</span></div>
 </pre></div>
 
           </div>

@@ -77,23 +77,23 @@
 <span class="c1">########################################</span>
 
 
-<div class="viewcode-block" id="TestSSLMode"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_postgres.html#sqlobject.tests.test_postgres.TestSSLMode">[docs]</a><span class="k">class</span> <span class="nc">TestSSLMode</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestSSLMode"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_postgres.html#sqlobject.tests.test_postgres.SOTestSSLMode">[docs]</a><span class="k">class</span> <span class="nc">SOTestSSLMode</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">test</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="test_sslmode"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_postgres.html#sqlobject.tests.test_postgres.test_sslmode">[docs]</a><span class="k">def</span> <span class="nf">test_sslmode</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSSLMode</span><span class="p">)</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">TestSSLMode</span><span class="o">.</span><span class="n">_connection</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSSLMode</span><span class="p">)</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">SOTestSSLMode</span><span class="o">.</span><span class="n">_connection</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s1">&#39;postgres&#39;</span><span class="p">)</span> <span class="ow">or</span> \
             <span class="p">(</span><span class="ow">not</span> <span class="n">connection</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">__name__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;psycopg&#39;</span><span class="p">)):</span>
         <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;The test requires PostgreSQL, psycopg and ssl mode&quot;</span><span class="p">)</span>
 
     <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">(</span><span class="n">sslmode</span><span class="o">=</span><span class="s1">&#39;require&#39;</span><span class="p">)</span>
-    <span class="n">TestSSLMode</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
-    <span class="n">test</span> <span class="o">=</span> <span class="n">TestSSLMode</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>  <span class="c1"># Connect to the DB to test sslmode</span>
+    <span class="n">SOTestSSLMode</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">SOTestSSLMode</span><span class="p">(</span><span class="n">test</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>  <span class="c1"># Connect to the DB to test sslmode</span>
 
     <span class="n">connection</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-    <span class="n">test</span> <span class="o">=</span> <span class="n">TestSSLMode</span><span class="o">.</span><span class="n">select</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">SOTestSSLMode</span><span class="o">.</span><span class="n">select</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">test</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span></div>
 
 
@@ -102,7 +102,7 @@
 <span class="c1">########################################</span>
 
 
-<div class="viewcode-block" id="TestSOList"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_postgres.html#sqlobject.tests.test_postgres.TestSOList">[docs]</a><span class="k">class</span> <span class="nc">TestSOList</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestSOList"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_postgres.html#sqlobject.tests.test_postgres.SOTestSOList">[docs]</a><span class="k">class</span> <span class="nc">SOTestSOList</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">pass</span></div>
 
 
@@ -117,8 +117,8 @@
     <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;postgres&quot;</span><span class="p">:</span>
         <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require PostgreSQL&quot;</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSOList</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">TestSOList</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span> <span class="ow">in</span> <span class="n">connection</span><span class="o">.</span><span class="n">listTables</span><span class="p">()</span></div>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSOList</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">SOTestSOList</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span> <span class="ow">in</span> <span class="n">connection</span><span class="o">.</span><span class="n">listTables</span><span class="p">()</span></div>
 </pre></div>
 
           </div>

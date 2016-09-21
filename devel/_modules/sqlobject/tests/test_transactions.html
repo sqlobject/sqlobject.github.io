@@ -77,7 +77,7 @@
 <span class="c1">########################################</span>
 
 
-<div class="viewcode-block" id="TestSOTrans"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.TestSOTrans">[docs]</a><span class="k">class</span> <span class="nc">TestSOTrans</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestSOTrans"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.SOTestSOTrans">[docs]</a><span class="k">class</span> <span class="nc">SOTestSOTrans</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
         <span class="n">defaultOrder</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alternateID</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dbName</span><span class="o">=</span><span class="s1">&#39;name_col&#39;</span><span class="p">)</span></div>
@@ -86,18 +86,18 @@
 <div class="viewcode-block" id="test_transaction"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.test_transaction">[docs]</a><span class="k">def</span> <span class="nf">test_transaction</span><span class="p">():</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;transactions&#39;</span><span class="p">):</span>
         <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Transactions aren&#39;t supported&quot;</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSOTrans</span><span class="p">)</span>
-    <span class="n">TestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
-    <span class="n">TestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tim&#39;</span><span class="p">)</span>
-    <span class="n">trans</span> <span class="o">=</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">transaction</span><span class="p">()</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSOTrans</span><span class="p">)</span>
+    <span class="n">SOTestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
+    <span class="n">SOTestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tim&#39;</span><span class="p">)</span>
+    <span class="n">trans</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">transaction</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="s1">&#39;exception&#39;</span>
-        <span class="n">TestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;joe&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)</span>
+        <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="s1">&#39;exception&#39;</span>
+        <span class="n">SOTestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;joe&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)</span>
         <span class="n">trans</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
         <span class="n">trans</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="p">([</span><span class="n">n</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)]</span> <span class="o">==</span>
+        <span class="k">assert</span> <span class="p">([</span><span class="n">n</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)]</span> <span class="o">==</span>
                 <span class="p">[</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="s1">&#39;tim&#39;</span><span class="p">])</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)</span>
         <span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;robert&#39;</span>
         <span class="n">trans</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;robert&#39;</span>
@@ -106,45 +106,45 @@
         <span class="n">trans</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;robert&#39;</span>
     <span class="k">finally</span><span class="p">:</span>
-        <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="test_transaction_commit_sync"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.test_transaction_commit_sync">[docs]</a><span class="k">def</span> <span class="nf">test_transaction_commit_sync</span><span class="p">():</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;transactions&#39;</span><span class="p">):</span>
         <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Transactions aren&#39;t supported&quot;</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSOTrans</span><span class="p">)</span>
-    <span class="n">trans</span> <span class="o">=</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">transaction</span><span class="p">()</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSOTrans</span><span class="p">)</span>
+    <span class="n">trans</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">transaction</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">TestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
-        <span class="n">bOut</span> <span class="o">=</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
-        <span class="n">bIn</span> <span class="o">=</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)</span>
+        <span class="n">SOTestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
+        <span class="n">bOut</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
+        <span class="n">bIn</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)</span>
         <span class="n">bIn</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;robert&#39;</span>
         <span class="k">assert</span> <span class="n">bOut</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;bob&#39;</span>
         <span class="n">trans</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">bOut</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;robert&#39;</span>
     <span class="k">finally</span><span class="p">:</span>
-        <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="test_transaction_delete"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.test_transaction_delete">[docs]</a><span class="k">def</span> <span class="nf">test_transaction_delete</span><span class="p">(</span><span class="n">close</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;transactions&#39;</span><span class="p">):</span>
         <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Transactions aren&#39;t supported&quot;</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestSOTrans</span><span class="p">)</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">_connection</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSOTrans</span><span class="p">)</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">_connection</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">connection</span><span class="o">.</span><span class="n">_memory</span><span class="p">:</span>
         <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;The following test requires a different connection&quot;</span><span class="p">)</span>
     <span class="n">trans</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">transaction</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">TestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
-        <span class="n">bIn</span> <span class="o">=</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)</span>
+        <span class="n">SOTestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
+        <span class="n">bIn</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">byName</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">trans</span><span class="p">)</span>
         <span class="n">bIn</span><span class="o">.</span><span class="n">destroySelf</span><span class="p">()</span>
-        <span class="n">bOut</span> <span class="o">=</span> <span class="n">TestSOTrans</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">TestSOTrans</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;bob&#39;</span><span class="p">)</span>
+        <span class="n">bOut</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;bob&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">bOut</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="n">bOutInst</span> <span class="o">=</span> <span class="n">bOut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">bOutID</span> <span class="o">=</span> <span class="n">bOutInst</span><span class="o">.</span><span class="n">id</span>  <span class="c1"># noqa: bOutID is used in the string code below</span>
         <span class="n">trans</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">close</span><span class="o">=</span><span class="n">close</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">bOut</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
-        <span class="n">raises</span><span class="p">(</span><span class="n">SQLObjectNotFound</span><span class="p">,</span> <span class="s2">&quot;TestSOTrans.get(bOutID)&quot;</span><span class="p">)</span>
+        <span class="n">raises</span><span class="p">(</span><span class="n">SQLObjectNotFound</span><span class="p">,</span> <span class="s2">&quot;SOTestSOTrans.get(bOutID)&quot;</span><span class="p">)</span>
         <span class="n">raises</span><span class="p">(</span><span class="n">SQLObjectNotFound</span><span class="p">,</span> <span class="s2">&quot;bOutInst.name&quot;</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="n">trans</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>

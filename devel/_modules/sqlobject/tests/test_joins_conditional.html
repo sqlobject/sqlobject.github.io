@@ -78,29 +78,29 @@
 <span class="c1">########################################</span>
 
 
-<div class="viewcode-block" id="TestJoin1"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.TestJoin1">[docs]</a><span class="k">class</span> <span class="nc">TestJoin1</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestJoin1"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.SOTestJoin1">[docs]</a><span class="k">class</span> <span class="nc">SOTestJoin1</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">col1</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="TestJoin2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.TestJoin2">[docs]</a><span class="k">class</span> <span class="nc">TestJoin2</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestJoin2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.SOTestJoin2">[docs]</a><span class="k">class</span> <span class="nc">SOTestJoin2</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">col2</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="TestJoin3"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.TestJoin3">[docs]</a><span class="k">class</span> <span class="nc">TestJoin3</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestJoin3"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.SOTestJoin3">[docs]</a><span class="k">class</span> <span class="nc">SOTestJoin3</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">col3</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="TestJoin4"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.TestJoin4">[docs]</a><span class="k">class</span> <span class="nc">TestJoin4</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestJoin4"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.SOTestJoin4">[docs]</a><span class="k">class</span> <span class="nc">SOTestJoin4</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">col4</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="TestJoin5"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.TestJoin5">[docs]</a><span class="k">class</span> <span class="nc">TestJoin5</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestJoin5"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.SOTestJoin5">[docs]</a><span class="k">class</span> <span class="nc">SOTestJoin5</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">col5</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestJoin1</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestJoin2</span><span class="p">)</span></div>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestJoin1</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestJoin2</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_1syntax"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.test_1syntax">[docs]</a><span class="k">def</span> <span class="nf">test_1syntax</span><span class="p">():</span>
@@ -116,96 +116,100 @@
 
 <div class="viewcode-block" id="test_2select_syntax"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.test_2select_syntax">[docs]</a><span class="k">def</span> <span class="nf">test_2select_syntax</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-        <span class="n">join</span><span class="o">=</span><span class="n">LEFTJOINConditional</span><span class="p">(</span><span class="n">TestJoin1</span><span class="p">,</span> <span class="n">TestJoin2</span><span class="p">,</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">join</span><span class="o">=</span><span class="n">LEFTJOINConditional</span><span class="p">(</span><span class="n">SOTestJoin1</span><span class="p">,</span> <span class="n">SOTestJoin2</span><span class="p">,</span>
                                  <span class="n">on_condition</span><span class="o">=</span><span class="p">(</span>
-                                     <span class="n">TestJoin1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestJoin2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">))</span>
+                                     <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">SOTestJoin2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">))</span>
     <span class="p">)</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_join1.id, test_join1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_join1 &quot;</span> \
-        <span class="s2">&quot;LEFT JOIN test_join2 &quot;</span> \
-        <span class="s2">&quot;ON ((test_join1.col1) = (test_join2.col2)) WHERE 1 = 1&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_join1.id, so_test_join1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_join1 &quot;</span> \
+        <span class="s2">&quot;LEFT JOIN so_test_join2 &quot;</span> \
+        <span class="s2">&quot;ON ((so_test_join1.col1) = (so_test_join2.col2)) WHERE 1 = 1&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_3perform_join"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.test_3perform_join">[docs]</a><span class="k">def</span> <span class="nf">test_3perform_join</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">TestJoin1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test1&quot;</span><span class="p">)</span>
-    <span class="n">TestJoin1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test2&quot;</span><span class="p">)</span>
-    <span class="n">TestJoin1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test3&quot;</span><span class="p">)</span>
-    <span class="n">TestJoin2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s2">&quot;test1&quot;</span><span class="p">)</span>
-    <span class="n">TestJoin2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s2">&quot;test2&quot;</span><span class="p">)</span>
+    <span class="n">SOTestJoin1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test1&quot;</span><span class="p">)</span>
+    <span class="n">SOTestJoin1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test2&quot;</span><span class="p">)</span>
+    <span class="n">SOTestJoin1</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s2">&quot;test3&quot;</span><span class="p">)</span>
+    <span class="n">SOTestJoin2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s2">&quot;test1&quot;</span><span class="p">)</span>
+    <span class="n">SOTestJoin2</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="s2">&quot;test2&quot;</span><span class="p">)</span>
 
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-        <span class="n">join</span><span class="o">=</span><span class="n">LEFTJOINOn</span><span class="p">(</span><span class="n">TestJoin1</span><span class="p">,</span> <span class="n">TestJoin2</span><span class="p">,</span>
-                        <span class="n">TestJoin1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">TestJoin2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">join</span><span class="o">=</span><span class="n">LEFTJOINOn</span><span class="p">(</span><span class="n">SOTestJoin1</span><span class="p">,</span> <span class="n">SOTestJoin2</span><span class="p">,</span>
+                        <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">SOTestJoin2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">assert</span> <span class="n">select</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span></div>
 
 
 <div class="viewcode-block" id="test_4join_3tables_syntax"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.test_4join_3tables_syntax">[docs]</a><span class="k">def</span> <span class="nf">test_4join_3tables_syntax</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestJoin3</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestJoin3</span><span class="p">)</span>
 
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-        <span class="n">join</span><span class="o">=</span><span class="n">LEFTJOIN</span><span class="p">(</span><span class="n">TestJoin2</span><span class="p">,</span> <span class="n">TestJoin3</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">join</span><span class="o">=</span><span class="n">LEFTJOIN</span><span class="p">(</span><span class="n">SOTestJoin2</span><span class="p">,</span> <span class="n">SOTestJoin3</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_join1.id, test_join1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_join1, test_join2 LEFT JOIN test_join3 WHERE 1 = 1&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_join1.id, so_test_join1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_join1, so_test_join2 LEFT JOIN so_test_join3 WHERE 1 = 1&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_5join_3tables_syntax2"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.test_5join_3tables_syntax2">[docs]</a><span class="k">def</span> <span class="nf">test_5join_3tables_syntax2</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestJoin3</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestJoin3</span><span class="p">)</span>
 
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-        <span class="n">join</span><span class="o">=</span><span class="p">(</span><span class="n">LEFTJOIN</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">TestJoin2</span><span class="p">),</span> <span class="n">LEFTJOIN</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">TestJoin3</span><span class="p">))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">join</span><span class="o">=</span><span class="p">(</span><span class="n">LEFTJOIN</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">SOTestJoin2</span><span class="p">),</span> <span class="n">LEFTJOIN</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">SOTestJoin3</span><span class="p">))</span>
     <span class="p">)</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_join1.id, test_join1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_join1  &quot;</span> \
-        <span class="s2">&quot;LEFT JOIN test_join2  LEFT JOIN test_join3 WHERE 1 = 1&quot;</span>
+        <span class="s2">&quot;SELECT so_test_join1.id, so_test_join1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_join1  &quot;</span> \
+        <span class="s2">&quot;LEFT JOIN so_test_join2  LEFT JOIN so_test_join3 WHERE 1 = 1&quot;</span>
 
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-        <span class="n">join</span><span class="o">=</span><span class="p">(</span><span class="n">LEFTJOIN</span><span class="p">(</span><span class="n">TestJoin1</span><span class="p">,</span> <span class="n">TestJoin2</span><span class="p">),</span> <span class="n">LEFTJOIN</span><span class="p">(</span><span class="n">TestJoin1</span><span class="p">,</span> <span class="n">TestJoin3</span><span class="p">))</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">join</span><span class="o">=</span><span class="p">(</span><span class="n">LEFTJOIN</span><span class="p">(</span><span class="n">SOTestJoin1</span><span class="p">,</span> <span class="n">SOTestJoin2</span><span class="p">),</span>
+              <span class="n">LEFTJOIN</span><span class="p">(</span><span class="n">SOTestJoin1</span><span class="p">,</span> <span class="n">SOTestJoin3</span><span class="p">))</span>
     <span class="p">)</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_join1.id, test_join1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_join1 &quot;</span> \
-        <span class="s2">&quot;LEFT JOIN test_join2, test_join1 LEFT JOIN test_join3 WHERE 1 = 1&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_join1.id, so_test_join1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_join1 &quot;</span> \
+        <span class="s2">&quot;LEFT JOIN so_test_join2, so_test_join1 &quot;</span> \
+        <span class="s2">&quot;LEFT JOIN so_test_join3 WHERE 1 = 1&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_6join_using"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.test_6join_using">[docs]</a><span class="k">def</span> <span class="nf">test_6join_using</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestJoin3</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestJoin3</span><span class="p">)</span>
 
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-        <span class="n">join</span><span class="o">=</span><span class="n">LEFTJOINUsing</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">TestJoin2</span><span class="p">,</span> <span class="p">[</span><span class="n">TestJoin2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">])</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="n">join</span><span class="o">=</span><span class="n">LEFTJOINUsing</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">SOTestJoin2</span><span class="p">,</span> <span class="p">[</span><span class="n">SOTestJoin2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">])</span>
     <span class="p">)</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_join1.id, test_join1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_join1 &quot;</span> \
-        <span class="s2">&quot;LEFT JOIN test_join2 USING (test_join2.id) WHERE 1 = 1&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_join1.id, so_test_join1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_join1 &quot;</span> \
+        <span class="s2">&quot;LEFT JOIN so_test_join2 USING (so_test_join2.id) WHERE 1 = 1&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_7join_on"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_joins_conditional.html#sqlobject.tests.test_joins_conditional.test_7join_on">[docs]</a><span class="k">def</span> <span class="nf">test_7join_on</span><span class="p">():</span>
     <span class="n">setup</span><span class="p">()</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestJoin3</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestJoin4</span><span class="p">)</span>
-    <span class="n">setupClass</span><span class="p">(</span><span class="n">TestJoin5</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestJoin3</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestJoin4</span><span class="p">)</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestJoin5</span><span class="p">)</span>
 
-    <span class="n">select</span> <span class="o">=</span> <span class="n">TestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">join</span><span class="o">=</span><span class="p">(</span>
-        <span class="n">LEFTJOINOn</span><span class="p">(</span><span class="n">TestJoin2</span><span class="p">,</span> <span class="n">TestJoin3</span><span class="p">,</span> <span class="n">TestJoin2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="n">TestJoin3</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col3</span><span class="p">),</span>
-        <span class="n">LEFTJOINOn</span><span class="p">(</span><span class="n">TestJoin4</span><span class="p">,</span> <span class="n">TestJoin5</span><span class="p">,</span> <span class="n">TestJoin4</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col4</span> <span class="o">==</span> <span class="n">TestJoin5</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col5</span><span class="p">)</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="n">SOTestJoin1</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">join</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">LEFTJOINOn</span><span class="p">(</span><span class="n">SOTestJoin2</span><span class="p">,</span> <span class="n">SOTestJoin3</span><span class="p">,</span>
+                   <span class="n">SOTestJoin2</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="n">SOTestJoin3</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col3</span><span class="p">),</span>
+        <span class="n">LEFTJOINOn</span><span class="p">(</span><span class="n">SOTestJoin4</span><span class="p">,</span> <span class="n">SOTestJoin5</span><span class="p">,</span>
+                   <span class="n">SOTestJoin4</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col4</span> <span class="o">==</span> <span class="n">SOTestJoin5</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col5</span><span class="p">)</span>
     <span class="p">))</span>
     <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">select</span><span class="p">)</span> <span class="o">==</span> \
-        <span class="s2">&quot;SELECT test_join1.id, test_join1.col1 &quot;</span> \
-        <span class="s2">&quot;FROM test_join1, test_join2 &quot;</span> \
-        <span class="s2">&quot;LEFT JOIN test_join3 &quot;</span> \
-        <span class="s2">&quot;ON ((test_join2.col2) = (test_join3.col3)), test_join4 &quot;</span> \
-        <span class="s2">&quot;LEFT JOIN test_join5 &quot;</span> \
-        <span class="s2">&quot;ON ((test_join4.col4) = (test_join5.col5)) WHERE 1 = 1&quot;</span></div>
+        <span class="s2">&quot;SELECT so_test_join1.id, so_test_join1.col1 &quot;</span> \
+        <span class="s2">&quot;FROM so_test_join1, so_test_join2 &quot;</span> \
+        <span class="s2">&quot;LEFT JOIN so_test_join3 &quot;</span> \
+        <span class="s2">&quot;ON ((so_test_join2.col2) = (so_test_join3.col3)), so_test_join4 &quot;</span> \
+        <span class="s2">&quot;LEFT JOIN so_test_join5 &quot;</span> \
+        <span class="s2">&quot;ON ((so_test_join4.col4) = (so_test_join5.col5)) WHERE 1 = 1&quot;</span></div>
 </pre></div>
 
           </div>

@@ -130,8 +130,8 @@
 <div class="viewcode-block" id="test_default_styles"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_default_style.html#sqlobject.tests.test_default_style.test_default_styles">[docs]</a><span class="k">def</span> <span class="nf">test_default_styles</span><span class="p">():</span>
     <span class="n">make_columns</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">styles</span><span class="p">:</span>
-        <span class="k">yield</span> <span class="n">do_col_test</span><span class="p">,</span> <span class="n">DefaultStyleTest</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">styles</span><span class="p">[</span><span class="n">style</span><span class="p">]</span>
-        <span class="k">yield</span> <span class="n">do_fkey_test</span><span class="p">,</span> <span class="n">DefaultStyleTest</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">fkeys</span><span class="p">[</span><span class="n">style</span><span class="p">]</span></div>
+        <span class="n">do_col_test</span><span class="p">(</span><span class="n">DefaultStyleTest</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">styles</span><span class="p">[</span><span class="n">style</span><span class="p">])</span>
+        <span class="n">do_fkey_test</span><span class="p">(</span><span class="n">DefaultStyleTest</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">fkeys</span><span class="p">[</span><span class="n">style</span><span class="p">])</span></div>
 </pre></div>
 
           </div>
