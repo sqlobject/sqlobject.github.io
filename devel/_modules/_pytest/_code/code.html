@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
     <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -81,6 +83,7 @@
 <span class="k">else</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">._py2traceback</span> <span class="k">import</span> <span class="n">format_exception_only</span>
 
+
 <span class="k">class</span> <span class="nc">Code</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; wrapper around Python code objects &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rawcode</span><span class="p">):</span>
@@ -96,6 +99,8 @@
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">raw</span>
+
+    <span class="n">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
@@ -423,7 +428,7 @@
             <span class="k">if</span> <span class="n">exprinfo</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="ne">AssertionError</span><span class="p">):</span>
                 <span class="n">exprinfo</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;msg&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">exprinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">exprinfo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="n">exprinfo</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">_builtin</span><span class="o">.</span><span class="n">_totext</span><span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
                 <span class="k">if</span> <span class="n">exprinfo</span> <span class="ow">and</span> <span class="n">exprinfo</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;assert &#39;</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_striptext</span> <span class="o">=</span> <span class="s1">&#39;AssertionError: &#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_excinfo</span> <span class="o">=</span> <span class="n">tup</span>
@@ -937,7 +942,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2016, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

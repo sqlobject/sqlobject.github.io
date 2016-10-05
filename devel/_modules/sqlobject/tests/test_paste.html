@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
     <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -68,13 +70,13 @@
             
   <h1>Source code for sqlobject.tests.test_paste</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
-<span class="kn">import</span> <span class="nn">py.test</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
 
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">sqlhub</span><span class="p">,</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">sqlobject.wsgi_middleware</span> <span class="k">import</span> <span class="n">make_middleware</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="n">pytestmark</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
+    <span class="n">pytestmark</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.dbtest</span> <span class="k">import</span> <span class="n">getConnection</span><span class="p">,</span> <span class="n">getConnectionURI</span><span class="p">,</span> <span class="n">setupClass</span>
 
 
@@ -152,7 +154,7 @@
     <span class="c1"># @@: Dammit, I can&#39;t get these to pass because I can&#39;t get the</span>
     <span class="c1"># stupid table to clear itself.  setupClass() sucks.  When I</span>
     <span class="c1"># fix it I&#39;ll take this disabling out:</span>
-    <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Oops...&quot;</span><span class="p">)</span>
+    <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Oops...&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">names</span><span class="p">()</span> <span class="o">==</span> <span class="p">[]</span>
     <span class="k">assert</span> <span class="n">runapp</span><span class="p">(</span><span class="n">fail</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">begin</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">abort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_transaction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">names</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;app1&#39;</span><span class="p">]</span>
@@ -181,7 +183,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2016, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -274,11 +276,10 @@
 <span class="k">class</span> <span class="nc">PyobjMixin</span><span class="p">(</span><span class="n">PyobjContext</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">obj</span><span class="p">():</span>
         <span class="k">def</span> <span class="nf">fget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
-            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getobj</span><span class="p">()</span>
-                <span class="k">return</span> <span class="n">obj</span>
+            <span class="k">return</span> <span class="n">obj</span>
         <span class="k">def</span> <span class="nf">fset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="n">fget</span><span class="p">,</span> <span class="n">fset</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;underlying python object&quot;</span><span class="p">)</span>
@@ -780,31 +781,26 @@
 <span class="sd">    They help to inspect a test function and to generate tests according to</span>
 <span class="sd">    test configuration or values specified in the class or module where a</span>
 <span class="sd">    test function is defined.</span>
-
-<span class="sd">    :ivar fixturenames: set of fixture names required by the test function</span>
-
-<span class="sd">    :ivar function: underlying python test function</span>
-
-<span class="sd">    :ivar cls: class object where the test function is defined in or ``None``.</span>
-
-<span class="sd">    :ivar module: the module object where the test function is defined in.</span>
-
-<span class="sd">    :ivar config: access to the :class:`_pytest.config.Config` object for the</span>
-<span class="sd">        test session.</span>
-
-<span class="sd">    :ivar funcargnames:</span>
-<span class="sd">        .. deprecated:: 2.3</span>
-<span class="sd">            Use ``fixturenames`` instead.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">fixtureinfo</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1">#: access to the :class:`_pytest.config.Config` object for the test session</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="c1">#: the module object where the test function is defined in.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">module</span>
+
+        <span class="c1">#: underlying python test function</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="n">function</span>
+
+        <span class="c1">#: set of fixture names required by the test function</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fixturenames</span> <span class="o">=</span> <span class="n">fixtureinfo</span><span class="o">.</span><span class="n">names_closure</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_arg2fixturedefs</span> <span class="o">=</span> <span class="n">fixtureinfo</span><span class="o">.</span><span class="n">name2fixturedefs</span>
+
+        <span class="c1">#: class object where the test function is defined in or ``None``.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">cls</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_calls</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ids</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arg2fixturedefs</span> <span class="o">=</span> <span class="n">fixtureinfo</span><span class="o">.</span><span class="n">name2fixturedefs</span>
 
     <span class="k">def</span> <span class="nf">parametrize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argnames</span><span class="p">,</span> <span class="n">argvalues</span><span class="p">,</span> <span class="n">indirect</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -845,8 +841,9 @@
 <span class="sd">            It will also override any fixture-function defined scope, allowing</span>
 <span class="sd">            to set a dynamic scope using test context or configuration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">_pytest.fixtures</span> <span class="k">import</span> <span class="n">scopes</span>
+        <span class="kn">from</span> <span class="nn">_pytest.fixtures</span> <span class="k">import</span> <span class="n">scope2index</span>
         <span class="kn">from</span> <span class="nn">_pytest.mark</span> <span class="k">import</span> <span class="n">extract_argvalue</span>
+        <span class="kn">from</span> <span class="nn">py.io</span> <span class="k">import</span> <span class="n">saferepr</span>
 
         <span class="n">unwrapped_argvalues</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">newkeywords</span> <span class="o">=</span> <span class="p">[]</span>
@@ -873,7 +870,8 @@
         <span class="k">if</span> <span class="n">scope</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">scope</span> <span class="o">=</span> <span class="n">_find_parametrized_scope</span><span class="p">(</span><span class="n">argnames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arg2fixturedefs</span><span class="p">,</span> <span class="n">indirect</span><span class="p">)</span>
 
-        <span class="n">scopenum</span> <span class="o">=</span> <span class="n">scopes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+        <span class="n">scopenum</span> <span class="o">=</span> <span class="n">scope2index</span><span class="p">(</span>
+            <span class="n">scope</span><span class="p">,</span> <span class="n">descr</span><span class="o">=</span><span class="s1">&#39;call to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parametrize</span><span class="p">))</span>
         <span class="n">valtypes</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">argnames</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">arg</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixturenames</span><span class="p">:</span>
@@ -900,9 +898,14 @@
         <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
             <span class="n">idfn</span> <span class="o">=</span> <span class="n">ids</span>
             <span class="n">ids</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">ids</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">argvalues</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> tests specified with </span><span class="si">%d</span><span class="s1"> ids&#39;</span> <span class="o">%</span><span class="p">(</span>
-                             <span class="nb">len</span><span class="p">(</span><span class="n">argvalues</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">ids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">argvalues</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> tests specified with </span><span class="si">%d</span><span class="s1"> ids&#39;</span> <span class="o">%</span><span class="p">(</span>
+                                 <span class="nb">len</span><span class="p">(</span><span class="n">argvalues</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="n">id_value</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">id_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">id_value</span><span class="p">,</span> <span class="n">py</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">_basestring</span><span class="p">):</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;ids must be list of strings, found: </span><span class="si">%s</span><span class="s1"> (type: </span><span class="si">%s</span><span class="s1">)&#39;</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span> <span class="o">%</span> <span class="p">(</span><span class="n">saferepr</span><span class="p">(</span><span class="n">id_value</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_value</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
         <span class="n">ids</span> <span class="o">=</span> <span class="n">idmaker</span><span class="p">(</span><span class="n">argnames</span><span class="p">,</span> <span class="n">argvalues</span><span class="p">,</span> <span class="n">idfn</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="n">newcalls</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">callspec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calls</span> <span class="ow">or</span> <span class="p">[</span><span class="n">CallSpec2</span><span class="p">(</span><span class="bp">self</span><span class="p">)]:</span>
@@ -1425,6 +1428,8 @@
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">x</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">))</span>
 
+    <span class="n">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="n">actual</span> <span class="o">==</span> <span class="bp">self</span><span class="p">)</span>
 
@@ -1503,6 +1508,8 @@
 
         <span class="c1"># Return true if the two numbers are within the tolerance.</span>
         <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span> <span class="o">-</span> <span class="n">actual</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span>
+
+    <span class="n">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="n">actual</span> <span class="o">==</span> <span class="bp">self</span><span class="p">)</span>
@@ -1644,7 +1651,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2016, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

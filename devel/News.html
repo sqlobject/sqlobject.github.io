@@ -25,6 +25,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
     <link rel="next" title="SQLObject and Python 3" href="Python3.html" />
     <link rel="prev" title="SQLObject Links" href="links.html" />
@@ -146,15 +148,17 @@
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>The docs are now generated with Sphinx.</li>
+<li>Move docs/LICENSE to the top-level directory so that Github recognizes it.</li>
 </ul>
 </div>
 <div class="section" id="tests">
 <h3>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Great Renaming: fix py.test warnings by renaming TestXXX classes
-to SOTestXXX to prevent py.test to recognize them as test classes.</li>
-<li>Fix py.test warnings by converting yield test to plain calls:
-yield test were deprecated in py.test.</li>
+<li>Rename py.test -&gt; pytest in tests and docs.</li>
+<li>Great Renaming: fix pytest warnings by renaming TestXXX classes
+to SOTestXXX to prevent pytest to recognize them as test classes.</li>
+<li>Fix pytest warnings by converting yield test to plain calls:
+yield test were deprecated in pytest.</li>
 <li>Tests are now run at CIs with python3.5.</li>
 <li>Tests are split at Circle CI in 4 parallel containers.</li>
 <li>Fix a problem in tests related to test order when running on PostgreSQL.</li>
@@ -263,7 +267,7 @@ Sphinx format.</li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2016, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

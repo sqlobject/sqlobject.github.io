@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
     <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -67,7 +69,7 @@
           <div class="body" role="main">
             
   <h1>Source code for sqlobject.tests.test_jsonbcol</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">py.test</span>
+<span></span><span class="kn">import</span> <span class="nn">pytest</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">JsonbCol</span>
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">getConnection</span><span class="p">,</span> <span class="n">setupClass</span>
 
@@ -101,7 +103,7 @@
 <div class="viewcode-block" id="test_jsonbCol"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_jsonbcol.html#sqlobject.tests.test_jsonbcol.test_jsonbCol">[docs]</a><span class="k">def</span> <span class="nf">test_jsonbCol</span><span class="p">():</span>
     <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;postgres&quot;</span><span class="p">:</span>
-        <span class="n">py</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require PostgreSQL&quot;</span><span class="p">)</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require PostgreSQL&quot;</span><span class="p">)</span>
 
     <span class="n">setupClass</span><span class="p">([</span><span class="n">JsonbContainer</span><span class="p">],</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -142,7 +144,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2016, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

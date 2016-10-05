@@ -25,6 +25,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
     <link rel="next" title="Authors" href="Authors.html" />
     <link rel="prev" title="Views and SQLObjects" href="Views.html" />
@@ -308,7 +310,7 @@ underscores (smushedwords).</p>
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <p>Tests are important.  Tests keep everything from falling apart.  All
 new additions should have tests.</p>
-<p>Testing uses py.test, an alternative to <code class="docutils literal"><span class="pre">unittest</span></code>.  It is available
+<p>Testing uses pytest, an alternative to <code class="docutils literal"><span class="pre">unittest</span></code>.  It is available
 at <a class="reference external" href="http://pytest.org/">http://pytest.org/</a> and <a class="reference external" href="https://pypi.python.org/pypi/pytest">https://pypi.python.org/pypi/pytest</a>.  Read its
 <a class="reference external" href="http://docs.pytest.org/en/latest/getting-started.html">getting started</a> document for more.</p>
 <p>To actually run the test, you have to give it a database to connect to.
@@ -318,7 +320,7 @@ the top of <code class="docutils literal"><span class="pre">tests/dbtest.py</spa
 <p>All the tests are modules in <code class="docutils literal"><span class="pre">sqlobject/tests</span></code>.  Each module tests
 one kind of feature, more or less.  If you are testing a module, call
 the test module <code class="docutils literal"><span class="pre">tests/test_modulename.py</span></code> &#8211; only modules that
-start with <code class="docutils literal"><span class="pre">test_</span></code> will be picked up by py.test.</p>
+start with <code class="docutils literal"><span class="pre">test_</span></code> will be picked up by pytest.</p>
 <p>The &#8220;framework&#8221; for testing is in <code class="docutils literal"><span class="pre">tests/dbtest</span></code>.  There&#8217;s a couple of
 important functions:</p>
 <p><code class="docutils literal"><span class="pre">setupClass(soClass)</span></code> creates the tables for the class.  It tries to
@@ -326,7 +328,7 @@ avoid recreating tables if not necessary.</p>
 <p><code class="docutils literal"><span class="pre">supports(featureName)</span></code> checks if the database backend supports the
 named feature.  What backends support what is defined at the top of
 <code class="docutils literal"><span class="pre">dbtest</span></code>.</p>
-<p>If you <code class="docutils literal"><span class="pre">import</span> <span class="pre">*</span></code> you&#8217;ll also get py.test&#8217;s version of <a class="reference external" href="http://docs.pytest.org/en/latest/assert.html#assertions-about-expected-exceptions">raises</a>, an
+<p>If you <code class="docutils literal"><span class="pre">import</span> <span class="pre">*</span></code> you&#8217;ll also get pytest&#8217;s version of <a class="reference external" href="http://docs.pytest.org/en/latest/assert.html#assertions-about-expected-exceptions">raises</a>, an
 <code class="docutils literal"><span class="pre">inserts</span></code> function that can create instances for you, and a couple
 miscellaneous functions.</p>
 <p>If you submit a patch or implement a feature without a test, we&#8217;ll be
@@ -382,7 +384,7 @@ separately (for instance, from <a class="reference external" href="https://pypi.
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2016, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

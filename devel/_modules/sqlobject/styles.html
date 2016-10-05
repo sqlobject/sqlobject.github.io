@@ -25,6 +25,8 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -74,7 +76,7 @@
            <span class="s2">&quot;MixedCaseStyle&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="Style"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style">[docs]</a><span class="k">class</span> <span class="nc">Style</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Style"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style">[docs]</a><span class="k">class</span> <span class="nc">Style</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The base Style class, and also the simplest implementation.  No</span>
@@ -105,84 +107,84 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">idForTable</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="p">:</span> <span class="n">idForTable</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">longID</span> <span class="o">=</span> <span class="n">longID</span>
 
-<div class="viewcode-block" id="Style.pythonAttrToDBColumn"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.pythonAttrToDBColumn">[docs]</a>    <span class="k">def</span> <span class="nf">pythonAttrToDBColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.pythonAttrToDBColumn"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.pythonAttrToDBColumn">[docs]</a>    <span class="k">def</span> <span class="nf">pythonAttrToDBColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">attr</span></div>
 
-<div class="viewcode-block" id="Style.dbColumnToPythonAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.dbColumnToPythonAttr">[docs]</a>    <span class="k">def</span> <span class="nf">dbColumnToPythonAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.dbColumnToPythonAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.dbColumnToPythonAttr">[docs]</a>    <span class="k">def</span> <span class="nf">dbColumnToPythonAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">col</span></div>
 
-<div class="viewcode-block" id="Style.pythonClassToDBTable"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.pythonClassToDBTable">[docs]</a>    <span class="k">def</span> <span class="nf">pythonClassToDBTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.pythonClassToDBTable"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.pythonClassToDBTable">[docs]</a>    <span class="k">def</span> <span class="nf">pythonClassToDBTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">className</span></div>
 
-<div class="viewcode-block" id="Style.dbTableToPythonClass"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.dbTableToPythonClass">[docs]</a>    <span class="k">def</span> <span class="nf">dbTableToPythonClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.dbTableToPythonClass"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.dbTableToPythonClass">[docs]</a>    <span class="k">def</span> <span class="nf">dbTableToPythonClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">table</span></div>
 
-<div class="viewcode-block" id="Style.idForTable"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.idForTable">[docs]</a>    <span class="k">def</span> <span class="nf">idForTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.idForTable"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.idForTable">[docs]</a>    <span class="k">def</span> <span class="nf">idForTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">longID</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tableReference</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s1">&#39;id&#39;</span></div>
 
-<div class="viewcode-block" id="Style.pythonClassToAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.pythonClassToAttr">[docs]</a>    <span class="k">def</span> <span class="nf">pythonClassToAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.pythonClassToAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.pythonClassToAttr">[docs]</a>    <span class="k">def</span> <span class="nf">pythonClassToAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">lowerword</span><span class="p">(</span><span class="n">className</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Style.instanceAttrToIDAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.instanceAttrToIDAttr">[docs]</a>    <span class="k">def</span> <span class="nf">instanceAttrToIDAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.instanceAttrToIDAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.instanceAttrToIDAttr">[docs]</a>    <span class="k">def</span> <span class="nf">instanceAttrToIDAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">attr</span> <span class="o">+</span> <span class="s2">&quot;ID&quot;</span></div>
 
-<div class="viewcode-block" id="Style.instanceIDAttrToAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.instanceIDAttrToAttr">[docs]</a>    <span class="k">def</span> <span class="nf">instanceIDAttrToAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.instanceIDAttrToAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.instanceIDAttrToAttr">[docs]</a>    <span class="k">def</span> <span class="nf">instanceIDAttrToAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">attr</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Style.tableReference"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.Style.tableReference">[docs]</a>    <span class="k">def</span> <span class="nf">tableReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="Style.tableReference"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.Style.tableReference">[docs]</a>    <span class="k">def</span> <span class="nf">tableReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">table</span> <span class="o">+</span> <span class="s2">&quot;_id&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="MixedCaseUnderscoreStyle"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseUnderscoreStyle">[docs]</a><span class="k">class</span> <span class="nc">MixedCaseUnderscoreStyle</span><span class="p">(</span><span class="n">Style</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseUnderscoreStyle"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseUnderscoreStyle">[docs]</a><span class="k">class</span> <span class="nc">MixedCaseUnderscoreStyle</span><span class="p">(</span><span class="n">Style</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is the default style.  Python attributes use mixedCase,</span>
 <span class="sd">    while database columns use underscore_separated.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MixedCaseUnderscoreStyle.pythonAttrToDBColumn"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseUnderscoreStyle.pythonAttrToDBColumn">[docs]</a>    <span class="k">def</span> <span class="nf">pythonAttrToDBColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseUnderscoreStyle.pythonAttrToDBColumn"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseUnderscoreStyle.pythonAttrToDBColumn">[docs]</a>    <span class="k">def</span> <span class="nf">pythonAttrToDBColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">mixedToUnder</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MixedCaseUnderscoreStyle.dbColumnToPythonAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseUnderscoreStyle.dbColumnToPythonAttr">[docs]</a>    <span class="k">def</span> <span class="nf">dbColumnToPythonAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseUnderscoreStyle.dbColumnToPythonAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseUnderscoreStyle.dbColumnToPythonAttr">[docs]</a>    <span class="k">def</span> <span class="nf">dbColumnToPythonAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">underToMixed</span><span class="p">(</span><span class="n">col</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MixedCaseUnderscoreStyle.pythonClassToDBTable"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseUnderscoreStyle.pythonClassToDBTable">[docs]</a>    <span class="k">def</span> <span class="nf">pythonClassToDBTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseUnderscoreStyle.pythonClassToDBTable"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseUnderscoreStyle.pythonClassToDBTable">[docs]</a>    <span class="k">def</span> <span class="nf">pythonClassToDBTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">className</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> \
             <span class="o">+</span> <span class="n">mixedToUnder</span><span class="p">(</span><span class="n">className</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span></div>
 
-<div class="viewcode-block" id="MixedCaseUnderscoreStyle.dbTableToPythonClass"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseUnderscoreStyle.dbTableToPythonClass">[docs]</a>    <span class="k">def</span> <span class="nf">dbTableToPythonClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseUnderscoreStyle.dbTableToPythonClass"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseUnderscoreStyle.dbTableToPythonClass">[docs]</a>    <span class="k">def</span> <span class="nf">dbTableToPythonClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> \
             <span class="o">+</span> <span class="n">underToMixed</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span></div>
 
-<div class="viewcode-block" id="MixedCaseUnderscoreStyle.pythonClassToDBTableReference"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseUnderscoreStyle.pythonClassToDBTableReference">[docs]</a>    <span class="k">def</span> <span class="nf">pythonClassToDBTableReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseUnderscoreStyle.pythonClassToDBTableReference"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseUnderscoreStyle.pythonClassToDBTableReference">[docs]</a>    <span class="k">def</span> <span class="nf">pythonClassToDBTableReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">className</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tableReference</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pythonClassToDBTable</span><span class="p">(</span><span class="n">className</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MixedCaseUnderscoreStyle.tableReference"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseUnderscoreStyle.tableReference">[docs]</a>    <span class="k">def</span> <span class="nf">tableReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseUnderscoreStyle.tableReference"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseUnderscoreStyle.tableReference">[docs]</a>    <span class="k">def</span> <span class="nf">tableReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">table</span> <span class="o">+</span> <span class="s2">&quot;_id&quot;</span></div></div>
 
 <span class="n">DefaultStyle</span> <span class="o">=</span> <span class="n">MixedCaseUnderscoreStyle</span>
 
 
-<div class="viewcode-block" id="MixedCaseStyle"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseStyle">[docs]</a><span class="k">class</span> <span class="nc">MixedCaseStyle</span><span class="p">(</span><span class="n">Style</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseStyle"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseStyle">[docs]</a><span class="k">class</span> <span class="nc">MixedCaseStyle</span><span class="p">(</span><span class="n">Style</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This style leaves columns as mixed-case, and uses long</span>
 <span class="sd">    ID names (like ProductID instead of simply id).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MixedCaseStyle.pythonAttrToDBColumn"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseStyle.pythonAttrToDBColumn">[docs]</a>    <span class="k">def</span> <span class="nf">pythonAttrToDBColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseStyle.pythonAttrToDBColumn"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseStyle.pythonAttrToDBColumn">[docs]</a>    <span class="k">def</span> <span class="nf">pythonAttrToDBColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">capword</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MixedCaseStyle.dbColumnToPythonAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseStyle.dbColumnToPythonAttr">[docs]</a>    <span class="k">def</span> <span class="nf">dbColumnToPythonAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseStyle.dbColumnToPythonAttr"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseStyle.dbColumnToPythonAttr">[docs]</a>    <span class="k">def</span> <span class="nf">dbColumnToPythonAttr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">lowerword</span><span class="p">(</span><span class="n">col</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MixedCaseStyle.dbTableToPythonClass"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseStyle.dbTableToPythonClass">[docs]</a>    <span class="k">def</span> <span class="nf">dbTableToPythonClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseStyle.dbTableToPythonClass"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseStyle.dbTableToPythonClass">[docs]</a>    <span class="k">def</span> <span class="nf">dbTableToPythonClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">capword</span><span class="p">(</span><span class="n">table</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MixedCaseStyle.tableReference"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.inheritance.tests.testDestroyCascade.MixedCaseStyle.tableReference">[docs]</a>    <span class="k">def</span> <span class="nf">tableReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedCaseStyle.tableReference"><a class="viewcode-back" href="../../api/sqlobject.styles.html#sqlobject.include.tests.test_hashcol.MixedCaseStyle.tableReference">[docs]</a>    <span class="k">def</span> <span class="nf">tableReference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">table</span> <span class="o">+</span> <span class="s2">&quot;ID&quot;</span></div></div>
 
 <span class="n">defaultStyle</span> <span class="o">=</span> <span class="n">DefaultStyle</span><span class="p">()</span>
@@ -263,7 +265,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2016, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>
