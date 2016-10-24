@@ -382,7 +382,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ALTER TABLE </span><span class="si">%s</span><span class="s1"> ADD COLUMN </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
                    <span class="p">(</span><span class="n">tableName</span><span class="p">,</span>
                     <span class="n">column</span><span class="o">.</span><span class="n">sqliteCreateSQL</span><span class="p">()))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;VACUUM </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tableName</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;VACUUM&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SQLiteConnection.delColumn"><a class="viewcode-back" href="../../../api/sqlobject.sqlite.sqliteconnection.html#sqlobject.sqlite.sqliteconnection.SQLiteConnection.delColumn">[docs]</a>    <span class="k">def</span> <span class="nf">delColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sqlmeta</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">recreateTableWithoutColumn</span><span class="p">(</span><span class="n">sqlmeta</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span></div>

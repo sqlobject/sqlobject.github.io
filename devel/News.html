@@ -60,6 +60,7 @@
   <ul>
 <li><a class="reference internal" href="#">News</a><ul>
 <li><a class="reference internal" href="#sqlobject-3-2-0-master">SQLObject 3.2.0 (master)</a><ul>
+<li><a class="reference internal" href="#minor-features">Minor features</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
 <li><a class="reference internal" href="#tests">Tests</a></li>
 </ul>
@@ -73,9 +74,9 @@
 </li>
 <li><a class="reference internal" href="#sqlobject-3-0-0">SQLObject 3.0.0</a><ul>
 <li><a class="reference internal" href="#id3">Features</a></li>
-<li><a class="reference internal" href="#minor-features">Minor features</a></li>
+<li><a class="reference internal" href="#id4">Minor features</a></li>
 <li><a class="reference internal" href="#development">Development</a></li>
-<li><a class="reference internal" href="#id4">Documentation</a></li>
+<li><a class="reference internal" href="#id5">Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -118,24 +119,25 @@
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents:</p>
 <ul class="simple">
-<li><a class="reference internal" href="#news" id="id6">News</a><ul>
-<li><a class="reference internal" href="#sqlobject-3-2-0-master" id="id7">SQLObject 3.2.0 (master)</a><ul>
-<li><a class="reference internal" href="#documentation" id="id8">Documentation</a></li>
-<li><a class="reference internal" href="#tests" id="id9">Tests</a></li>
+<li><a class="reference internal" href="#news" id="id7">News</a><ul>
+<li><a class="reference internal" href="#sqlobject-3-2-0-master" id="id8">SQLObject 3.2.0 (master)</a><ul>
+<li><a class="reference internal" href="#minor-features" id="id9">Minor features</a></li>
+<li><a class="reference internal" href="#documentation" id="id10">Documentation</a></li>
+<li><a class="reference internal" href="#tests" id="id11">Tests</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sqlobject-3-1-0" id="id10">SQLObject 3.1.0</a><ul>
-<li><a class="reference internal" href="#features" id="id11">Features</a></li>
-<li><a class="reference internal" href="#id1" id="id12">Documentation</a></li>
-<li><a class="reference internal" href="#source-code" id="id13">Source code</a></li>
-<li><a class="reference internal" href="#id2" id="id14">Tests</a></li>
+<li><a class="reference internal" href="#sqlobject-3-1-0" id="id12">SQLObject 3.1.0</a><ul>
+<li><a class="reference internal" href="#features" id="id13">Features</a></li>
+<li><a class="reference internal" href="#id1" id="id14">Documentation</a></li>
+<li><a class="reference internal" href="#source-code" id="id15">Source code</a></li>
+<li><a class="reference internal" href="#id2" id="id16">Tests</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sqlobject-3-0-0" id="id15">SQLObject 3.0.0</a><ul>
-<li><a class="reference internal" href="#id3" id="id16">Features</a></li>
-<li><a class="reference internal" href="#minor-features" id="id17">Minor features</a></li>
-<li><a class="reference internal" href="#development" id="id18">Development</a></li>
-<li><a class="reference internal" href="#id4" id="id19">Documentation</a></li>
+<li><a class="reference internal" href="#sqlobject-3-0-0" id="id17">SQLObject 3.0.0</a><ul>
+<li><a class="reference internal" href="#id3" id="id18">Features</a></li>
+<li><a class="reference internal" href="#id4" id="id19">Minor features</a></li>
+<li><a class="reference internal" href="#development" id="id20">Development</a></li>
+<li><a class="reference internal" href="#id5" id="id21">Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -144,6 +146,14 @@
 </div>
 <div class="section" id="sqlobject-3-2-0-master">
 <span id="start"></span><h2>SQLObject 3.2.0 (master)<a class="headerlink" href="#sqlobject-3-2-0-master" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="minor-features">
+<h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Dropped table name from <code class="docutils literal"><span class="pre">VACUUM</span></code> command in SQLiteConnection:
+SQLite doesn&#8217;t vacuum a single table and SQLite 3.15 uses the supplied name
+as the name of the attached database to vacuum.</li>
+</ul>
+</div>
 <div class="section" id="documentation">
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -217,8 +227,8 @@ via coveralls.io and codecov.io.</li>
 (Python version &gt;= 3.4 currently required.)</li>
 </ul>
 </div>
-<div class="section" id="minor-features">
-<h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Minor features<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>PyDispatcher (&gt;=2.0.4) was made an external dependency.</li>
 </ul>
@@ -229,8 +239,8 @@ via coveralls.io and codecov.io.</li>
 <li>Source code was made flake8-clean.</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h3>Documentation<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Documentation<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Documentation is published at <a class="reference external" href="http://sqlobject.readthedocs.org/">http://sqlobject.readthedocs.org/</a> in
 Sphinx format.</li>
