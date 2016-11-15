@@ -153,7 +153,7 @@
 SQLite doesn&#8217;t vacuum a single table and SQLite 3.15 uses the supplied name
 as the name of the attached database to vacuum.</li>
 <li>Remove <code class="docutils literal"><span class="pre">driver</span></code> keyword from RdbhostConnection as it allows one driver
-<code class="docutils literal"><span class="pre">rdbhost</span></code>.</li>
+<code class="docutils literal"><span class="pre">rdbhdb</span></code>.</li>
 <li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for FirebirdConnection. Allowed values are &#8216;fdb&#8217; or
 &#8216;kinterbasdb&#8217;. Default is to test &#8216;fdb&#8217; and &#8216;kinterbasdb&#8217; in that order.</li>
 <li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for MySQLConnection. Allowed value is &#8216;mysqldb&#8217;.</li>
@@ -163,22 +163,20 @@ as the name of the attached database to vacuum.</li>
 <h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>The docs are now generated with Sphinx.</li>
-<li>Move docs/LICENSE to the top-level directory so that Github recognizes it.</li>
+<li>Move <code class="docutils literal"><span class="pre">docs/LICENSE</span></code> to the top-level directory so that Github recognizes
+it.</li>
 </ul>
 </div>
 <div class="section" id="tests">
 <h3>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Rename py.test -&gt; pytest in tests and docs.</li>
-<li>Great Renaming: fix pytest warnings by renaming TestXXX classes
-to SOTestXXX to prevent pytest to recognize them as test classes.</li>
-<li>Fix pytest warnings by converting yield test to plain calls:
-yield test were deprecated in pytest.</li>
-<li>Tests are now run at CIs with python3.5.</li>
-<li>Tests are split at Circle CI in 4 parallel containers.</li>
-<li>Fix a problem in tests related to test order when running on PostgreSQL.</li>
-<li>Restore mxDateTime installation in tox.ini
-(was removed while egenix.com was down).</li>
+<li>Rename <code class="docutils literal"><span class="pre">py.test</span></code> -&gt; <code class="docutils literal"><span class="pre">pytest</span></code> in tests and docs.</li>
+<li>Great Renaming: fix <code class="docutils literal"><span class="pre">pytest</span></code> warnings by renaming <code class="docutils literal"><span class="pre">TestXXX</span></code> classes
+to <code class="docutils literal"><span class="pre">SOTestXXX</span></code> to prevent <code class="docutils literal"><span class="pre">pytest</span></code> to recognize them as test classes.</li>
+<li>Fix <code class="docutils literal"><span class="pre">pytest</span></code> warnings by converting yield tests to plain calls:
+yield tests were deprecated in <code class="docutils literal"><span class="pre">pytest</span></code>.</li>
+<li>Tests are now run at CIs with <code class="docutils literal"><span class="pre">python3.5</span></code>.</li>
+<li>Tests are split at <code class="docutils literal"><span class="pre">Circle</span> <span class="pre">CI</span></code> in 4 parallel containers.</li>
 </ul>
 </div>
 </div>
