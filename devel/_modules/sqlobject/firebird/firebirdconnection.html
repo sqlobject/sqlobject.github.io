@@ -88,17 +88,34 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s1">&#39;3050&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;sysdba&#39;</span><span class="p">,</span>
                  <span class="n">password</span><span class="o">=</span><span class="s1">&#39;masterkey&#39;</span><span class="p">,</span> <span class="n">autoCommit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">dialect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">fdb</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">fdb</span>
-        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">kinterbasdb</span>
-            <span class="c1"># See http://kinterbasdb.sourceforge.net/dist_docs/usage.html</span>
-            <span class="c1"># for an explanation; in short: use datetime, decimal and</span>
-            <span class="c1"># unicode.</span>
-            <span class="n">kinterbasdb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">type_conv</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">kinterbasdb</span>
-
+        <span class="n">drivers</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;driver&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;fdb,kinterbasdb&#39;</span>
+        <span class="k">for</span> <span class="n">driver</span> <span class="ow">in</span> <span class="n">drivers</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
+            <span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">driver</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;fdb&#39;</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">fdb</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">fdb</span>
+                <span class="k">elif</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;kinterbasdb&#39;</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">kinterbasdb</span>
+                    <span class="c1"># See</span>
+                    <span class="c1"># http://kinterbasdb.sourceforge.net/dist_docs/usage.html</span>
+                    <span class="c1"># for an explanation; in short: use datetime, decimal and</span>
+                    <span class="c1"># unicode.</span>
+                    <span class="n">kinterbasdb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">type_conv</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">kinterbasdb</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s1">&#39;Unknown FireBird driver &quot;</span><span class="si">%s</span><span class="s1">&quot;, &#39;</span>
+                        <span class="s1">&#39;expected fdb or kinterbasdb&#39;</span> <span class="o">%</span> <span class="n">driver</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s1">&#39;Cannot find an FireBird driver, tried </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">drivers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>

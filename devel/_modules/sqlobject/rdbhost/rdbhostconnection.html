@@ -87,34 +87,19 @@
     <span class="n">schemes</span> <span class="o">=</span> <span class="p">[</span><span class="n">dbName</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dsn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unicodeCols</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;rdbhost&#39;</span><span class="p">,</span>
-                 <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="n">drivers</span> <span class="o">=</span> <span class="n">driver</span>
-        <span class="k">for</span> <span class="n">driver</span> <span class="ow">in</span> <span class="n">drivers</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
-            <span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">driver</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;rdbhost&#39;</span><span class="p">:</span>
-                    <span class="kn">from</span> <span class="nn">rdbhdb</span> <span class="k">import</span> <span class="n">rdbhdb</span> <span class="k">as</span> <span class="n">rdb</span>
-                    <span class="c1"># monkey patch % escaping into Cursor._execute</span>
-                    <span class="n">old_execute</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rdb</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="s1">&#39;_execute&#39;</span><span class="p">)</span>
-                    <span class="nb">setattr</span><span class="p">(</span><span class="n">rdb</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="s1">&#39;_old_execute&#39;</span><span class="p">,</span> <span class="n">old_execute</span><span class="p">)</span>
+                 <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unicodeCols</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">rdbhdb</span> <span class="k">import</span> <span class="n">rdbhdb</span> <span class="k">as</span> <span class="n">rdb</span>
+        <span class="c1"># monkey patch % escaping into Cursor._execute</span>
+        <span class="n">old_execute</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">rdb</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="s1">&#39;_execute&#39;</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">rdb</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="s1">&#39;_old_execute&#39;</span><span class="p">,</span> <span class="n">old_execute</span><span class="p">)</span>
 
-                    <span class="k">def</span> <span class="nf">_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-                        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">])</span>
-                        <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%%</span><span class="s1">&#39;</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_old_execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(),</span> <span class="p">(),</span> <span class="p">())</span>
-                    <span class="nb">setattr</span><span class="p">(</span><span class="n">rdb</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="s1">&#39;_execute&#39;</span><span class="p">,</span> <span class="n">_execute</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">rdb</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown Rdbhost driver </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">driver</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-                <span class="k">pass</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">break</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;Cannot find the Rdbhost driver&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">])</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%%</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_old_execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(),</span> <span class="p">(),</span> <span class="p">())</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">rdb</span><span class="o">.</span><span class="n">Cursor</span><span class="p">,</span> <span class="s1">&#39;_execute&#39;</span><span class="p">,</span> <span class="n">_execute</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">rdb</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>

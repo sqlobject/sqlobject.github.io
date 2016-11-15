@@ -149,9 +149,14 @@
 <div class="section" id="minor-features">
 <h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Dropped table name from <code class="docutils literal"><span class="pre">VACUUM</span></code> command in SQLiteConnection:
+<li>Drop table name from <code class="docutils literal"><span class="pre">VACUUM</span></code> command in SQLiteConnection:
 SQLite doesn&#8217;t vacuum a single table and SQLite 3.15 uses the supplied name
 as the name of the attached database to vacuum.</li>
+<li>Remove <code class="docutils literal"><span class="pre">driver</span></code> keyword from RdbhostConnection as it allows one driver
+<code class="docutils literal"><span class="pre">rdbhost</span></code>.</li>
+<li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for FirebirdConnection. Allowed values are &#8216;fdb&#8217; or
+&#8216;kinterbasdb&#8217;. Default is to test &#8216;fdb&#8217; and &#8216;kinterbasdb&#8217; in that order.</li>
+<li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for MySQLConnection. Allowed value is &#8216;mysqldb&#8217;.</li>
 </ul>
 </div>
 <div class="section" id="documentation">
