@@ -99,17 +99,28 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">driver</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;mysqldb&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;mysqldb&#39;</span><span class="p">,</span> <span class="s1">&#39;pymysql&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;pymysql&#39;</span><span class="p">:</span>
+                        <span class="kn">import</span> <span class="nn">pymysql</span>
+                        <span class="n">pymysql</span><span class="o">.</span><span class="n">install_as_MySQLdb</span><span class="p">()</span>
                     <span class="kn">import</span> <span class="nn">MySQLdb</span>
-                    <span class="k">if</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                            <span class="s1">&#39;SQLObject requires MySQLdb 1.2.2 or later&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;mysqldb&#39;</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                                <span class="s1">&#39;SQLObject requires MySQLdb 1.2.2 or later&#39;</span><span class="p">)</span>
                     <span class="kn">import</span> <span class="nn">MySQLdb.constants.CR</span>
                     <span class="kn">import</span> <span class="nn">MySQLdb.constants.ER</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">MySQLdb</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">CR_SERVER_GONE_ERROR</span> <span class="o">=</span> \
-                        <span class="n">MySQLdb</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">CR</span><span class="o">.</span><span class="n">SERVER_GONE_ERROR</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">CR_SERVER_LOST</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">CR</span><span class="o">.</span><span class="n">SERVER_LOST</span>
+                    <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;mysqldb&#39;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">CR_SERVER_GONE_ERROR</span> <span class="o">=</span> \
+                            <span class="n">MySQLdb</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">CR</span><span class="o">.</span><span class="n">SERVER_GONE_ERROR</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">CR_SERVER_LOST</span> <span class="o">=</span> \
+                            <span class="n">MySQLdb</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">CR</span><span class="o">.</span><span class="n">SERVER_LOST</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">CR_SERVER_GONE_ERROR</span> <span class="o">=</span> \
+                            <span class="n">MySQLdb</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">CR</span><span class="o">.</span><span class="n">CR_SERVER_GONE_ERROR</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">CR_SERVER_LOST</span> <span class="o">=</span> \
+                            <span class="n">MySQLdb</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">CR</span><span class="o">.</span><span class="n">CR_SERVER_LOST</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">ER_DUP_ENTRY</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">ER</span><span class="o">.</span><span class="n">DUP_ENTRY</span>
                 <span class="k">elif</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;connector&#39;</span><span class="p">:</span>
                     <span class="kn">import</span> <span class="nn">mysql.connector</span>
@@ -129,7 +140,8 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                         <span class="s1">&#39;Unknown MySQL driver &quot;</span><span class="si">%s</span><span class="s1">&quot;, &#39;</span>
-                        <span class="s1">&#39;expected mysqldb, connector or oursql&#39;</span> <span class="o">%</span> <span class="n">driver</span><span class="p">)</span>
+                        <span class="s1">&#39;expected mysqldb, connector, &#39;</span>
+                        <span class="s1">&#39;oursql or pymysql&#39;</span> <span class="o">%</span> <span class="n">driver</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
                 <span class="k">pass</span>
             <span class="k">else</span><span class="p">:</span>
@@ -193,8 +205,9 @@
             <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
                 <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span>
                 <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span>
-            <span class="c1"># Attempt to reconnect. This setting is persistent.</span>
-            <span class="n">conn</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">__name__</span> <span class="o">!=</span> <span class="s1">&#39;oursql&#39;</span><span class="p">:</span>
+                <span class="c1"># Attempt to reconnect. This setting is persistent.</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">OperationalError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">conninfo</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;; used connection string: &quot;</span>
                         <span class="s2">&quot;host=</span><span class="si">%(host)s</span><span class="s2">, port=</span><span class="si">%(port)s</span><span class="s2">, &quot;</span>

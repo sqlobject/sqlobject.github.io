@@ -61,6 +61,7 @@
 <li><a class="reference internal" href="#">News</a><ul>
 <li><a class="reference internal" href="#sqlobject-3-2-0-master">SQLObject 3.2.0 (master)</a><ul>
 <li><a class="reference internal" href="#minor-features">Minor features</a></li>
+<li><a class="reference internal" href="#work-in-progress">Work in progress</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
 <li><a class="reference internal" href="#tests">Tests</a></li>
 </ul>
@@ -122,22 +123,23 @@
 <li><a class="reference internal" href="#news" id="id7">News</a><ul>
 <li><a class="reference internal" href="#sqlobject-3-2-0-master" id="id8">SQLObject 3.2.0 (master)</a><ul>
 <li><a class="reference internal" href="#minor-features" id="id9">Minor features</a></li>
-<li><a class="reference internal" href="#documentation" id="id10">Documentation</a></li>
-<li><a class="reference internal" href="#tests" id="id11">Tests</a></li>
+<li><a class="reference internal" href="#work-in-progress" id="id10">Work in progress</a></li>
+<li><a class="reference internal" href="#documentation" id="id11">Documentation</a></li>
+<li><a class="reference internal" href="#tests" id="id12">Tests</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sqlobject-3-1-0" id="id12">SQLObject 3.1.0</a><ul>
-<li><a class="reference internal" href="#features" id="id13">Features</a></li>
-<li><a class="reference internal" href="#id1" id="id14">Documentation</a></li>
-<li><a class="reference internal" href="#source-code" id="id15">Source code</a></li>
-<li><a class="reference internal" href="#id2" id="id16">Tests</a></li>
+<li><a class="reference internal" href="#sqlobject-3-1-0" id="id13">SQLObject 3.1.0</a><ul>
+<li><a class="reference internal" href="#features" id="id14">Features</a></li>
+<li><a class="reference internal" href="#id1" id="id15">Documentation</a></li>
+<li><a class="reference internal" href="#source-code" id="id16">Source code</a></li>
+<li><a class="reference internal" href="#id2" id="id17">Tests</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sqlobject-3-0-0" id="id17">SQLObject 3.0.0</a><ul>
-<li><a class="reference internal" href="#id3" id="id18">Features</a></li>
-<li><a class="reference internal" href="#id4" id="id19">Minor features</a></li>
-<li><a class="reference internal" href="#development" id="id20">Development</a></li>
-<li><a class="reference internal" href="#id5" id="id21">Documentation</a></li>
+<li><a class="reference internal" href="#sqlobject-3-0-0" id="id18">SQLObject 3.0.0</a><ul>
+<li><a class="reference internal" href="#id3" id="id19">Features</a></li>
+<li><a class="reference internal" href="#id4" id="id20">Minor features</a></li>
+<li><a class="reference internal" href="#development" id="id21">Development</a></li>
+<li><a class="reference internal" href="#id5" id="id22">Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -157,16 +159,24 @@ the name of the attached database to vacuum.</li>
 <li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for FirebirdConnection. Allowed values are &#8216;fdb&#8217;
 or &#8216;kinterbasdb&#8217;. Default is to test &#8216;fdb&#8217; and &#8216;kinterbasdb&#8217; in that
 order.</li>
+<li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for MySQLConnection. Allowed value are &#8216;mysqldb&#8217;,
+&#8216;connector&#8217;, &#8216;oursql&#8217; and &#8216;pymysql&#8217;. Default is to test for mysqldb only;
+(connector, oursql and pymysql drivers still cause problems).</li>
+</ul>
+</div>
+<div class="section" id="work-in-progress">
+<h3>Work in progress<a class="headerlink" href="#work-in-progress" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
 <li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/mysql-connector">MySQL Connector</a> (pure python; <a class="reference external" href="https://dev.mysql.com/doc/connector-python/en/">binary
 packages</a> are not at
 PyPI and hence are hard to install and test; most tests are passed, but
 there are still problems).</li>
 <li>Add support for <a class="reference external" href="https://github.com/python-oursql/oursql">oursql</a> MySQL
-driver (Python 2.6 and 2.7; most tests are passed, but there are still
+driver (Python 2.6 and 2.7 until oursql fixes python 3 compatibility;
+most tests are passed, but there are still problems).</li>
+<li>Add support for <a class="reference external" href="https://github.com/PyMySQL/PyMySQL/">PyMySQL</a> - pure
+python mysql interface; most tests are passed, but there are still
 problems).</li>
-<li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for MySQLConnection. Allowed value are &#8216;mysqldb&#8217;,
-&#8216;connector&#8217; and &#8216;oursql&#8217;. Default is to test for mysqldb only;
-(connector and oursql drivers still cause problems).</li>
 </ul>
 </div>
 <div class="section" id="documentation">
