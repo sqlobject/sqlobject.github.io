@@ -108,8 +108,8 @@ values =&gt; <cite>values</cite> for MySQL).</p>
 </li>
 <li><p class="first">Cached join results.</p>
 </li>
-<li><p class="first">Invert tests isinstance(obj, (tuple, list)) to not isinstance(obj, basestr)
-to allow any iterable.</p>
+<li><p class="first">Invert tests isinstance(obj, (tuple, list)) to not isinstance(obj,
+basestr) to allow any iterable.</p>
 </li>
 <li><p class="first">Always use .lazyIter().</p>
 </li>
@@ -117,13 +117,15 @@ to allow any iterable.</p>
 </li>
 <li><p class="first">Generators instead of loops (fetchall =&gt; fetchone).</p>
 </li>
-<li><p class="first">Cache columns in sqlmeta.getColumns(); reset the cache on add/del Column/Join.</p>
+<li><p class="first">Cache columns in sqlmeta.getColumns(); reset the cache on add/del
+Column/Join.</p>
 </li>
 <li><p class="first">Make ConnectionHub a context manager instead of .doInTransaction().</p>
 </li>
 <li><p class="first">Make version_info a namedtuple.</p>
 </li>
-<li><p class="first">Expression columns - in SELECT but not in INSERT/UPDATE. Something like this:</p>
+<li><p class="first">Expression columns - in SELECT but not in INSERT/UPDATE. Something like
+this:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">function1</span> <span class="o">=</span> <span class="n">ExpressionCol</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">my_function</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span><span class="p">))</span>
     <span class="n">function2</span> <span class="o">=</span> <span class="n">ExpressionCol</span><span class="p">(</span><span class="s1">&#39;sum(col2)&#39;</span><span class="p">)</span>
@@ -140,30 +142,32 @@ generating query strings.</p>
 </li>
 <li><p class="first">PREPARE/EXECUTE.</p>
 </li>
-<li><p class="first">Protect all .encode(), catch UnicodeEncode exceptions and reraise Invalid.</p>
+<li><p class="first">Protect all .encode(), catch UnicodeEncode exceptions and reraise
+Invalid.</p>
 </li>
 <li><p class="first">More kinds of joins, and more powerful join results (closer to how
 <cite>select</cite> works).</p>
 </li>
-<li><p class="first">Better joins - automatic joins in .select()
-based on ForeignKey/MultipleJoin/RelatedJoin.</p>
+<li><p class="first">Better joins - automatic joins in .select() based on
+ForeignKey/MultipleJoin/RelatedJoin.</p>
 </li>
 <li><p class="first">Deprecate, then remove connectionForOldURI.</p>
 </li>
 <li><p class="first">Switch from setuptools to distribute.</p>
 </li>
-<li><p class="first">Ultramysql <a class="reference external" href="https://github.com/esnme/ultramysql">for Python2</a> and
-<a class="reference external" href="https://github.com/arpitbbhayani/umysql3">Python3</a>. See also <a class="reference external" href="https://github.com/hongqn/umysqldb">umysqldb</a>.</p>
+<li><p class="first"><a class="reference external" href="https://pypi.python.org/pypi/pg8000">pg8000 driver</a>.</p>
 </li>
-<li><p class="first">pg8000 driver: <a class="reference external" href="http://code.google.com/p/pg8000/">http://code.google.com/p/pg8000/</a></p>
+<li><p class="first"><a class="reference external" href="https://pypi.python.org/pypi/py-postgresql">py-postgresql driver</a>.</p>
 </li>
-<li><p class="first">py-postgresql driver: <a class="reference external" href="http://python.projects.postgresql.org/">http://python.projects.postgresql.org/</a></p>
+<li><p class="first"><a class="reference external" href="https://pypi.python.org/pypi/firebirdsql">pyfirebirdsql</a>.</p>
 </li>
-<li><p class="first">pyfirebirdsql: <a class="reference external" href="https://github.com/nakagami/pyfirebirdsql">https://github.com/nakagami/pyfirebirdsql</a></p>
+<li><p class="first"><a class="reference external" href="https://pypi.python.org/pypi/dbms">dbms</a> is a DB API wrapper for DB
+API drivers for IBM DB2, Firebird, MSSQL Server, MySQL, Oracle,
+PostgreSQL, SQLite and ODBC.</p>
 </li>
-<li><p class="first">dict API: use getitem interface for column access instead of getattr; reserve
-getattr for internal attributes only; this helps to avoid collisions with
-internal attributes.</p>
+<li><p class="first">dict API: use getitem interface for column access instead of getattr;
+reserve getattr for internal attributes only; this helps to avoid
+collisions with internal attributes.</p>
 </li>
 <li><p class="first">Or move column values access to a separate namespace, e.g. .c:
 row.c.column.</p>
@@ -172,18 +176,18 @@ row.c.column.</p>
 </li>
 <li><p class="first">RSS 2.0 and Atom news feeds.</p>
 </li>
-<li><p class="first">Use <a class="reference external" href="http://www.webwareforpython.org/DBUtils">DBUtils</a>, especially SolidConnection.</p>
+<li><p class="first">Use <a class="reference external" href="https://pypi.python.org/pypi/DBUtils">DBUtils</a>, especially SolidConnection.</p>
 </li>
 </ul>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">_fromDatabase</span></code> currently doesn&#8217;t support IDs that don&#8217;t fit into
-the normal naming scheme.  It should do so.  You can still use
-<code class="docutils literal"><span class="pre">_idName</span></code> with <code class="docutils literal"><span class="pre">_fromDatabase</span></code>.</li>
-<li>More databases supported.  There has been interest and some work in
-the progress for Oracle. IWBN to have Informix and DB2 drivers.</li>
-<li>Better transaction support &#8211; right now you can use transactions
-for the database, but objects aren&#8217;t transaction-aware, so
-non-database persistence won&#8217;t be able to be rolled back.</li>
+<li><code class="docutils literal"><span class="pre">_fromDatabase</span></code> currently doesn&#8217;t support IDs that don&#8217;t fit into the
+normal naming scheme.  It should do so.  You can still use <code class="docutils literal"><span class="pre">_idName</span></code>
+with <code class="docutils literal"><span class="pre">_fromDatabase</span></code>.</li>
+<li>More databases supported.  There has been interest and some work in the
+progress for Oracle. IWBN to have Informix and DB2 drivers.</li>
+<li>Better transaction support &#8211; right now you can use transactions for the
+database, but objects aren&#8217;t transaction-aware, so non-database
+persistence won&#8217;t be able to be rolled back.</li>
 <li>Optimistic locking and other techniques to handle concurrency.</li>
 <li>Profile of SQLObject performance to identify bottlenecks.</li>
 <li>Increase hooks with FormEncode validation and form generation package, so
