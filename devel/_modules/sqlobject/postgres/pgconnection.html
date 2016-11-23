@@ -70,12 +70,13 @@
           <div class="body" role="main">
             
   <h1>Source code for sqlobject.postgres.pgconnection</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">sqlobject.dbconnection</span> <span class="k">import</span> <span class="n">DBAPI</span>
-<span class="kn">import</span> <span class="nn">re</span>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">col</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">dberrors</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">sqlbuilder</span>
-<span class="kn">from</span> <span class="nn">sqlobject.converters</span> <span class="k">import</span> <span class="n">registerConverter</span>
+<span class="kn">from</span> <span class="nn">sqlobject.compat</span> <span class="k">import</span> <span class="n">PY2</span>
+<span class="kn">from</span> <span class="nn">sqlobject.converters</span> <span class="k">import</span> <span class="n">registerConverter</span><span class="p">,</span> <span class="n">sqlrepr</span>
+<span class="kn">from</span> <span class="nn">sqlobject.dbconnection</span> <span class="k">import</span> <span class="n">DBAPI</span>
 
 
 <div class="viewcode-block" id="ErrorMessage"><a class="viewcode-back" href="../../../api/sqlobject.postgres.pgconnection.html#sqlobject.postgres.pgconnection.ErrorMessage">[docs]</a><span class="k">class</span> <span class="nc">ErrorMessage</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
@@ -107,20 +108,30 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;psycopg2&#39;</span><span class="p">:</span>
                     <span class="kn">import</span> <span class="nn">psycopg2</span> <span class="k">as</span> <span class="nn">psycopg</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">psycopg</span>
                 <span class="k">elif</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;psycopg1&#39;</span><span class="p">:</span>
                     <span class="kn">import</span> <span class="nn">psycopg</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">psycopg</span>
                 <span class="k">elif</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;psycopg&#39;</span><span class="p">:</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="kn">import</span> <span class="nn">psycopg2</span> <span class="k">as</span> <span class="nn">psycopg</span>
                     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
                         <span class="kn">import</span> <span class="nn">psycopg</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">psycopg</span>
                 <span class="k">elif</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pygresql&#39;</span><span class="p">:</span>
                     <span class="kn">import</span> <span class="nn">pgdb</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">pgdb</span>
+                <span class="k">elif</span> <span class="n">driver</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;py-postgresql&#39;</span><span class="p">,</span> <span class="s1">&#39;pypostgresql&#39;</span><span class="p">):</span>
+                    <span class="kn">from</span> <span class="nn">postgresql.driver</span> <span class="k">import</span> <span class="n">dbapi20</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">dbapi20</span>
+                <span class="k">elif</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pg8000&#39;</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">pg8000</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">pg8000</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                         <span class="s1">&#39;Unknown PostgreSQL driver &quot;</span><span class="si">%s</span><span class="s1">&quot;, &#39;</span>
-                        <span class="s1">&#39;expected psycopg2, psycopg1 or pygresql&#39;</span> <span class="o">%</span> <span class="n">driver</span><span class="p">)</span>
+                        <span class="s1">&#39;expected psycopg2, psycopg1, &#39;</span>
+                        <span class="s1">&#39;pygresql, pg8000 or pypostgresql&#39;</span> <span class="o">%</span> <span class="n">driver</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
                 <span class="k">pass</span>
             <span class="k">else</span><span class="p">:</span>
@@ -128,11 +139,15 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
                 <span class="s1">&#39;Cannot find a PostgreSQL driver, tried </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">drivers</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;psycopg&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">psycopg</span>
             <span class="c1"># Register a converter for psycopg Binary type.</span>
-            <span class="n">registerConverter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">psycopg</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)),</span>
+            <span class="n">registerConverter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)),</span>
                               <span class="n">PsycoBinaryConverter</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pygresql&#39;</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">:</span>
+            <span class="c1"># Register a converter for pygresql Binary type.</span>
+            <span class="n">registerConverter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;&#39;</span><span class="p">)),</span>
+                              <span class="n">PygresBinaryConverter</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
@@ -189,6 +204,20 @@
                 <span class="k">if</span> <span class="n">sslmode</span><span class="p">:</span>
                     <span class="n">dsn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;sslmode=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">sslmode</span><span class="p">)</span>
                 <span class="n">dsn</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dsn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pypostgresql&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">host</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">host</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pg8000&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">host</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix_sock&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">host</span>
+            <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">if</span> <span class="n">password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dsn</span> <span class="o">=</span> <span class="n">dsn</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unicodeCols</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;unicodeCols&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
@@ -247,7 +276,8 @@
             <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">(</span><span class="n">ErrorMessage</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">IntegrityError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">ErrorMessage</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">pgcode</span> <span class="o">==</span> <span class="s1">&#39;23505&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;pgcode&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;23505&#39;</span> <span class="ow">or</span> \
+                    <span class="nb">getattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;sqlstate&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;23505&#39;</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">DuplicateEntryError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">IntegrityError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -260,7 +290,11 @@
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">NotSupportedError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">NotSupportedError</span><span class="p">(</span><span class="n">ErrorMessage</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">DatabaseError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">DatabaseError</span><span class="p">(</span><span class="n">ErrorMessage</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">ErrorMessage</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;duplicate key value violates unique constraint&#39;</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">DuplicateEntryError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">DatabaseError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">InterfaceError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">InterfaceError</span><span class="p">(</span><span class="n">ErrorMessage</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Warning</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -530,10 +564,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_createOrDropDatabase</span><span class="p">(</span><span class="n">op</span><span class="o">=</span><span class="s2">&quot;DROP&quot;</span><span class="p">)</span></div></div>
 
 
-<span class="c1"># Converter for psycopg Binary type.</span>
+<span class="c1"># Converter for Binary types</span>
 <div class="viewcode-block" id="PsycoBinaryConverter"><a class="viewcode-back" href="../../../api/sqlobject.postgres.pgconnection.html#sqlobject.postgres.pgconnection.PsycoBinaryConverter">[docs]</a><span class="k">def</span> <span class="nf">PsycoBinaryConverter</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">db</span> <span class="o">==</span> <span class="s1">&#39;postgres&#39;</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">PygresBinaryConverter</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">db</span> <span class="o">==</span> <span class="s1">&#39;postgres&#39;</span>
+        <span class="k">return</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">db</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<div class="viewcode-block" id="PygresBinaryConverter"><a class="viewcode-back" href="../../../api/sqlobject.postgres.pgconnection.html#sqlobject.postgres.pgconnection.PygresBinaryConverter">[docs]</a>    <span class="k">def</span> <span class="nf">PygresBinaryConverter</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">db</span> <span class="o">==</span> <span class="s1">&#39;postgres&#39;</span>
+        <span class="k">return</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;latin1&#39;</span><span class="p">),</span> <span class="n">db</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
