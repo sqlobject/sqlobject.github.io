@@ -134,7 +134,9 @@ context manager:</p>
 <code class="docutils literal"><span class="pre">message</span></code> to specify a custom failure message:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">raises</span><span class="p">(</span><span class="ne">ZeroDivisionError</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Expecting ZeroDivisionError&quot;</span><span class="p">):</span>
 <span class="gp">... </span>   <span class="k">pass</span>
-<span class="gp">... </span><span class="n">Failed</span><span class="p">:</span> <span class="n">Expecting</span> <span class="ne">ZeroDivisionError</span>
+<span class="gt">Traceback (most recent call last):</span>
+  <span class="c">...</span>
+<span class="gr">Failed</span>: <span class="n">Expecting ZeroDivisionError</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -144,19 +146,20 @@ note that normal context manager rules apply and that the exception
 raised <em>must</em> be the final line in the scope of the context manager.
 Lines of code after that, within the scope of the context manager will
 not be executed. For example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">raises</span><span class="p">(</span><span class="ne">OSError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc_info</span><span class="p">:</span>
-<span class="go">        assert 1 == 1  # this will execute as expected</span>
-<span class="go">        raise OSError(errno.EEXISTS, &#39;directory exists&#39;)</span>
-<span class="go">        assert exc_info.value.errno == errno.EEXISTS  # this will not execute</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">value</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc_info</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;value must be &lt;= 10&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;value must be &lt;= 10&quot;</span>  <span class="c1"># this will not execute</span>
 </pre></div>
 </div>
 <p>Instead, the following approach must be taken (note the difference in
 scope):</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">raises</span><span class="p">(</span><span class="ne">OSError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc_info</span><span class="p">:</span>
-<span class="go">        assert 1 == 1  # this will execute as expected</span>
-<span class="go">        raise OSError(errno.EEXISTS, &#39;directory exists&#39;)</span>
-
-<span class="go">    assert exc_info.value.errno == errno.EEXISTS  # this will now execute</span>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc_info</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;value must be &lt;= 10&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;value must be &lt;= 10&quot;</span>
 </pre></div>
 </div>
 </div>

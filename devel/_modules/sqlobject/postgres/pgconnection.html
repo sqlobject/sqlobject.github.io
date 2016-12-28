@@ -70,7 +70,8 @@
           <div class="body" role="main">
             
   <h1>Source code for sqlobject.postgres.pgconnection</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span></span><span class="kn">from</span> <span class="nn">getpass</span> <span class="k">import</span> <span class="n">getuser</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">col</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">dberrors</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">sqlbuilder</span>
@@ -204,18 +205,19 @@
                 <span class="k">if</span> <span class="n">sslmode</span><span class="p">:</span>
                     <span class="n">dsn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;sslmode=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">sslmode</span><span class="p">)</span>
                 <span class="n">dsn</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dsn</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pypostgresql&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">host</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">driver</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;py-postgresql&#39;</span><span class="p">,</span> <span class="s1">&#39;pypostgresql&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">host</span> <span class="ow">and</span> <span class="n">host</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
                 <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">host</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="s2">&quot;unix&quot;</span> <span class="ow">in</span> <span class="n">dsn_dict</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pg8000&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">host</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">host</span> <span class="ow">and</span> <span class="n">host</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
                 <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix_sock&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">host</span>
             <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getuser</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;password&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
@@ -306,6 +308,11 @@
         <span class="n">table</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span>
         <span class="n">idName</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;py-postgresql&#39;</span><span class="p">,</span> <span class="s1">&#39;pypostgresql&#39;</span><span class="p">):</span>
+            <span class="n">sequenceName</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idSequence</span> <span class="ow">or</span> \
+                <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">_seq&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">idName</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_executeRetry</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="s2">&quot;SELECT NEXTVAL(&#39;</span><span class="si">%s</span><span class="s2">&#39;)&quot;</span> <span class="o">%</span> <span class="n">sequenceName</span><span class="p">)</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">idName</span><span class="p">]</span> <span class="o">+</span> <span class="n">names</span>
             <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">+</span> <span class="n">values</span>

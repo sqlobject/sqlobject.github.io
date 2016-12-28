@@ -93,11 +93,16 @@
     <span class="n">getlocation</span><span class="p">,</span> <span class="n">enum</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">cutdir2</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">_pytest</span><span class="o">.</span><span class="n">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">dirpath</span><span class="p">()</span>
 <span class="n">cutdir1</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">pluggy</span><span class="o">.</span><span class="n">__file__</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;oc&quot;</span><span class="p">))</span>
+<span class="n">cutdir2</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">_pytest</span><span class="o">.</span><span class="n">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">dirpath</span><span class="p">()</span>
+<span class="n">cutdir3</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">py</span><span class="o">.</span><span class="n">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">dirpath</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">filter_traceback</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return True if a TracebackEntry instance should be removed from tracebacks:</span>
+<span class="sd">    * dynamically generated code (no code to show up for it);</span>
+<span class="sd">    * internal traceback from pytest or its internal libraries, py and pluggy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># entry.path might sometimes return a str object when the entry</span>
     <span class="c1"># points to dynamically generated code</span>
     <span class="c1"># see https://bitbucket.org/pytest-dev/py/issues/71</span>
@@ -108,7 +113,7 @@
     <span class="c1"># entry.path might point to an inexisting file, in which case it will</span>
     <span class="c1"># alsso return a str object. see #1133</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">cutdir1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">relto</span><span class="p">(</span><span class="n">cutdir2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">cutdir1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">relto</span><span class="p">(</span><span class="n">cutdir2</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">relto</span><span class="p">(</span><span class="n">cutdir3</span><span class="p">)</span>
 
 
 
@@ -280,9 +285,12 @@
             <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getobj</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">obj</span>
+
         <span class="k">def</span> <span class="nf">fset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">value</span>
+
         <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="n">fget</span><span class="p">,</span> <span class="n">fset</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;underlying python object&quot;</span><span class="p">)</span>
+
     <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_getobj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -495,20 +503,25 @@
                  <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-            <span class="n">exc_class</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()</span>
+            <span class="kn">from</span> <span class="nn">_pytest._code.code</span> <span class="k">import</span> <span class="n">ExceptionInfo</span>
+            <span class="n">exc_info</span> <span class="o">=</span> <span class="n">ExceptionInfo</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">exc_info</span><span class="o">.</span><span class="n">traceback</span> <span class="o">=</span> <span class="n">exc_info</span><span class="o">.</span><span class="n">traceback</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">filter_traceback</span><span class="p">)</span>
+            <span class="n">exc_repr</span> <span class="o">=</span> <span class="n">exc_info</span><span class="o">.</span><span class="n">getrepr</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;short&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">exc_info</span><span class="o">.</span><span class="n">traceback</span> <span class="k">else</span> <span class="n">exc_info</span><span class="o">.</span><span class="n">exconly</span><span class="p">()</span>
+            <span class="n">formatted_tb</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">_builtin</span><span class="o">.</span><span class="n">_totext</span><span class="p">(</span><span class="n">exc_repr</span><span class="p">)</span>
             <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">CollectError</span><span class="p">(</span>
-                <span class="s2">&quot;ImportError while importing test module &#39;</span><span class="si">%s</span><span class="s2">&#39;.</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;Original error message:</span><span class="se">\n</span><span class="s2">&#39;</span><span class="si">%s</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;Make sure your test modules/packages have valid Python names.&quot;</span>
-                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fspath</span><span class="p">,</span> <span class="n">exc</span> <span class="ow">or</span> <span class="n">exc_class</span><span class="p">)</span>
+                <span class="s2">&quot;ImportError while importing test module &#39;</span><span class="si">{fspath}</span><span class="s2">&#39;.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;Hint: make sure your test modules/packages have valid Python names.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;Traceback:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;</span><span class="si">{traceback}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fspath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fspath</span><span class="p">,</span> <span class="n">traceback</span><span class="o">=</span><span class="n">formatted_tb</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="n">_pytest</span><span class="o">.</span><span class="n">runner</span><span class="o">.</span><span class="n">Skipped</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">allow_module_level</span><span class="p">:</span>
                 <span class="k">raise</span>
             <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">CollectError</span><span class="p">(</span>
-                <span class="s2">&quot;Using @pytest.skip outside of a test (e.g. as a test &quot;</span>
-                <span class="s2">&quot;function decorator) is not allowed. Use @pytest.mark.skip or &quot;</span>
-                <span class="s2">&quot;@pytest.mark.skipif instead.&quot;</span>
+                <span class="s2">&quot;Using pytest.skip outside of a test is not allowed. If you are &quot;</span>
+                <span class="s2">&quot;trying to decorate a test function, use the @pytest.mark.skip &quot;</span>
+                <span class="s2">&quot;or @pytest.mark.skipif decorators instead.&quot;</span>
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pluginmanager</span><span class="o">.</span><span class="n">consider_module</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">mod</span>
@@ -1166,7 +1179,9 @@
 
 <span class="sd">        &gt;&gt;&gt; with raises(ZeroDivisionError, message=&quot;Expecting ZeroDivisionError&quot;):</span>
 <span class="sd">        ...    pass</span>
-<span class="sd">        ... Failed: Expecting ZeroDivisionError</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">          ...</span>
+<span class="sd">        Failed: Expecting ZeroDivisionError</span>
 
 
 <span class="sd">    .. note::</span>
@@ -1177,19 +1192,21 @@
 <span class="sd">       Lines of code after that, within the scope of the context manager will</span>
 <span class="sd">       not be executed. For example::</span>
 
-<span class="sd">           &gt;&gt;&gt; with raises(OSError) as exc_info:</span>
-<span class="sd">                   assert 1 == 1  # this will execute as expected</span>
-<span class="sd">                   raise OSError(errno.EEXISTS, &#39;directory exists&#39;)</span>
-<span class="sd">                   assert exc_info.value.errno == errno.EEXISTS  # this will not execute</span>
+<span class="sd">           &gt;&gt;&gt; value = 15</span>
+<span class="sd">           &gt;&gt;&gt; with raises(ValueError) as exc_info:</span>
+<span class="sd">           ...     if value &gt; 10:</span>
+<span class="sd">           ...         raise ValueError(&quot;value must be &lt;= 10&quot;)</span>
+<span class="sd">           ...     assert str(exc_info.value) == &quot;value must be &lt;= 10&quot;  # this will not execute</span>
 
 <span class="sd">       Instead, the following approach must be taken (note the difference in</span>
 <span class="sd">       scope)::</span>
 
-<span class="sd">           &gt;&gt;&gt; with raises(OSError) as exc_info:</span>
-<span class="sd">                   assert 1 == 1  # this will execute as expected</span>
-<span class="sd">                   raise OSError(errno.EEXISTS, &#39;directory exists&#39;)</span>
+<span class="sd">           &gt;&gt;&gt; with raises(ValueError) as exc_info:</span>
+<span class="sd">           ...     if value &gt; 10:</span>
+<span class="sd">           ...         raise ValueError(&quot;value must be &lt;= 10&quot;)</span>
+<span class="sd">           ...</span>
+<span class="sd">           &gt;&gt;&gt; assert str(exc_info.value) == &quot;value must be &lt;= 10&quot;</span>
 
-<span class="sd">               assert exc_info.value.errno == errno.EEXISTS  # this will now execute</span>
 
 <span class="sd">    Or you can specify a callable by passing a to-be-called lambda::</span>
 
@@ -1294,7 +1311,11 @@
                 <span class="n">exc_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span> <span class="o">=</span> <span class="n">tp</span>
                 <span class="n">tp</span> <span class="o">=</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">traceback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_exception</span><span class="p">)</span>
+        <span class="n">suppress_exception</span> <span class="o">=</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_exception</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">suppress_exception</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exc_clear</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">suppress_exception</span>
+
 
 <span class="c1"># builtin pytest.approx helper</span>
 
@@ -1469,6 +1490,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rel</span> <span class="o">=</span> <span class="n">rel</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">,</span> <span class="nb">complex</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">)</span>
+
         <span class="c1"># Infinities aren&#39;t compared using tolerances, so don&#39;t show a</span>
         <span class="c1"># tolerance.</span>
         <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">):</span>
@@ -1481,16 +1505,10 @@
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="n">vetted_tolerance</span> <span class="o">=</span> <span class="s1">&#39;???&#39;</span>
 
-        <span class="n">plus_minus</span> <span class="o">=</span> <span class="s1">u&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="se">\u00b1</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">,</span> <span class="n">vetted_tolerance</span><span class="p">)</span>
-
-        <span class="c1"># In python2, __repr__() must return a string (i.e. not a unicode</span>
-        <span class="c1"># object).  In python3, __repr__() must return a unicode object</span>
-        <span class="c1"># (although now strings are unicode objects and bytes are what</span>
-        <span class="c1"># strings were).</span>
         <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">plus_minus</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> +- </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">,</span> <span class="n">vetted_tolerance</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">plus_minus</span>
+            <span class="k">return</span> <span class="s1">u&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="se">\u00b1</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">,</span> <span class="n">vetted_tolerance</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">):</span>
         <span class="c1"># Short-circuit exact equality.</span>
