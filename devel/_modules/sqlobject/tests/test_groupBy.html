@@ -96,8 +96,8 @@
         <span class="n">groupBy</span><span class="o">=</span><span class="n">GroupbyTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
         <span class="n">orderBy</span><span class="o">=</span><span class="n">GroupbyTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
     <span class="n">sql</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span></div>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="n">sql</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">]</span> <span class="o">==</span> <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span></div>
 
 
 <div class="viewcode-block" id="test_groupBy_list"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_groupBy.html#sqlobject.tests.test_groupBy.test_groupBy_list">[docs]</a><span class="k">def</span> <span class="nf">test_groupBy_list</span><span class="p">():</span>
@@ -112,8 +112,8 @@
         <span class="n">groupBy</span><span class="o">=</span><span class="p">[</span><span class="n">GroupbyTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">GroupbyTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">],</span>
         <span class="n">orderBy</span><span class="o">=</span><span class="p">[</span><span class="n">GroupbyTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">GroupbyTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">value</span><span class="p">])</span>
     <span class="n">sql</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">select</span><span class="p">)</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span></div>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="n">sql</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">]</span> <span class="o">==</span> <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span></div>
 </pre></div>
 
           </div>
@@ -135,7 +135,7 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2004-2016, Ian Bicking and contributors.
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
