@@ -172,6 +172,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">dbEncoding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s2">&quot;charset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;charset&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dbEncoding</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
 
         <span class="k">global</span> <span class="n">mysql_Bin</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">PY2</span> <span class="ow">and</span> <span class="n">mysql_Bin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -192,20 +193,20 @@
 <div class="viewcode-block" id="MySQLConnection.makeConnection"><a class="viewcode-back" href="../../../api/sqlobject.mysql.mysqlconnection.html#sqlobject.mysql.mysqlconnection.MySQLConnection.makeConnection">[docs]</a>    <span class="k">def</span> <span class="nf">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">dbEncoding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbEncoding</span>
         <span class="k">if</span> <span class="n">dbEncoding</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;MySQLdb&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;mysqldb&#39;</span><span class="p">,</span> <span class="s1">&#39;pymysql&#39;</span><span class="p">):</span>
                 <span class="kn">from</span> <span class="nn">MySQLdb.connections</span> <span class="k">import</span> <span class="n">Connection</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Connection</span><span class="p">,</span> <span class="s1">&#39;set_character_set&#39;</span><span class="p">):</span>
                     <span class="c1"># monkeypatch pre MySQLdb 1.2.1</span>
                     <span class="k">def</span> <span class="nf">character_set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
                         <span class="k">return</span> <span class="n">dbEncoding</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">dbEncoding</span>
                     <span class="n">Connection</span><span class="o">.</span><span class="n">character_set_name</span> <span class="o">=</span> <span class="n">character_set_name</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;mysql.connector&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;connector&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">[</span><span class="s1">&#39;consume_results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
                 <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span>
                 <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">passwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">__name__</span> <span class="o">!=</span> <span class="s1">&#39;oursql&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">!=</span> <span class="s1">&#39;oursql&#39;</span><span class="p">:</span>
                 <span class="c1"># Attempt to reconnect. This setting is persistent.</span>
                 <span class="n">conn</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">OperationalError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -216,10 +217,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_setAutoCommit</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span><span class="p">))</span>
 
-        <span class="k">if</span> <span class="n">dbEncoding</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;MySQLdb&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s1">&#39;set_character_set&#39;</span><span class="p">):</span>  <span class="c1"># MySQLdb 1.2.1 and later</span>
+        <span class="k">if</span> <span class="n">dbEncoding</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s1">&#39;set_character_set&#39;</span><span class="p">):</span>
                 <span class="n">conn</span><span class="o">.</span><span class="n">set_character_set</span><span class="p">(</span><span class="n">dbEncoding</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>  <span class="c1"># pre MySQLdb 1.2.1</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;oursql&#39;</span><span class="p">:</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">charset</span> <span class="o">=</span> <span class="n">dbEncoding</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s1">&#39;query&#39;</span><span class="p">):</span>
                 <span class="c1"># works along with monkeypatching code above</span>
                 <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SET NAMES </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dbEncoding</span><span class="p">)</span>
 
