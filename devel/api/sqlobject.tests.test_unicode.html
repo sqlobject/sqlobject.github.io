@@ -80,8 +80,8 @@
 <em class="property">class </em><code class="descclassname">sqlobject.tests.test_unicode.</code><code class="descname">SOTestUnicode</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_unicode.html#SOTestUnicode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
 <dl class="classmethod">
-<dt id="sqlobject.tests.test_unicode.SOTestUnicode.byCol1">
-<em class="property">classmethod </em><code class="descname">byCol1</code><span class="sig-paren">(</span><em>val</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.byCol1" title="Permalink to this definition">¶</a></dt>
+<dt id="sqlobject.tests.test_unicode.SOTestUnicode.byCol">
+<em class="property">classmethod </em><code class="descname">byCol</code><span class="sig-paren">(</span><em>val</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.byCol" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="classmethod">
@@ -90,13 +90,8 @@
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="sqlobject.tests.test_unicode.SOTestUnicode.col1">
-<code class="descname">col1</code><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.col1" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="sqlobject.tests.test_unicode.SOTestUnicode.col2">
-<code class="descname">col2</code><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.col2" title="Permalink to this definition">¶</a></dt>
+<dt id="sqlobject.tests.test_unicode.SOTestUnicode.col">
+<code class="descname">col</code><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.col" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -125,17 +120,17 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'count': &lt;IntCol b3ea510cL count&gt;, 'col2': &lt;UnicodeCol b3e9072cL col2&gt;, 'col1': &lt;UnicodeCol b402116cL col1&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'count': &lt;IntCol b5305a4cL count&gt;, 'col': &lt;UnicodeCol b50f602cL col&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columnList">
-<code class="descname">columnList</code><em class="property"> = [&lt;SOIntCol count alternate ID&gt;, &lt;SOUnicodeCol col1 alternate ID&gt;, &lt;SOUnicodeCol col2&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnList</code><em class="property"> = [&lt;SOIntCol count alternate ID&gt;, &lt;SOUnicodeCol col alternate ID&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columns">
-<code class="descname">columns</code><em class="property"> = {'count': &lt;SOIntCol count alternate ID&gt;, 'col2': &lt;SOUnicodeCol col2&gt;, 'col1': &lt;SOUnicodeCol col1 alternate ID&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columns</code><em class="property"> = {'count': &lt;SOIntCol count alternate ID&gt;, 'col': &lt;SOUnicodeCol col alternate ID&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_unicode.SOTestUnicode.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -191,11 +186,6 @@
 <dl class="function">
 <dt id="sqlobject.tests.test_unicode.test_create">
 <code class="descclassname">sqlobject.tests.test_unicode.</code><code class="descname">test_create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_unicode.html#test_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_unicode.test_create" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="sqlobject.tests.test_unicode.test_dbEncoding">
-<code class="descclassname">sqlobject.tests.test_unicode.</code><code class="descname">test_dbEncoding</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_unicode.html#test_dbEncoding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_unicode.test_dbEncoding" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
