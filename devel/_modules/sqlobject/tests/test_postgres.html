@@ -69,7 +69,8 @@
           <div class="body" role="main">
             
   <h1>Source code for sqlobject.tests.test_postgres</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span>
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">getConnection</span><span class="p">,</span> <span class="n">setupClass</span>
 
@@ -87,8 +88,10 @@
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSSLMode</span><span class="p">)</span>
     <span class="n">connection</span> <span class="o">=</span> <span class="n">SOTestSSLMode</span><span class="o">.</span><span class="n">_connection</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s1">&#39;postgres&#39;</span><span class="p">)</span> <span class="ow">or</span> \
-            <span class="p">(</span><span class="ow">not</span> <span class="n">connection</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">__name__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;psycopg&#39;</span><span class="p">)):</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;The test requires PostgreSQL, psycopg and ssl mode&quot;</span><span class="p">)</span>
+            <span class="p">(</span><span class="ow">not</span> <span class="n">connection</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">__name__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;psycopg&#39;</span><span class="p">))</span> <span class="ow">or</span> \
+            <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span><span class="p">):</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;The test requires PostgreSQL, psycopg and ssl mode; &quot;</span>
+                    <span class="s2">&quot;also it doesn&#39;t work on w32&quot;</span><span class="p">)</span>
 
     <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">(</span><span class="n">sslmode</span><span class="o">=</span><span class="s1">&#39;require&#39;</span><span class="p">)</span>
     <span class="n">SOTestSSLMode</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
