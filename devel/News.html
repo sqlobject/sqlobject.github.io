@@ -160,8 +160,7 @@ the name of the attached database to vacuum.</li>
 or &#8216;kinterbasdb&#8217;. Default is to test &#8216;fdb&#8217; and &#8216;kinterbasdb&#8217; in that
 order. pyfirebirdsql is supported but untested.</li>
 <li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for MySQLConnection. Allowed value are &#8216;mysqldb&#8217;,
-&#8216;connector&#8217;, &#8216;oursql&#8217; and &#8216;pymysql&#8217;. Default is to test for mysqldb only;
-(connector, oursql and pymysql drivers still cause problems).</li>
+&#8216;connector&#8217;, &#8216;oursql&#8217; and &#8216;pymysql&#8217;. Default is to test for mysqldb only.</li>
 <li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/mysql-connector">MySQL Connector</a> (pure python; <a class="reference external" href="https://dev.mysql.com/doc/connector-python/en/">binary
 packages</a> are not at
 PyPI and hence are hard to install and test).</li>
@@ -178,8 +177,9 @@ python mysql interface).</li>
 <li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/py-postgresql">py-postgresql</a> PostgreSQL driver. There
 are still problems with the driver.</li>
 <li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/pg8000">pg8000</a>
-PostgreSQL driver. There are major problems with the driver.</li>
-<li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/firebirdsql">pyfirebirdsql</a> (untested).</li>
+PostgreSQL driver. There are major problems with the driver caused by both
+the driver and SQLObject.</li>
+<li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/firebirdsql">pyfirebirdsql</a>.</li>
 </ul>
 </div>
 <div class="section" id="documentation">
@@ -202,6 +202,8 @@ tests were deprecated in <code class="docutils literal"><span class="pre">pytest
 <li>Drop <code class="docutils literal"><span class="pre">Circle</span> <span class="pre">CI</span></code>.</li>
 <li>Run at Travis CI tests with Firebird backend (server version 2.5; drivers fdb
 and firebirdsql). There are problems with tests.</li>
+<li>Add appveyor for windows testing. Run tests with Postgres and MS SQL. There
+are problems.</li>
 </ul>
 </div>
 </div>
