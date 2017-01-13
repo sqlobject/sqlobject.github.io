@@ -99,6 +99,11 @@
 <code class="descname">q</code><em class="property"> = base</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.q" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="sqlobject.versioning.test.test_version.Base.so_value">
+<code class="descname">so_value</code><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.so_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="class">
 <dt id="sqlobject.versioning.test.test_version.Base.sqlmeta">
 <em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.sqlmeta" title="Permalink to this definition">¶</a></dt>
@@ -115,17 +120,17 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.Base.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'childName': &lt;StringCol b3deeeccL childName&gt;, 'name': &lt;StringCol b3c99eecL name&gt;, 'value': &lt;IntCol b3c9960cL value&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'so_value': &lt;IntCol b591e14cL so_value&gt;, 'name': &lt;StringCol b591e5acL name&gt;, 'childName': &lt;StringCol b591edacL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.Base.sqlmeta.columnList">
-<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol name&gt;, &lt;SOIntCol value default=0&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol name&gt;, &lt;SOIntCol so_value default=0&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.Base.sqlmeta.columns">
-<code class="descname">columns</code><em class="property"> = {'childName': &lt;SOStringCol childName default=None&gt;, 'name': &lt;SOStringCol name&gt;, 'value': &lt;SOIntCol value default=0&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columns</code><em class="property"> = {'so_value': &lt;SOIntCol so_value default=0&gt;, 'name': &lt;SOStringCol name&gt;, 'childName': &lt;SOStringCol childName default=None&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -167,11 +172,6 @@
 </dd></dl>
 
 <dl class="attribute">
-<dt id="sqlobject.versioning.test.test_version.Base.value">
-<code class="descclassname">Base.</code><code class="descname">value</code><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.value" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.Base.versions">
 <code class="descclassname">Base.</code><code class="descname">versions</code><a class="headerlink" href="#sqlobject.versioning.test.test_version.Base.versions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -202,6 +202,11 @@
 <code class="descname">q</code><em class="property"> = child</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Child.q" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="sqlobject.versioning.test.test_version.Child.so_value">
+<code class="descname">so_value</code><a class="headerlink" href="#sqlobject.versioning.test.test_version.Child.so_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="class">
 <dt id="sqlobject.versioning.test.test_version.Child.sqlmeta">
 <em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.versioning.test.test_version.Child.sqlmeta" title="Permalink to this definition">¶</a></dt>
@@ -218,7 +223,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.Child.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'toy': &lt;StringCol b417674cL toy&gt;, 'childName': &lt;StringCol b3c8058cL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Child.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'toy': &lt;StringCol b5a9936cL toy&gt;, 'childName': &lt;StringCol b52d5aecL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Child.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -275,11 +280,6 @@
 <code class="descclassname">Child.</code><code class="descname">toy</code><a class="headerlink" href="#sqlobject.versioning.test.test_version.Child.toy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
-<dt id="sqlobject.versioning.test.test_version.Child.value">
-<code class="descclassname">Child.</code><code class="descname">value</code><a class="headerlink" href="#sqlobject.versioning.test.test_version.Child.value" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="class">
@@ -312,7 +312,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.Extra.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b3c472ecL name&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Extra.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b52e284cL name&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Extra.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -415,7 +415,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.Government.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b3ca4dacL name&gt;, 'childName': &lt;StringCol b3deececL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Government.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b54db4acL name&gt;, 'childName': &lt;StringCol b583faecL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Government.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -508,7 +508,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.HasAltId.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b3c47f8cL name&gt;, 'altid': &lt;IntCol b3c47b0cL altid&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.HasAltId.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b58900ecL name&gt;, 'altid': &lt;IntCol b589010cL altid&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.HasAltId.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -606,7 +606,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.HasForeign.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'foreignID': &lt;ForeignKey b3c4606cL foreign&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.HasForeign.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'foreignID': &lt;ForeignKey b590718cL foreign&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.HasForeign.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -714,7 +714,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.Monarchy.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'monarch': &lt;StringCol b652d40cL monarch&gt;, 'childName': &lt;StringCol b3cb1e2cL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Monarchy.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'monarch': &lt;StringCol b54db76cL monarch&gt;, 'childName': &lt;StringCol b54dbaecL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.Monarchy.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -803,7 +803,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.MyClass.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b3ca790cL name&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.MyClass.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'name': &lt;StringCol b5a86cecL name&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.MyClass.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -890,6 +890,11 @@
 <code class="descname">q</code><em class="property"> = vchild</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.VChild.q" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="sqlobject.versioning.test.test_version.VChild.so_value">
+<code class="descname">so_value</code><a class="headerlink" href="#sqlobject.versioning.test.test_version.VChild.so_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="class">
 <dt id="sqlobject.versioning.test.test_version.VChild.sqlmeta">
 <em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.versioning.test.test_version.VChild.sqlmeta" title="Permalink to this definition">¶</a></dt>
@@ -906,7 +911,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.VChild.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'weapon': &lt;StringCol b3c4898cL weapon&gt;, 'childName': &lt;StringCol b3c8e5acL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.VChild.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'weapon': &lt;StringCol b58b72acL weapon&gt;, 'childName': &lt;StringCol b58b7cccL childName&gt;}</em><a class="headerlink" href="#sqlobject.versioning.test.test_version.VChild.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -957,11 +962,6 @@
 <dd></dd></dl>
 
 </dd></dl>
-
-<dl class="attribute">
-<dt id="sqlobject.versioning.test.test_version.VChild.value">
-<code class="descclassname">VChild.</code><code class="descname">value</code><a class="headerlink" href="#sqlobject.versioning.test.test_version.VChild.value" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.versioning.test.test_version.VChild.versions">

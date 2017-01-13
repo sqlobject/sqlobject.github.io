@@ -87,14 +87,15 @@
 
 <div class="viewcode-block" id="Employee"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_inheritance.html#sqlobject.inheritance.tests.test_inheritance.Employee">[docs]</a><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">InheritablePerson</span><span class="p">):</span>
     <span class="n">_inheritable</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">position</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
+    <span class="n">so_position</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_inheritance.html#sqlobject.inheritance.tests.test_inheritance.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">():</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">InheritablePerson</span><span class="p">)</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">Employee</span><span class="p">)</span>
 
-    <span class="n">Employee</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Project&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Leader&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s1">&#39;Project leader&#39;</span><span class="p">)</span>
+    <span class="n">Employee</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Project&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Leader&#39;</span><span class="p">,</span>
+             <span class="n">so_position</span><span class="o">=</span><span class="s1">&#39;Project leader&#39;</span><span class="p">)</span>
     <span class="n">InheritablePerson</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Oneof&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Authors&#39;</span><span class="p">)</span></div>
 
 
@@ -138,7 +139,7 @@
     <span class="k">assert</span> <span class="n">employees</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
 
     <span class="c1"># comparison to None needed to build the right SQL expression</span>
-    <span class="n">employees</span> <span class="o">=</span> <span class="n">Employee</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">position</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># noqa</span>
+    <span class="n">employees</span> <span class="o">=</span> <span class="n">Employee</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">so_position</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># noqa</span>
     <span class="k">assert</span> <span class="n">employees</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
 
     <span class="n">persons</span> <span class="o">=</span> <span class="n">InheritablePerson</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s2">&quot;Project&quot;</span><span class="p">)</span>
@@ -176,10 +177,10 @@
                                             <span class="n">Employee</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">firstName</span><span class="p">)))</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">persons</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
 
-    <span class="n">persons</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">orderBy</span><span class="o">=</span><span class="n">Employee</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">position</span><span class="p">))</span>
+    <span class="n">persons</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">orderBy</span><span class="o">=</span><span class="n">Employee</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">so_position</span><span class="p">))</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">persons</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
 
-    <span class="n">persons</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">orderBy</span><span class="o">=</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
+    <span class="n">persons</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">orderBy</span><span class="o">=</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">so_position</span><span class="p">,</span>
                                             <span class="n">Employee</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">lastName</span><span class="p">)))</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">persons</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span></div>
 

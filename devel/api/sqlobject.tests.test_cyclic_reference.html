@@ -119,6 +119,11 @@
 <code class="descname">short</code><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.short" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.so_time">
+<code class="descname">so_time</code><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.so_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="class">
 <dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta">
 <em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_cyclic_reference.html#SOTestCyclicReferenceA.sqlmeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta" title="Permalink to this definition">¶</a></dt>
@@ -130,17 +135,17 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'short': &lt;StringCol b4a831ecL short&gt;, 'name': &lt;StringCol b45027ecL name&gt;, 'fkeybID': &lt;ForeignKey b4a8352cL fkeyb&gt;, 'number': &lt;IntCol b4a83bccL number&gt;, 'blobcol': &lt;BLOBCol b4a8376cL blobcol&gt;, 'time': &lt;DateTimeCol b4a838ccL time&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'short': &lt;StringCol b55a2bacL short&gt;, 'so_time': &lt;DateTimeCol b4f67d6cL so_time&gt;, 'fkeybID': &lt;ForeignKey b4eb248cL fkeyb&gt;, 'number': &lt;IntCol b59ae2ecL number&gt;, 'blobcol': &lt;BLOBCol b55a2d6cL blobcol&gt;, 'name': &lt;StringCol b545fe0cL name&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columnList">
-<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol name&gt;, &lt;SOIntCol number&gt;, &lt;SODateTimeCol time&gt;, &lt;SOStringCol short&gt;, &lt;SOBLOBCol blobcol&gt;, &lt;SOForeignKey fkeybID connected to SOTestCyclicReferenceB&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol name&gt;, &lt;SOIntCol number&gt;, &lt;SODateTimeCol so_time&gt;, &lt;SOStringCol short&gt;, &lt;SOBLOBCol blobcol&gt;, &lt;SOForeignKey fkeybID connected to SOTestCyclicReferenceB&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columns">
-<code class="descname">columns</code><em class="property"> = {'short': &lt;SOStringCol short&gt;, 'name': &lt;SOStringCol name&gt;, 'fkeybID': &lt;SOForeignKey fkeybID connected to SOTestCyclicReferenceB&gt;, 'number': &lt;SOIntCol number&gt;, 'blobcol': &lt;SOBLOBCol blobcol&gt;, 'time': &lt;SODateTimeCol time&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columns</code><em class="property"> = {'short': &lt;SOStringCol short&gt;, 'so_time': &lt;SODateTimeCol so_time&gt;, 'fkeybID': &lt;SOForeignKey fkeybID connected to SOTestCyclicReferenceB&gt;, 'number': &lt;SOIntCol number&gt;, 'blobcol': &lt;SOBLOBCol blobcol&gt;, 'name': &lt;SOStringCol name&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -185,11 +190,6 @@
 <dd></dd></dl>
 
 </dd></dl>
-
-<dl class="attribute">
-<dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.time">
-<code class="descclassname">SOTestCyclicReferenceA.</code><code class="descname">time</code><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceA.time" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -237,6 +237,11 @@
 <code class="descname">short</code><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.short" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.so_time">
+<code class="descname">so_time</code><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.so_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="class">
 <dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta">
 <em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_cyclic_reference.html#SOTestCyclicReferenceB.sqlmeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta" title="Permalink to this definition">¶</a></dt>
@@ -248,17 +253,17 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'fkeyaID': &lt;ForeignKey b662bbecL fkeya&gt;, 'short': &lt;StringCol b662bc0cL short&gt;, 'name': &lt;StringCol b455c2ecL name&gt;, 'number': &lt;IntCol b44be04cL number&gt;, 'blobcol': &lt;BLOBCol b662b90cL blobcol&gt;, 'time': &lt;DateTimeCol b44be26cL time&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'fkeyaID': &lt;ForeignKey b54ef7ecL fkeya&gt;, 'short': &lt;StringCol b543fc8cL short&gt;, 'so_time': &lt;DateTimeCol b6523c0cL so_time&gt;, 'number': &lt;IntCol b54f9fccL number&gt;, 'blobcol': &lt;BLOBCol b54ef86cL blobcol&gt;, 'name': &lt;StringCol b589054cL name&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columnList">
-<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol name&gt;, &lt;SOIntCol number&gt;, &lt;SODateTimeCol time&gt;, &lt;SOStringCol short&gt;, &lt;SOBLOBCol blobcol&gt;, &lt;SOForeignKey fkeyaID connected to SOTestCyclicReferenceA&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol name&gt;, &lt;SOIntCol number&gt;, &lt;SODateTimeCol so_time&gt;, &lt;SOStringCol short&gt;, &lt;SOBLOBCol blobcol&gt;, &lt;SOForeignKey fkeyaID connected to SOTestCyclicReferenceA&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columns">
-<code class="descname">columns</code><em class="property"> = {'fkeyaID': &lt;SOForeignKey fkeyaID connected to SOTestCyclicReferenceA&gt;, 'short': &lt;SOStringCol short&gt;, 'name': &lt;SOStringCol name&gt;, 'number': &lt;SOIntCol number&gt;, 'blobcol': &lt;SOBLOBCol blobcol&gt;, 'time': &lt;SODateTimeCol time&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columns</code><em class="property"> = {'fkeyaID': &lt;SOForeignKey fkeyaID connected to SOTestCyclicReferenceA&gt;, 'short': &lt;SOStringCol short&gt;, 'so_time': &lt;SODateTimeCol so_time&gt;, 'number': &lt;SOIntCol number&gt;, 'blobcol': &lt;SOBLOBCol blobcol&gt;, 'name': &lt;SOStringCol name&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -303,11 +308,6 @@
 <dd></dd></dl>
 
 </dd></dl>
-
-<dl class="attribute">
-<dt id="sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.time">
-<code class="descclassname">SOTestCyclicReferenceB.</code><code class="descname">time</code><a class="headerlink" href="#sqlobject.tests.test_cyclic_reference.SOTestCyclicReferenceB.time" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 

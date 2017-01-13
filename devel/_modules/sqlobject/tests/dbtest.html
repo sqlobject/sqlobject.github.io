@@ -103,16 +103,17 @@
 <span class="sd">            pytest.skip(&quot;Doesn&#39;t support featureX&quot;)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="n">supportsMatrix</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;+exceptions&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql postgres sqlite&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;-transactions&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql rdbhost&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;-dropTableCascade&#39;</span><span class="p">:</span> <span class="s1">&#39;sybase mssql mysql&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;-expressionIndex&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql sqlite firebird mssql&#39;</span><span class="p">,</span>
     <span class="s1">&#39;-blobData&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql rdbhost&#39;</span><span class="p">,</span>
     <span class="s1">&#39;-decimalColumn&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-dropTableCascade&#39;</span><span class="p">:</span> <span class="s1">&#39;sybase mssql mysql&#39;</span><span class="p">,</span>
     <span class="s1">&#39;-emptyTable&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;+exceptions&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql postgres sqlite&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-expressionIndex&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql sqlite firebird mssql&#39;</span><span class="p">,</span>
     <span class="s1">&#39;-limitSelect&#39;</span><span class="p">:</span> <span class="s1">&#39;mssql&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;+schema&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres&#39;</span><span class="p">,</span>
     <span class="s1">&#39;+memorydb&#39;</span><span class="p">:</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;+rlike&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql postgres sqlite&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;+schema&#39;</span><span class="p">:</span> <span class="s1">&#39;postgres&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-transactions&#39;</span><span class="p">:</span> <span class="s1">&#39;mysql rdbhost&#39;</span><span class="p">,</span>
 <span class="p">}</span>
 
 

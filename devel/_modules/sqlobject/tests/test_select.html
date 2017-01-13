@@ -248,6 +248,9 @@
 
 
 <div class="viewcode-block" id="test_select_RLIKE"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_select_RLIKE">[docs]</a><span class="k">def</span> <span class="nf">test_select_RLIKE</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;rlike&#39;</span><span class="p">):</span>
+        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;rlike isn&#39;t supported&quot;</span><span class="p">)</span>
+
     <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">IterTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>

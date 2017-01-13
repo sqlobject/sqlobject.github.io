@@ -94,7 +94,7 @@
 
 
 <div class="viewcode-block" id="HashTest"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.HashTest">[docs]</a><span class="k">class</span> <span class="nc">HashTest</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
-    <span class="n">count</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">alternateID</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">so_count</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">alternateID</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">col1</span> <span class="o">=</span> <span class="n">hashcol</span><span class="o">.</span><span class="n">HashCol</span><span class="p">()</span>
     <span class="n">col2</span> <span class="o">=</span> <span class="n">hashcol</span><span class="o">.</span><span class="n">HashCol</span><span class="p">(</span><span class="n">hashMethod</span><span class="o">=</span><span class="n">sha256_str</span><span class="p">)</span></div>
 
@@ -108,7 +108,7 @@
     <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">HashTest</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HashTest</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">col1</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">col2</span><span class="o">=</span><span class="n">s</span><span class="p">))</span></div>
+        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HashTest</span><span class="p">(</span><span class="n">so_count</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">col1</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">col2</span><span class="o">=</span><span class="n">s</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="test_create"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.test_create">[docs]</a><span class="k">def</span> <span class="nf">test_create</span><span class="p">():</span>
@@ -119,13 +119,13 @@
 
     <span class="n">conn</span> <span class="o">=</span> <span class="n">HashTest</span><span class="o">.</span><span class="n">_connection</span>
     <span class="n">rows</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    SELECT count, col1, col2</span>
+<span class="s2">    SELECT so_count, col1, col2</span>
 <span class="s2">    FROM hash_test</span>
-<span class="s2">    ORDER BY count</span>
+<span class="s2">    ORDER BY so_count</span>
 <span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">md5_str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">count</span><span class="p">])</span> <span class="o">==</span> <span class="n">col1</span>
-        <span class="k">assert</span> <span class="n">sha256_str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">count</span><span class="p">])</span> <span class="o">==</span> <span class="n">col2</span></div>
+    <span class="k">for</span> <span class="n">so_count</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">md5_str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">so_count</span><span class="p">])</span> <span class="o">==</span> <span class="n">col1</span>
+        <span class="k">assert</span> <span class="n">sha256_str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">so_count</span><span class="p">])</span> <span class="o">==</span> <span class="n">col2</span></div>
 
 
 <div class="viewcode-block" id="test_select"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.test_select">[docs]</a><span class="k">def</span> <span class="nf">test_select</span><span class="p">():</span>

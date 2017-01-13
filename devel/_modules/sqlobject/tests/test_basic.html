@@ -391,13 +391,13 @@
 
 <div class="viewcode-block" id="SOTestSO12"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_basic.html#sqlobject.tests.test_basic.SOTestSO12">[docs]</a><span class="k">class</span> <span class="nc">SOTestSO12</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">defaultSQL</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">)</span></div>
+    <span class="n">so_value</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">defaultSQL</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_defaultSQL"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_basic.html#sqlobject.tests.test_basic.test_defaultSQL">[docs]</a><span class="k">def</span> <span class="nf">test_defaultSQL</span><span class="p">():</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSO12</span><span class="p">)</span>
     <span class="n">test</span> <span class="o">=</span> <span class="n">SOTestSO12</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="mi">1</span></div>
+    <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">so_value</span> <span class="o">==</span> <span class="mi">1</span></div>
 
 
 <div class="viewcode-block" id="test_connection_override"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_basic.html#sqlobject.tests.test_basic.test_connection_override">[docs]</a><span class="k">def</span> <span class="nf">test_connection_override</span><span class="p">():</span>

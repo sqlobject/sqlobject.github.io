@@ -72,6 +72,7 @@
   <h1>Source code for sqlobject.postgres.pgconnection</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">getpass</span> <span class="k">import</span> <span class="n">getuser</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">col</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">dberrors</span>
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">sqlbuilder</span>
@@ -146,8 +147,8 @@
             <span class="c1"># Register a converter for psycopg Binary type.</span>
             <span class="n">registerConverter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)),</span>
                               <span class="n">PsycoBinaryConverter</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pygresql&#39;</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">:</span>
-            <span class="c1"># Register a converter for pygresql Binary type.</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">PostgresBinaryConverter</span><span class="p">)):</span>
+            <span class="c1"># Register a converter for Binary type.</span>
             <span class="n">registerConverter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;&#39;</span><span class="p">)),</span>
                               <span class="n">PostgresBinaryConverter</span><span class="p">)</span>
 
@@ -213,18 +214,12 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="s2">&quot;unix&quot;</span> <span class="ow">in</span> <span class="n">dsn_dict</span><span class="p">:</span>
                     <span class="k">del</span> <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix&quot;</span><span class="p">]</span>
-            <span class="c1"># Register a converter for bytes</span>
-            <span class="n">registerConverter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;&#39;</span><span class="p">)),</span>
-                              <span class="n">PostgresBinaryConverter</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pg8000&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">host</span> <span class="ow">and</span> <span class="n">host</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
                 <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;unix_sock&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">host</span>
             <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">dsn_dict</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getuser</span><span class="p">()</span>
-            <span class="c1"># Register a converter for pg8000 Bytea type.</span>
-            <span class="n">registerConverter</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Binary</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;&#39;</span><span class="p">)),</span>
-                              <span class="n">PostgresBinaryConverter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dsn</span> <span class="o">=</span> <span class="n">dsn</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unicodeCols</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;unicodeCols&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
@@ -259,6 +254,11 @@
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">OperationalError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">(</span>
                 <span class="n">ErrorMessage</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;used connection string </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">dsn</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pg8000&#39;</span> <span class="ow">and</span> \
+                <span class="s1">&#39;sqlobject.tests.dbtest&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span> <span class="ow">and</span> \
+                <span class="nb">hasattr</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="s1">&#39;set_cache_size&#39;</span><span class="p">):</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">set_cache_size</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># rows</span>
 
         <span class="c1"># For printDebug in _executeRetry</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connectionNumbers</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">conn</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connectionCount</span>

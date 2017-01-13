@@ -90,7 +90,7 @@
 
 <div class="viewcode-block" id="EmployeeAD"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_asdict.html#sqlobject.inheritance.tests.test_asdict.EmployeeAD">[docs]</a><span class="k">class</span> <span class="nc">EmployeeAD</span><span class="p">(</span><span class="n">InheritablePersonAD</span><span class="p">):</span>
     <span class="n">_inheritable</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">position</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
+    <span class="n">so_position</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="test_getColumns"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_asdict.html#sqlobject.inheritance.tests.test_asdict.test_getColumns">[docs]</a><span class="k">def</span> <span class="nf">test_getColumns</span><span class="p">():</span>
@@ -99,7 +99,7 @@
     <span class="k">for</span> <span class="n">klass</span><span class="p">,</span> <span class="n">columns</span> <span class="ow">in</span> <span class="p">(</span>
             <span class="p">(</span><span class="n">InheritablePersonAD</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;firstName&#39;</span><span class="p">,</span> <span class="s1">&#39;lastName&#39;</span><span class="p">]),</span>
             <span class="p">(</span><span class="n">ManagerAD</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;department&#39;</span><span class="p">,</span> <span class="s1">&#39;firstName&#39;</span><span class="p">,</span> <span class="s1">&#39;lastName&#39;</span><span class="p">]),</span>
-            <span class="p">(</span><span class="n">EmployeeAD</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;firstName&#39;</span><span class="p">,</span> <span class="s1">&#39;lastName&#39;</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">])):</span>
+            <span class="p">(</span><span class="n">EmployeeAD</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;firstName&#39;</span><span class="p">,</span> <span class="s1">&#39;lastName&#39;</span><span class="p">,</span> <span class="s1">&#39;so_position&#39;</span><span class="p">])):</span>
         <span class="n">_columns</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">klass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">getColumns</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="k">assert</span> <span class="n">_columns</span> <span class="o">==</span> <span class="n">columns</span></div>
 
@@ -109,7 +109,7 @@
     <span class="n">InheritablePersonAD</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Oneof&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Authors&#39;</span><span class="p">)</span>
     <span class="n">ManagerAD</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;ManagerAD&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;The&#39;</span><span class="p">,</span> <span class="n">department</span><span class="o">=</span><span class="s1">&#39;Dep&#39;</span><span class="p">)</span>
     <span class="n">EmployeeAD</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Project&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Leader&#39;</span><span class="p">,</span>
-               <span class="n">position</span><span class="o">=</span><span class="s1">&#39;Project leader&#39;</span><span class="p">)</span>
+               <span class="n">so_position</span><span class="o">=</span><span class="s1">&#39;Project leader&#39;</span><span class="p">)</span>
 
     <span class="k">assert</span> <span class="n">InheritablePersonAD</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">asDict</span><span class="p">()</span> <span class="o">==</span> \
         <span class="nb">dict</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Oneof&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Authors&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -117,7 +117,7 @@
         <span class="nb">dict</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;ManagerAD&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;The&#39;</span><span class="p">,</span> <span class="n">department</span><span class="o">=</span><span class="s1">&#39;Dep&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">InheritablePersonAD</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">asDict</span><span class="p">()</span> <span class="o">==</span> \
         <span class="nb">dict</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Project&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Leader&#39;</span><span class="p">,</span>
-             <span class="n">position</span><span class="o">=</span><span class="s1">&#39;Project leader&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div>
+             <span class="n">so_position</span><span class="o">=</span><span class="s1">&#39;Project leader&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

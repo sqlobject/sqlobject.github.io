@@ -80,8 +80,8 @@
 <em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_deep_inheritance.</code><code class="descname">DIEmployee</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_deep_inheritance.html#DIEmployee"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIPerson" title="sqlobject.inheritance.tests.test_deep_inheritance.DIPerson"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.tests.test_deep_inheritance.DIPerson</span></code></a></p>
 <dl class="classmethod">
-<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.byPosition">
-<em class="property">classmethod </em><code class="descname">byPosition</code><span class="sig-paren">(</span><em>val</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.byPosition" title="Permalink to this definition">¶</a></dt>
+<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.bySo_position">
+<em class="property">classmethod </em><code class="descname">bySo_position</code><span class="sig-paren">(</span><em>val</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.bySo_position" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -110,13 +110,13 @@
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.position">
-<code class="descname">position</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.position" title="Permalink to this definition">¶</a></dt>
+<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.q">
+<code class="descname">q</code><em class="property"> = di_employee</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.q" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.q">
-<code class="descname">q</code><em class="property"> = di_employee</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.q" title="Permalink to this definition">¶</a></dt>
+<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.so_position">
+<code class="descname">so_position</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.so_position" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
@@ -135,17 +135,17 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'position': &lt;StringCol b5599f8cL position&gt;, 'childName': &lt;StringCol b57a036cL childName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'childName': &lt;StringCol b54a3b4cL childName&gt;, 'so_position': &lt;StringCol b54aac4cL so_position&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columnList">
-<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol position&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol so_position&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columns">
-<code class="descname">columns</code><em class="property"> = {'position': &lt;SOStringCol position&gt;, 'childName': &lt;SOStringCol childName default=None&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columns</code><em class="property"> = {'childName': &lt;SOStringCol childName default=None&gt;, 'so_position': &lt;SOStringCol so_position&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -204,13 +204,13 @@
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIManager.position">
-<code class="descname">position</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIManager.position" title="Permalink to this definition">¶</a></dt>
+<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIManager.q">
+<code class="descname">q</code><em class="property"> = di_manager</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIManager.q" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIManager.q">
-<code class="descname">q</code><em class="property"> = di_manager</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIManager.q" title="Permalink to this definition">¶</a></dt>
+<dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIManager.so_position">
+<code class="descname">so_position</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIManager.so_position" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
@@ -229,7 +229,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIManager.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'childName': &lt;StringCol b5720e6cL childName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIManager.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'childName': &lt;StringCol b5498cccL childName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIManager.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -348,7 +348,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_deep_inheritance.DIPerson.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'lastName': &lt;StringCol b64eb96cL lastName&gt;, 'childName': &lt;StringCol b56c4b6cL childName&gt;, 'firstName': &lt;StringCol b623c8ecL firstName&gt;, 'managerID': &lt;ForeignKey b623cbacL manager&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIPerson.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'lastName': &lt;StringCol b554d96cL lastName&gt;, 'childName': &lt;StringCol b545ca4cL childName&gt;, 'firstName': &lt;StringCol b549cdecL firstName&gt;, 'managerID': &lt;ForeignKey b543728cL manager&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_deep_inheritance.DIPerson.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
