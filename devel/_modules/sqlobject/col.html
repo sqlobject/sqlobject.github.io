@@ -971,6 +971,10 @@
 
     <span class="k">def</span> <span class="nf">_mssqlType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;INT NULL&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">key_type</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idType</span><span class="p">()]</span>
+
+    <span class="k">def</span> <span class="nf">_firebirdType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;VARCHAR(255)&quot;</span><span class="p">}</span>
         <span class="k">return</span> <span class="n">key_type</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idType</span><span class="p">()]</span></div>
 
 

@@ -20,9 +20,9 @@ Minor features
 * Remove ``driver`` keyword from RdbhostConnection as it allows one driver
   ``rdbhdb``.
 
-* Add ``driver`` keyword for FirebirdConnection. Allowed values are 'fdb'
-  or 'kinterbasdb'. Default is to test 'fdb' and 'kinterbasdb' in that
-  order. pyfirebirdsql is supported but untested.
+* Add ``driver`` keyword for FirebirdConnection. Allowed values are 'fdb',
+  'kinterbasdb' or 'firebirdsql'. Default is to test 'fdb', 'kinterbasdb' and
+  'firebirdsql' in that order.
 
 * Add ``driver`` keyword for MySQLConnection. Allowed value are 'mysqldb',
   'connector', 'oursql' and 'pymysql'. Default is to test for mysqldb only.
@@ -77,7 +77,7 @@ Tests
 * Drop ``Circle CI``.
 
 * Run at Travis CI tests with Firebird backend (server version 2.5; drivers fdb
-  and firebirdsql). There are problems with tests.
+  and firebirdsql). There are some problems with tests.
 
 * Add AppVeyor for windows testing. Run tests with Postgres and MS SQL. There
   are problems with MS SQL.

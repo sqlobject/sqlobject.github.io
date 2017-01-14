@@ -79,6 +79,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pytest</span> <span class="k">import</span> <span class="n">raises</span><span class="p">,</span> <span class="n">skip</span>
 <span class="kn">import</span> <span class="nn">sqlobject</span>
+<span class="kn">from</span> <span class="nn">sqlobject.col</span> <span class="k">import</span> <span class="n">use_microseconds</span>
 <span class="kn">import</span> <span class="nn">sqlobject.conftest</span> <span class="k">as</span> <span class="nn">conftest</span>
 
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;win&quot;</span><span class="p">:</span>
@@ -189,6 +190,9 @@
     <span class="c1"># The module was imported during documentation building</span>
     <span class="k">if</span> <span class="s1">&#39;sphinx&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not open database: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s1">&#39;firebird&#39;</span><span class="p">:</span>
+        <span class="n">use_microseconds</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">InstalledTestDatabase</span><span class="p">(</span><span class="n">sqlobject</span><span class="o">.</span><span class="n">SQLObject</span><span class="p">):</span>

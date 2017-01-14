@@ -151,19 +151,19 @@
     <span class="k">assert</span> <span class="n">employee</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span></div>
 
 
-<div class="viewcode-block" id="SOTestInheritableBase"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_foreignKey.html#sqlobject.inheritance.tests.test_foreignKey.SOTestInheritableBase">[docs]</a><span class="k">class</span> <span class="nc">SOTestInheritableBase</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
+<div class="viewcode-block" id="SOTestInhBase"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_foreignKey.html#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase">[docs]</a><span class="k">class</span> <span class="nc">SOTestInhBase</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="SOTestInheritableForeignKey"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_foreignKey.html#sqlobject.inheritance.tests.test_foreignKey.SOTestInheritableForeignKey">[docs]</a><span class="k">class</span> <span class="nc">SOTestInheritableForeignKey</span><span class="p">(</span><span class="n">SOTestInheritableBase</span><span class="p">):</span>
-    <span class="n">base</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;SOTestInheritableBase&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="SOTestInhFKey"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_foreignKey.html#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey">[docs]</a><span class="k">class</span> <span class="nc">SOTestInhFKey</span><span class="p">(</span><span class="n">SOTestInhBase</span><span class="p">):</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;SOTestInhBase&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_foreignKey2"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_foreignKey.html#sqlobject.inheritance.tests.test_foreignKey.test_foreignKey2">[docs]</a><span class="k">def</span> <span class="nf">test_foreignKey2</span><span class="p">():</span>
-    <span class="n">setupClass</span><span class="p">([</span><span class="n">SOTestInheritableBase</span><span class="p">,</span> <span class="n">SOTestInheritableForeignKey</span><span class="p">])</span>
+    <span class="n">setupClass</span><span class="p">([</span><span class="n">SOTestInhBase</span><span class="p">,</span> <span class="n">SOTestInhFKey</span><span class="p">])</span>
 
-    <span class="n">test</span> <span class="o">=</span> <span class="n">SOTestInheritableBase</span><span class="p">()</span>
-    <span class="n">SOTestInheritableForeignKey</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="n">test</span><span class="p">)</span></div>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">SOTestInhBase</span><span class="p">()</span>
+    <span class="n">SOTestInhFKey</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="n">test</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
