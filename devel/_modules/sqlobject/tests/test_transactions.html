@@ -79,6 +79,16 @@
 <span class="c1">########################################</span>
 
 
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">support_transactions</span> <span class="o">=</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;transactions&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="c1"># The module was imported during documentation building</span>
+    <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">support_transactions</span><span class="p">:</span>
+        <span class="n">pytestmark</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="SOTestSOTrans"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.SOTestSOTrans">[docs]</a><span class="k">class</span> <span class="nc">SOTestSOTrans</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
         <span class="n">defaultOrder</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
@@ -86,8 +96,6 @@
 
 
 <div class="viewcode-block" id="test_transaction"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.test_transaction">[docs]</a><span class="k">def</span> <span class="nf">test_transaction</span><span class="p">():</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;transactions&#39;</span><span class="p">):</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Transactions aren&#39;t supported&quot;</span><span class="p">)</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSOTrans</span><span class="p">)</span>
     <span class="n">SOTestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">)</span>
     <span class="n">SOTestSOTrans</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tim&#39;</span><span class="p">)</span>
@@ -112,8 +120,6 @@
 
 
 <div class="viewcode-block" id="test_transaction_commit_sync"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.test_transaction_commit_sync">[docs]</a><span class="k">def</span> <span class="nf">test_transaction_commit_sync</span><span class="p">():</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;transactions&#39;</span><span class="p">):</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Transactions aren&#39;t supported&quot;</span><span class="p">)</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSOTrans</span><span class="p">)</span>
     <span class="n">trans</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">transaction</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
@@ -129,8 +135,6 @@
 
 
 <div class="viewcode-block" id="test_transaction_delete"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_transactions.html#sqlobject.tests.test_transactions.test_transaction_delete">[docs]</a><span class="k">def</span> <span class="nf">test_transaction_delete</span><span class="p">(</span><span class="n">close</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;transactions&#39;</span><span class="p">):</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Transactions aren&#39;t supported&quot;</span><span class="p">)</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSOTrans</span><span class="p">)</span>
     <span class="n">connection</span> <span class="o">=</span> <span class="n">SOTestSOTrans</span><span class="o">.</span><span class="n">_connection</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">connection</span><span class="o">.</span><span class="n">_memory</span><span class="p">:</span>

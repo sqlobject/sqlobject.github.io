@@ -611,8 +611,6 @@
     <span class="k">def</span> <span class="nf">_sybaseType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_case_sensitive</span><span class="p">(</span><span class="s2">&quot;SYBASE&quot;</span><span class="p">)</span>
         <span class="nb">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sqlType</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">notNone</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">alternateID</span><span class="p">:</span>
-            <span class="nb">type</span> <span class="o">+=</span> <span class="s1">&#39; NULL&#39;</span>
         <span class="k">return</span> <span class="nb">type</span>
 
     <span class="k">def</span> <span class="nf">_mssqlType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -627,8 +625,6 @@
             <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;VARCHAR(</span><span class="si">%i</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;CHAR(</span><span class="si">%i</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">notNone</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">alternateID</span><span class="p">:</span>
-            <span class="nb">type</span> <span class="o">+=</span> <span class="s1">&#39; NULL&#39;</span>
         <span class="k">return</span> <span class="nb">type</span>
 
     <span class="k">def</span> <span class="nf">_firebirdType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -698,7 +694,6 @@
 
 <span class="k">class</span> <span class="nc">NQuoted</span><span class="p">(</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLExpression</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">unicode_type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -739,6 +734,8 @@
                 <span class="k">pass</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s1">&#39;mssql&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDbEncoding</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
                     <span class="k">return</span> <span class="n">NQuoted</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDbEncoding</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;__unicode__&#39;</span><span class="p">):</span>
@@ -966,11 +963,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_type</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idType</span><span class="p">()]</span>
 
     <span class="k">def</span> <span class="nf">_sybaseType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;NUMERIC(18,0) NULL&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span><span class="p">}</span>
+        <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;NUMERIC(18,0)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span><span class="p">}</span>
         <span class="k">return</span> <span class="n">key_type</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idType</span><span class="p">()]</span>
 
     <span class="k">def</span> <span class="nf">_mssqlType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;INT NULL&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span><span class="p">}</span>
+        <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span><span class="p">}</span>
         <span class="k">return</span> <span class="n">key_type</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_idType</span><span class="p">()]</span>
 
     <span class="k">def</span> <span class="nf">_firebirdType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

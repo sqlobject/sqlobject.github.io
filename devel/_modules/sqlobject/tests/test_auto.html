@@ -74,6 +74,7 @@
 
 <span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">KeyCol</span><span class="p">,</span> <span class="n">MultipleJoin</span><span class="p">,</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span><span class="p">,</span> \
     <span class="n">classregistry</span><span class="p">,</span> <span class="n">sqlmeta</span>
+<span class="kn">from</span> <span class="nn">sqlobject.col</span> <span class="k">import</span> <span class="n">use_microseconds</span>
 <span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">getConnection</span><span class="p">,</span> <span class="n">setupClass</span>
 
 
@@ -261,7 +262,10 @@
         <span class="n">dbName</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dbName</span>
         <span class="n">dropper</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dbName</span> <span class="o">+</span> <span class="s1">&#39;Drop&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">dropper</span><span class="p">:</span>
-            <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">dropper</span><span class="p">)</span></div>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">dropper</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>  <span class="c1"># Perhaps we don&#39;t have DROP permission</span>
+                <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="TestAuto.test_classCreate"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_auto.html#sqlobject.tests.test_auto.TestAuto.test_classCreate">[docs]</a>    <span class="k">def</span> <span class="nf">test_classCreate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">class</span> <span class="nc">AutoTest</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
@@ -270,6 +274,8 @@
             <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">(</span><span class="n">sqlmeta</span><span class="p">):</span>
                 <span class="n">idName</span> <span class="o">=</span> <span class="s1">&#39;auto_id&#39;</span>
                 <span class="n">fromDatabase</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">AutoTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s1">&#39;mssql&#39;</span><span class="p">:</span>
+            <span class="n">use_microseconds</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">john</span> <span class="o">=</span> <span class="n">AutoTest</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;john&#39;</span><span class="p">,</span>
                         <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;doe&#39;</span><span class="p">,</span>
                         <span class="n">age</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
@@ -291,7 +297,9 @@
 
         <span class="n">columns</span> <span class="o">=</span> <span class="n">AutoTest</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span>
         <span class="k">assert</span> <span class="n">columns</span><span class="p">[</span><span class="s2">&quot;lastName&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s2">&quot;last_name&quot;</span>
-        <span class="k">assert</span> <span class="n">columns</span><span class="p">[</span><span class="s2">&quot;wannahavefun&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s2">&quot;wannahavefun&quot;</span></div></div>
+        <span class="k">assert</span> <span class="n">columns</span><span class="p">[</span><span class="s2">&quot;wannahavefun&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s2">&quot;wannahavefun&quot;</span>
+        <span class="k">if</span> <span class="n">AutoTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">==</span> <span class="s1">&#39;mssql&#39;</span><span class="p">:</span>
+            <span class="n">use_microseconds</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
