@@ -78,6 +78,16 @@
 <span class="kn">from</span> <span class="nn">.test_basic</span> <span class="k">import</span> <span class="n">SOTestSO1</span>
 
 
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">NameError</span><span class="p">):</span>
+    <span class="c1"># The module was imported during documentation building</span>
+    <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>
+        <span class="n">pytestmark</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="SQLiteFactoryTest"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlite.html#sqlobject.tests.test_sqlite.SQLiteFactoryTest">[docs]</a><span class="k">class</span> <span class="nc">SQLiteFactoryTest</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
 
@@ -85,8 +95,6 @@
 <div class="viewcode-block" id="test_sqlite_factory"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlite.html#sqlobject.tests.test_sqlite.test_sqlite_factory">[docs]</a><span class="k">def</span> <span class="nf">test_sqlite_factory</span><span class="p">():</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SQLiteFactoryTest</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">SQLiteFactoryTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">SQLiteFactoryTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">using_sqlite2</span><span class="p">:</span>
         <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite v2+&quot;</span><span class="p">)</span>
 
@@ -108,8 +116,6 @@
 <div class="viewcode-block" id="test_sqlite_factory_str"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlite.html#sqlobject.tests.test_sqlite.test_sqlite_factory_str">[docs]</a><span class="k">def</span> <span class="nf">test_sqlite_factory_str</span><span class="p">():</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SQLiteFactoryTest</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">SQLiteFactoryTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">SQLiteFactoryTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">using_sqlite2</span><span class="p">:</span>
         <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite v2+&quot;</span><span class="p">)</span>
 
@@ -135,8 +141,6 @@
 <div class="viewcode-block" id="test_sqlite_aggregate"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlite.html#sqlobject.tests.test_sqlite.test_sqlite_aggregate">[docs]</a><span class="k">def</span> <span class="nf">test_sqlite_aggregate</span><span class="p">():</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SQLiteFactoryTest</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">SQLiteFactoryTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">SQLiteFactoryTest</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">using_sqlite2</span><span class="p">:</span>
         <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite v2+&quot;</span><span class="p">)</span>
 
@@ -196,9 +200,6 @@
 <div class="viewcode-block" id="test_memorydb"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlite.html#sqlobject.tests.test_sqlite.test_memorydb">[docs]</a><span class="k">def</span> <span class="nf">test_memorydb</span><span class="p">():</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s2">&quot;memorydb&quot;</span><span class="p">):</span>
         <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;memorydb isn&#39;t supported&quot;</span><span class="p">)</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">connection</span><span class="o">.</span><span class="n">_memory</span><span class="p">:</span>
         <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;The connection isn&#39;t memorydb&quot;</span><span class="p">)</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSO1</span><span class="p">)</span>
@@ -208,16 +209,10 @@
 
 
 <div class="viewcode-block" id="test_list_databases"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlite.html#sqlobject.tests.test_sqlite.test_list_databases">[docs]</a><span class="k">def</span> <span class="nf">test_list_databases</span><span class="p">():</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">connection</span><span class="o">.</span><span class="n">listDatabases</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="test_list_tables"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_sqlite.html#sqlobject.tests.test_sqlite.test_list_tables">[docs]</a><span class="k">def</span> <span class="nf">test_list_tables</span><span class="p">():</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">dbName</span> <span class="o">!=</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">:</span>
-        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;These tests require SQLite&quot;</span><span class="p">)</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">SOTestSO1</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">SOTestSO1</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span> <span class="ow">in</span> <span class="n">connection</span><span class="o">.</span><span class="n">listTables</span><span class="p">()</span></div>
 </pre></div>
