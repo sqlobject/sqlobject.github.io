@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
-    <link rel="up" title="sqlobject.mssql" href="../mssql.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -109,7 +108,7 @@
                 <span class="s1">&#39;Cannot find an MSSQL driver, tried </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">drivers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">sqlmodule</span>
 
-        <span class="k">if</span> <span class="n">sqlmodule</span><span class="o">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;adodbapi&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">sqlmodule</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;adodbapi&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dbconnection</span> <span class="o">=</span> <span class="n">sqlmodule</span><span class="o">.</span><span class="n">connect</span>
             <span class="c1"># ADO uses unicode only (AFAIK)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">usingUnicodeStrings</span> <span class="o">=</span> <span class="kc">True</span>
@@ -171,12 +170,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_server_version</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_max_types</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_microseconds</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">DBAPI</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">DBAPI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_connectionFromParams</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_connectionFromParams</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
                    <span class="n">host</span><span class="o">=</span><span class="n">host</span> <span class="ow">or</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MSSQLConnection.insert_id"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.insert_id">[docs]</a>    <span class="k">def</span> <span class="nf">insert_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
@@ -259,11 +258,11 @@
         <span class="k">return</span> <span class="nb">id</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_queryAddLimitOffset</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_queryAddLimitOffset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">end</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">start</span><span class="p">:</span>
             <span class="n">limit_str</span> <span class="o">=</span> <span class="s2">&quot;SELECT TOP </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">end</span>
 
-            <span class="n">match</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">limit_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">limit_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">match</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">limit_str</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
         <span class="k">else</span><span class="p">:</span>
@@ -467,7 +466,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

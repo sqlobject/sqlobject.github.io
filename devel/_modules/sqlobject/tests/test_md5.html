@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -78,10 +77,10 @@
 
 
 <div class="viewcode-block" id="test_md5"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_md5.html#sqlobject.tests.test_md5.test_md5">[docs]</a><span class="k">def</span> <span class="nf">test_md5</span><span class="p">():</span>
-    <span class="k">assert</span> <span class="n">md5</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;d41d8cd98f00b204e9800998ecf8427e&#39;</span>
-    <span class="k">assert</span> <span class="n">md5</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;68b329da9893e34099c7d8ad5cb9c940&#39;</span>
-    <span class="k">assert</span> <span class="n">md5</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;123&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;202cb962ac59075b964b07152d234b70&#39;</span>
-    <span class="k">assert</span> <span class="n">md5</span><span class="p">(</span><span class="n">b</span><span class="s1">&#39;123</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;ba1f2511fc30423bdbb183fe33f3dd0f&#39;</span></div>
+    <span class="k">assert</span> <span class="n">md5</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;d41d8cd98f00b204e9800998ecf8427e&#39;</span>
+    <span class="k">assert</span> <span class="n">md5</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;68b329da9893e34099c7d8ad5cb9c940&#39;</span>
+    <span class="k">assert</span> <span class="n">md5</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;123&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;202cb962ac59075b964b07152d234b70&#39;</span>
+    <span class="k">assert</span> <span class="n">md5</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;123</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;ba1f2511fc30423bdbb183fe33f3dd0f&#39;</span></div>
 </pre></div>
 
           </div>
@@ -104,7 +103,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

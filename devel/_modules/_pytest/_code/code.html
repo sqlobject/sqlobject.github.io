@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -101,7 +100,7 @@
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">raw</span>
 
-    <span class="n">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="fm">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span>
@@ -337,9 +336,9 @@
                 <span class="k">while</span> <span class="n">cur</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">excinfo</span><span class="o">=</span><span class="n">excinfo</span><span class="p">)</span>
                     <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">tb_next</span>
-            <span class="nb">list</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">tb</span><span class="p">))</span>
+            <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">tb</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">list</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tb</span><span class="p">)</span>
+            <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tb</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">firstlineno</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">excludepath</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; return a Traceback instance wrapping part of this Traceback</span>
@@ -363,9 +362,9 @@
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="n">val</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Traceback</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Traceback</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">))):</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">val</span>
 
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">ishidden</span><span class="p">()):</span>
@@ -441,7 +440,7 @@
         <span class="c1">#: the exception raw traceback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tb</span> <span class="o">=</span> <span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="c1">#: the exception type name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">typename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">typename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="c1">#: the exception traceback (_pytest._code.Traceback instance)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span> <span class="o">=</span> <span class="n">_pytest</span><span class="o">.</span><span class="n">_code</span><span class="o">.</span><span class="n">Traceback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tb</span><span class="p">,</span> <span class="n">excinfo</span><span class="o">=</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
@@ -736,7 +735,7 @@
         <span class="k">return</span> <span class="n">io</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> instance at </span><span class="si">%0x</span><span class="s2">&gt;&quot;</span> <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> instance at </span><span class="si">%0x</span><span class="s2">&gt;&quot;</span> <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
 
 <span class="k">class</span> <span class="nc">ExceptionRepr</span><span class="p">(</span><span class="n">TerminalRepr</span><span class="p">):</span>
@@ -754,7 +753,7 @@
 
 <span class="k">class</span> <span class="nc">ExceptionChainRepr</span><span class="p">(</span><span class="n">ExceptionRepr</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chain</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ExceptionChainRepr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExceptionChainRepr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="n">chain</span>
         <span class="c1"># reprcrash and reprtraceback of the outermost (the newest) exception</span>
         <span class="c1"># in the chain</span>
@@ -772,7 +771,7 @@
 
 <span class="k">class</span> <span class="nc">ReprExceptionInfo</span><span class="p">(</span><span class="n">ExceptionRepr</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reprtraceback</span><span class="p">,</span> <span class="n">reprcrash</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ReprExceptionInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ReprExceptionInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reprtraceback</span> <span class="o">=</span> <span class="n">reprtraceback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reprcrash</span> <span class="o">=</span> <span class="n">reprcrash</span>
 
@@ -905,7 +904,7 @@
 <span class="k">def</span> <span class="nf">getrawcode</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">trycall</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; return code object for given function. &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">__code__</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__code__</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;im_func&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;func_code&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
@@ -913,7 +912,7 @@
         <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__code__&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">trycall</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;co_firstlineno&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__call__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">py</span><span class="o">.</span><span class="n">std</span><span class="o">.</span><span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="n">getrawcode</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">__call__</span><span class="p">,</span> <span class="n">trycall</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">getrawcode</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="fm">__call__</span><span class="p">,</span> <span class="n">trycall</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;co_firstlineno&#39;</span><span class="p">):</span>
                     <span class="k">return</span> <span class="n">x</span>
         <span class="k">return</span> <span class="n">obj</span>
@@ -952,7 +951,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -136,7 +135,7 @@
         <span class="k">return</span> <span class="n">query</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> at </span><span class="si">%x</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2"> at </span><span class="si">%x</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_getConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;connection&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">_connection</span>
@@ -171,7 +170,7 @@
 <div class="viewcode-block" id="SelectResults.clone"><a class="viewcode-back" href="../../api/sqlobject.sresults.html#sqlobject.main.SelectResults.clone">[docs]</a>    <span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">newOps</span><span class="p">):</span>
         <span class="n">ops</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">ops</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">newOps</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">clause</span><span class="p">,</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">clause</span><span class="p">,</span>
                               <span class="bp">self</span><span class="o">.</span><span class="n">clauseTables</span><span class="p">,</span> <span class="o">**</span><span class="n">ops</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SelectResults.orderBy"><a class="viewcode-back" href="../../api/sqlobject.sresults.html#sqlobject.main.SelectResults.orderBy">[docs]</a>    <span class="k">def</span> <span class="nf">orderBy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orderBy</span><span class="p">):</span>
@@ -193,7 +192,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">distinct</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SelectResults.newClause"><a class="viewcode-back" href="../../api/sqlobject.sresults.html#sqlobject.main.SelectResults.newClause">[docs]</a>    <span class="k">def</span> <span class="nf">newClause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_clause</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="p">,</span> <span class="n">new_clause</span><span class="p">,</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="p">,</span> <span class="n">new_clause</span><span class="p">,</span>
                               <span class="bp">self</span><span class="o">.</span><span class="n">clauseTables</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SelectResults.filter"><a class="viewcode-back" href="../../api/sqlobject.sresults.html#sqlobject.main.SelectResults.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_clause</span><span class="p">):</span>
@@ -361,7 +360,7 @@
             <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">NoDefault</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">main</span><span class="o">.</span><span class="n">SQLObjectNotFound</span><span class="p">(</span>
                     <span class="s2">&quot;No results matched the query for </span><span class="si">%s</span><span class="s2">&quot;</span>
-                    <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+                    <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">default</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">main</span><span class="o">.</span><span class="n">SQLObjectIntegrityError</span><span class="p">(</span>
@@ -415,7 +414,7 @@
             <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">ColumnAS</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">colName</span><span class="p">),</span> <span class="n">colName</span><span class="p">)</span>
         <span class="p">])</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">Alias</span><span class="p">(</span><span class="n">query</span><span class="p">,</span>
-                                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+                                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                                             <span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">otherClass</span><span class="p">,</span> <span class="n">otherClass</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">colName</span><span class="p">)</span>
 
@@ -427,7 +426,7 @@
             <span class="p">[</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">ColumnAS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">)])</span><span class="o">.</span>\
             <span class="n">orderBy</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">Alias</span><span class="p">(</span><span class="n">query</span><span class="p">,</span>
-                                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+                                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                                             <span class="n">join</span><span class="o">.</span><span class="n">joinMethodName</span><span class="p">))</span>
         <span class="n">joinColumn</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">otherClass</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">colName</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">otherClass</span><span class="p">,</span> <span class="n">joinColumn</span> <span class="o">==</span> <span class="n">query</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
@@ -440,7 +439,7 @@
             <span class="p">[</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">ColumnAS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">)])</span><span class="o">.</span>\
             <span class="n">orderBy</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">Alias</span><span class="p">(</span><span class="n">query</span><span class="p">,</span>
-                                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+                                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                                             <span class="n">join</span><span class="o">.</span><span class="n">joinMethodName</span><span class="p">))</span>
         <span class="n">clause</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span>
             <span class="n">otherClass</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">intTable</span><span class="p">,</span> <span class="n">join</span><span class="o">.</span><span class="n">otherColumn</span><span class="p">),</span>
@@ -468,7 +467,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -79,16 +78,16 @@
 
 <span class="n">_json_test_data</span> <span class="o">=</span> <span class="p">(</span>
     <span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span>
-    <span class="p">{</span><span class="s2">u&quot;test&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span>
-     <span class="p">{</span><span class="s2">u&quot;unicode&#39;with&#39;apostrophes&quot;</span><span class="p">:</span> <span class="s2">u&quot;unicode</span><span class="se">\&quot;</span><span class="s2">with</span><span class="se">\&quot;</span><span class="s2">quotes&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="sa">u</span><span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span>
+     <span class="p">{</span><span class="sa">u</span><span class="s2">&quot;unicode&#39;with&#39;apostrophes&quot;</span><span class="p">:</span> <span class="sa">u</span><span class="s2">&quot;unicode</span><span class="se">\&quot;</span><span class="s2">with</span><span class="se">\&quot;</span><span class="s2">quotes&quot;</span><span class="p">},</span>
      <span class="p">[],</span>
-     <span class="s2">u&quot;unicode&quot;</span><span class="p">]},</span>
+     <span class="sa">u</span><span class="s2">&quot;unicode&quot;</span><span class="p">]},</span>
     <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span>
      <span class="p">[],</span>
-     <span class="p">{</span><span class="s2">u&quot;unicode&#39;with&#39;apostrophes&quot;</span><span class="p">:</span> <span class="s2">u&quot;unicode</span><span class="se">\&quot;</span><span class="s2">with</span><span class="se">\&quot;</span><span class="s2">quotes&quot;</span><span class="p">},</span>
-     <span class="s2">u&quot;unicode&quot;</span><span class="p">,</span> <span class="s2">u&quot;unicode&#39;with&#39;apostrophes&quot;</span><span class="p">,</span> <span class="s2">u&quot;unicode</span><span class="se">\&quot;</span><span class="s2">with</span><span class="se">\&quot;</span><span class="s2">quotes&quot;</span><span class="p">,</span>
+     <span class="p">{</span><span class="sa">u</span><span class="s2">&quot;unicode&#39;with&#39;apostrophes&quot;</span><span class="p">:</span> <span class="sa">u</span><span class="s2">&quot;unicode</span><span class="se">\&quot;</span><span class="s2">with</span><span class="se">\&quot;</span><span class="s2">quotes&quot;</span><span class="p">},</span>
+     <span class="sa">u</span><span class="s2">&quot;unicode&quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;unicode&#39;with&#39;apostrophes&quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;unicode</span><span class="se">\&quot;</span><span class="s2">with</span><span class="se">\&quot;</span><span class="s2">quotes&quot;</span><span class="p">,</span>
      <span class="p">],</span>
-    <span class="s2">u&quot;unicode&quot;</span><span class="p">,</span> <span class="s2">u&quot;unicode&#39;with&#39;apostrophes&quot;</span><span class="p">,</span> <span class="s2">u&quot;unicode</span><span class="se">\&quot;</span><span class="s2">with</span><span class="se">\&quot;</span><span class="s2">quotes&quot;</span><span class="p">,</span>
+    <span class="sa">u</span><span class="s2">&quot;unicode&quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;unicode&#39;with&#39;apostrophes&quot;</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;unicode</span><span class="se">\&quot;</span><span class="s2">with</span><span class="se">\&quot;</span><span class="s2">quotes&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 
@@ -125,7 +124,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -27,7 +28,6 @@
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -51,7 +51,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/sqlobject.inheritance.tests.test_indexes.txt"
+      <li><a href="../_sources/api/sqlobject.inheritance.tests.test_indexes.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -140,7 +140,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_indexes.InhEmployeeIdxGet.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'security_number': &lt;IntCol b502978cL security_number&gt;, 'childName': &lt;StringCol b4fb692cL childName&gt;, 'experience': &lt;IntCol b50299acL experience&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhEmployeeIdxGet.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'security_number': &lt;IntCol b585bf6cL security_number&gt;, 'childName': &lt;StringCol b4c9aa4cL childName&gt;, 'experience': &lt;IntCol b585be2cL experience&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhEmployeeIdxGet.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -155,7 +155,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_indexes.InhEmployeeIdxGet.sqlmeta.indexDefinitions">
-<code class="descname">indexDefinitions</code><em class="property"> = [&lt;DatabaseIndex b51b5a4cL {'unique': True, 'name': 'pk', 'columns': (&lt;StringCol b4fa78acL first_name&gt;, &lt;StringCol b51b5cccL last_name&gt;)}&gt;, &lt;DatabaseIndex b52c3eecL {'unique': True, 'name': 'sec_index', 'columns': (&lt;IntCol b502978cL security_number&gt;,)}&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhEmployeeIdxGet.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">indexDefinitions</code><em class="property"> = [&lt;DatabaseIndex b53960ccL {'unique': True, 'name': 'pk', 'columns': (&lt;StringCol b4c4d1ccL first_name&gt;, &lt;StringCol b5760d0cL last_name&gt;)}&gt;, &lt;DatabaseIndex b585bf0cL {'unique': True, 'name': 'sec_index', 'columns': (&lt;IntCol b585bf6cL security_number&gt;,)}&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhEmployeeIdxGet.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -249,7 +249,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_indexes.InhPersonIdxGet.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'age': &lt;IntCol b51b50acL age&gt;, 'last_name': &lt;StringCol b51b5cccL last_name&gt;, 'first_name': &lt;StringCol b4fa78acL first_name&gt;, 'childName': &lt;StringCol b4fb622cL childName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhPersonIdxGet.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'age': &lt;IntCol b68008ecL age&gt;, 'last_name': &lt;StringCol b5760d0cL last_name&gt;, 'first_name': &lt;StringCol b4c4d1ccL first_name&gt;, 'childName': &lt;StringCol b4d852ccL childName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhPersonIdxGet.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -264,7 +264,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_indexes.InhPersonIdxGet.sqlmeta.indexDefinitions">
-<code class="descname">indexDefinitions</code><em class="property"> = [&lt;DatabaseIndex b51b5a4cL {'unique': True, 'name': 'pk', 'columns': (&lt;StringCol b4fa78acL first_name&gt;, &lt;StringCol b51b5cccL last_name&gt;)}&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhPersonIdxGet.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">indexDefinitions</code><em class="property"> = [&lt;DatabaseIndex b53960ccL {'unique': True, 'name': 'pk', 'columns': (&lt;StringCol b4c4d1ccL first_name&gt;, &lt;StringCol b5760d0cL last_name&gt;)}&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhPersonIdxGet.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -347,7 +347,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_indexes.InhSalesManIdxGet.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'skill': &lt;IntCol b520868cL skill&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhSalesManIdxGet.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'skill': &lt;IntCol b4d140acL skill&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhSalesManIdxGet.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -362,7 +362,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.inheritance.tests.test_indexes.InhSalesManIdxGet.sqlmeta.indexDefinitions">
-<code class="descname">indexDefinitions</code><em class="property"> = [&lt;DatabaseIndex b51b5a4cL {'unique': True, 'name': 'pk', 'columns': (&lt;StringCol b4fa78acL first_name&gt;, &lt;StringCol b51b5cccL last_name&gt;)}&gt;, &lt;DatabaseIndex b52c3eecL {'unique': True, 'name': 'sec_index', 'columns': (&lt;IntCol b502978cL security_number&gt;,)}&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhSalesManIdxGet.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">indexDefinitions</code><em class="property"> = [&lt;DatabaseIndex b53960ccL {'unique': True, 'name': 'pk', 'columns': (&lt;StringCol b4c4d1ccL first_name&gt;, &lt;StringCol b5760d0cL last_name&gt;)}&gt;, &lt;DatabaseIndex b585bf0cL {'unique': True, 'name': 'sec_index', 'columns': (&lt;IntCol b585bf6cL security_number&gt;,)}&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_indexes.InhSalesManIdxGet.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -428,7 +428,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

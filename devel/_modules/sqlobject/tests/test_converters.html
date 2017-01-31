@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -107,7 +106,7 @@
 
 
 <span class="k">def</span> <span class="nf">_sqlrepr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
 <span class="n">SQLExpression</span><span class="o">.</span><span class="n">__sqlrepr__</span> <span class="o">=</span> <span class="n">_sqlrepr</span>
 
@@ -148,7 +147,7 @@
 
 
 <div class="viewcode-block" id="test_simple_unicode"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.test_simple_unicode">[docs]</a><span class="k">def</span> <span class="nf">test_simple_unicode</span><span class="p">():</span>
-    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="s1">u&#39;A String&#39;</span><span class="p">,</span> <span class="s1">&#39;postgres&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;&#39;A String&#39;&quot;</span></div>
+    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;A String&#39;</span><span class="p">,</span> <span class="s1">&#39;postgres&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;&#39;A String&#39;&quot;</span></div>
 
 
 <div class="viewcode-block" id="test_integer"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.test_integer">[docs]</a><span class="k">def</span> <span class="nf">test_integer</span><span class="p">():</span>
@@ -343,8 +342,8 @@
 <div class="viewcode-block" id="test_like_quoted"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_converters.html#sqlobject.tests.test_converters.test_like_quoted">[docs]</a><span class="k">def</span> <span class="nf">test_like_quoted</span><span class="p">():</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">_LikeQuoted</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">),</span> <span class="s1">&#39;postgres&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;&#39;test&#39;&quot;</span>
     <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">_LikeQuoted</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">),</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;&#39;test&#39;&quot;</span>
-    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">_LikeQuoted</span><span class="p">(</span><span class="s1">&#39;test%&#39;</span><span class="p">),</span> <span class="s1">&#39;postgres&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">r&quot;E&#39;test</span><span class="se">\\</span><span class="s2">%&#39;&quot;</span>
-    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">_LikeQuoted</span><span class="p">(</span><span class="s1">&#39;test%&#39;</span><span class="p">),</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">r&quot;&#39;test\%&#39;&quot;</span></div>
+    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">_LikeQuoted</span><span class="p">(</span><span class="s1">&#39;test%&#39;</span><span class="p">),</span> <span class="s1">&#39;postgres&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="sa">r</span><span class="s2">&quot;E&#39;test</span><span class="se">\\</span><span class="s2">%&#39;&quot;</span>
+    <span class="k">assert</span> <span class="n">sqlrepr</span><span class="p">(</span><span class="n">_LikeQuoted</span><span class="p">(</span><span class="s1">&#39;test%&#39;</span><span class="p">),</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="sa">r</span><span class="s2">&quot;&#39;test\%&#39;&quot;</span></div>
 </pre></div>
 
           </div>
@@ -367,7 +366,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

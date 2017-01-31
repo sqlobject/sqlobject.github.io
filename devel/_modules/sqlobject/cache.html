@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -365,41 +364,41 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kw</span> <span class="o">=</span> <span class="n">kw</span>
 
-<div class="viewcode-block" id="CacheSet.get"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="CacheSet.get"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">CacheFactory</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">CacheFactory</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CacheSet.put"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
+<div class="viewcode-block" id="CacheSet.put"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CacheSet.finishPut"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.finishPut">[docs]</a>    <span class="k">def</span> <span class="nf">finishPut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">finishPut</span><span class="p">()</span></div>
+<div class="viewcode-block" id="CacheSet.finishPut"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.finishPut">[docs]</a>    <span class="k">def</span> <span class="nf">finishPut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">finishPut</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CacheSet.created"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.created">[docs]</a>    <span class="k">def</span> <span class="nf">created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="CacheSet.created"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.created">[docs]</a>    <span class="k">def</span> <span class="nf">created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">CacheFactory</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">CacheFactory</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kw</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CacheSet.expire"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.expire">[docs]</a>    <span class="k">def</span> <span class="nf">expire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="CacheSet.expire"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.expire">[docs]</a>    <span class="k">def</span> <span class="nf">expire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="CacheSet.clear"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="CacheSet.clear"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">cache</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                 <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+        <span class="k">elif</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CacheSet.tryGet"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.tryGet">[docs]</a>    <span class="k">def</span> <span class="nf">tryGet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tryGetByName</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span></div>
+<div class="viewcode-block" id="CacheSet.tryGet"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.tryGet">[docs]</a>    <span class="k">def</span> <span class="nf">tryGet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tryGetByName</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CacheSet.tryGetByName"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.tryGetByName">[docs]</a>    <span class="k">def</span> <span class="nf">tryGetByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">clsname</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -407,9 +406,9 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="CacheSet.allIDs"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.allIDs">[docs]</a>    <span class="k">def</span> <span class="nf">allIDs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="CacheSet.allIDs"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.allIDs">[docs]</a>    <span class="k">def</span> <span class="nf">allIDs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">allIDs</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">allIDs</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span></div>
 
@@ -419,30 +418,30 @@
 <div class="viewcode-block" id="CacheSet.allSubCachesByClassNames"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.allSubCachesByClassNames">[docs]</a>    <span class="k">def</span> <span class="nf">allSubCachesByClassNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span></div>
 
-<div class="viewcode-block" id="CacheSet.weakrefAll"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.weakrefAll">[docs]</a>    <span class="k">def</span> <span class="nf">weakrefAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CacheSet.weakrefAll"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.weakrefAll">[docs]</a>    <span class="k">def</span> <span class="nf">weakrefAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Move all objects in the cls (or if not given, then in all</span>
 <span class="sd">        classes) to the weakref dictionary, where they can be</span>
 <span class="sd">        collected.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">cache</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                 <span class="n">cache</span><span class="o">.</span><span class="n">expireAll</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">expireAll</span><span class="p">()</span></div>
+        <span class="k">elif</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">expireAll</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CacheSet.getAll"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.getAll">[docs]</a>    <span class="k">def</span> <span class="nf">getAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CacheSet.getAll"><a class="viewcode-back" href="../../api/sqlobject.cache.html#sqlobject.cache.CacheSet.getAll">[docs]</a>    <span class="k">def</span> <span class="nf">getAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns all instances in the cache for the given class or all</span>
 <span class="sd">        classes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">cache</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                 <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cache</span><span class="o">.</span><span class="n">getAll</span><span class="p">())</span>
             <span class="k">return</span> <span class="n">results</span>
-        <span class="k">elif</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">getAll</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">caches</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">getAll</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span></div></div>
 </pre></div>
@@ -467,7 +466,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

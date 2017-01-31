@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -27,7 +28,6 @@
     <script type="text/javascript" src="_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
     <link rel="next" title="SQLObject and Python 3" href="Python3.html" />
     <link rel="prev" title="SQLObject Links" href="links.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -94,7 +94,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/News.txt"
+      <li><a href="_sources/News.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -161,17 +161,19 @@ the name of the attached database to vacuum.</li>
 <li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for FirebirdConnection. Allowed values are &#8216;fdb&#8217;,
 &#8216;kinterbasdb&#8217; and &#8216;pyfirebirdsql&#8217;. Default is to test &#8216;fdb&#8217; and
 &#8216;kinterbasdb&#8217; in that order. pyfirebirdsql is supported but has problems.</li>
-<li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for MySQLConnection. Allowed value are &#8216;mysqldb&#8217;,
+<li>Add <code class="docutils literal"><span class="pre">driver</span></code> keyword for MySQLConnection. Allowed values are &#8216;mysqldb&#8217;,
 &#8216;connector&#8217;, &#8216;oursql&#8217; and &#8216;pymysql&#8217;. Default is to test for mysqldb only.</li>
 <li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/mysql-connector">MySQL Connector</a> (pure python; <a class="reference external" href="https://dev.mysql.com/doc/connector-python/en/">binary
 packages</a> are not at
 PyPI and hence are hard to install and test).</li>
 <li>Add support for <a class="reference external" href="https://github.com/python-oursql/oursql">oursql</a> MySQL
-driver (Python 2.6 and 2.7 until oursql fixes python 3 compatibility).</li>
+driver (only Python 2.6 and 2.7 until oursql author fixes Python 3
+compatibility).</li>
 <li>Add support for <a class="reference external" href="https://github.com/PyMySQL/PyMySQL/">PyMySQL</a> - pure
 python mysql interface).</li>
 <li>Add parameter <code class="docutils literal"><span class="pre">timeout</span></code> for MSSQLConnection (usable only with pymssql
 driver); timeouts are in seconds.</li>
+<li>Remove deprecated ez_setup.py.</li>
 </ul>
 </div>
 <div class="section" id="drivers-work-in-progress">
@@ -194,7 +196,7 @@ the driver.</li>
 value.</li>
 <li>Fix MSSQLConnection and SybaseConnection: insert default values into a table
 with just one IDENTITY column.</li>
-<li>Remove excessive NULLs for MSSQL/Sybase.</li>
+<li>Remove excessive NULLs from <code class="docutils literal"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> for MSSQL/Sybase.</li>
 <li>Fix concatenation operator for MSSQL/Sybase (it&#8217;s <code class="docutils literal"><span class="pre">+</span></code>, not <code class="docutils literal"><span class="pre">||</span></code>).</li>
 <li>Fix MSSQLConnection.server_version() under Py3 (decode version to str).</li>
 </ul>
@@ -219,8 +221,8 @@ tests were deprecated in <code class="docutils literal"><span class="pre">pytest
 <li>Drop <code class="docutils literal"><span class="pre">Circle</span> <span class="pre">CI</span></code>.</li>
 <li>Run at Travis CI tests with Firebird backend (server version 2.5; drivers fdb
 and firebirdsql). There are problems with tests.</li>
-<li>Add AppVeyor for windows testing. Run tests with MS SQL, Postgres and
-SQLite. There are problems with MS SQL.</li>
+<li>Run tests at AppVeyor for windows testing. Run tests with MS SQL, Postgres
+and SQLite. There are problems with MS SQL.</li>
 </ul>
 </div>
 </div>
@@ -324,7 +326,7 @@ Sphinx format.</li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -160,7 +159,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">def</span> <span class="nf">setFunc</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__dict__</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span>
 
     <span class="n">props</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -196,12 +195,12 @@
         <span class="n">d</span> <span class="o">=</span> <span class="n">obj</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">delFunc</span> <span class="o">=</span> <span class="nb">delattr</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__dict__</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span>
 
     <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">property</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">fget</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">fset</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">fdel</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">prop</span> <span class="ow">and</span> <span class="n">prop</span><span class="o">.</span><span class="n">__name__</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">prop</span> <span class="ow">and</span> <span class="n">prop</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
                     <span class="n">delFunc</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
                     <span class="k">break</span>
 
@@ -228,7 +227,7 @@
     <span class="k">return</span> <span class="n">depends</span>
 
 
-<span class="k">def</span> <span class="nf">_collectAttributes</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">look_for_class</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_collectAttributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">look_for_class</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Finds all attributes in `new_attrs` that are instances of</span>
 <span class="sd">    `look_for_class`. The ``.name`` attribute is set for any matching objects.</span>
 <span class="sd">    Returns them as a list.</span>
@@ -238,7 +237,7 @@
     <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">new_attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">look_for_class</span><span class="p">):</span>
             <span class="n">value</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">attr</span>
-            <span class="nb">delattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+            <span class="nb">delattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>
 
@@ -324,57 +323,57 @@
     <span class="c1"># Default encoding for UnicodeCol&#39;s</span>
     <span class="n">dbEncoding</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">__classinit__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_unshared_attributes</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__classinit__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_unshared_attributes</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_attrs</span><span class="p">:</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">declarative</span><span class="o">.</span><span class="n">setup_attributes</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">declarative</span><span class="o">.</span><span class="n">setup_attributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="sqlmeta.send"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="n">events</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+<div class="viewcode-block" id="sqlmeta.send"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="sqlmeta.setClass"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.setClass">[docs]</a>    <span class="k">def</span> <span class="nf">setClass</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span> <span class="o">=</span> <span class="n">soClass</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">cls</span><span class="o">.</span><span class="n">style</span><span class="p">:</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">styles</span><span class="o">.</span><span class="n">defaultStyle</span>
+<div class="viewcode-block" id="sqlmeta.setClass"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.setClass">[docs]</a>    <span class="k">def</span> <span class="nf">setClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span> <span class="o">=</span> <span class="n">soClass</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">style</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">styles</span><span class="o">.</span><span class="n">defaultStyle</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">and</span> <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">style</span><span class="p">:</span>
-                    <span class="n">cls</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">style</span>
+                <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">and</span> <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">style</span><span class="p">:</span>
+                    <span class="bp">cls</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">style</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">pass</span>
-        <span class="k">if</span> <span class="n">cls</span><span class="o">.</span><span class="n">table</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">pythonClassToDBTable</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">cls</span><span class="o">.</span><span class="n">idName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">idName</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">idForTable</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">table</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">pythonClassToDBTable</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">idName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">idName</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">idForTable</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
 
         <span class="c1"># plainSetters are columns that haven&#39;t been overridden by the</span>
         <span class="c1"># user, so we can contact the database directly to set them.</span>
         <span class="c1"># Note that these can&#39;t set these in the SQLObject class</span>
         <span class="c1"># itself, because they specific to this subclass of SQLObject,</span>
         <span class="c1"># and cannot be shared among classes.</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_plainSetters</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_plainGetters</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_plainForeignSetters</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_plainForeignGetters</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_plainJoinGetters</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_plainJoinAdders</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_plainJoinRemovers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_plainSetters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_plainGetters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_plainForeignSetters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_plainForeignGetters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_plainJoinGetters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_plainJoinAdders</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_plainJoinRemovers</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c1"># This is a dictionary of columnName: columnObject</span>
         <span class="c1"># None of these objects can be shared with superclasses</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">columnList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">columnList</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># These, however, can be shared:</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">columnDefinitions</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">columnDefinitions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">indexes</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">indexDefinitions</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">indexDefinitions</span><span class="p">[:]</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">joins</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">joinDefinitions</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">joinDefinitions</span><span class="p">[:]</span></div>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">columnDefinitions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">columnDefinitions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">indexes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">indexDefinitions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">indexDefinitions</span><span class="p">[:]</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">joins</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">joinDefinitions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">joinDefinitions</span><span class="p">[:]</span></div>
 
     <span class="c1">############################################################</span>
     <span class="c1"># Adding special values, like columns and indexes</span>
@@ -385,13 +384,13 @@
     <span class="c1">########################################</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="sqlmeta.addColumn"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.addColumn">[docs]</a>    <span class="k">def</span> <span class="nf">addColumn</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">columnDef</span><span class="p">,</span> <span class="n">changeSchema</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="sqlmeta.addColumn"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.addColumn">[docs]</a>    <span class="k">def</span> <span class="nf">addColumn</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columnDef</span><span class="p">,</span> <span class="n">changeSchema</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">post_funcs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">AddColumnSignal</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">AddColumnSignal</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
                  <span class="n">columnDef</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">columnDef</span><span class="p">,</span> <span class="n">changeSchema</span><span class="p">,</span> <span class="n">post_funcs</span><span class="p">)</span>
-        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="n">cls</span>
-        <span class="n">soClass</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span>
-        <span class="k">del</span> <span class="n">cls</span>
+        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="bp">cls</span>
+        <span class="n">soClass</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span>
+        <span class="k">del</span> <span class="bp">cls</span>
         <span class="n">column</span> <span class="o">=</span> <span class="n">columnDef</span><span class="o">.</span><span class="n">withClass</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span>
         <span class="k">assert</span> <span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="p">(</span>
@@ -400,19 +399,19 @@
         <span class="k">assert</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="p">(</span>
             <span class="s2">&quot;The class </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> already has a column </span><span class="si">%r</span><span class="s2"> (</span><span class="si">%r</span><span class="s2">), you cannot &quot;</span>
             <span class="s2">&quot;add the column </span><span class="si">%r</span><span class="s2">&quot;</span>
-            <span class="o">%</span> <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">__module__</span><span class="p">,</span> <span class="n">soClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
+            <span class="o">%</span> <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="n">soClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span>
                <span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnDefinitions</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">columnDef</span><span class="p">))</span>
         <span class="c1"># Collect columns from the parent classes to test</span>
         <span class="c1"># if the column is not in a parent class</span>
         <span class="n">parent_columns</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="n">soClass</span><span class="o">.</span><span class="n">__bases__</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="n">soClass</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s2">&quot;sqlmeta&quot;</span><span class="p">):</span>
                 <span class="n">parent_columns</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
             <span class="k">assert</span> <span class="p">(</span><span class="n">name</span> <span class="ow">in</span> <span class="n">parent_columns</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;childName&quot;</span><span class="p">),</span> <span class="p">(</span>
                 <span class="s2">&quot;The class </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> already has a variable or method </span><span class="si">%r</span><span class="s2">, &quot;</span>
                 <span class="s2">&quot;you cannot add the column </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                    <span class="n">soClass</span><span class="o">.</span><span class="n">__module__</span><span class="p">,</span> <span class="n">soClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                    <span class="n">soClass</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span> <span class="n">soClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
         <span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnDefinitions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">columnDef</span>
         <span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">column</span>
         <span class="c1"># A stable-ordered version of the list...</span>
@@ -551,8 +550,8 @@
                 <span class="n">sqlmeta</span><span class="o">.</span><span class="n">addColumn</span><span class="p">(</span><span class="n">columnDef</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="sqlmeta.delColumn"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.delColumn">[docs]</a>    <span class="k">def</span> <span class="nf">delColumn</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">changeSchema</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="n">cls</span>
+<div class="viewcode-block" id="sqlmeta.delColumn"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.delColumn">[docs]</a>    <span class="k">def</span> <span class="nf">delColumn</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">changeSchema</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="bp">cls</span>
         <span class="n">soClass</span> <span class="o">=</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">soClass</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -570,7 +569,7 @@
                 <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
                     <span class="s2">&quot;Column with definition </span><span class="si">%r</span><span class="s2"> not found&quot;</span> <span class="o">%</span> <span class="n">column</span><span class="p">)</span>
         <span class="n">post_funcs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">DeleteColumnSignal</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">DeleteColumnSignal</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
                  <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">post_funcs</span><span class="p">)</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span>
         <span class="k">del</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
@@ -612,9 +611,9 @@
     <span class="c1">########################################</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="sqlmeta.addJoin"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.addJoin">[docs]</a>    <span class="k">def</span> <span class="nf">addJoin</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">joinDef</span><span class="p">):</span>
-        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="n">cls</span>
-        <span class="n">soClass</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">soClass</span>
+<div class="viewcode-block" id="sqlmeta.addJoin"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.addJoin">[docs]</a>    <span class="k">def</span> <span class="nf">addJoin</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">joinDef</span><span class="p">):</span>
+        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="bp">cls</span>
+        <span class="n">soClass</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span>
         <span class="c1"># The name of the method we&#39;ll create.  If it&#39;s</span>
         <span class="c1"># automatically generated, it&#39;s generated by the</span>
         <span class="c1"># join class.</span>
@@ -707,11 +706,11 @@
     <span class="c1">########################################</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="sqlmeta.addIndex"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.addIndex">[docs]</a>    <span class="k">def</span> <span class="nf">addIndex</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">indexDef</span><span class="p">):</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">indexDefinitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indexDef</span><span class="p">)</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">indexDef</span><span class="o">.</span><span class="n">withClass</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">)</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
+<div class="viewcode-block" id="sqlmeta.addIndex"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.sqlmeta.addIndex">[docs]</a>    <span class="k">def</span> <span class="nf">addIndex</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">indexDef</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">indexDefinitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indexDef</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">indexDef</span><span class="o">.</span><span class="n">withClass</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">soClass</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span></div>
 
     <span class="c1">########################################</span>
     <span class="c1"># Utility methods</span>
@@ -840,39 +839,39 @@
     <span class="c1"># The law of Demeter: the class should not call another classes by name</span>
     <span class="n">SelectResultsClass</span> <span class="o">=</span> <span class="n">SelectResults</span>
 
-    <span class="k">def</span> <span class="nf">__classinit__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__classinit__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
 
         <span class="c1"># This is true if we&#39;re initializing the SQLObject class,</span>
         <span class="c1"># instead of a subclass:</span>
-        <span class="n">is_base</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__bases__</span> <span class="o">==</span> <span class="p">(</span><span class="nb">object</span><span class="p">,)</span>
+        <span class="n">is_base</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__bases__</span> <span class="o">==</span> <span class="p">(</span><span class="nb">object</span><span class="p">,)</span>
 
-        <span class="n">cls</span><span class="o">.</span><span class="n">_SO_setupSqlmeta</span><span class="p">(</span><span class="n">new_attrs</span><span class="p">,</span> <span class="n">is_base</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_SO_setupSqlmeta</span><span class="p">(</span><span class="n">new_attrs</span><span class="p">,</span> <span class="n">is_base</span><span class="p">)</span>
 
-        <span class="n">implicitColumns</span> <span class="o">=</span> <span class="n">_collectAttributes</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">Col</span><span class="p">)</span>
-        <span class="n">implicitJoins</span> <span class="o">=</span> <span class="n">_collectAttributes</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">joins</span><span class="o">.</span><span class="n">Join</span><span class="p">)</span>
-        <span class="n">implicitIndexes</span> <span class="o">=</span> <span class="n">_collectAttributes</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span>
+        <span class="n">implicitColumns</span> <span class="o">=</span> <span class="n">_collectAttributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">Col</span><span class="p">)</span>
+        <span class="n">implicitJoins</span> <span class="o">=</span> <span class="n">_collectAttributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">joins</span><span class="o">.</span><span class="n">Join</span><span class="p">)</span>
+        <span class="n">implicitIndexes</span> <span class="o">=</span> <span class="n">_collectAttributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span>
                                              <span class="n">index</span><span class="o">.</span><span class="n">DatabaseIndex</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_base</span><span class="p">:</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">_SO_cleanDeprecatedAttrs</span><span class="p">(</span><span class="n">new_attrs</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_SO_cleanDeprecatedAttrs</span><span class="p">(</span><span class="n">new_attrs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s1">&#39;_connection&#39;</span> <span class="ow">in</span> <span class="n">new_attrs</span><span class="p">:</span>
             <span class="n">connection</span> <span class="o">=</span> <span class="n">new_attrs</span><span class="p">[</span><span class="s1">&#39;_connection&#39;</span><span class="p">]</span>
-            <span class="k">del</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
+            <span class="k">del</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
             <span class="k">assert</span> <span class="s1">&#39;connection&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_attrs</span>
         <span class="k">elif</span> <span class="s1">&#39;connection&#39;</span> <span class="ow">in</span> <span class="n">new_attrs</span><span class="p">:</span>
             <span class="n">connection</span> <span class="o">=</span> <span class="n">new_attrs</span><span class="p">[</span><span class="s1">&#39;connection&#39;</span><span class="p">]</span>
-            <span class="k">del</span> <span class="n">cls</span><span class="o">.</span><span class="n">connection</span>
+            <span class="k">del</span> <span class="bp">cls</span><span class="o">.</span><span class="n">connection</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">connection</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">cls</span><span class="o">.</span><span class="n">_SO_finishedClassCreation</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_SO_finishedClassCreation</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1">######################################################</span>
         <span class="c1"># Set some attributes to their defaults, if necessary.</span>
         <span class="c1"># First we get the connection:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">connection</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s1">&#39;_connection&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="n">mod</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__module__</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">connection</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;_connection&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">mod</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span>
             <span class="c1"># See if there&#39;s a __connection__ global in</span>
             <span class="c1"># the module, use it if there is.</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;__connection__&#39;</span><span class="p">):</span>
@@ -881,10 +880,10 @@
         <span class="c1"># Do not check hasattr(cls, &#39;_connection&#39;) here - it is possible</span>
         <span class="c1"># SQLObject parent class has a connection attribute that came</span>
         <span class="c1"># from sqlhub, e.g.; check __dict__ only.</span>
-        <span class="k">if</span> <span class="n">connection</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;_connection&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">__dict__</span><span class="p">):</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">setConnection</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">connection</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;_connection&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">):</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">setConnection</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
 
-        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span>
+        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span>
 
         <span class="c1"># We have to check if there are columns in the inherited</span>
         <span class="c1"># _columns where the attribute has been set to None in this</span>
@@ -902,7 +901,7 @@
 
         <span class="c1"># Now the class is in an essentially OK-state, so we can</span>
         <span class="c1"># set up any magic attributes:</span>
-        <span class="n">declarative</span><span class="o">.</span><span class="n">setup_attributes</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
+        <span class="n">declarative</span><span class="o">.</span><span class="n">setup_attributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">fromDatabase</span><span class="p">:</span>
             <span class="n">sqlmeta</span><span class="o">.</span><span class="n">addColumnsFromDatabase</span><span class="p">()</span>
@@ -924,21 +923,21 @@
 
         <span class="c1"># We don&#39;t setup the properties until we&#39;re finished with the</span>
         <span class="c1"># batch adding of all the columns...</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_notifyFinishClassCreation</span><span class="p">()</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_SO_finishedClassCreation</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">makeProperties</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_notifyFinishClassCreation</span><span class="p">()</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_SO_finishedClassCreation</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">makeProperties</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
 
         <span class="c1"># We use the magic &quot;q&quot; attribute for accessing lazy</span>
         <span class="c1"># SQL where-clause generation.  See the sql module for</span>
         <span class="c1"># more.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_base</span><span class="p">:</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectTable</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">j</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectTableWithJoins</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectTable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">j</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectTableWithJoins</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
 
-        <span class="n">classregistry</span><span class="o">.</span><span class="n">registry</span><span class="p">(</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">registry</span><span class="p">)</span><span class="o">.</span><span class="n">addClass</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+        <span class="n">classregistry</span><span class="o">.</span><span class="n">registry</span><span class="p">(</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">registry</span><span class="p">)</span><span class="o">.</span><span class="n">addClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_SO_setupSqlmeta</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">is_base</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_SO_setupSqlmeta</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">is_base</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This fixes up the sqlmeta attribute.  It handles both the case</span>
 <span class="sd">        where no sqlmeta was given (in which we need to create another</span>
@@ -949,17 +948,17 @@
         <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;sqlmeta&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_attrs</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_base</span><span class="p">):</span>
             <span class="c1"># We have to create our own subclass, usually.</span>
             <span class="c1"># type(className, bases_tuple, attr_dict) creates a new subclass.</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;sqlmeta&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">,),</span> <span class="p">{})</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">,</span> <span class="n">sqlmeta</span><span class="p">):</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;sqlmeta&#39;</span><span class="p">,</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">,),</span> <span class="p">{})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">,</span> <span class="n">sqlmeta</span><span class="p">):</span>
             <span class="c1"># We allow no superclass and an object superclass, instead</span>
             <span class="c1"># of inheriting from sqlmeta; but in that case we replace</span>
             <span class="c1"># the class and just move over its attributes:</span>
-            <span class="k">assert</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">__bases__</span> <span class="ow">in</span> <span class="p">((),</span> <span class="p">(</span><span class="nb">object</span><span class="p">,)),</span> <span class="p">(</span>
+            <span class="k">assert</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="vm">__bases__</span> <span class="ow">in</span> <span class="p">((),</span> <span class="p">(</span><span class="nb">object</span><span class="p">,)),</span> <span class="p">(</span>
                 <span class="s2">&quot;If you do not inherit your sqlmeta class from &quot;</span>
                 <span class="s2">&quot;sqlobject.sqlmeta, it must not inherit from any other &quot;</span>
                 <span class="s2">&quot;class (your sqlmeta inherits from: </span><span class="si">%s</span><span class="s2">)&quot;</span>
-                <span class="o">%</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">__bases__</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">__bases__</span><span class="p">:</span>
+                <span class="o">%</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">:</span>
                 <span class="n">superclass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">&#39;sqlmeta&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">superclass</span><span class="p">:</span>
                     <span class="k">break</span>
@@ -967,19 +966,19 @@
                 <span class="k">assert</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span>
                     <span class="s2">&quot;No sqlmeta class could be found in any superclass &quot;</span>
                     <span class="s2">&quot;(while fixing up sqlmeta </span><span class="si">%r</span><span class="s2"> inheritance)&quot;</span>
-                    <span class="o">%</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">)</span>
-            <span class="n">values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+                    <span class="o">%</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">)</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
                 <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
                     <span class="c1"># Magic values shouldn&#39;t be passed through:</span>
                     <span class="k">del</span> <span class="n">values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;sqlmeta&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">superclass</span><span class="p">,),</span> <span class="n">values</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;sqlmeta&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">superclass</span><span class="p">,),</span> <span class="n">values</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_base</span><span class="p">:</span>  <span class="c1"># Do not pollute the base sqlmeta class</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">setClass</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">setClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_SO_cleanDeprecatedAttrs</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_SO_cleanDeprecatedAttrs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This removes attributes on SQLObject subclasses that have</span>
 <span class="sd">        been deprecated; they are moved to the sqlmeta class, and</span>
@@ -992,29 +991,29 @@
                            <span class="s2">&quot;deprecated&quot;</span> <span class="o">%</span> <span class="n">attr</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.get"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectResults</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SQLObject.get"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectResults</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
         <span class="k">assert</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> \
-            <span class="s1">&#39;None is not a possible id for </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span>
+            <span class="s1">&#39;None is not a possible id for </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idType</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idType</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">connection</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span>
+            <span class="n">cache</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cache</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cache</span>
 
         <span class="c1"># This whole sequence comes from Cache.CacheFactory&#39;s</span>
         <span class="c1"># behavior, where a None returned means a cache miss.</span>
-        <span class="n">val</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">val</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">_SO_fetch_no_create</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">_SO_fetch_no_create</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                 <span class="n">val</span><span class="o">.</span><span class="n">_SO_validatorState</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectState</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
                 <span class="n">val</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">selectResults</span><span class="p">)</span>
-                <span class="n">cache</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+                <span class="n">cache</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
             <span class="k">finally</span><span class="p">:</span>
-                <span class="n">cache</span><span class="o">.</span><span class="n">finishPut</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+                <span class="n">cache</span><span class="o">.</span><span class="n">finishPut</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">selectResults</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">val</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span><span class="p">:</span>
             <span class="n">val</span><span class="o">.</span><span class="n">_SO_writeLock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
             <span class="k">try</span><span class="p">:</span>
@@ -1025,7 +1024,7 @@
         <span class="k">return</span> <span class="n">val</span></div>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_notifyFinishClassCreation</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_notifyFinishClassCreation</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectResults</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1053,7 +1052,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">selectResults</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">SQLObjectNotFound</span><span class="p">(</span>
                     <span class="s2">&quot;The object </span><span class="si">%s</span><span class="s2"> by the ID </span><span class="si">%s</span><span class="s2"> does not exist&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_SO_selectInit</span><span class="p">(</span><span class="n">selectResults</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_SO_createValues</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1082,7 +1081,7 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">selectResults</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">SQLObjectNotFound</span><span class="p">(</span>
                         <span class="s2">&quot;The object </span><span class="si">%s</span><span class="s2"> by the ID </span><span class="si">%s</span><span class="s2"> has been deleted&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_SO_selectInit</span><span class="p">(</span><span class="n">selectResults</span><span class="p">)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrName</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">result</span>
@@ -1099,7 +1098,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">selectResults</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">SQLObjectNotFound</span><span class="p">(</span>
                     <span class="s2">&quot;The object </span><span class="si">%s</span><span class="s2"> by the ID </span><span class="si">%s</span><span class="s2"> has been deleted&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_SO_selectInit</span><span class="p">(</span><span class="n">selectResults</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">expired</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">finally</span><span class="p">:</span>
@@ -1137,7 +1136,7 @@
             <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span><span class="p">:</span>
                 <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instanceName</span><span class="p">(</span><span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">expired</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_SO_createValues</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_SO_writeLock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
@@ -1226,12 +1225,12 @@
 
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">extra</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                             <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.set() got an unexpected keyword argument &quot;</span>
-                            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -1266,12 +1265,12 @@
                 <span class="n">toUpdate</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dbValue</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">extra</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                             <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.set() got an unexpected keyword argument &quot;</span>
-                            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -1302,14 +1301,14 @@
         <span class="c1"># Retrieves a single value from the database.  Simple.</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">_obsolete</span><span class="p">,</span> <span class="p">(</span>
             <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> with id </span><span class="si">%s</span><span class="s2"> has become obsolete&quot;</span>
-            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="c1"># @@: do we really need this lock?</span>
         <span class="c1"># self._SO_writeLock.acquire()</span>
         <span class="n">column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">_SO_selectOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">[</span><span class="n">column</span><span class="o">.</span><span class="n">dbName</span><span class="p">])</span>
         <span class="c1"># self._SO_writeLock.release()</span>
         <span class="k">assert</span> <span class="n">results</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> with id </span><span class="si">%s</span><span class="s2"> is not in the database&quot;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">column</span><span class="o">.</span><span class="n">to_python</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">column</span><span class="o">.</span><span class="n">to_python</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SO_validatorState</span><span class="p">)</span>
@@ -1344,7 +1343,7 @@
             <span class="c1"># We shadow the sqlmeta class with an instance of sqlmeta</span>
             <span class="c1"># that points to us (our sqlmeta buddy object; where the</span>
             <span class="c1"># sqlmeta class is our class&#39;s buddy class)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">sqlmeta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="c1"># The get() classmethod/constructor uses a magic keyword</span>
             <span class="c1"># argument when it wants an empty object, fetched from the</span>
             <span class="c1"># database.  So we have nothing more to do in that case:</span>
@@ -1405,7 +1404,7 @@
                     <span class="k">if</span> <span class="n">column</span><span class="o">.</span><span class="n">defaultSQL</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                             <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">() did not get expected keyword argument &quot;</span>
-                            <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                            <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="c1"># There is defaultSQL for the column -</span>
                         <span class="c1"># do not put the column to kw</span>
@@ -1448,10 +1447,10 @@
         <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">queryInsertID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                             <span class="nb">id</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
         <span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span>
-        <span class="n">cache</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">cache</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
         <span class="n">post_funcs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="p">)])</span>
+        <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="p">)])</span>
 
         <span class="k">def</span> <span class="nf">_send_RowCreatedSignal</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">RowCreatedSignal</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">kw</span><span class="p">,</span> <span class="n">post_funcs</span><span class="p">)</span>
@@ -1463,7 +1462,7 @@
         <span class="k">return</span> <span class="n">getID</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">refColumn</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_findAlternateID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_findAlternateID</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">name</span> <span class="o">=</span> <span class="p">(</span><span class="n">name</span><span class="p">,)</span>
             <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span><span class="p">,)</span>
@@ -1472,28 +1471,28 @@
                 <span class="s2">&quot;&#39;column&#39; and &#39;value&#39; tuples must be of the same size&quot;</span><span class="p">)</span>
         <span class="n">new_value</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-            <span class="n">from_python</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s1">&#39;_SO_from_python_&#39;</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">from_python</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;_SO_from_python_&#39;</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">from_python</span><span class="p">:</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="n">from_python</span><span class="p">(</span>
-                    <span class="n">v</span><span class="p">,</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectState</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">))</span>
+                    <span class="n">v</span><span class="p">,</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectState</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">))</span>
             <span class="n">new_value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
         <span class="n">condition</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">AND</span><span class="p">(</span>
-            <span class="o">*</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">_n</span><span class="p">)</span> <span class="o">==</span> <span class="n">_v</span> <span class="k">for</span> <span class="n">_n</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span><span class="o">.</span><span class="n">_SO_selectOneAlt</span><span class="p">(</span>
-            <span class="n">cls</span><span class="p">,</span>
-            <span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">]</span> <span class="o">+</span>
-            <span class="p">[</span><span class="n">column</span><span class="o">.</span><span class="n">dbName</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span><span class="p">],</span>
+            <span class="o">*</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">_n</span><span class="p">)</span> <span class="o">==</span> <span class="n">_v</span> <span class="k">for</span> <span class="n">_n</span><span class="p">,</span> <span class="n">_v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span><span class="o">.</span><span class="n">_SO_selectOneAlt</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">]</span> <span class="o">+</span>
+            <span class="p">[</span><span class="n">column</span><span class="o">.</span><span class="n">dbName</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span><span class="p">],</span>
             <span class="n">condition</span><span class="p">),</span> <span class="kc">None</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_SO_fetchAlternateID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">_SO_fetchAlternateID</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                              <span class="n">idxName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">result</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_findAlternateID</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_findAlternateID</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">idxName</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">SQLObjectNotFound</span><span class="p">(</span>
                     <span class="s2">&quot;The </span><span class="si">%s</span><span class="s2"> by alternateID </span><span class="si">%s</span><span class="s2"> = </span><span class="si">%s</span><span class="s2"> does not exist&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                        <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+                        <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)):</span>
@@ -1501,27 +1500,27 @@
                 <span class="n">names</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="n">SQLObjectNotFound</span><span class="p">(</span>
                     <span class="s2">&quot;The </span><span class="si">%s</span><span class="s2"> by unique index </span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">) does not exist&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                        <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">idxName</span><span class="p">,</span> <span class="n">names</span><span class="p">))</span>
+                        <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">idxName</span><span class="p">,</span> <span class="n">names</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">obj</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">obj</span>
         <span class="k">if</span> <span class="n">connection</span><span class="p">:</span>
-            <span class="n">obj</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span>
                           <span class="n">selectResults</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">obj</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">selectResults</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">selectResults</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
         <span class="k">return</span> <span class="n">obj</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_SO_depends</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">findDependencies</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">registry</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_SO_depends</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">findDependencies</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">registry</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.select"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clauseTables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="SQLObject.select"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clauseTables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">orderBy</span><span class="o">=</span><span class="n">NoDefault</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">lazyColumns</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">reversed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                <span class="n">distinct</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">join</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">forUpdate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">SelectResultsClass</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clause</span><span class="p">,</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">SelectResultsClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">clause</span><span class="p">,</span>
                                       <span class="n">clauseTables</span><span class="o">=</span><span class="n">clauseTables</span><span class="p">,</span>
                                       <span class="n">orderBy</span><span class="o">=</span><span class="n">orderBy</span><span class="p">,</span>
                                       <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
@@ -1532,136 +1531,136 @@
                                       <span class="n">join</span><span class="o">=</span><span class="n">join</span><span class="p">,</span> <span class="n">forUpdate</span><span class="o">=</span><span class="n">forUpdate</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.selectBy"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.selectBy">[docs]</a>    <span class="k">def</span> <span class="nf">selectBy</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">SelectResultsClass</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span>
-                                      <span class="n">conn</span><span class="o">.</span><span class="n">_SO_columnClause</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">kw</span><span class="p">),</span>
+<div class="viewcode-block" id="SQLObject.selectBy"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.selectBy">[docs]</a>    <span class="k">def</span> <span class="nf">selectBy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">SelectResultsClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span>
+                                      <span class="n">conn</span><span class="o">.</span><span class="n">_SO_columnClause</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">kw</span><span class="p">),</span>
                                       <span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.tableExists"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.tableExists">[docs]</a>    <span class="k">def</span> <span class="nf">tableExists</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="k">return</span> <span class="n">conn</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">)</span></div>
+<div class="viewcode-block" id="SQLObject.tableExists"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.tableExists">[docs]</a>    <span class="k">def</span> <span class="nf">tableExists</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">return</span> <span class="n">conn</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.dropTable"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.dropTable">[docs]</a>    <span class="k">def</span> <span class="nf">dropTable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ifExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dropJoinTables</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<div class="viewcode-block" id="SQLObject.dropTable"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.dropTable">[docs]</a>    <span class="k">def</span> <span class="nf">dropTable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ifExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dropJoinTables</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                   <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="k">if</span> <span class="n">ifExists</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">cls</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">if</span> <span class="n">ifExists</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="n">extra_sql</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">post_funcs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">DropTableSignal</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">DropTableSignal</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
                          <span class="n">extra_sql</span><span class="p">,</span> <span class="n">post_funcs</span><span class="p">)</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">dropTable</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">cascade</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">dropTable</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">cascade</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">dropJoinTables</span><span class="p">:</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">dropJoinTables</span><span class="p">(</span><span class="n">ifExists</span><span class="o">=</span><span class="n">ifExists</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">dropJoinTables</span><span class="p">(</span><span class="n">ifExists</span><span class="o">=</span><span class="n">ifExists</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">sql</span> <span class="ow">in</span> <span class="n">extra_sql</span><span class="p">:</span>
             <span class="n">connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">post_funcs</span><span class="p">:</span>
-            <span class="n">func</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span></div>
+            <span class="n">func</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.createTable"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createTable">[docs]</a>    <span class="k">def</span> <span class="nf">createTable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ifNotExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">createJoinTables</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<div class="viewcode-block" id="SQLObject.createTable"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createTable">[docs]</a>    <span class="k">def</span> <span class="nf">createTable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ifNotExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">createJoinTables</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                     <span class="n">createIndexes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">applyConstraints</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                     <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="k">if</span> <span class="n">ifNotExists</span> <span class="ow">and</span> <span class="n">cls</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">if</span> <span class="n">ifNotExists</span> <span class="ow">and</span> <span class="bp">cls</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="n">extra_sql</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">post_funcs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">CreateTableSignal</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">CreateTableSignal</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
                          <span class="n">extra_sql</span><span class="p">,</span> <span class="n">post_funcs</span><span class="p">)</span>
-        <span class="n">constraints</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">createTable</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+        <span class="n">constraints</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">createTable</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">applyConstraints</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">constraint</span> <span class="ow">in</span> <span class="n">constraints</span><span class="p">:</span>
                 <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">constraint</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">extra_sql</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">constraints</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">createJoinTables</span><span class="p">:</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">createJoinTables</span><span class="p">(</span><span class="n">ifNotExists</span><span class="o">=</span><span class="n">ifNotExists</span><span class="p">,</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">createJoinTables</span><span class="p">(</span><span class="n">ifNotExists</span><span class="o">=</span><span class="n">ifNotExists</span><span class="p">,</span>
                                  <span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">createIndexes</span><span class="p">:</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">createIndexes</span><span class="p">(</span><span class="n">ifNotExists</span><span class="o">=</span><span class="n">ifNotExists</span><span class="p">,</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">createIndexes</span><span class="p">(</span><span class="n">ifNotExists</span><span class="o">=</span><span class="n">ifNotExists</span><span class="p">,</span>
                               <span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">post_funcs</span><span class="p">:</span>
-            <span class="n">func</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
+            <span class="n">func</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">extra_sql</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.createTableSQL"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createTableSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createTableSQL</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">createJoinTables</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">createIndexes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<div class="viewcode-block" id="SQLObject.createTableSQL"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createTableSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createTableSQL</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">createJoinTables</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">createIndexes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                        <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="n">sql</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">createTableSQL</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="n">sql</span><span class="p">,</span> <span class="n">constraints</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">createTableSQL</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">createJoinTables</span><span class="p">:</span>
-            <span class="n">join_sql</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">createJoinTablesSQL</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
+            <span class="n">join_sql</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">createJoinTablesSQL</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">join_sql</span><span class="p">:</span>
                 <span class="n">sql</span> <span class="o">+=</span> <span class="s1">&#39;;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">join_sql</span>
         <span class="k">if</span> <span class="n">createIndexes</span><span class="p">:</span>
-            <span class="n">index_sql</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">createIndexesSQL</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
+            <span class="n">index_sql</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">createIndexesSQL</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">index_sql</span><span class="p">:</span>
                 <span class="n">sql</span> <span class="o">+=</span> <span class="s1">&#39;;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">index_sql</span>
         <span class="k">return</span> <span class="n">sql</span><span class="p">,</span> <span class="n">constraints</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.createJoinTables"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createJoinTables">[docs]</a>    <span class="k">def</span> <span class="nf">createJoinTables</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ifNotExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_getJoinsToCreate</span><span class="p">():</span>
+<div class="viewcode-block" id="SQLObject.createJoinTables"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createJoinTables">[docs]</a>    <span class="k">def</span> <span class="nf">createJoinTables</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ifNotExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_getJoinsToCreate</span><span class="p">():</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">ifNotExists</span> <span class="ow">and</span>
                     <span class="n">conn</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">join</span><span class="o">.</span><span class="n">intermediateTable</span><span class="p">)):</span>
                 <span class="k">continue</span>
             <span class="n">conn</span><span class="o">.</span><span class="n">_SO_createJoinTable</span><span class="p">(</span><span class="n">join</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.createJoinTablesSQL"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createJoinTablesSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createJoinTablesSQL</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
+<div class="viewcode-block" id="SQLObject.createJoinTablesSQL"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createJoinTablesSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createJoinTablesSQL</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
         <span class="n">sql</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_getJoinsToCreate</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_getJoinsToCreate</span><span class="p">():</span>
             <span class="n">sql</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conn</span><span class="o">.</span><span class="n">_SO_createJoinTableSQL</span><span class="p">(</span><span class="n">join</span><span class="p">))</span>
         <span class="k">return</span> <span class="s1">&#39;;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.createIndexes"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createIndexes">[docs]</a>    <span class="k">def</span> <span class="nf">createIndexes</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ifNotExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="k">for</span> <span class="n">_index</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">indexes</span><span class="p">:</span>
+<div class="viewcode-block" id="SQLObject.createIndexes"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createIndexes">[docs]</a>    <span class="k">def</span> <span class="nf">createIndexes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ifNotExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">for</span> <span class="n">_index</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">indexes</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">_index</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">conn</span><span class="o">.</span><span class="n">_SO_createIndex</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">_index</span><span class="p">)</span></div>
+            <span class="n">conn</span><span class="o">.</span><span class="n">_SO_createIndex</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">_index</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.createIndexesSQL"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createIndexesSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createIndexesSQL</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
+<div class="viewcode-block" id="SQLObject.createIndexesSQL"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.createIndexesSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createIndexesSQL</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
         <span class="n">sql</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">_index</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">indexes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_index</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">indexes</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">_index</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">sql</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conn</span><span class="o">.</span><span class="n">createIndexSQL</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">_index</span><span class="p">))</span>
+            <span class="n">sql</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">conn</span><span class="o">.</span><span class="n">createIndexSQL</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">_index</span><span class="p">))</span>
         <span class="k">return</span> <span class="s1">&#39;;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_getJoinsToCreate</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_getJoinsToCreate</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="n">joins</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">joins</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">joins</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">join</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">join</span><span class="o">.</span><span class="n">hasIntermediateTable</span><span class="p">()</span> <span class="ow">or</span> \
                     <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">join</span><span class="p">,</span> <span class="s1">&#39;createRelatedTable&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">join</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">__name__</span> <span class="o">&gt;</span> <span class="n">join</span><span class="o">.</span><span class="n">otherClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">join</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">&gt;</span> <span class="n">join</span><span class="o">.</span><span class="n">otherClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">joins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">join</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">joins</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.dropJoinTables"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.dropJoinTables">[docs]</a>    <span class="k">def</span> <span class="nf">dropJoinTables</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ifExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">joins</span><span class="p">:</span>
+<div class="viewcode-block" id="SQLObject.dropJoinTables"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.dropJoinTables">[docs]</a>    <span class="k">def</span> <span class="nf">dropJoinTables</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ifExists</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">joins</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">join</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">join</span><span class="o">.</span><span class="n">hasIntermediateTable</span><span class="p">()</span> <span class="ow">or</span> \
                     <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">join</span><span class="p">,</span> <span class="s1">&#39;createRelatedTable&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">join</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">__name__</span> <span class="o">&gt;</span> <span class="n">join</span><span class="o">.</span><span class="n">otherClass</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">join</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">&gt;</span> <span class="n">join</span><span class="o">.</span><span class="n">otherClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">if</span> <span class="n">ifExists</span> <span class="ow">and</span> \
                <span class="ow">not</span> <span class="n">conn</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">join</span><span class="o">.</span><span class="n">intermediateTable</span><span class="p">):</span>
@@ -1669,13 +1668,13 @@
             <span class="n">conn</span><span class="o">.</span><span class="n">_SO_dropJoinTable</span><span class="p">(</span><span class="n">join</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.clearTable"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.clearTable">[docs]</a>    <span class="k">def</span> <span class="nf">clearTable</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clearJoinTables</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="SQLObject.clearTable"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.clearTable">[docs]</a>    <span class="k">def</span> <span class="nf">clearTable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clearJoinTables</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="c1"># 3-03 @@: Maybe this should check the cache... but it&#39;s</span>
         <span class="c1"># kind of crude anyway, so...</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">clearTable</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">clearTable</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">clearJoinTables</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">_getJoinsToCreate</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_getJoinsToCreate</span><span class="p">():</span>
                 <span class="n">conn</span><span class="o">.</span><span class="n">clearTable</span><span class="p">(</span><span class="n">join</span><span class="o">.</span><span class="n">intermediateTable</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SQLObject.destroySelf"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.destroySelf">[docs]</a>    <span class="k">def</span> <span class="nf">destroySelf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1683,7 +1682,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">RowDestroySignal</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">post_funcs</span><span class="p">)</span>
         <span class="c1"># Kills this object.  Kills it dead!</span>
 
-        <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span>
+        <span class="n">klass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
 
         <span class="c1"># Free related joins on the base class</span>
         <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="n">klass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">joins</span><span class="p">:</span>
@@ -1698,13 +1697,13 @@
             <span class="c1"># Free related joins</span>
             <span class="k">for</span> <span class="n">join</span> <span class="ow">in</span> <span class="n">k</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">joins</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">join</span><span class="p">,</span> <span class="n">joins</span><span class="o">.</span><span class="n">SORelatedJoin</span><span class="p">)</span> <span class="ow">and</span> \
-                        <span class="n">join</span><span class="o">.</span><span class="n">otherClassName</span> <span class="o">==</span> <span class="n">klass</span><span class="o">.</span><span class="n">__name__</span><span class="p">:</span>
+                        <span class="n">join</span><span class="o">.</span><span class="n">otherClassName</span> <span class="o">==</span> <span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
                     <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM </span><span class="si">%s</span><span class="s2"> WHERE </span><span class="si">%s</span><span class="s2">=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">join</span><span class="o">.</span><span class="n">intermediateTable</span><span class="p">,</span>
                                                         <span class="n">join</span><span class="o">.</span><span class="n">otherColumn</span><span class="p">,</span>
                                                         <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
 
-            <span class="n">cols</span> <span class="o">=</span> <span class="n">findDependantColumns</span><span class="p">(</span><span class="n">klass</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="n">findDependantColumns</span><span class="p">(</span><span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
 
             <span class="c1"># Don&#39;t confuse the rest of the process</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -1734,7 +1733,7 @@
                     <span class="k">raise</span> <span class="n">SQLObjectIntegrityError</span><span class="p">(</span>
                         <span class="s2">&quot;Tried to delete </span><span class="si">%s</span><span class="s2">::</span><span class="si">%s</span><span class="s2"> but &quot;</span>
                         <span class="s2">&quot;table </span><span class="si">%s</span><span class="s2"> has a restriction against it&quot;</span> <span class="o">%</span>
-                        <span class="p">(</span><span class="n">klass</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+                        <span class="p">(</span><span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">delete</span><span class="p">:</span>
@@ -1744,7 +1743,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">_obsolete</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">_SO_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">post_funcs</span><span class="p">:</span>
             <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -1755,27 +1754,27 @@
             <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.delete"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
+<div class="viewcode-block" id="SQLObject.delete"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">destroySelf</span><span class="p">()</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.deleteMany"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.deleteMany">[docs]</a>    <span class="k">def</span> <span class="nf">deleteMany</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">NoDefault</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">conn</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">Delete</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">where</span><span class="p">)))</span></div>
+<div class="viewcode-block" id="SQLObject.deleteMany"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.deleteMany">[docs]</a>    <span class="k">def</span> <span class="nf">deleteMany</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">NoDefault</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">conn</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">Delete</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">where</span><span class="p">)))</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.deleteBy"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.deleteBy">[docs]</a>    <span class="k">def</span> <span class="nf">deleteBy</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
+<div class="viewcode-block" id="SQLObject.deleteBy"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.deleteBy">[docs]</a>    <span class="k">def</span> <span class="nf">deleteBy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
         <span class="n">conn</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">conn</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">Delete</span><span class="p">(</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">conn</span><span class="o">.</span><span class="n">_SO_columnClause</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">kw</span><span class="p">))))</span></div>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">conn</span><span class="o">.</span><span class="n">_SO_columnClause</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">kw</span><span class="p">))))</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">):</span>
             <span class="c1"># Object initialization not finished.  No attributes can be read.</span>
-            <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> (not initialized)&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+            <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> (not initialized)&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%r</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&gt;&#39;</span> \
-               <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+               <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                   <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                   <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                       <span class="p">[</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -1785,15 +1784,15 @@
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.sqlrepr"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.sqlrepr">[docs]</a>    <span class="k">def</span> <span class="nf">sqlrepr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+<div class="viewcode-block" id="SQLObject.sqlrepr"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.sqlrepr">[docs]</a>    <span class="k">def</span> <span class="nf">sqlrepr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span><span class="o">.</span><span class="n">sqlrepr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.coerceID"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.coerceID">[docs]</a>    <span class="k">def</span> <span class="nf">coerceID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="SQLObject.coerceID"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.coerceID">[docs]</a>    <span class="k">def</span> <span class="nf">coerceID</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">id</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idType</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idType</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_reprItems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1806,31 +1805,31 @@
         <span class="k">return</span> <span class="n">items</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="SQLObject.setConnection"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.setConnection">[docs]</a>    <span class="k">def</span> <span class="nf">setConnection</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="SQLObject.setConnection"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.setConnection">[docs]</a>    <span class="k">def</span> <span class="nf">setConnection</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">string_type</span><span class="p">):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">dbconnection</span><span class="o">.</span><span class="n">connectionForURI</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">value</span></div>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">value</span></div>
 
 <div class="viewcode-block" id="SQLObject.tablesUsedImmediate"><a class="viewcode-back" href="../../api/sqlobject.main.html#sqlobject.include.tests.test_hashcol.SQLObject.tablesUsedImmediate">[docs]</a>    <span class="k">def</span> <span class="nf">tablesUsedImmediate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">q</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">q</span><span class="p">]</span></div>
 
     <span class="c1"># hash implementation</span>
 
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># We hash on class name and id, since that should be</span>
         <span class="c1"># unique</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
 
     <span class="c1"># Comparison</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="n">__class__</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">NotImplemented</span>
@@ -1854,7 +1853,7 @@
                 <span class="s1">&#39;that has a per-instance connection&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">lazyUpdate</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SO_createValues</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">syncUpdate</span><span class="p">()</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;sqlmeta&#39;</span><span class="p">]</span>
         <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;_SO_validatorState&#39;</span><span class="p">]</span>
         <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;_SO_writeLock&#39;</span><span class="p">]</span>
@@ -1862,19 +1861,19 @@
         <span class="k">return</span> <span class="n">d</span>
 
     <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">_SO_fetch_no_create</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">_SO_fetch_no_create</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_SO_validatorState</span> <span class="o">=</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLObjectState</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_SO_writeLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_SO_createValues</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-        <span class="n">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
         <span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">cache</span>
-        <span class="k">if</span> <span class="n">cache</span><span class="o">.</span><span class="n">tryGet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cache</span><span class="o">.</span><span class="n">tryGet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Cannot unpickle </span><span class="si">%s</span><span class="s2"> row with id=</span><span class="si">%s</span><span class="s2"> - &quot;</span>
                 <span class="s2">&quot;a different instance with the id already exists &quot;</span>
-                <span class="s2">&quot;in the cache&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
-        <span class="n">cache</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+                <span class="s2">&quot;in the cache&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="n">cache</span><span class="o">.</span><span class="n">created</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">setterName</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
@@ -1955,7 +1954,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

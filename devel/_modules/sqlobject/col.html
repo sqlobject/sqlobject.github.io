@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -214,7 +213,7 @@
                  <span class="n">dbEncoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">extra_vars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="c1"># This isn&#39;t strictly true, since we *could* use backquotes or</span>
         <span class="c1"># &quot; or something (database-specific) around column names, but</span>
@@ -374,7 +373,7 @@
     <span class="n">joinName</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_joinName</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">NoDefault</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">+=</span> <span class="s1">&#39; default=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreignKey</span><span class="p">:</span>
@@ -402,7 +401,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">customSQLType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Col </span><span class="si">%s</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">) cannot be used for automatic &quot;</span>
                              <span class="s2">&quot;schema creation (too abstract)&quot;</span> <span class="o">%</span>
-                             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">))</span>
+                             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">customSQLType</span>
 
@@ -470,7 +469,7 @@
             <span class="k">return</span> <span class="bp">self</span>
         <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">_obsolete</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;The object &lt;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&gt; is obsolete&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">cacheColumns</span><span class="p">:</span>
             <span class="n">columns</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">_columnCache</span>
             <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -485,7 +484,7 @@
     <span class="k">def</span> <span class="nf">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">immutable</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;The column </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2"> is immutable&quot;</span> <span class="o">%</span>
-                                 <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+                                 <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                                   <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">setColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
@@ -514,17 +513,17 @@
     <span class="n">baseClass</span> <span class="o">=</span> <span class="n">SOCol</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Col</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;_kw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kw</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;creationOrder&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">creationOrder</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;_extra_vars&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Col</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;_kw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kw</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;creationOrder&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">creationOrder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;_extra_vars&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">_set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">==</span> <span class="n">value</span><span class="p">,</span> <span class="p">(</span>
             <span class="s2">&quot;You cannot change a name after it has already been set &quot;</span>
             <span class="s2">&quot;(from </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s1">&#39;_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
@@ -540,13 +539,13 @@
 
     <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">var</span> <span class="o">==</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">Col</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">Col</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_extra_vars</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))[</span><span class="mi">2</span><span class="p">:],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))[</span><span class="mi">2</span><span class="p">:],</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">or</span> <span class="s1">&#39;(unnamed)&#39;</span><span class="p">)</span></div>
 
 
@@ -571,7 +570,7 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">varchar</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">varchar</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOStringLikeCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOStringLikeCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SOStringLikeCol.autoConstraints"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SOStringLikeCol.autoConstraints">[docs]</a>    <span class="k">def</span> <span class="nf">autoConstraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">constrs</span><span class="o">.</span><span class="n">isString</span><span class="p">]</span>
@@ -787,7 +786,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;length&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unsigned</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;unsigned&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">zerofill</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;zerofill&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-        <span class="n">SOCol</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">SOCol</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SOIntCol.autoConstraints"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SOIntCol.autoConstraints">[docs]</a>    <span class="k">def</span> <span class="nf">autoConstraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">constrs</span><span class="o">.</span><span class="n">isInt</span><span class="p">]</span></div>
@@ -954,7 +953,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">refColumn</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;refColumn&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOKeyCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOKeyCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_idType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idType</span>
@@ -983,7 +982,7 @@
 <span class="k">class</span> <span class="nc">ForeignKeyValidator</span><span class="p">(</span><span class="n">SOValidator</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ForeignKeyValidator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ForeignKeyValidator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fkIDType</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">from_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
@@ -1019,7 +1018,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">instanceAttrToIDAttr</span><span class="p">(</span>
                 <span class="n">style</span><span class="o">.</span><span class="n">pythonClassToAttr</span><span class="p">(</span><span class="n">foreignKey</span><span class="p">))</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOForeignKey</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOForeignKey</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SOForeignKey.createValidators"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SOForeignKey.createValidators">[docs]</a>    <span class="k">def</span> <span class="nf">createValidators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">ForeignKeyValidator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span> <span class="o">+</span> \
@@ -1168,7 +1167,7 @@
     <span class="n">baseClass</span> <span class="o">=</span> <span class="n">SOForeignKey</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">foreignKey</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">foreignKey</span><span class="o">=</span><span class="n">foreignKey</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">foreignKey</span><span class="o">=</span><span class="n">foreignKey</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
 
 
 <span class="k">class</span> <span class="nc">EnumValidator</span><span class="p">(</span><span class="n">SOValidator</span><span class="p">):</span>
@@ -1196,7 +1195,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">enumValues</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;enumValues&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">enumValues</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> \
             <span class="s1">&#39;You must provide an enumValues keyword argument&#39;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOEnumCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOEnumCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SOEnumCol.autoConstraints"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SOEnumCol.autoConstraints">[docs]</a>    <span class="k">def</span> <span class="nf">autoConstraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">constrs</span><span class="o">.</span><span class="n">isString</span><span class="p">,</span> <span class="n">constrs</span><span class="o">.</span><span class="n">InList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enumValues</span><span class="p">)]</span></div>
@@ -1286,7 +1285,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setValues</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;setValues&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">setValues</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> \
             <span class="s1">&#39;You must provide a setValues keyword argument&#39;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOSetCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOSetCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SOSetCol.autoConstraints"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SOSetCol.autoConstraints">[docs]</a>    <span class="k">def</span> <span class="nf">autoConstraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">constrs</span><span class="o">.</span><span class="n">isString</span><span class="p">,</span> <span class="n">constrs</span><span class="o">.</span><span class="n">InList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setValues</span><span class="p">)]</span></div>
@@ -1434,7 +1433,7 @@
         <span class="n">datetimeFormat</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;datetimeFormat&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">datetimeFormat</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">datetimeFormat</span> <span class="o">=</span> <span class="n">datetimeFormat</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SODateTimeCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SODateTimeCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SODateTimeCol.createValidators"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SODateTimeCol.createValidators">[docs]</a>    <span class="k">def</span> <span class="nf">createValidators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_validators</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SODateTimeCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">createValidators</span><span class="p">()</span>
@@ -1511,7 +1510,7 @@
         <span class="n">dateFormat</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dateFormat&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">dateFormat</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dateFormat</span> <span class="o">=</span> <span class="n">dateFormat</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SODateCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SODateCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SODateCol.createValidators"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SODateCol.createValidators">[docs]</a>    <span class="k">def</span> <span class="nf">createValidators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a validator for the column.</span>
@@ -1583,7 +1582,7 @@
         <span class="n">timeFormat</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;timeFormat&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">timeFormat</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">timeFormat</span> <span class="o">=</span> <span class="n">timeFormat</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOTimeCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOTimeCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SOTimeCol.createValidators"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SOTimeCol.createValidators">[docs]</a>    <span class="k">def</span> <span class="nf">createValidators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_validators</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SOTimeCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">createValidators</span><span class="p">()</span>
@@ -1636,7 +1635,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="k">if</span> <span class="s1">&#39;default&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
             <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">SOCol</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">SOCol</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_mysqlType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">can_use_microseconds</span><span class="p">():</span>
@@ -1729,7 +1728,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;precision&#39;</span><span class="p">,</span> <span class="n">NoDefault</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">NoDefault</span><span class="p">,</span> \
             <span class="s2">&quot;You must give a precision argument&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SODecimalCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SODecimalCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_sqlType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;DECIMAL(</span><span class="si">%i</span><span class="s1">, </span><span class="si">%i</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
@@ -1748,7 +1747,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="n">pushKey</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
         <span class="n">pushKey</span><span class="p">(</span><span class="n">kw</span><span class="p">,</span> <span class="s1">&#39;precision&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOCurrencyCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOCurrencyCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="CurrencyCol"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.CurrencyCol">[docs]</a><span class="k">class</span> <span class="nc">CurrencyCol</span><span class="p">(</span><span class="n">DecimalCol</span><span class="p">):</span>
@@ -1789,7 +1788,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">quantize</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;quantize&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quantize</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> \
             <span class="s2">&quot;quantize argument must be Boolean True/False&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SODecimalStringCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SODecimalStringCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SODecimalStringCol.createValidators"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SODecimalStringCol.createValidators">[docs]</a>    <span class="k">def</span> <span class="nf">createValidators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">quantize</span><span class="p">:</span>
@@ -1868,7 +1867,7 @@
         <span class="c1"># this is a (mostly) binary column</span>
         <span class="k">if</span> <span class="s1">&#39;varchar&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">:</span>
             <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;varchar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOBLOBCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOBLOBCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SOBLOBCol.createValidators"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SOBLOBCol.createValidators">[docs]</a>    <span class="k">def</span> <span class="nf">createValidators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">BinaryValidator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span> <span class="o">+</span> \
@@ -1936,7 +1935,7 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pickleProtocol</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;pickleProtocol&#39;</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SOPickleCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SOPickleCol</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SOPickleCol.createValidators"><a class="viewcode-back" href="../../api/sqlobject.col.html#sqlobject.col.SOPickleCol.createValidators">[docs]</a>    <span class="k">def</span> <span class="nf">createValidators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">PickleValidator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -2098,7 +2097,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

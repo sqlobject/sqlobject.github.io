@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -27,7 +28,6 @@
     <script type="text/javascript" src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -51,7 +51,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api/sqlobject.util.csvexport.txt"
+      <li><a href="../_sources/api/sqlobject.util.csvexport.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -80,14 +80,14 @@
 <dt id="sqlobject.util.csvexport.export_csv">
 <code class="descclassname">sqlobject.util.csvexport.</code><code class="descname">export_csv</code><span class="sig-paren">(</span><em>soClass</em>, <em>select=None</em>, <em>writer=None</em>, <em>connection=None</em>, <em>orderBy=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/util/csvexport.html#export_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.util.csvexport.export_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export the SQLObject class <code class="docutils literal"><span class="pre">soClass</span></code> to a CSV file.</p>
-<p><code class="docutils literal"><span class="pre">soClass</span></code> can also be a SelectResult object, as returned by
+<p><code class="docutils literal"><span class="pre">soClass</span></code> can also be a SelectResults object, as returned by
 <code class="docutils literal"><span class="pre">.select()</span></code>.  If it is a class, all objects will be retrieved,
 ordered by <code class="docutils literal"><span class="pre">orderBy</span></code> if given, or the <code class="docutils literal"><span class="pre">.csvOrderBy</span></code> attribute
 if present (but csvOrderBy will only be applied when no select
 result is given).</p>
 <p>You can also pass in select results (or simply a list of
 instances) in <code class="docutils literal"><span class="pre">select</span></code> &#8211; if you have a list of objects (not a
-SelectResult instance, as produced by <code class="docutils literal"><span class="pre">.select()</span></code>) then you must
+SelectResults instance, as produced by <code class="docutils literal"><span class="pre">.select()</span></code>) then you must
 pass it in with <code class="docutils literal"><span class="pre">select</span></code> and pass the class in as the first
 argument.</p>
 <p><code class="docutils literal"><span class="pre">writer</span></code> is a <code class="docutils literal"><span class="pre">csv.writer()</span></code> object, or a file-like object.
@@ -149,7 +149,7 @@ be a directory name, for instance).</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -93,9 +92,9 @@
     <span class="n">getlocation</span><span class="p">,</span> <span class="n">enum</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">cutdir1</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">pluggy</span><span class="o">.</span><span class="n">__file__</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;oc&quot;</span><span class="p">))</span>
-<span class="n">cutdir2</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">_pytest</span><span class="o">.</span><span class="n">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">dirpath</span><span class="p">()</span>
-<span class="n">cutdir3</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">py</span><span class="o">.</span><span class="n">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">dirpath</span><span class="p">()</span>
+<span class="n">cutdir1</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">pluggy</span><span class="o">.</span><span class="vm">__file__</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;oc&quot;</span><span class="p">))</span>
+<span class="n">cutdir2</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">_pytest</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">dirpath</span><span class="p">()</span>
+<span class="n">cutdir3</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">local</span><span class="p">(</span><span class="n">py</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">dirpath</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">filter_traceback</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
@@ -172,7 +171,7 @@
     <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">alt_spellings</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">metafunc</span><span class="o">.</span><span class="n">function</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> has &#39;</span><span class="si">{1}</span><span class="s2">&#39;, spelling should be &#39;parametrize&#39;&quot;</span>
-            <span class="k">raise</span> <span class="n">MarkerError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metafunc</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">MarkerError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metafunc</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">markers</span> <span class="o">=</span> <span class="n">metafunc</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">parametrize</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
@@ -275,7 +274,7 @@
 
 <span class="k">class</span> <span class="nc">PyobjContext</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">module</span> <span class="o">=</span> <span class="n">pyobj_property</span><span class="p">(</span><span class="s2">&quot;Module&quot;</span><span class="p">)</span>
-    <span class="n">cls</span> <span class="o">=</span> <span class="n">pyobj_property</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+    <span class="bp">cls</span> <span class="o">=</span> <span class="n">pyobj_property</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
     <span class="n">instance</span> <span class="o">=</span> <span class="n">pyobj_property</span><span class="p">(</span><span class="s2">&quot;Instance&quot;</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">PyobjMixin</span><span class="p">(</span><span class="n">PyobjContext</span><span class="p">):</span>
@@ -326,7 +325,7 @@
         <span class="n">compat_co_firstlineno</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;compat_co_firstlineno&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">compat_co_firstlineno</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="c1"># nose compatibility</span>
-            <span class="n">fspath</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">__module__</span><span class="p">]</span><span class="o">.</span><span class="n">__file__</span>
+            <span class="n">fspath</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span><span class="o">.</span><span class="vm">__file__</span>
             <span class="k">if</span> <span class="n">fspath</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.pyc&quot;</span><span class="p">):</span>
                 <span class="n">fspath</span> <span class="o">=</span> <span class="n">fspath</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">lineno</span> <span class="o">=</span> <span class="n">compat_co_firstlineno</span>
@@ -385,8 +384,8 @@
         <span class="c1"># NB. we avoid random getattrs and peek in the __dict__ instead</span>
         <span class="c1"># (XXX originally introduced from a PyPy need, still true?)</span>
         <span class="n">dicts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__dict__&#39;</span><span class="p">,</span> <span class="p">{})]</span>
-        <span class="k">for</span> <span class="n">basecls</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="p">):</span>
-            <span class="n">dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">basecls</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">basecls</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="n">dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">basecls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
         <span class="n">seen</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">dic</span> <span class="ow">in</span> <span class="n">dicts</span><span class="p">:</span>
@@ -411,17 +410,17 @@
     <span class="k">def</span> <span class="nf">_genfunctions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">funcobj</span><span class="p">):</span>
         <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getparent</span><span class="p">(</span><span class="n">Module</span><span class="p">)</span><span class="o">.</span><span class="n">obj</span>
         <span class="n">clscol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getparent</span><span class="p">(</span><span class="n">Class</span><span class="p">)</span>
-        <span class="n">cls</span> <span class="o">=</span> <span class="n">clscol</span> <span class="ow">and</span> <span class="n">clscol</span><span class="o">.</span><span class="n">obj</span> <span class="ow">or</span> <span class="kc">None</span>
-        <span class="n">transfer_markers</span><span class="p">(</span><span class="n">funcobj</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="n">clscol</span> <span class="ow">and</span> <span class="n">clscol</span><span class="o">.</span><span class="n">obj</span> <span class="ow">or</span> <span class="kc">None</span>
+        <span class="n">transfer_markers</span><span class="p">(</span><span class="n">funcobj</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span>
         <span class="n">fm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">_fixturemanager</span>
-        <span class="n">fixtureinfo</span> <span class="o">=</span> <span class="n">fm</span><span class="o">.</span><span class="n">getfixtureinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">funcobj</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>
+        <span class="n">fixtureinfo</span> <span class="o">=</span> <span class="n">fm</span><span class="o">.</span><span class="n">getfixtureinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">funcobj</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
         <span class="n">metafunc</span> <span class="o">=</span> <span class="n">Metafunc</span><span class="p">(</span><span class="n">funcobj</span><span class="p">,</span> <span class="n">fixtureinfo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
-                            <span class="n">cls</span><span class="o">=</span><span class="n">cls</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">)</span>
+                            <span class="bp">cls</span><span class="o">=</span><span class="bp">cls</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">)</span>
         <span class="n">methods</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;pytest_generate_tests&quot;</span><span class="p">):</span>
             <span class="n">methods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">pytest_generate_tests</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s2">&quot;pytest_generate_tests&quot;</span><span class="p">):</span>
-            <span class="n">methods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cls</span><span class="p">()</span><span class="o">.</span><span class="n">pytest_generate_tests</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s2">&quot;pytest_generate_tests&quot;</span><span class="p">):</span>
+            <span class="n">methods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">cls</span><span class="p">()</span><span class="o">.</span><span class="n">pytest_generate_tests</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">methods</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ihook</span><span class="o">.</span><span class="n">pytest_generate_tests</span><span class="o">.</span><span class="n">call_extra</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span>
                                                         <span class="nb">dict</span><span class="p">(</span><span class="n">metafunc</span><span class="o">=</span><span class="n">metafunc</span><span class="p">))</span>
@@ -457,10 +456,10 @@
     <span class="k">return</span> <span class="n">mark</span><span class="o">.</span><span class="n">args</span> <span class="o">==</span> <span class="n">func_mark</span><span class="o">.</span><span class="n">args</span> <span class="ow">and</span> <span class="n">mark</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">==</span> <span class="n">func_mark</span><span class="o">.</span><span class="n">kwargs</span>
 
 
-<span class="k">def</span> <span class="nf">transfer_markers</span><span class="p">(</span><span class="n">funcobj</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">mod</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">transfer_markers</span><span class="p">(</span><span class="n">funcobj</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">mod</span><span class="p">):</span>
     <span class="c1"># XXX this should rather be code in the mark plugin or the mark</span>
     <span class="c1"># plugin should merge with the python plugin.</span>
-    <span class="k">for</span> <span class="n">holder</span> <span class="ow">in</span> <span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">mod</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">holder</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">mod</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">pytestmark</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">pytestmark</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
@@ -551,7 +550,7 @@
     <span class="n">param_obj</span> <span class="o">=</span> <span class="n">param_obj</span> <span class="k">if</span> <span class="n">param_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">holder</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">_get_xunit_func</span><span class="p">(</span><span class="n">holder</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">arg_count</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">__code__</span><span class="o">.</span><span class="n">co_argcount</span>
+        <span class="n">arg_count</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="vm">__code__</span><span class="o">.</span><span class="n">co_argcount</span>
         <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
             <span class="n">arg_count</span> <span class="o">-=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">arg_count</span><span class="p">:</span>
@@ -575,11 +574,11 @@
     <span class="k">def</span> <span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">hasinit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="s2">&quot;cannot collect test class </span><span class="si">%r</span><span class="s2"> because it has a &quot;</span>
-                <span class="s2">&quot;__init__ constructor&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+                <span class="s2">&quot;__init__ constructor&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">[]</span>
         <span class="k">elif</span> <span class="n">hasnew</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="s2">&quot;cannot collect test class </span><span class="si">%r</span><span class="s2"> because it has a &quot;</span>
-                            <span class="s2">&quot;__new__ constructor&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+                            <span class="s2">&quot;__new__ constructor&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_getcustomclass</span><span class="p">(</span><span class="s2">&quot;Instance&quot;</span><span class="p">)(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;()&quot;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)]</span>
 
@@ -713,13 +712,13 @@
 <span class="k">def</span> <span class="nf">hasinit</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
     <span class="n">init</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">init</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">init</span> <span class="o">!=</span> <span class="nb">object</span><span class="o">.</span><span class="n">__init__</span>
+        <span class="k">return</span> <span class="n">init</span> <span class="o">!=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__init__</span>
 
 
 <span class="k">def</span> <span class="nf">hasnew</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
     <span class="n">new</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__new__&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">new</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">new</span> <span class="o">!=</span> <span class="nb">object</span><span class="o">.</span><span class="n">__new__</span>
+        <span class="k">return</span> <span class="n">new</span> <span class="o">!=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span>
 
 
 <span class="k">class</span> <span class="nc">CallSpec2</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -795,7 +794,7 @@
 <span class="sd">    test configuration or values specified in the class or module where a</span>
 <span class="sd">    test function is defined.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">fixtureinfo</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">fixtureinfo</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1">#: access to the :class:`_pytest.config.Config` object for the test session</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
 
@@ -809,7 +808,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fixturenames</span> <span class="o">=</span> <span class="n">fixtureinfo</span><span class="o">.</span><span class="n">names_closure</span>
 
         <span class="c1">#: class object where the test function is defined in or ``None``.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="n">cls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="bp">cls</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_calls</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ids</span> <span class="o">=</span> <span class="n">py</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
@@ -877,7 +876,7 @@
             <span class="n">fs</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="n">getfslineno</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">)</span>
             <span class="n">newmark</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span>
                 <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;got empty parameter set </span><span class="si">%r</span><span class="s2">, function </span><span class="si">%s</span><span class="s2"> at </span><span class="si">%s</span><span class="s2">:</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                    <span class="n">argnames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">lineno</span><span class="p">))</span>
+                    <span class="n">argnames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">lineno</span><span class="p">))</span>
             <span class="n">newkeywords</span> <span class="o">=</span> <span class="p">[{</span><span class="n">newmark</span><span class="o">.</span><span class="n">markname</span><span class="p">:</span> <span class="n">newmark</span><span class="p">}]</span>
 
         <span class="k">if</span> <span class="n">scope</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -918,7 +917,7 @@
             <span class="k">for</span> <span class="n">id_value</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">id_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">id_value</span><span class="p">,</span> <span class="n">py</span><span class="o">.</span><span class="n">builtin</span><span class="o">.</span><span class="n">_basestring</span><span class="p">):</span>
                     <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;ids must be list of strings, found: </span><span class="si">%s</span><span class="s1"> (type: </span><span class="si">%s</span><span class="s1">)&#39;</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span> <span class="o">%</span> <span class="p">(</span><span class="n">saferepr</span><span class="p">(</span><span class="n">id_value</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_value</span><span class="p">)</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span> <span class="o">%</span> <span class="p">(</span><span class="n">saferepr</span><span class="p">(</span><span class="n">id_value</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">id_value</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
         <span class="n">ids</span> <span class="o">=</span> <span class="n">idmaker</span><span class="p">(</span><span class="n">argnames</span><span class="p">,</span> <span class="n">argvalues</span><span class="p">,</span> <span class="n">idfn</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
         <span class="n">newcalls</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">callspec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calls</span> <span class="ow">or</span> <span class="p">[</span><span class="n">CallSpec2</span><span class="p">(</span><span class="bp">self</span><span class="p">)]:</span>
@@ -1017,7 +1016,7 @@
     <span class="k">elif</span> <span class="n">enum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">isclass</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="vm">__name__</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">argname</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">_idvalset</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">valset</span><span class="p">,</span> <span class="n">argnames</span><span class="p">,</span> <span class="n">idfn</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1071,7 +1070,7 @@
         <span class="n">tw</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">funcargspec</span><span class="p">,</span> <span class="n">green</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="n">INDENT</span> <span class="o">=</span> <span class="s1">&#39;    </span><span class="si">{0}</span><span class="s1">&#39;</span>
-        <span class="n">fixture_doc</span> <span class="o">=</span> <span class="n">fixture_def</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">__doc__</span>
+        <span class="n">fixture_doc</span> <span class="o">=</span> <span class="n">fixture_def</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span>
 
         <span class="k">if</span> <span class="n">fixture_doc</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fixture_doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
@@ -1128,7 +1127,7 @@
                 <span class="k">continue</span>
             <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">fixturedef</span><span class="o">.</span><span class="n">argname</span><span class="p">,</span> <span class="n">loc</span><span class="p">))</span>
             <span class="n">available</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">fixturedef</span><span class="o">.</span><span class="n">baseid</span><span class="p">),</span>
-                              <span class="n">fixturedef</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">__module__</span><span class="p">,</span>
+                              <span class="n">fixturedef</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
                               <span class="n">curdir</span><span class="o">.</span><span class="n">bestrelpath</span><span class="p">(</span><span class="n">loc</span><span class="p">),</span>
                               <span class="n">fixturedef</span><span class="o">.</span><span class="n">argname</span><span class="p">,</span> <span class="n">fixturedef</span><span class="p">))</span>
 
@@ -1148,7 +1147,7 @@
             <span class="n">funcargspec</span> <span class="o">=</span> <span class="n">argname</span>
         <span class="n">tw</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">funcargspec</span><span class="p">,</span> <span class="n">green</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">loc</span> <span class="o">=</span> <span class="n">getlocation</span><span class="p">(</span><span class="n">fixturedef</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">curdir</span><span class="p">)</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="n">fixturedef</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">__doc__</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">fixturedef</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
         <span class="k">if</span> <span class="n">doc</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
                 <span class="n">tw</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;    &quot;</span> <span class="o">+</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
@@ -1296,7 +1295,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">_pytest</span><span class="o">.</span><span class="n">_code</span><span class="o">.</span><span class="n">ExceptionInfo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">_pytest</span><span class="o">.</span><span class="n">_code</span><span class="o">.</span><span class="n">ExceptionInfo</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span>
 
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">tp</span><span class="p">):</span>
@@ -1310,7 +1309,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="ne">BaseException</span><span class="p">):</span>
                 <span class="n">exc_type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span> <span class="o">=</span> <span class="n">tp</span>
                 <span class="n">tp</span> <span class="o">=</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">traceback</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
         <span class="n">suppress_exception</span> <span class="o">=</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">excinfo</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_exception</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">suppress_exception</span><span class="p">:</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exc_clear</span><span class="p">()</span>
@@ -1449,7 +1448,7 @@
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">x</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">))</span>
 
-    <span class="n">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="fm">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="n">actual</span> <span class="o">==</span> <span class="bp">self</span><span class="p">)</span>
@@ -1508,7 +1507,7 @@
         <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> +- </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">,</span> <span class="n">vetted_tolerance</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">u&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="se">\u00b1</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">,</span> <span class="n">vetted_tolerance</span><span class="p">)</span>
+            <span class="k">return</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="se">\u00b1</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">,</span> <span class="n">vetted_tolerance</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">):</span>
         <span class="c1"># Short-circuit exact equality.</span>
@@ -1527,7 +1526,7 @@
         <span class="c1"># Return true if the two numbers are within the tolerance.</span>
         <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span> <span class="o">-</span> <span class="n">actual</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span>
 
-    <span class="n">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="fm">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actual</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="n">actual</span> <span class="o">==</span> <span class="bp">self</span><span class="p">)</span>
@@ -1538,7 +1537,7 @@
 
         <span class="c1"># Figure out what the absolute tolerance should be.  ``self.abs`` is</span>
         <span class="c1"># either None or a value specified by the user.</span>
-        <span class="n">absolute_tolerance</span> <span class="o">=</span> <span class="n">set_default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">absolute_tolerance</span> <span class="o">=</span> <span class="n">set_default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="mf">1e-12</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">absolute_tolerance</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;absolute tolerance can&#39;t be negative: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">absolute_tolerance</span><span class="p">))</span>
@@ -1556,7 +1555,7 @@
         <span class="c1"># we&#39;ve made sure the user didn&#39;t ask for an absolute tolerance only,</span>
         <span class="c1"># because we don&#39;t want to raise errors about the relative tolerance if</span>
         <span class="c1"># we aren&#39;t even going to use it.</span>
-        <span class="n">relative_tolerance</span> <span class="o">=</span> <span class="n">set_default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rel</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">)</span>
+        <span class="n">relative_tolerance</span> <span class="o">=</span> <span class="n">set_default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rel</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expected</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">relative_tolerance</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;relative tolerance can&#39;t be negative: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">absolute_tolerance</span><span class="p">))</span>
@@ -1579,13 +1578,13 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">callspec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callobj</span><span class="o">=</span><span class="n">NOTSET</span><span class="p">,</span> <span class="n">keywords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">fixtureinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">originalname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Function</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Function</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
                                        <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="k">if</span> <span class="n">callobj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">NOTSET</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">callobj</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">callspec</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">callspec</span> <span class="o">=</span> <span class="n">callspec</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">callspec</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
@@ -1669,7 +1668,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -209,8 +208,8 @@
     <span class="n">connectionURI</span> <span class="o">=</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">StringCol</span><span class="p">(</span><span class="n">notNull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">installOrClear</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClasses</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">installOrClear</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">soClasses</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
         <span class="nb">reversed</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">soClasses</span><span class="p">)[:]</span>
         <span class="nb">reversed</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
         <span class="c1"># If anything needs to be dropped, they all must be dropped</span>
@@ -223,7 +222,7 @@
             <span class="n">table</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
                 <span class="k">continue</span>
-            <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span>
                 <span class="n">table_name</span><span class="o">=</span><span class="n">table</span><span class="p">,</span>
                 <span class="n">connectionURI</span><span class="o">=</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">uri</span><span class="p">()))</span>
             <span class="k">if</span> <span class="n">items</span><span class="p">:</span>
@@ -240,16 +239,16 @@
         <span class="k">for</span> <span class="n">soClass</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">any_drops</span><span class="p">:</span>
-                    <span class="n">cls</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+                    <span class="bp">cls</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">cls</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+                    <span class="bp">cls</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">soClass</span> <span class="ow">in</span> <span class="n">soClasses</span><span class="p">:</span>
             <span class="n">table</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
-                <span class="n">cls</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates the given table in its database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -262,14 +261,14 @@
             <span class="n">sql</span><span class="p">,</span> <span class="n">extra_sql</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">createTableSQL</span><span class="p">()</span>
             <span class="n">soClass</span><span class="o">.</span><span class="n">createTable</span><span class="p">(</span><span class="n">applyConstraints</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">all_extra</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">extra_sql</span><span class="p">)</span>
-        <span class="n">cls</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+        <span class="bp">cls</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
             <span class="n">createSQL</span><span class="o">=</span><span class="n">sql</span><span class="p">,</span>
             <span class="n">connectionURI</span><span class="o">=</span><span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">uri</span><span class="p">())</span>
         <span class="k">for</span> <span class="n">extra_sql</span> <span class="ow">in</span> <span class="n">all_extra</span><span class="p">:</span>
             <span class="n">soClass</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">extra_sql</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Drops a the given table from its database</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -280,19 +279,19 @@
             <span class="n">soClass</span><span class="o">.</span><span class="n">dropTable</span><span class="p">()</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes all the rows from a table.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">soClass</span><span class="o">.</span><span class="n">clearTable</span><span class="p">()</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This sets up *this* table.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">):</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">createTable</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">):</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">createTable</span><span class="p">()</span>
 
 <span class="n">installOrClear</span> <span class="o">=</span> <span class="n">InstalledTestDatabase</span><span class="o">.</span><span class="n">installOrClear</span>
 
@@ -308,7 +307,7 @@
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="inserts"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.inserts">[docs]</a><span class="k">def</span> <span class="nf">inserts</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="inserts"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.inserts">[docs]</a><span class="k">def</span> <span class="nf">inserts</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a bunch of rows.</span>
 
@@ -336,7 +335,7 @@
         <span class="n">data</span> <span class="o">=</span> <span class="n">keywordData</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cls</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">))</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">results</span></div>
 
 
@@ -383,7 +382,7 @@
 <div class="viewcode-block" id="setup_module"><a class="viewcode-back" href="../../../api/sqlobject.tests.dbtest.html#sqlobject.tests.dbtest.setup_module">[docs]</a><span class="k">def</span> <span class="nf">setup_module</span><span class="p">(</span><span class="n">mod</span><span class="p">):</span>
     <span class="c1"># modules with &#39;_old&#39; test backward compatible methods, so they</span>
     <span class="c1"># don&#39;t get warnings or errors.</span>
-    <span class="n">mod_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="n">mod_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">mod_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/py&#39;</span><span class="p">):</span>
         <span class="n">mod_name</span> <span class="o">=</span> <span class="n">mod_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">mod_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_old&#39;</span><span class="p">):</span>
@@ -451,7 +450,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

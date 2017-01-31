@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -266,7 +265,7 @@
         <span class="k">def</span> <span class="nf">SQLiteConnectionFactory</span><span class="p">(</span><span class="n">sqlite</span><span class="p">):</span>
             <span class="k">class</span> <span class="nc">MyConnection</span><span class="p">(</span><span class="n">sqlite</span><span class="o">.</span><span class="n">Connection</span><span class="p">):</span>
                 <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-                    <span class="nb">super</span><span class="p">(</span><span class="n">MyConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                    <span class="nb">super</span><span class="p">(</span><span class="n">MyConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">create_function</span><span class="p">(</span><span class="s2">&quot;regexp&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">regexp</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">MyConnection</span>
 
@@ -283,7 +282,7 @@
 <div class="viewcode-block" id="test_select_sqlbuilder"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_select_sqlbuilder">[docs]</a><span class="k">def</span> <span class="nf">test_select_sqlbuilder</span><span class="p">():</span>
     <span class="n">setupClass</span><span class="p">(</span><span class="n">IterTest</span><span class="p">)</span>
     <span class="n">IterTest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;sqlobject&#39;</span><span class="p">)</span>
-    <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">u&#39;sqlobject&#39;</span><span class="p">)</span></div>
+    <span class="n">IterTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">IterTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa">u</span><span class="s1">&#39;sqlobject&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_select_perConnection"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_select.html#sqlobject.tests.test_select.test_select_perConnection">[docs]</a><span class="k">def</span> <span class="nf">test_select_perConnection</span><span class="p">():</span>
@@ -312,7 +311,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

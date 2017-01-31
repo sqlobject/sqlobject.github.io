@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -27,7 +28,6 @@
     <script type="text/javascript" src="_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
     <link rel="next" title="The sqlobject-admin Tool" href="sqlobject-admin.html" />
     <link rel="prev" title="SQLBuilder" href="SQLBuilder.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -99,7 +99,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/SelectResults.txt"
+      <li><a href="_sources/SelectResults.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -160,13 +160,14 @@
 </div>
 <div class="section" id="overview">
 <h2><a class="toc-backref" href="#id2">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>SelectResults are returned from <code class="docutils literal"><span class="pre">.select</span></code> and <code class="docutils literal"><span class="pre">.selectBy</span></code> methods on SQLObject classes, and from <code class="docutils literal"><span class="pre">SQLMultipleJoin</span></code>, and <code class="docutils literal"><span class="pre">SQLRelatedJoin</span></code> accessors on SQLObject instances.</p>
-<p>Select results are generators, which are lazily evaluated.  The SQL
-is only executed when you iterate over the select results, fetching
-rows one at a time.  This way you
-can iterate over large results without keeping the entire result set
-in memory. You can also do things like <code class="docutils literal"><span class="pre">.reversed()</span></code> without
-fetching and reversing the entire result &#8211; instead, SQLObject can
+<p>SelectResults are returned from <code class="docutils literal"><span class="pre">.select</span></code> and <code class="docutils literal"><span class="pre">.selectBy</span></code> methods on
+SQLObject classes, and from <code class="docutils literal"><span class="pre">SQLMultipleJoin</span></code>, and <code class="docutils literal"><span class="pre">SQLRelatedJoin</span></code>
+accessors on SQLObject instances.</p>
+<p>SelectResults are generators, which are lazily evaluated.  The SQL is only
+executed when you iterate over the SelectResults, fetching rows one at a
+time.  This way you can iterate over large results without keeping the
+entire result set in memory. You can also do things like <code class="docutils literal"><span class="pre">.reversed()</span></code>
+without fetching and reversing the entire result &#8211; instead, SQLObject can
 change the SQL that is sent so you get equivalent results.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -174,16 +175,16 @@ change the SQL that is sent so you get equivalent results.</p>
 of calling <code class="docutils literal"><span class="pre">list()</span></code> on the generator to force execution
 and convert the results to a stored list.</p>
 </div>
-<p>You can also slice select results.  This modifies the SQL query, so
+<p>You can also slice SelectResults.  This modifies the SQL query, so
 <code class="docutils literal"><span class="pre">peeps[:10]</span></code> will result in <code class="docutils literal"><span class="pre">LIMIT</span> <span class="pre">10</span></code> being added to the end of
 the SQL query.  If the slice cannot be performed in the SQL (e.g.,
 peeps[:-10]), then the select is executed, and the slice is performed
 on the list of results.  This will generally only happen when you use
 negative indexes.</p>
-<p>In certain cases, you may get a select result with an object in it
-more than once, e.g., in some joins.  If you don&#8217;t want this, you can
-add the keyword argument <code class="docutils literal"><span class="pre">MyClass.select(...,</span> <span class="pre">distinct=True)</span></code>, which
-results in a <code class="docutils literal"><span class="pre">SELECT</span> <span class="pre">DISTINCT</span></code> call.</p>
+<p>In certain cases, you may get a SelectResults instance with an object in it
+more than once, e.g., in some joins.  If you don&#8217;t want this, you can add
+the keyword argument <code class="docutils literal"><span class="pre">MyClass.select(...,</span> <span class="pre">distinct=True)</span></code>, which results
+in a <code class="docutils literal"><span class="pre">SELECT</span> <span class="pre">DISTINCT</span></code> call.</p>
 <p>You can get the length of the result without fetching all the results
 by calling <code class="docutils literal"><span class="pre">count</span></code> on the result object, like
 <code class="docutils literal"><span class="pre">MyClass.select().count()</span></code>.  A <code class="docutils literal"><span class="pre">COUNT(*)</span></code> query is used &#8211; the
@@ -239,7 +240,7 @@ a default like <code class="docutils literal"><span class="pre">.getOne(None)</s
 </div>
 <div class="section" id="cloning-methods">
 <h2><a class="toc-backref" href="#id6">Cloning Methods</a><a class="headerlink" href="#cloning-methods" title="Permalink to this headline">¶</a></h2>
-<p>These methods return a modified copy of the SelectResult instance
+<p>These methods return a modified copy of the SelectResults instance
 they are called on, so successive calls can chained, eg
 <code class="docutils literal"><span class="pre">results</span> <span class="pre">=</span> <span class="pre">MyClass.selectBy(city='Boston').filter(MyClass.q.commute_distance&gt;10).orderBy('vehicle_mileage')</span></code>
 or used independently later on.</p>
@@ -311,15 +312,15 @@ in the same manner as the cloning methods above. For instance:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Schools</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Schools</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">student_satisfaction</span><span class="o">&gt;</span><span class="mi">90</span><span class="p">)</span><span class="o">.</span><span class="n">throughTo</span><span class="o">.</span><span class="n">teachers</span>
 </pre></div>
 </div>
-<p>returns a SelectResult of Teachers of Schools with satisfied students,
+<p>returns a SelectResults of Teachers of Schools with satisfied students,
 assuming Schools has a SQLMultipleJoin or SQLRelatedJoin attribute
 named <code class="docutils literal"><span class="pre">teachers</span></code>. Similarily, with a self-joining foreign key named
 <code class="docutils literal"><span class="pre">father</span></code>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Person</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="s1">&#39;Steve&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">throughTo</span><span class="o">.</span><span class="n">father</span><span class="o">.</span><span class="n">throughTo</span><span class="o">.</span><span class="n">father</span>
 </pre></div>
 </div>
-<p>returns a SelectResult of Persons who are the paternal grandfather of someone
-named <code class="docutils literal"><span class="pre">Steve</span></code>.</p>
+<p>returns a SelectResults of Persons who are the paternal grandfather of
+someone named <code class="docutils literal"><span class="pre">Steve</span></code>.</p>
 <a class="reference external image-reference" href="https://sourceforge.net/projects/sqlobject"><img alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" class="noborder align-center" src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" style="width: 80px; height: 15px;" /></a>
 </div>
 </div>
@@ -351,7 +352,7 @@ named <code class="docutils literal"><span class="pre">Steve</span></code>.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

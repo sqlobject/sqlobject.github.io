@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../../index.html" />
-    <link rel="up" title="sqlobject.mysql" href="../mysql.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -76,11 +75,11 @@
 
 
 <div class="viewcode-block" id="ErrorMessage"><a class="viewcode-back" href="../../../api/sqlobject.mysql.mysqlconnection.html#sqlobject.mysql.mysqlconnection.ErrorMessage">[docs]</a><span class="k">class</span> <span class="nc">ErrorMessage</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">append_msg</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">append_msg</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">append_msg</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">append_msg</span><span class="p">)</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">__module__</span>
-        <span class="n">obj</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="vm">__module__</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
 <span class="n">mysql_Bin</span> <span class="o">=</span> <span class="kc">None</span>
@@ -182,11 +181,11 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_server_version</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_microseconds</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">DBAPI</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">DBAPI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_connectionFromParams</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">),</span>
+    <span class="k">def</span> <span class="nf">_connectionFromParams</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">),</span>
                    <span class="n">user</span><span class="o">=</span><span class="n">user</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                    <span class="n">host</span><span class="o">=</span><span class="n">host</span> <span class="ow">or</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
 
@@ -212,7 +211,7 @@
         <span class="k">except</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">OperationalError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">conninfo</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;; used connection string: &quot;</span>
                         <span class="s2">&quot;host=</span><span class="si">%(host)s</span><span class="s2">, port=</span><span class="si">%(port)s</span><span class="s2">, &quot;</span>
-                        <span class="s2">&quot;db=</span><span class="si">%(db)s</span><span class="s2">, user=</span><span class="si">%(user)s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+                        <span class="s2">&quot;db=</span><span class="si">%(db)s</span><span class="s2">, user=</span><span class="si">%(user)s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">dberrors</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">(</span><span class="n">ErrorMessage</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">conninfo</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_setAutoCommit</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span><span class="p">))</span>
@@ -312,7 +311,7 @@
         <span class="k">return</span> <span class="nb">id</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_queryAddLimitOffset</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_queryAddLimitOffset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">start</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> LIMIT </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">end</span><span class="p">:</span>
@@ -516,7 +515,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

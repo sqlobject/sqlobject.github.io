@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -27,8 +28,6 @@
     <script type="text/javascript" src="../../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!--[if lt IE 9]>
     <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
@@ -154,7 +153,7 @@
                     <span class="n">tablesSet</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">currentClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">))</span>
             <span class="n">clause</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">AND</span><span class="p">,</span> <span class="n">parentClause</span><span class="p">,</span> <span class="n">clause</span><span class="p">)</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">InheritableSelectResults</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">InheritableSelectResults</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">sourceClass</span><span class="p">,</span> <span class="n">clause</span><span class="p">,</span> <span class="n">clauseTables</span><span class="p">,</span> <span class="o">**</span><span class="n">ops</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">accumulateMany</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
@@ -165,7 +164,7 @@
         <span class="k">for</span> <span class="n">func_name</span><span class="p">,</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">string_type</span><span class="p">):</span>
                 <span class="n">tables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">tableName</span><span class="p">)</span>
-        <span class="n">clone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">clause</span><span class="p">,</span>
+        <span class="n">clone</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sourceClass</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">clause</span><span class="p">,</span>
                                <span class="bp">self</span><span class="o">.</span><span class="n">clauseTables</span><span class="p">,</span> <span class="n">inheritedTables</span><span class="o">=</span><span class="n">tables</span><span class="p">,</span>
                                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">ops</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">clone</span><span class="o">.</span><span class="n">accumulateMany</span><span class="p">(</span><span class="n">skipInherited</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">)</span>
@@ -325,70 +324,70 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">SQLObject</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__classinit__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
-        <span class="n">SQLObject</span><span class="o">.</span><span class="n">__classinit__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__classinit__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">):</span>
+        <span class="n">SQLObject</span><span class="o">.</span><span class="n">__classinit__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">)</span>
         <span class="c1"># if we are a child class, add sqlbuilder fields from parents</span>
-        <span class="n">currentClass</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span>
+        <span class="n">currentClass</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span>
         <span class="k">while</span> <span class="n">currentClass</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">currentClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnDefinitions</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;childName&#39;</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">):</span>
                     <span class="k">continue</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                         <span class="nb">getattr</span><span class="p">(</span><span class="n">currentClass</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
             <span class="n">currentClass</span> <span class="o">=</span> <span class="n">currentClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_SO_setupSqlmeta</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">is_base</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_SO_setupSqlmeta</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">new_attrs</span><span class="p">,</span> <span class="n">is_base</span><span class="p">):</span>
         <span class="c1"># Note: cannot use super(InheritableSQLObject, cls)._SO_setupSqlmeta -</span>
         <span class="c1">#       InheritableSQLObject is not defined when it&#39;s __classinit__</span>
         <span class="c1">#       is run.  Cannot use SQLObject._SO_setupSqlmeta, either:</span>
         <span class="c1">#       the method would be bound to wrong class.</span>
-        <span class="k">if</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;InheritableSQLObject&quot;</span><span class="p">:</span>
-            <span class="n">call_super</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;InheritableSQLObject&quot;</span><span class="p">:</span>
+            <span class="n">call_super</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># InheritableSQLObject must be in globals yet</span>
-            <span class="n">call_super</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>
+            <span class="n">call_super</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
         <span class="n">call_super</span><span class="o">.</span><span class="n">_SO_setupSqlmeta</span><span class="p">(</span><span class="n">new_attrs</span><span class="p">,</span> <span class="n">is_base</span><span class="p">)</span>
-        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span>
+        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span>
         <span class="n">sqlmeta</span><span class="o">.</span><span class="n">childClasses</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># locate parent class and register this class in it&#39;s children</span>
         <span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">for</span> <span class="n">superclass</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">__bases__</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">superclass</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">superclass</span><span class="p">,</span> <span class="s1">&#39;_inheritable&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> \
-                    <span class="ow">and</span> <span class="p">(</span><span class="n">superclass</span><span class="o">.</span><span class="n">__name__</span> <span class="o">!=</span> <span class="s1">&#39;InheritableSQLObject&#39;</span><span class="p">):</span>
+                    <span class="ow">and</span> <span class="p">(</span><span class="n">superclass</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">!=</span> <span class="s1">&#39;InheritableSQLObject&#39;</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span><span class="p">:</span>
                     <span class="c1"># already have a parent class;</span>
                     <span class="c1"># cannot inherit from more than one</span>
                     <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
                         <span class="s2">&quot;Multiple inheritance is not implemented&quot;</span><span class="p">)</span>
                 <span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span> <span class="o">=</span> <span class="n">superclass</span>
-                <span class="n">superclass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">childClasses</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">cls</span>
+                <span class="n">superclass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">childClasses</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
         <span class="k">if</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span><span class="p">:</span>
             <span class="c1"># remove inherited column definitions</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnDefinitions</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnDefinitions</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="c1"># default inheritance child name</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">childName</span><span class="p">:</span>
-                <span class="n">sqlmeta</span><span class="o">.</span><span class="n">childName</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span>
+                <span class="n">sqlmeta</span><span class="o">.</span><span class="n">childName</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="InheritableSQLObject.get"><a class="viewcode-back" href="../../api/sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectResults</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="InheritableSQLObject.get"><a class="viewcode-back" href="../../api/sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selectResults</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">childResults</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">childUpdate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
-        <span class="n">val</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span>
                                                    <span class="n">selectResults</span><span class="p">)</span>
 
         <span class="c1"># DSM: If we are updating a child, we should never return a child...</span>
         <span class="k">if</span> <span class="n">childUpdate</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">val</span>
         <span class="c1"># DSM: If this class has a child, return the child</span>
-        <span class="k">if</span> <span class="s1">&#39;childName&#39;</span> <span class="ow">in</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;childName&#39;</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
             <span class="n">childName</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">childName</span>
             <span class="k">if</span> <span class="n">childName</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">childClass</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">childClasses</span><span class="p">[</span><span class="n">childName</span><span class="p">]</span>
+                <span class="n">childClass</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">childClasses</span><span class="p">[</span><span class="n">childName</span><span class="p">]</span>
                 <span class="c1"># If the class has no columns (which sometimes makes sense</span>
                 <span class="c1"># and may be true for non-inheritable (leaf) classes only),</span>
                 <span class="c1"># shunt the query to avoid almost meaningless SQL</span>
@@ -411,8 +410,8 @@
         <span class="k">return</span> <span class="n">val</span></div>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_notifyFinishClassCreation</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span>
+    <span class="k">def</span> <span class="nf">_notifyFinishClassCreation</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">sqlmeta</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span>
         <span class="c1"># verify names of added columns</span>
         <span class="k">if</span> <span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span><span class="p">:</span>
             <span class="c1"># FIXME: this does not check for grandparent column overrides</span>
@@ -426,7 +425,7 @@
                         <span class="s2">&quot;The column &#39;</span><span class="si">%s</span><span class="s2">&#39; is already defined &quot;</span>
                         <span class="s2">&quot;in an inheritable parent&quot;</span> <span class="o">%</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="c1"># if this class is inheritable, add column for children distinction</span>
-        <span class="k">if</span> <span class="n">cls</span><span class="o">.</span><span class="n">_inheritable</span> <span class="ow">and</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span> <span class="o">!=</span> <span class="s1">&#39;InheritableSQLObject&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_inheritable</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">!=</span> <span class="s1">&#39;InheritableSQLObject&#39;</span><span class="p">):</span>
             <span class="n">sqlmeta</span><span class="o">.</span><span class="n">addColumn</span><span class="p">(</span>
                 <span class="n">StringCol</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;childName&#39;</span><span class="p">,</span>
                           <span class="c1"># limit string length to get VARCHAR and not CLOB</span>
@@ -470,7 +469,7 @@
                         <span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">foreignName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kw</span><span class="p">):</span>
                     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                         <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">() did not get expected keyword argument &quot;</span>
-                        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                        <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
 
             <span class="n">parent_kw</span><span class="p">[</span><span class="s1">&#39;childName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">childName</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parentClass</span><span class="p">(</span><span class="n">kw</span><span class="o">=</span><span class="n">parent_kw</span><span class="p">,</span>
@@ -495,16 +494,16 @@
             <span class="k">raise</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">_findAlternateID</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span><span class="p">}))</span>
+    <span class="k">def</span> <span class="nf">_findAlternateID</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dbName</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span><span class="p">}))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="kc">None</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">],</span> <span class="n">obj</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="InheritableSQLObject.select"><a class="viewcode-back" href="../../api/sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">parentClass</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span>
+<div class="viewcode-block" id="InheritableSQLObject.select"><a class="viewcode-back" href="../../api/sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">clause</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">parentClass</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">parentClass</span>
         <span class="n">childUpdate</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;childUpdate&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="c1"># childUpdate may have one of three values:</span>
         <span class="c1">#   True:</span>
@@ -524,7 +523,7 @@
         <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">childUpdate</span><span class="p">)</span> <span class="ow">and</span> <span class="n">parentClass</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">childUpdate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># this is the first parent in deep hierarchy</span>
-                <span class="n">addClause</span> <span class="o">=</span> <span class="n">parentClass</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">childName</span> <span class="o">==</span> <span class="n">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">childName</span>
+                <span class="n">addClause</span> <span class="o">=</span> <span class="n">parentClass</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">childName</span> <span class="o">==</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">childName</span>
                 <span class="c1"># if the clause was one of TRUE varians, replace it</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">clause</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">clause</span> <span class="ow">is</span> <span class="n">sqlbuilder</span><span class="o">.</span><span class="n">SQLTrueClause</span><span class="p">)</span> \
                         <span class="ow">or</span> <span class="p">(</span>
@@ -536,7 +535,7 @@
                     <span class="c1"># change ID field of this class to ID of parent class</span>
                     <span class="c1"># XXX the clause is patched in place; it would be better</span>
                     <span class="c1">#     to build a new one if we have to replace field</span>
-                    <span class="n">clsID</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
+                    <span class="n">clsID</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
                     <span class="n">parentID</span> <span class="o">=</span> <span class="n">parentClass</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
 
                     <span class="k">def</span> <span class="nf">_get_patched</span><span class="p">(</span><span class="n">clause</span><span class="p">):</span>
@@ -566,14 +565,14 @@
             <span class="k">return</span> <span class="n">parentClass</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">clause</span><span class="p">,</span> <span class="n">childUpdate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                       <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
                 <span class="n">clause</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="InheritableSQLObject.selectBy"><a class="viewcode-back" href="../../api/sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject.selectBy">[docs]</a>    <span class="k">def</span> <span class="nf">selectBy</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<div class="viewcode-block" id="InheritableSQLObject.selectBy"><a class="viewcode-back" href="../../api/sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject.selectBy">[docs]</a>    <span class="k">def</span> <span class="nf">selectBy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="n">clause</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">foreignColumns</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">currentClass</span> <span class="o">=</span> <span class="n">cls</span>
+        <span class="n">currentClass</span> <span class="o">=</span> <span class="bp">cls</span>
         <span class="k">while</span> <span class="n">currentClass</span><span class="p">:</span>
             <span class="n">foreignColumns</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
                 <span class="p">[(</span><span class="n">column</span><span class="o">.</span><span class="n">foreignName</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
@@ -586,7 +585,7 @@
                 <span class="n">name</span> <span class="o">=</span> <span class="n">foreignColumns</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>  <span class="c1"># translate &quot;key&quot; to &quot;keyID&quot;</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">SQLObject</span><span class="p">):</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">id</span>
-            <span class="n">currentClass</span> <span class="o">=</span> <span class="n">cls</span>
+            <span class="n">currentClass</span> <span class="o">=</span> <span class="bp">cls</span>
             <span class="k">while</span> <span class="n">currentClass</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">clause</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">currentClass</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span>
@@ -597,13 +596,13 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
                     <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; instance has no attribute &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                        <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                        <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">clause</span><span class="p">:</span>
             <span class="n">clause</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">sqlbuilder</span><span class="o">.</span><span class="n">AND</span><span class="p">,</span> <span class="n">clause</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">clause</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># select all</span>
-        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="n">cls</span><span class="o">.</span><span class="n">_connection</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">SelectResultsClass</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">clause</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span></div>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">connection</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">SelectResultsClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">clause</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">conn</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="InheritableSQLObject.destroySelf"><a class="viewcode-back" href="../../api/sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject.destroySelf">[docs]</a>    <span class="k">def</span> <span class="nf">destroySelf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># DSM: If this object has parents, recursivly kill them</span>
@@ -642,7 +641,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

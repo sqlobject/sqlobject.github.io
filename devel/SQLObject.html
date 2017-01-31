@@ -18,7 +18,8 @@
         VERSION:     '3.2.0a0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -27,7 +28,6 @@
     <script type="text/javascript" src="_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="SQLObject 3.2.0a0 documentation" href="index.html" />
     <link rel="next" title="SQLObject FAQ" href="FAQ.html" />
     <link rel="prev" title="SQLObject and Python 3" href="Python3.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -161,7 +161,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/SQLObject.txt"
+      <li><a href="_sources/SQLObject.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -323,25 +323,22 @@ via <a class="reference external" href="http://www.pymssql.org/en/latest/index.h
 </div>
 <div class="section" id="compared-to-other-database-wrappers">
 <h2><a class="toc-backref" href="#id14">Compared To Other Database Wrappers</a><a class="headerlink" href="#compared-to-other-database-wrappers" title="Permalink to this headline">¶</a></h2>
-<p>There are several object-relational mappers (ORM) for Python.  I
+<p>There are several object-relational mappers (ORM) for Python.  We
 honestly can&#8217;t comment deeply on the quality of those packages, but
-I&#8217;ll try to place SQLObject in perspective.</p>
-<p>SQLObject uses new-style classes extensively.  The resultant objects
-have a new-style feel as a result &#8211; setting attributes has side
-effects (it changes the database), and defining classes has side
-effects (through the use of metaclasses).  Attributes are generally
-exposed, not marked private, knowing that they can be made dynamic
-or write-only later.</p>
-<p>SQLObject creates objects that feel similar to normal Python objects
-(with the semantics of new-style classes).  An attribute attached to a
-column doesn&#8217;t look different than an attribute that&#8217;s attached to a
-file, or an attribute that is calculated.  It is a specific goal that
-you be able to change the database without changing the interface,
-including changing the scope of the database, making it more or less
-prominent as a storage mechanism.</p>
+we&#8217;ll try to place SQLObject in perspective.</p>
+<p>Objects have built-in magic &#8211; setting attributes has side effects (it
+changes the database), and defining classes has side effects (through
+the use of metaclasses).  Attributes are generally exposed, not marked
+private, knowing that they can be made dynamic or write-only later.</p>
+<p>SQLObject creates objects that feel similar to normal Python objects. An
+attribute attached to a column doesn&#8217;t look different than an attribute
+that&#8217;s attached to a file, or an attribute that is calculated.  It is a
+specific goal that you be able to change the database without changing
+the interface, including changing the scope of the database, making it
+more or less prominent as a storage mechanism.</p>
 <p>This is in contrast to some ORMs that provide a dictionary-like
 interface to the database (for example, <a class="reference external" href="http://skunkweb.sourceforge.net/pydo.html">PyDO</a>).  The dictionary
-interface distinguishes the row from a normal Python object.  I also
+interface distinguishes the row from a normal Python object.  We also
 don&#8217;t care for the use of strings where an attribute seems more
 natural &#8211; columns are limited in number and predefined, just like
 attributes.  (Note: newer version of PyDO apparently allow attribute
@@ -349,7 +346,7 @@ access as well)</p>
 <p>SQLObject is, to my knowledge, unique in using metaclasses to
 facilitate this seamless integration.  Some other ORMs use code
 generation to create an interface, expressing the schema in a CSV or
-XML file (for example, MiddleKit, part of <a class="reference external" href="http://webware.sourceforge.net/">Webware</a>).  By using
+XML file (for example, <a class="reference external" href="http://webware.sourceforge.net/Webware/MiddleKit/Docs/">MiddleKit</a>, part of <a class="reference external" href="http://webware.sourceforge.net/Webware/Docs/">Webware</a>).  By using
 metaclasses you are able to comfortably define your schema in the
 Python source code.  No code generation, no weird tools, no
 compilation step.</p>
@@ -370,7 +367,6 @@ classes do not have to inherit the database&#8217;s naming schemes.</p>
 <p>Let&#8217;s start off quickly.  We&#8217;ll generally just import everything from
 the <code class="docutils literal"><span class="pre">sqlobject</span></code> class:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
 </pre></div>
 </div>
 <div class="section" id="declaring-a-connection">
@@ -397,12 +393,14 @@ sqlite:/:memory:
 <code class="docutils literal"><span class="pre">debugThreading</span></code> (default: False),
 <code class="docutils literal"><span class="pre">logger</span></code> (default: None), <code class="docutils literal"><span class="pre">loglevel</span></code> (default: None),
 <code class="docutils literal"><span class="pre">schema</span></code> (default: None).</p>
-<p>If you want to pass True value in a connection URI - pass any non-empty
-string; an empty string for False.</p>
+<p>If you want to pass True value in a connection URI - pass almost any
+non-empty string, especially <code class="docutils literal"><span class="pre">yes</span></code>, <code class="docutils literal"><span class="pre">true</span></code>, <code class="docutils literal"><span class="pre">on</span></code> or <code class="docutils literal"><span class="pre">1</span></code>; an
+empty string or <code class="docutils literal"><span class="pre">no</span></code>, <code class="docutils literal"><span class="pre">false</span></code>, <code class="docutils literal"><span class="pre">off</span></code> or <code class="docutils literal"><span class="pre">0</span></code> for False.</p>
+<p>There are also connection-specific parameters, they are listed in the
+appropriate sections.</p>
 <p>Lets first set up a connection:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">db_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;data.db&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">db_filename</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">db_filename</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;data.db&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">connection_string</span> <span class="o">=</span> <span class="s1">&#39;sqlite:&#39;</span> <span class="o">+</span> <span class="n">db_filename</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">connection</span> <span class="o">=</span> <span class="n">connectionForURI</span><span class="p">(</span><span class="n">connection_string</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sqlhub</span><span class="o">.</span><span class="n">processConnection</span> <span class="o">=</span> <span class="n">connection</span>
@@ -447,13 +445,13 @@ names that don&#8217;t fit conventions (see <a class="reference internal" href="
 <p>We can change the type of the various columns by using something other
 than <cite>StringCol</cite>, or using different arguments.  More about this in
 <a class="reference internal" href="#column-types">Column Types</a>.</p>
-<p>You&#8217;ll note that the <code class="docutils literal"><span class="pre">id</span></code> column is not given in the class
-definition, it is implied.  For MySQL databases it should be defined
-as <code class="docutils literal"><span class="pre">INT</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">AUTO_INCREMENT</span></code>, in Postgres <code class="docutils literal"><span class="pre">SERIAL</span> <span class="pre">PRIMARY</span>
-<span class="pre">KEY</span></code>, and in SQLite as <code class="docutils literal"><span class="pre">INTEGER</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span></code>.  You can&#8217;t use tables
-with SQLObject that don&#8217;t have a single primary key, and you must
-treat that key as immutable (otherwise you&#8217;ll confuse SQLObject
-terribly).</p>
+<p>You&#8217;ll note that the <code class="docutils literal"><span class="pre">id</span></code> column is not given in the class definition,
+it is implied.  For MySQL databases it should be defined as <code class="docutils literal"><span class="pre">INT</span>
+<span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">AUTO_INCREMENT</span></code>, in Postgres <code class="docutils literal"><span class="pre">SERIAL</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span></code>, in
+SQLite as <code class="docutils literal"><span class="pre">INTEGER</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">AUTOINCREMENT</span></code>, and for other backends
+accordingly.  You can&#8217;t use tables with SQLObject that don&#8217;t have a
+single primary key, and you must treat that key as immutable (otherwise
+you&#8217;ll confuse SQLObject terribly).</p>
 <p>You can <a class="reference internal" href="#class-sqlmeta">override the id name</a> in the database, but it is
 always called <code class="docutils literal"><span class="pre">.id</span></code> from Python.</p>
 </div>
@@ -516,7 +514,7 @@ a certain amount of consistency if you have multiple threads accessing
 the same data (though of course across processes there can be no
 sharing of an instance).  This isn&#8217;t true if you&#8217;re using
 <a class="reference internal" href="#transactions">transactions</a>, which are necessarily isolated.</p>
-<p>To get an idea of what&#8217;s happening behind the surface, I&#8217;ll give the
+<p>To get an idea of what&#8217;s happening behind the surface, we&#8217;ll give the
 same actions with the SQL that is sent, along with some commentary:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This will make SQLObject print out the SQL it executes:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Person</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span>
@@ -539,9 +537,9 @@ same actions with the SQL that is sent, along with some commentary:</p>
 </pre></div>
 </div>
 <p>Hopefully you see that the SQL that gets sent is pretty clear and
-predictable.  To view the SQL being sent, add <code class="docutils literal"><span class="pre">?debug=t</span></code> to your
+predictable.  To view the SQL being sent, add <code class="docutils literal"><span class="pre">?debug=true</span></code> to your
 connection URI, or set the <code class="docutils literal"><span class="pre">debug</span></code> attribute on the connection, and
-all SQL will be printed to the console.  This can be reassuring, and I
+all SQL will be printed to the console.  This can be reassuring, and we
 would encourage you to try it.</p>
 <p>As a small optimization, instead of assigning each attribute
 individually, you can assign a number of them using the <code class="docutils literal"><span class="pre">set</span></code>
@@ -671,8 +669,8 @@ is evaluated by constructing a string that is sent then to the backend.</p>
 <p>SQLObject doesn&#8217;t evaluate firstName but stores the expression:</p>
 <blockquote>
 <div>Person.q.firstName==&#8221;John&#8221;</div></blockquote>
-<p>converts it to the string <code class="docutils literal"><span class="pre">first_name</span> <span class="pre">=</span> <span class="pre">'John'</span></code> and passes the string to
-the backend.</p>
+<p>Later SQLObject converts it to the string <code class="docutils literal"><span class="pre">first_name</span> <span class="pre">=</span> <span class="pre">'John'</span></code> and
+passes the string to the backend.</p>
 </div>
 <div class="section" id="selectby-method">
 <h4><a class="toc-backref" href="#id21">selectBy Method</a><a class="headerlink" href="#selectby-method" title="Permalink to this headline">¶</a></h4>
@@ -681,7 +679,7 @@ the backend.</p>
 </pre></div>
 </div>
 <p>Each keyword argument is a column, and all the keyword arguments
-are ANDed together.  The return value is a <cite>SelectResult</cite>, so you
+are ANDed together.  The return value is a <cite>SelectResults</cite>, so you
 can slice it, count it, order it, etc.</p>
 </div>
 </div>
@@ -961,12 +959,16 @@ as a namespace for classes.</dd>
 <dt><cite>fromDatabase</cite>:</dt>
 <dd>A boolean (default false).  If true, then on class creation the
 database will be queried for the table&#8217;s columns, and any missing
-columns (possible all columns) will be added automatically.</dd>
+columns (possible all columns) will be added automatically. Please be
+warned that not all connections fully implement database
+introspection.</dd>
 <dt><cite>dbEncoding</cite>:</dt>
 <dd><a class="reference internal" href="#column-types">UnicodeCol</a> looks up <cite>sqlmeta.dbEncoding</cite> if <cite>column.dbEncoding</cite> is
 <code class="docutils literal"><span class="pre">None</span></code> (if <cite>sqlmeta.dbEncoding</cite> is <code class="docutils literal"><span class="pre">None</span></code> <a class="reference internal" href="#column-types">UnicodeCol</a> looks up
 <cite>connection.dbEncoding</cite> and if <cite>dbEncoding</cite> isn&#8217;t defined anywhere it
-defaults to <code class="docutils literal"><span class="pre">&quot;utf-8&quot;</span></code>).</dd>
+defaults to <code class="docutils literal"><span class="pre">&quot;utf-8&quot;</span></code>). For Python 3 there must be one encoding for
+connection - do not define different columns with different
+encodings, it&#8217;s not implemented.</dd>
 </dl>
 <p>The following attributes provide introspection but should not be set directly -
 see <a class="reference internal" href="#runtime-column-and-join-changes">Runtime Column and Join Changes</a> for dynamically modifying these class
@@ -1083,12 +1085,11 @@ method has the signature <code class="docutils literal"><span class="pre">_init(
 <div class="section" id="adding-magic-attributes-properties">
 <h4><a class="toc-backref" href="#id32">Adding Magic Attributes (properties)</a><a class="headerlink" href="#adding-magic-attributes-properties" title="Permalink to this headline">¶</a></h4>
 <p>You can use all the normal techniques for defining methods in this
-new-style class, including <cite>classmethod</cite>, <cite>staticmethod</cite>, and
-<cite>property</cite>, but you can also use a shortcut.  If you have a method
-that&#8217;s name starts with <code class="docutils literal"><span class="pre">_set_</span></code>, <code class="docutils literal"><span class="pre">_get_</span></code>, <code class="docutils literal"><span class="pre">_del_</span></code>, or <code class="docutils literal"><span class="pre">_doc_</span></code>,
-it will be used to create a property.  So, for instance, say you have
-images stored under the ID of the person in the <code class="docutils literal"><span class="pre">/var/people/images</span></code>
-directory:</p>
+class, including <cite>classmethod</cite>, <cite>staticmethod</cite>, and <cite>property</cite>, but you
+can also use a shortcut.  If you have a method that&#8217;s name starts with
+<code class="docutils literal"><span class="pre">_set_</span></code>, <code class="docutils literal"><span class="pre">_get_</span></code>, <code class="docutils literal"><span class="pre">_del_</span></code>, or <code class="docutils literal"><span class="pre">_doc_</span></code>, it will be used to create
+a property.  So, for instance, say you have images stored under the ID
+of the person in the <code class="docutils literal"><span class="pre">/var/people/images</span></code> directory:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="c1"># ...</span>
 
@@ -1110,7 +1111,7 @@ directory:</p>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_del_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="c1"># I usually wouldn&#39;t include a method like this, but for</span>
+        <span class="c1"># We usually wouldn&#39;t include a method like this, but for</span>
         <span class="c1"># instructional purposes...</span>
         <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imageFilename</span><span class="p">())</span>
 </pre></div>
@@ -1158,8 +1159,8 @@ digits, and of proper length, and make the formatting nice:</p>
 <span class="k">class</span> <span class="nc">PhoneNumber</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
     <span class="n">phoneNumber</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 
-    <span class="n">_garbageCharactersRE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;[\-\.\(\) ]&#39;</span><span class="p">)</span>
-    <span class="n">_phoneNumberRE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;^[0-9]+$&#39;</span><span class="p">)</span>
+    <span class="n">_garbageCharactersRE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\-\.\(\) ]&#39;</span><span class="p">)</span>
+    <span class="n">_phoneNumberRE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[0-9]+$&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_set_phoneNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_garbageCharactersRE</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
@@ -1204,7 +1205,7 @@ simply set it, without making any change to the database, i.e: it will
 work as any other attribute you set on any Python class, it will
 &#8216;forget&#8217; it is a SQLObject class.</p>
 <p>This may sometimes be a problem: if you have got a &#8216;name&#8217; attribute and
-you you write &#8216;a.namme=&#8221;Victor&#8221;&#8217; once, when setting it, you&#8217;ll get no
+you you write <code class="docutils literal"><span class="pre">a.namme=&quot;Victor&quot;</span></code> once, when setting it, you&#8217;ll get no
 error, no warning, nothing at all, and you may get crazy at understanding
 why you don&#8217;t get that value set in your DB.</p>
 </div>
@@ -1379,20 +1380,20 @@ limitations on using UnicodeCol in queries:</p>
 <li>only == and != operators are supported;</li>
 </ul>
 <p>The following code works:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">u&#39;value&#39;</span> <span class="o">==</span> <span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">u&#39;value&#39;</span><span class="p">)</span>
-<span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">OR</span><span class="p">(</span><span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="s1">u&#39;value1&#39;</span><span class="p">,</span> <span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">!=</span> <span class="s1">u&#39;value2&#39;</span><span class="p">))</span>
-<span class="n">MyTable</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">u&#39;value&#39;</span><span class="p">)</span>
-<span class="n">MyTable</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="s1">u&#39;value1&#39;</span><span class="p">,</span> <span class="n">col2</span><span class="o">=</span><span class="s1">u&#39;value2&#39;</span><span class="p">)</span>
-<span class="n">MyTable</span><span class="o">.</span><span class="n">byCol1</span><span class="p">(</span><span class="s1">u&#39;value1&#39;</span><span class="p">)</span> <span class="c1"># if col1 is an alternateID</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;value&#39;</span> <span class="o">==</span> <span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="sa">u</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">OR</span><span class="p">(</span><span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="sa">u</span><span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">!=</span> <span class="sa">u</span><span class="s1">&#39;value2&#39;</span><span class="p">))</span>
+<span class="n">MyTable</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+<span class="n">MyTable</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="n">col2</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;value2&#39;</span><span class="p">)</span>
+<span class="n">MyTable</span><span class="o">.</span><span class="n">byCol1</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;value1&#39;</span><span class="p">)</span> <span class="c1"># if col1 is an alternateID</span>
 </pre></div>
 </div>
 <p>The following does not work:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">((</span><span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span> <span class="o">==</span> <span class="s1">u&#39;value&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">((</span><span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span> <span class="o">==</span> <span class="sa">u</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>In that case you must apply the encoding yourself:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">((</span><span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span> <span class="o">==</span> <span class="s1">u&#39;value&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">dbEncoding</span><span class="p">))</span>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">MyTable</span><span class="o">.</span><span class="n">select</span><span class="p">((</span><span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="n">MyTable</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span> <span class="o">==</span> <span class="sa">u</span><span class="s1">&#39;value&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">dbEncoding</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd>
@@ -1691,7 +1692,7 @@ primary key.  That key should be defined like:</p>
 <dt>Postgres:</dt>
 <dd><code class="docutils literal"><span class="pre">SERIAL</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span></code></dd>
 <dt>SQLite:</dt>
-<dd><code class="docutils literal"><span class="pre">INTEGER</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span></code></dd>
+<dd><code class="docutils literal"><span class="pre">INTEGER</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">AUTOINCREMENT</span></code></dd>
 </dl>
 <p>SQLObject does not support primary keys made up of multiple columns (that
 probably won&#8217;t change).  It does not generally support tables with primary
@@ -1830,9 +1831,10 @@ empty SQLObject uses <code class="docutils literal"><span class="pre">print</spa
 <p><cite>MySQLConnection</cite> takes the keyword arguments <cite>host</cite>, <cite>port</cite>, <cite>db</cite>, <cite>user</cite>,
 and <cite>password</cite>, just like <cite>MySQLdb.connect</cite> does.</p>
 <p>MySQLConnection supports all the features, though MySQL only supports
-<a class="reference internal" href="#transactions">transactions</a> when using the InnoDB backend, and SQLObject currently
-does not have support for explicitly defining the backend when using
-<code class="docutils literal"><span class="pre">createTable</span></code>.</p>
+<a class="reference internal" href="#transactions">transactions</a> when using the InnoDB backend; SQLObject can explicitly
+define the backend using <code class="docutils literal"><span class="pre">sqlmeta.createSQL</span></code>.</p>
+<p>Supported drivers are <code class="docutils literal"><span class="pre">mysqldb</span></code>, <code class="docutils literal"><span class="pre">connector</span></code>, <code class="docutils literal"><span class="pre">oursql</span></code> and
+<code class="docutils literal"><span class="pre">pymysql</span></code>; defualt is <code class="docutils literal"><span class="pre">mysqldb</span></code>.</p>
 <p>Keyword argument <code class="docutils literal"><span class="pre">conv</span></code> allows to pass a list of custom converters.
 Example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
@@ -1856,6 +1858,11 @@ Example:</p>
 <span class="n">connection</span> <span class="o">=</span> <span class="n">MySQLConnection</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s1">&#39;somedb&#39;</span><span class="p">,</span> <span class="n">conv</span><span class="o">=</span><span class="n">conversions</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Connection-specific parameters are: <code class="docutils literal"><span class="pre">unix_socket</span></code>, <code class="docutils literal"><span class="pre">init_command</span></code>,
+<code class="docutils literal"><span class="pre">read_default_file</span></code>, <code class="docutils literal"><span class="pre">read_default_group</span></code>, <code class="docutils literal"><span class="pre">conv</span></code>,
+<code class="docutils literal"><span class="pre">connect_timeout</span></code>, <code class="docutils literal"><span class="pre">compress</span></code>, <code class="docutils literal"><span class="pre">named_pipe</span></code>, <code class="docutils literal"><span class="pre">use_unicode</span></code>,
+<code class="docutils literal"><span class="pre">client_flag</span></code>, <code class="docutils literal"><span class="pre">local_infile</span></code>, <code class="docutils literal"><span class="pre">ssl_key</span></code>, <code class="docutils literal"><span class="pre">ssl_cert</span></code>,
+<code class="docutils literal"><span class="pre">ssl_ca</span></code>, <code class="docutils literal"><span class="pre">ssl_capath</span></code>, <code class="docutils literal"><span class="pre">charset</span></code>.</p>
 </div>
 <div class="section" id="postgres">
 <h3><a class="toc-backref" href="#id59">Postgres</a><a class="headerlink" href="#postgres" title="Permalink to this headline">¶</a></h3>
@@ -1867,8 +1874,10 @@ and a dsn string will be constructed.</p>
 <p>The user can choose a DB API driver for PostgreSQL by using a <code class="docutils literal"><span class="pre">driver</span></code>
 parameter in DB URI or PostgresConnection that can be a comma-separated
 list of driver names. Possible drivers are: <code class="docutils literal"><span class="pre">psycopg2</span></code>, psycopg1,
-<code class="docutils literal"><span class="pre">psycopg</span></code> (tries psycopg2 and psycopg1), <code class="docutils literal"><span class="pre">pygresql</span></code>. Default is
-<code class="docutils literal"><span class="pre">psycopg</span></code>.</p>
+<code class="docutils literal"><span class="pre">psycopg</span></code> (tries psycopg2 and psycopg1), <code class="docutils literal"><span class="pre">pygresql</span></code>, <code class="docutils literal"><span class="pre">pygresql</span></code>,
+<code class="docutils literal"><span class="pre">pg8000</span></code> or <code class="docutils literal"><span class="pre">pypostgresql</span></code>. Default is <code class="docutils literal"><span class="pre">psycopg</span></code>.</p>
+<p>Connection-specific parameters are: <code class="docutils literal"><span class="pre">sslmode</span></code>, <code class="docutils literal"><span class="pre">unicodeCols</span></code>,
+<code class="docutils literal"><span class="pre">schema</span></code>, <code class="docutils literal"><span class="pre">charset</span></code>.</p>
 </div>
 <div class="section" id="id4">
 <h3><a class="toc-backref" href="#id60">SQLite</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
@@ -1885,6 +1894,8 @@ parameter in DB URI or SQLiteConnection that can be a comma-separated list
 of driver names. Possible drivers are: <code class="docutils literal"><span class="pre">pysqlite2</span></code> (alias <code class="docutils literal"><span class="pre">sqlite2</span></code>),
 <code class="docutils literal"><span class="pre">sqlite3</span></code>, <code class="docutils literal"><span class="pre">sqlite</span></code> (alias <code class="docutils literal"><span class="pre">sqlite1</span></code>). Default is to test pysqlite2,
 sqlite3 and sqlite in that order.</p>
+<p>Connection-specific parameters are: <code class="docutils literal"><span class="pre">encoding</span></code>, <code class="docutils literal"><span class="pre">mode</span></code>, <code class="docutils literal"><span class="pre">timeout</span></code>,
+<code class="docutils literal"><span class="pre">check_same_thread</span></code>, <code class="docutils literal"><span class="pre">use_table_info</span></code>.</p>
 </div>
 <div class="section" id="id5">
 <h3><a class="toc-backref" href="#id61">Firebird</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
@@ -1895,7 +1906,8 @@ may be some issues, especially with concurrent access, and especially
 using lazy selects.  Try <code class="docutils literal"><span class="pre">list(MyClass.select())</span></code> to avoid
 concurrent cursors if you have problems (using <code class="docutils literal"><span class="pre">list()</span></code> will
 pre-fetch all the results of a select).</p>
-<p>Firebird support uses <a class="reference external" href="http://www.firebirdsql.org/en/devel-python-driver/">fdb</a> or <a class="reference external" href="http://kinterbasdb.sourceforge.net/">kinterbasdb</a> Python library.</p>
+<p>Firebird support <code class="docutils literal"><span class="pre">fdb</span></code>, <code class="docutils literal"><span class="pre">kinterbasdb</span></code> or <code class="docutils literal"><span class="pre">firebirdsql</span></code> drivers.
+Default are <code class="docutils literal"><span class="pre">fdb</span></code> and <code class="docutils literal"><span class="pre">kinterbasdb</span></code>.</p>
 <p>There could be a problem if one tries to connect to a server running on w32
 from a program running on Unix; the problem is how to specify the database
 so that SQLObject correctly parses it. Vertical bar is replaces by
@@ -1914,8 +1926,9 @@ instead of database name in the aliases.conf file</p>
 stop and restart the server in order for new aliases.conf entries to be
 recognised.</p>
 <p>If you are using indexes and get an error like <em>key size exceeds
-implementation restriction for index</em>, see <a class="reference external" href="http://www.volny.cz/iprenosil/interbase/ip_ib_indexcalculator.htm">this page</a> to understand
+implementation restriction for index</em>, see <a class="reference external" href="http://mujweb.cz/iprenosil/interbase/ip_ib_indexcalculator.htm">this page</a> to understand
 the restrictions on your indexing.</p>
+<p>Connection-specific parameters are: <code class="docutils literal"><span class="pre">dialect</span></code>, <code class="docutils literal"><span class="pre">role</span></code>, <code class="docutils literal"><span class="pre">charset</span></code>.</p>
 </div>
 <div class="section" id="id6">
 <h3><a class="toc-backref" href="#id62">Sybase</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
@@ -1925,6 +1938,7 @@ True), which is passed through when performing a connection.  You may
 use a False value for <cite>locking</cite> if you are not using multiple threads,
 for a slight performance boost.</p>
 <p>It uses the <a class="reference external" href="http://www.object-craft.com.au/projects/sybase/">Sybase</a> module.</p>
+<p>Connection-specific parameters are: <code class="docutils literal"><span class="pre">locking</span></code>, <code class="docutils literal"><span class="pre">autoCommit</span></code>.</p>
 </div>
 <div class="section" id="id7">
 <h3><a class="toc-backref" href="#id63">MAX DB</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
@@ -1934,6 +1948,8 @@ and MySQL.  It takes the typical arguments: <cite>host</cite>, <cite>database</c
 <code class="docutils literal"><span class="pre">&quot;internal&quot;</span></code>), <cite>isolation</cite>, and <cite>timeout</cite>, which are passed through
 when creating the connection to the database.</p>
 <p>It uses the <a class="reference external" href="http://maxdb.sap.com/doc/7_8/50/01923f25b842438a408805774f6989/frameset.htm">sapdb</a> module.</p>
+<p>Connection-specific parameters are: <code class="docutils literal"><span class="pre">autoCommit</span></code>, <code class="docutils literal"><span class="pre">sqlmode</span></code>,
+<code class="docutils literal"><span class="pre">isolation</span></code>, <code class="docutils literal"><span class="pre">timeout</span></code>.</p>
 </div>
 <div class="section" id="ms-sql-server">
 <h3><a class="toc-backref" href="#id64">MS SQL Server</a><a class="headerlink" href="#ms-sql-server" title="Permalink to this headline">¶</a></h3>
@@ -1948,6 +1964,7 @@ URI.</p>
 parameter in DB URI or MSSQLConnection that can be a comma-separated list
 of driver names. Possible drivers are: <code class="docutils literal"><span class="pre">adodb</span></code> (alias <code class="docutils literal"><span class="pre">adodbapi</span></code>) and
 <code class="docutils literal"><span class="pre">pymssql</span></code>. Default is to test <code class="docutils literal"><span class="pre">adodbapi</span></code> and <code class="docutils literal"><span class="pre">pymssql</span></code> in that order.</p>
+<p>Connection-specific parameters are: <code class="docutils literal"><span class="pre">autoCommit</span></code>, <code class="docutils literal"><span class="pre">timeout</span></code>.</p>
 </div>
 </div>
 <div class="section" id="events-signals">
@@ -2163,7 +2180,7 @@ Documentation</a>.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2004-2017, Ian Bicking and contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>
