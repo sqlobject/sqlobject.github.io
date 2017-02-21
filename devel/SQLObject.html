@@ -313,8 +313,8 @@ used with the same query syntax.</p>
 <h2><a class="toc-backref" href="#id13">Requirements</a><a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <p>Currently SQLObject supports <a class="reference external" href="https://www.mysql.com/">MySQL</a> via <a class="reference external" href="https://sourceforge.net/projects/mysql-python/">MySQLdb</a> aka MySQL-python (called
 <a class="reference external" href="https://pypi.python.org/pypi/mysqlclient">mysqlclient</a> for Python 3), <a class="reference external" href="https://pypi.python.org/pypi/mysql-connector">MySQL Connector</a>, <a class="reference external" href="https://github.com/python-oursql/oursql">oursql</a> and <a class="reference external" href="https://github.com/PyMySQL/PyMySQL/">PyMySQL</a>. For
-<a class="reference external" href="https://postgresql.org">PostgreSQL</a> <a class="reference external" href="http://initd.org/psycopg/">psycopg2</a> or psycopg1 are recommended; <a class="reference external" href="http://www.pygresql.org/">PyGreSQL</a>, <a class="reference external" href="https://pypi.python.org/pypi/py-postgresql">py-postgresql</a>
-and <a class="reference external" href="https://pypi.python.org/pypi/pg8000">pg8000</a> are supported but have problems (not all tests passed). <a class="reference external" href="https://sqlite.org/">SQLite</a> has
+<a class="reference external" href="https://postgresql.org">PostgreSQL</a> <a class="reference external" href="http://initd.org/psycopg/">psycopg2</a> or psycopg1 are recommended; <a class="reference external" href="http://www.pygresql.org/">PyGreSQL</a> and <a class="reference external" href="https://pypi.python.org/pypi/py-postgresql">py-postgresql</a>
+are supported but have problems (not all tests passed). <a class="reference external" href="https://sqlite.org/">SQLite</a> has
 a built-in driver or <a class="reference external" href="https://github.com/ghaering/pysqlite">PySQLite</a>. <a class="reference external" href="http://www.firebirdsql.org/en/python-driver/">Firebird</a> is supported via <a class="reference external" href="http://www.firebirdsql.org/en/devel-python-driver/">fdb</a> or
 <a class="reference external" href="http://kinterbasdb.sourceforge.net/">kinterbasdb</a>; <a class="reference external" href="https://pypi.python.org/pypi/firebirdsql">pyfirebirdsql</a> is supported but has problems. <a class="reference external" href="http://maxdb.sap.com/">MAX DB</a> (also
 known as SAP DB) is supported via <a class="reference external" href="http://maxdb.sap.com/doc/7_8/50/01923f25b842438a408805774f6989/frameset.htm">sapdb</a>. Sybase via <a class="reference external" href="http://www.object-craft.com.au/projects/sybase/">Sybase</a>. <a class="reference external" href="http://www.microsoft.com/sql/">MSSQL Server</a>
@@ -1811,21 +1811,18 @@ empty SQLObject uses <code class="docutils literal"><span class="pre">print</spa
 <code class="docutils literal"><span class="pre">stdout</span></code> or <code class="docutils literal"><span class="pre">stderr</span></code> in this case; default is <code class="docutils literal"><span class="pre">stdout</span></code>.</p>
 <p>To configure logging one can do something like that:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">handlers</span><span class="p">[:]:</span>
-   <span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-<span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="s2">&quot;test.log&quot;</span><span class="p">)</span>
-<span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">] </span><span class="si">%(name)s</span><span class="s1"> </span><span class="si">%(levelname)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
-<span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">fmt</span><span class="p">))</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;test.log&#39;</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;[</span><span class="si">%(asctime)s</span><span class="s1">] </span><span class="si">%(name)s</span><span class="s1"> </span><span class="si">%(levelname)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;TEST&quot;</span><span class="p">)</span>
 <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Log started&quot;</span><span class="p">)</span>
 
 <span class="n">__connection__</span> <span class="o">=</span> <span class="s2">&quot;sqlite:/:memory:?debug=1&amp;logger=TEST&amp;loglevel=debug&quot;</span>
 </pre></div>
 </div>
-<p>The code redirects SQLObject debug messages to the <cite>test.log</cite> file.</p>
+<p>The code redirects SQLObject debug messages to <cite>test.log</cite> file.</p>
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id58">MySQL</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p><cite>MySQLConnection</cite> takes the keyword arguments <cite>host</cite>, <cite>port</cite>, <cite>db</cite>, <cite>user</cite>,
@@ -1874,8 +1871,8 @@ and a dsn string will be constructed.</p>
 <p>The user can choose a DB API driver for PostgreSQL by using a <code class="docutils literal"><span class="pre">driver</span></code>
 parameter in DB URI or PostgresConnection that can be a comma-separated
 list of driver names. Possible drivers are: <code class="docutils literal"><span class="pre">psycopg2</span></code>, psycopg1,
-<code class="docutils literal"><span class="pre">psycopg</span></code> (tries psycopg2 and psycopg1), <code class="docutils literal"><span class="pre">pygresql</span></code>, <code class="docutils literal"><span class="pre">pygresql</span></code>,
-<code class="docutils literal"><span class="pre">pg8000</span></code> or <code class="docutils literal"><span class="pre">pypostgresql</span></code>. Default is <code class="docutils literal"><span class="pre">psycopg</span></code>.</p>
+<code class="docutils literal"><span class="pre">psycopg</span></code> (tries psycopg2 and psycopg1), <code class="docutils literal"><span class="pre">pygresql</span></code>, <code class="docutils literal"><span class="pre">pygresql</span></code>
+or <code class="docutils literal"><span class="pre">pypostgresql</span></code>. Default is <code class="docutils literal"><span class="pre">psycopg</span></code>.</p>
 <p>Connection-specific parameters are: <code class="docutils literal"><span class="pre">sslmode</span></code>, <code class="docutils literal"><span class="pre">unicodeCols</span></code>,
 <code class="docutils literal"><span class="pre">schema</span></code>, <code class="docutils literal"><span class="pre">charset</span></code>.</p>
 </div>

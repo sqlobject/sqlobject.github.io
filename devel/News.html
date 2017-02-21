@@ -182,9 +182,6 @@ driver); timeouts are in seconds.</li>
 <li>Extend support for PyGreSQL driver. There are still some problems.</li>
 <li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/py-postgresql">py-postgresql</a> PostgreSQL driver. There
 are still problems with the driver.</li>
-<li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/pg8000">pg8000</a>
-PostgreSQL driver. There are major problems with the driver caused by both
-the driver and SQLObject.</li>
 <li>Add support for <a class="reference external" href="https://pypi.python.org/pypi/firebirdsql">pyfirebirdsql</a>.There are still problems with
 the driver.</li>
 </ul>
@@ -219,10 +216,11 @@ to <code class="docutils literal"><span class="pre">SOTestXXX</span></code> to p
 tests were deprecated in <code class="docutils literal"><span class="pre">pytest</span></code>.</li>
 <li>Tests are now run at CIs with Python 3.5.</li>
 <li>Drop <code class="docutils literal"><span class="pre">Circle</span> <span class="pre">CI</span></code>.</li>
-<li>Run at Travis CI tests with Firebird backend (server version 2.5; drivers fdb
-and firebirdsql). There are problems with tests.</li>
-<li>Run tests at AppVeyor for windows testing. Run tests with MS SQL, Postgres
-and SQLite. There are problems with MS SQL.</li>
+<li>Run at Travis CI tests with Firebird backend (server version 2.5;
+drivers fdb and firebirdsql). There are problems with tests.</li>
+<li>Run tests at AppVeyor for windows testing. Run tests with MS SQL,
+MySQL, Postgres and SQLite backends; use Python 2.7, 3.4 and 3.5,
+x86 and x64. There are problems with MS SQL and MySQL.</li>
 </ul>
 </div>
 </div>
