@@ -36,6 +36,6 @@ $(window).resize(function(){
         $("li.nav-item-0 a").text("Top");
     }
     else {
-        $("li.nav-item-0 a").text("SQLObject 3.2.0a1 documentation");
+        $("li.nav-item-0 a").text("SQLObject 3.2.0b1 documentation");
     }
 });
