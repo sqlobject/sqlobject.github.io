@@ -64,6 +64,7 @@
 <li><a class="reference internal" href="#columns-validators-and-converters">Columns, validators and converters</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#branch-workflow">Branch workflow</a></li>
 <li><a class="reference internal" href="#style-guide">Style Guide</a></li>
 <li><a class="reference internal" href="#testing">Testing</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
@@ -113,9 +114,10 @@
 <li><a class="reference internal" href="#columns-validators-and-converters" id="id4">Columns, validators and converters</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#style-guide" id="id5">Style Guide</a></li>
-<li><a class="reference internal" href="#testing" id="id6">Testing</a></li>
-<li><a class="reference internal" href="#documentation" id="id7">Documentation</a></li>
+<li><a class="reference internal" href="#branch-workflow" id="id5">Branch workflow</a></li>
+<li><a class="reference internal" href="#style-guide" id="id6">Style Guide</a></li>
+<li><a class="reference internal" href="#testing" id="id7">Testing</a></li>
+<li><a class="reference internal" href="#documentation" id="id8">Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -196,6 +198,17 @@ converters. Another approach for <code class="docutils literal"><span class="pre
 that has <code class="docutils literal"><span class="pre">__sqlrepr__</span></code> method. Such objects convert to SQL strings
 themselves, converters are not used.</p>
 </div>
+</div>
+<div class="section" id="branch-workflow">
+<h2>Branch workflow<a class="headerlink" href="#branch-workflow" title="Permalink to this headline">¶</a></h2>
+<p>Initially <code class="docutils literal"><span class="pre">SQLObject</span></code> was being developed using <code class="docutils literal"><span class="pre">Subversion</span></code>. Even
+after switching to git development process somewhat preserves the old
+workflow.</p>
+<p>The <code class="docutils literal"><span class="pre">trunk</span></code>, called <code class="docutils literal"><span class="pre">master</span></code> in git, is the most advanced and the
+most unstable branch. It is where new features are applied. Bug fixes
+are applied to <code class="docutils literal"><span class="pre">oldstable</span></code> and <code class="docutils literal"><span class="pre">stable</span></code> branches and are merged
+upward &#8211; from <code class="docutils literal"><span class="pre">oldstable</span></code> to <code class="docutils literal"><span class="pre">stable</span></code> and from <code class="docutils literal"><span class="pre">stable</span></code> to
+<code class="docutils literal"><span class="pre">master</span></code>.</p>
 </div>
 <div class="section" id="style-guide">
 <h2>Style Guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h2>
