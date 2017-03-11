@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>News &#8212; SQLObject 3.2.0b1 documentation</title>
+    <title>News &#8212; SQLObject 3.3.0 documentation</title>
     
     <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '3.2.0b1',
+        VERSION:     '3.3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -51,7 +51,7 @@
         <li class="right" >
           <a href="links.html" title="SQLObject Links"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0b1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.3.0 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -59,7 +59,8 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">News</a><ul>
-<li><a class="reference internal" href="#sqlobject-3-2-0-master">SQLObject 3.2.0 (master)</a><ul>
+<li><a class="reference internal" href="#sqlobject-3-3-0-master">SQLObject 3.3.0 (master)</a></li>
+<li><a class="reference internal" href="#sqlobject-3-2-0">SQLObject 3.2.0</a><ul>
 <li><a class="reference internal" href="#minor-features">Minor features</a></li>
 <li><a class="reference internal" href="#drivers-work-in-progress">Drivers (work in progress)</a></li>
 <li><a class="reference internal" href="#bug-fixes">Bug fixes</a></li>
@@ -122,34 +123,39 @@
 <p class="topic-title first">Contents:</p>
 <ul class="simple">
 <li><a class="reference internal" href="#news" id="id7">News</a><ul>
-<li><a class="reference internal" href="#sqlobject-3-2-0-master" id="id8">SQLObject 3.2.0 (master)</a><ul>
-<li><a class="reference internal" href="#minor-features" id="id9">Minor features</a></li>
-<li><a class="reference internal" href="#drivers-work-in-progress" id="id10">Drivers (work in progress)</a></li>
-<li><a class="reference internal" href="#bug-fixes" id="id11">Bug fixes</a></li>
-<li><a class="reference internal" href="#documentation" id="id12">Documentation</a></li>
-<li><a class="reference internal" href="#tests" id="id13">Tests</a></li>
+<li><a class="reference internal" href="#sqlobject-3-3-0-master" id="id8">SQLObject 3.3.0 (master)</a></li>
+<li><a class="reference internal" href="#sqlobject-3-2-0" id="id9">SQLObject 3.2.0</a><ul>
+<li><a class="reference internal" href="#minor-features" id="id10">Minor features</a></li>
+<li><a class="reference internal" href="#drivers-work-in-progress" id="id11">Drivers (work in progress)</a></li>
+<li><a class="reference internal" href="#bug-fixes" id="id12">Bug fixes</a></li>
+<li><a class="reference internal" href="#documentation" id="id13">Documentation</a></li>
+<li><a class="reference internal" href="#tests" id="id14">Tests</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sqlobject-3-1-0" id="id14">SQLObject 3.1.0</a><ul>
-<li><a class="reference internal" href="#features" id="id15">Features</a></li>
-<li><a class="reference internal" href="#id1" id="id16">Documentation</a></li>
-<li><a class="reference internal" href="#source-code" id="id17">Source code</a></li>
-<li><a class="reference internal" href="#id2" id="id18">Tests</a></li>
+<li><a class="reference internal" href="#sqlobject-3-1-0" id="id15">SQLObject 3.1.0</a><ul>
+<li><a class="reference internal" href="#features" id="id16">Features</a></li>
+<li><a class="reference internal" href="#id1" id="id17">Documentation</a></li>
+<li><a class="reference internal" href="#source-code" id="id18">Source code</a></li>
+<li><a class="reference internal" href="#id2" id="id19">Tests</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#sqlobject-3-0-0" id="id19">SQLObject 3.0.0</a><ul>
-<li><a class="reference internal" href="#id3" id="id20">Features</a></li>
-<li><a class="reference internal" href="#id4" id="id21">Minor features</a></li>
-<li><a class="reference internal" href="#development" id="id22">Development</a></li>
-<li><a class="reference internal" href="#id5" id="id23">Documentation</a></li>
+<li><a class="reference internal" href="#sqlobject-3-0-0" id="id20">SQLObject 3.0.0</a><ul>
+<li><a class="reference internal" href="#id3" id="id21">Features</a></li>
+<li><a class="reference internal" href="#id4" id="id22">Minor features</a></li>
+<li><a class="reference internal" href="#development" id="id23">Development</a></li>
+<li><a class="reference internal" href="#id5" id="id24">Documentation</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="section" id="sqlobject-3-2-0-master">
-<span id="start"></span><h2>SQLObject 3.2.0 (master)<a class="headerlink" href="#sqlobject-3-2-0-master" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sqlobject-3-3-0-master">
+<span id="start"></span><h2>SQLObject 3.3.0 (master)<a class="headerlink" href="#sqlobject-3-3-0-master" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="sqlobject-3-2-0">
+<h2>SQLObject 3.2.0<a class="headerlink" href="#sqlobject-3-2-0" title="Permalink to this headline">¶</a></h2>
+<p>Released 11 Mar 2017.</p>
 <div class="section" id="minor-features">
 <h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -319,7 +325,7 @@ Sphinx format.</li>
         <li class="right" >
           <a href="links.html" title="SQLObject Links"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0b1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.3.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

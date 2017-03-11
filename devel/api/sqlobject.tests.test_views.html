@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>sqlobject.tests.test_views module &#8212; SQLObject 3.2.0b1 documentation</title>
+    <title>sqlobject.tests.test_views module &#8212; SQLObject 3.3.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '3.2.0b1',
+        VERSION:     '3.3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0b1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.3.0 documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -115,7 +115,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_views.PhoneCall.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'toID': &lt;ForeignKey b38c6fccL to&gt;, 'minutes': &lt;IntCol b38c64ccL minutes&gt;, 'phoneNumberID': &lt;ForeignKey b369a80cL phoneNumber&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.PhoneCall.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'toID': &lt;ForeignKey b3c48b6cL to&gt;, 'minutes': &lt;IntCol b3c48e0cL minutes&gt;, 'phoneNumberID': &lt;ForeignKey b35edfccL phoneNumber&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.PhoneCall.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -223,7 +223,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_views.PhoneNumber.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'number': &lt;StringCol b36fd9acL number&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.PhoneNumber.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'number': &lt;StringCol b3583eecL number&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.PhoneNumber.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -346,7 +346,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_views.ViewPhone.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'numberOfCalls': &lt;IntCol b58131ecL numberOfCalls&gt;, 'minutes': &lt;IntCol b4bd58acL minutes&gt;, 'number': &lt;StringCol b58614acL number&gt;, 'phoneNumberID': &lt;ForeignKey b586176cL phoneNumber&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhone.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'numberOfCalls': &lt;IntCol b54b1f8cL numberOfCalls&gt;, 'minutes': &lt;IntCol b54b1f2cL minutes&gt;, 'number': &lt;StringCol b57b418cL number&gt;, 'phoneNumberID': &lt;ForeignKey b577ae0cL phoneNumber&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhone.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -469,7 +469,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_views.ViewPhoneCall.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'callID': &lt;ForeignKey b374eeccL call&gt;, 'minutes': &lt;IntCol b374e8ecL minutes&gt;, 'number': &lt;StringCol b374e12cL number&gt;, 'phoneNumberID': &lt;ForeignKey b374e5ccL phoneNumber&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhoneCall.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'callID': &lt;ForeignKey b36b7d2cL call&gt;, 'minutes': &lt;IntCol b36b7facL minutes&gt;, 'number': &lt;StringCol b36b7d4cL number&gt;, 'phoneNumberID': &lt;ForeignKey b36b7cccL phoneNumber&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhoneCall.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -552,7 +552,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_views.ViewPhoneInnerAggregate.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'numberOfCalls': &lt;IntCol b58131ecL numberOfCalls&gt;, 'twiceMinutes': &lt;IntCol b3cb5d8cL twiceMinutes&gt;, 'minutes': &lt;IntCol b4bd58acL minutes&gt;, 'number': &lt;StringCol b58614acL number&gt;, 'phoneNumberID': &lt;ForeignKey b586176cL phoneNumber&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhoneInnerAggregate.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'numberOfCalls': &lt;IntCol b54b1f8cL numberOfCalls&gt;, 'twiceMinutes': &lt;IntCol b384c80cL twiceMinutes&gt;, 'minutes': &lt;IntCol b54b1f2cL minutes&gt;, 'number': &lt;StringCol b57b418cL number&gt;, 'phoneNumberID': &lt;ForeignKey b577ae0cL phoneNumber&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhoneInnerAggregate.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -651,7 +651,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_views.ViewPhoneMore.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'timesCalledLong': &lt;IntCol b3679decL timesCalledLong&gt;, 'minutesCalled': &lt;IntCol b3679f4cL minutesCalled&gt;, 'timesCalled': &lt;IntCol b367972cL timesCalled&gt;, 'number': &lt;StringCol b36795ccL number&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhoneMore.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'timesCalledLong': &lt;IntCol b5783a8cL timesCalledLong&gt;, 'minutesCalled': &lt;IntCol b5783f6cL minutesCalled&gt;, 'timesCalled': &lt;IntCol b5783becL timesCalled&gt;, 'number': &lt;StringCol b383df0cL number&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhoneMore.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -744,7 +744,7 @@
 
 <dl class="attribute">
 <dt id="sqlobject.tests.test_views.ViewPhoneMore2.sqlmeta.columnDefinitions">
-<code class="descname">columnDefinitions</code><em class="property"> = {'timesCalledLong': &lt;IntCol b3679decL timesCalledLong&gt;, 'minutesCalled': &lt;IntCol b3679f4cL minutesCalled&gt;, 'timesCalled': &lt;IntCol b367972cL timesCalled&gt;, 'number': &lt;StringCol b36795ccL number&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhoneMore2.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">columnDefinitions</code><em class="property"> = {'timesCalledLong': &lt;IntCol b5783a8cL timesCalledLong&gt;, 'minutesCalled': &lt;IntCol b5783f6cL minutesCalled&gt;, 'timesCalled': &lt;IntCol b5783becL timesCalled&gt;, 'number': &lt;StringCol b383df0cL number&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_views.ViewPhoneMore2.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -874,7 +874,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0b1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.3.0 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -1,0 +1,262 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_string_id module &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.tests.test_string_id.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.tests.test_string_id">
+<span id="sqlobject-tests-test-string-id-module"></span><h1>sqlobject.tests.test_string_id module<a class="headerlink" href="#module-sqlobject.tests.test_string_id" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sqlobject.tests.test_string_id.SOStringID">
+<em class="property">class </em><code class="descclassname">sqlobject.tests.test_string_id.</code><code class="descname">SOStringID</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_string_id.html#SOStringID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
+<dl class="classmethod">
+<dt id="sqlobject.tests.test_string_id.SOStringID.byVal">
+<em class="property">classmethod </em><code class="descname">byVal</code><span class="sig-paren">(</span><em>val</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.byVal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.firebirdCreate">
+<code class="descname">firebirdCreate</code><em class="property"> = '\n    CREATE TABLE so_string_id (\n      id VARCHAR(50) NOT NULL PRIMARY KEY,\n      val BLOB SUB_TYPE TEXT\n    )\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.firebirdCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.firebirdDrop">
+<code class="descname">firebirdDrop</code><em class="property"> = '\n    DROP TABLE so_string_id\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.firebirdDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.j">
+<code class="descname">j</code><em class="property"> = so_string_id</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.mssqlCreate">
+<code class="descname">mssqlCreate</code><em class="property"> = '\n    CREATE TABLE so_string_id (\n      id VARCHAR(50) PRIMARY KEY,\n      val varchar(4000)\n    )\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.mssqlCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.mssqlDrop">
+<code class="descname">mssqlDrop</code><em class="property"> = '\n    DROP TABLE so_string_id\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.mssqlDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.mysqlCreate">
+<code class="descname">mysqlCreate</code><em class="property"> = '\n    CREATE TABLE IF NOT EXISTS so_string_id (\n      id VARCHAR(50) PRIMARY KEY,\n      val TEXT\n    )\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.mysqlCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.mysqlDrop">
+<code class="descname">mysqlDrop</code><em class="property"> = '\n    DROP TABLE IF EXISTS so_string_id\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.mysqlDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.postgresCreate">
+<code class="descname">postgresCreate</code><em class="property"> = '\n    CREATE TABLE so_string_id (\n      id VARCHAR(50) PRIMARY KEY,\n      val TEXT\n    )\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.postgresCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.postgresDrop">
+<code class="descname">postgresDrop</code><em class="property"> = '\n    DROP TABLE so_string_id\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.postgresDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.q">
+<code class="descname">q</code><em class="property"> = so_string_id</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqliteCreate">
+<code class="descname">sqliteCreate</code><em class="property"> = '\n    CREATE TABLE so_string_id (\n      id VARCHAR(50) PRIMARY KEY,\n      val TEXT\n    )\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqliteCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqliteDrop">
+<code class="descname">sqliteDrop</code><em class="property"> = '\n    DROP TABLE so_string_id\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqliteDrop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_string_id.html#SOStringID.sqlmeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.sqlmeta" title="sqlobject.main.sqlmeta"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.sqlmeta</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'val': &lt;StringCol b36d996cL val&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol val alternate ID&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'val': &lt;SOStringCol val alternate ID&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = 'id'</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.idType">
+<code class="descname">idType</code><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.idType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">str</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.tests.test_string_id.SOStringID" title="sqlobject.tests.test_string_id.SOStringID"><code class="xref py py-class docutils literal"><span class="pre">SOStringID</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = &lt;sqlobject.styles.MixedCaseUnderscoreStyle object&gt;</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'so_string_id'</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.sybaseCreate">
+<code class="descclassname">SOStringID.</code><code class="descname">sybaseCreate</code><em class="property"> = '\n    CREATE TABLE so_string_id (\n      id VARCHAR(50) UNIQUE,\n      val VARCHAR(50) NULL\n    )\n    '</em><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.sybaseCreate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_string_id.SOStringID.val">
+<code class="descclassname">SOStringID.</code><code class="descname">val</code><a class="headerlink" href="#sqlobject.tests.test_string_id.SOStringID.val" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.tests.test_string_id.test_stringID">
+<code class="descclassname">sqlobject.tests.test_string_id.</code><code class="descname">test_stringID</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_string_id.html#test_stringID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_string_id.test_stringID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

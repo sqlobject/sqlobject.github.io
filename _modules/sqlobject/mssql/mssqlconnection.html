@@ -1,0 +1,472 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.mssql.mssqlconnection &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../mssql.html" accesskey="U">sqlobject.mssql</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.mssql.mssqlconnection</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">col</span>
+<span class="kn">from</span> <span class="nn">sqlobject.dbconnection</span> <span class="k">import</span> <span class="n">DBAPI</span>
+<span class="kn">from</span> <span class="nn">sqlobject.compat</span> <span class="k">import</span> <span class="n">PY2</span>
+
+
+<div class="viewcode-block" id="MSSQLConnection"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection">[docs]</a><span class="k">class</span> <span class="nc">MSSQLConnection</span><span class="p">(</span><span class="n">DBAPI</span><span class="p">):</span>
+
+    <span class="n">supportTransactions</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">dbName</span> <span class="o">=</span> <span class="s1">&#39;mssql&#39;</span>
+    <span class="n">schemes</span> <span class="o">=</span> <span class="p">[</span><span class="n">dbName</span><span class="p">]</span>
+
+    <span class="n">limit_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^\s*(select )(.*)&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">autoCommit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">drivers</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;driver&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;adodb,pymssql&#39;</span>
+        <span class="k">for</span> <span class="n">driver</span> <span class="ow">in</span> <span class="n">drivers</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
+            <span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">driver</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">driver</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;adodb&#39;</span><span class="p">,</span> <span class="s1">&#39;adodbapi&#39;</span><span class="p">):</span>
+                    <span class="kn">import</span> <span class="nn">adodbapi</span> <span class="k">as</span> <span class="nn">sqlmodule</span>
+                <span class="k">elif</span> <span class="n">driver</span> <span class="o">==</span> <span class="s1">&#39;pymssql&#39;</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">pymssql</span> <span class="k">as</span> <span class="nn">sqlmodule</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s1">&#39;Unknown MSSQL driver &quot;</span><span class="si">%s</span><span class="s1">&quot;, &#39;</span>
+                        <span class="s1">&#39;expected adodb or pymssql&#39;</span> <span class="o">%</span> <span class="n">driver</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s1">&#39;Cannot find an MSSQL driver, tried </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">drivers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">sqlmodule</span>
+
+        <span class="k">if</span> <span class="n">sqlmodule</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;adodbapi&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbconnection</span> <span class="o">=</span> <span class="n">sqlmodule</span><span class="o">.</span><span class="n">connect</span>
+            <span class="c1"># ADO uses unicode only (AFAIK)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">usingUnicodeStrings</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="c1"># Need to use SQLNCLI provider for SQL Server Express Edition</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ncli&quot;</span><span class="p">):</span>
+                <span class="n">conn_str</span> <span class="o">=</span> <span class="s2">&quot;Provider=SQLNCLI;&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">conn_str</span> <span class="o">=</span> <span class="s2">&quot;Provider=SQLOLEDB;&quot;</span>
+
+            <span class="n">conn_str</span> <span class="o">+=</span> <span class="s2">&quot;Data Source=</span><span class="si">%s</span><span class="s2">;Initial Catalog=</span><span class="si">%s</span><span class="s2">;&quot;</span>
+
+            <span class="c1"># MSDE does not allow SQL server login</span>
+            <span class="k">if</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sspi&quot;</span><span class="p">):</span>
+                <span class="n">conn_str</span> <span class="o">+=</span> \
+                    <span class="s2">&quot;Integrated Security=SSPI;Persist Security Info=False&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">make_conn_str</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">keys</span><span class="p">:</span> <span class="n">conn_str</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">keys</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">conn_str</span> <span class="o">+=</span> <span class="s2">&quot;User Id=</span><span class="si">%s</span><span class="s2">;Password=</span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">make_conn_str</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">keys</span><span class="p">:</span> <span class="n">conn_str</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">keys</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+
+            <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ncli&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;sspi&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># pymssql</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dbconnection</span> <span class="o">=</span> <span class="n">sqlmodule</span><span class="o">.</span><span class="n">connect</span>
+            <span class="n">sqlmodule</span><span class="o">.</span><span class="n">Binary</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">st</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+            <span class="c1"># don&#39;t know whether pymssql uses unicode</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">usingUnicodeStrings</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="n">timeout</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;timeout&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">timeout</span><span class="p">:</span>
+                <span class="n">timeout</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+
+            <span class="k">def</span> <span class="nf">_make_conn_str</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+                <span class="n">keys_dict</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="s1">&#39;database&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">db</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">user</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">password</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">host</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;port&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">port</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;timeout&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="o">.</span><span class="n">timeout</span><span class="p">),</span>
+                <span class="p">):</span>
+                    <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                        <span class="n">keys_dict</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">return</span> <span class="n">keys_dict</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_conn_str</span> <span class="o">=</span> <span class="n">_make_conn_str</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">autoCommit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_version</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_max_types</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_microseconds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">DBAPI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_connectionFromParams</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+                   <span class="n">host</span><span class="o">=</span><span class="n">host</span> <span class="ow">or</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MSSQLConnection.insert_id"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.insert_id">[docs]</a>    <span class="k">def</span> <span class="nf">insert_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        insert_id method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="c1"># converting the identity to an int is ugly, but it gets returned</span>
+        <span class="c1"># as a decimal otherwise :S</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT CONVERT(INT, @@IDENTITY)&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.makeConnection"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.makeConnection">[docs]</a>    <span class="k">def</span> <span class="nf">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">conn_descr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_conn_str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conn_descr</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbconnection</span><span class="p">(</span><span class="o">**</span><span class="n">conn_descr</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbconnection</span><span class="p">(</span><span class="n">conn_descr</span><span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SET ANSI_NULLS ON&#39;</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT CAST(&#39;12345.21&#39; AS DECIMAL(10, 2))&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decimalSeparator</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">])[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">con</span></div>
+
+    <span class="n">HAS_IDENTITY</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">       select 1</span>
+<span class="s2">       from INFORMATION_SCHEMA.COLUMNS</span>
+<span class="s2">       where TABLE_NAME = &#39;</span><span class="si">%s</span><span class="s2">&#39;</span>
+<span class="s2">       and COLUMNPROPERTY(object_id(TABLE_NAME), COLUMN_NAME, &#39;IsIdentity&#39;) = 1</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_hasIdentity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HAS_IDENTITY</span> <span class="o">%</span> <span class="n">table</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_queryInsertID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">soInstance</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Insert the Initial with names and values, using id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span>
+        <span class="n">idName</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">has_identity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hasIdentity</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">idName</span><span class="p">]</span> <span class="o">+</span> <span class="n">names</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">+</span> <span class="n">values</span>
+        <span class="k">elif</span> <span class="n">has_identity</span> <span class="ow">and</span> <span class="n">idName</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">idName</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="n">has_identity</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SET IDENTITY_INSERT </span><span class="si">%s</span><span class="s1"> ON&#39;</span> <span class="o">%</span> <span class="n">table</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SET IDENTITY_INSERT </span><span class="si">%s</span><span class="s1"> OFF&#39;</span> <span class="o">%</span> <span class="n">table</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">names</span> <span class="ow">and</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insertSQL</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO </span><span class="si">%s</span><span class="s2"> DEFAULT VALUES&quot;</span> <span class="o">%</span> <span class="n">table</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="s1">&#39;QueryIns&#39;</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">has_identity</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SET IDENTITY_INSERT </span><span class="si">%s</span><span class="s1"> OFF&#39;</span> <span class="o">%</span> <span class="n">table</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">insert_id</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugOutput</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="s1">&#39;QueryIns&#39;</span><span class="p">,</span> <span class="s1">&#39;result&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">id</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_queryAddLimitOffset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">end</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">start</span><span class="p">:</span>
+            <span class="n">limit_str</span> <span class="o">=</span> <span class="s2">&quot;SELECT TOP </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">end</span>
+
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">limit_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">limit_str</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">query</span>
+
+<div class="viewcode-block" id="MSSQLConnection.createReferenceConstraint"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.createReferenceConstraint">[docs]</a>    <span class="k">def</span> <span class="nf">createReferenceConstraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">mssqlCreateReferenceConstraint</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.createColumn"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.createColumn">[docs]</a>    <span class="k">def</span> <span class="nf">createColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">mssqlCreateSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.createIDColumn"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.createIDColumn">[docs]</a>    <span class="k">def</span> <span class="nf">createIDColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span><span class="p">}[</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idType</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> IDENTITY UNIQUE&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">,</span> <span class="n">key_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.createIndexSQL"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.createIndexSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createIndexSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">index</span><span class="o">.</span><span class="n">mssqlCreateIndexSQL</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.joinSQLType"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.joinSQLType">[docs]</a>    <span class="k">def</span> <span class="nf">joinSQLType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">join</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;INT NOT NULL&#39;</span></div>
+
+    <span class="n">SHOW_TABLES</span> <span class="o">=</span> <span class="s2">&quot;SELECT name FROM sysobjects WHERE type=&#39;U&#39;&quot;</span>
+
+<div class="viewcode-block" id="MSSQLConnection.tableExists"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.tableExists">[docs]</a>    <span class="k">def</span> <span class="nf">tableExists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">):</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">table</span><span class="p">,)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SHOW_TABLES</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">table</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">tableName</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.addColumn"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.addColumn">[docs]</a>    <span class="k">def</span> <span class="nf">addColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ALTER TABLE </span><span class="si">%s</span><span class="s1"> ADD </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">tableName</span><span class="p">,</span>
+                    <span class="n">column</span><span class="o">.</span><span class="n">mssqlCreateSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.delColumn"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.delColumn">[docs]</a>    <span class="k">def</span> <span class="nf">delColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sqlmeta</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ALTER TABLE </span><span class="si">%s</span><span class="s1"> DROP COLUMN </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+                                                      <span class="n">column</span><span class="o">.</span><span class="n">dbName</span><span class="p">))</span></div>
+
+    <span class="c1"># Precision and scale is gotten from column table</span>
+    <span class="c1"># so that we can create decimal columns if needed.</span>
+    <span class="n">SHOW_COLUMNS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        select</span>
+<span class="s2">                name,</span>
+<span class="s2">                length,</span>
+<span class="s2">                (       select name</span>
+<span class="s2">                        from systypes</span>
+<span class="s2">                        where cast(xusertype as int)= cast(sc.xtype as int)</span>
+<span class="s2">                ) datatype,</span>
+<span class="s2">                prec,</span>
+<span class="s2">                scale,</span>
+<span class="s2">                isnullable,</span>
+<span class="s2">                cdefault,</span>
+<span class="s2">                m.text default_text,</span>
+<span class="s2">                isnull(len(autoval),0) is_identity</span>
+<span class="s2">        from syscolumns sc</span>
+<span class="s2">        LEFT OUTER JOIN syscomments m on sc.cdefault = m.id</span>
+<span class="s2">                AND m.colid = 1</span>
+<span class="s2">        where</span>
+<span class="s2">                sc.id in (select id</span>
+<span class="s2">                        from sysobjects</span>
+<span class="s2">                where name = &#39;</span><span class="si">%s</span><span class="s2">&#39;)</span>
+<span class="s2">        order by</span>
+<span class="s2">                colorder&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MSSQLConnection.columnsFromSchema"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.columnsFromSchema">[docs]</a>    <span class="k">def</span> <span class="nf">columnsFromSchema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">colData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SHOW_COLUMNS</span>
+                                <span class="o">%</span> <span class="n">tableName</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">precision</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">nullAllowed</span><span class="p">,</span>
+                <span class="n">default</span><span class="p">,</span> <span class="n">defaultText</span><span class="p">,</span> <span class="n">is_identity</span><span class="p">)</span> <span class="ow">in</span> <span class="n">colData</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field</span> <span class="o">==</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># precision is needed for decimal columns</span>
+            <span class="n">colClass</span><span class="p">,</span> <span class="n">kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">guessClass</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">precision</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">dbColumnToPythonAttr</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;dbName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;notNone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">nullAllowed</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">defaultText</span><span class="p">):</span>
+                <span class="c1"># Strip ( and )</span>
+                <span class="n">defaultText</span> <span class="o">=</span> <span class="n">defaultText</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">defaultText</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">:</span>
+                    <span class="n">defaultText</span> <span class="o">=</span> <span class="n">defaultText</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;numeric&quot;</span><span class="p">)</span> <span class="ow">and</span> \
+                            <span class="n">defaultText</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;(&quot;</span><span class="p">:</span>
+                        <span class="n">defaultText</span> <span class="o">=</span> <span class="n">defaultText</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;int&quot;</span><span class="p">:</span>
+                        <span class="n">defaultText</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">defaultText</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;float&quot;</span><span class="p">:</span>
+                        <span class="n">defaultText</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">defaultText</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;numeric&quot;</span><span class="p">:</span>
+                        <span class="n">defaultText</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">defaultText</span><span class="p">)</span>
+                    <span class="c1"># TODO need to access the &quot;column&quot; to_python method here --</span>
+                    <span class="c1"># but the object doesn&#39;t exists yet.</span>
+
+            <span class="c1"># @@ skip key...</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultText</span>
+
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">colClass</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+    <span class="k">def</span> <span class="nf">_setAutoCommit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">auto</span><span class="p">):</span>
+        <span class="c1"># raise Exception(repr(auto))</span>
+        <span class="k">return</span>
+        <span class="c1"># conn.auto_commit = auto</span>
+        <span class="n">option</span> <span class="o">=</span> <span class="s2">&quot;ON&quot;</span>
+        <span class="k">if</span> <span class="n">auto</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">option</span> <span class="o">=</span> <span class="s2">&quot;OFF&quot;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET AUTOCOMMIT &quot;</span> <span class="o">+</span> <span class="n">option</span><span class="p">)</span>
+        <span class="c1"># from mx.ODBC.Windows import SQL</span>
+        <span class="c1"># connection.setconnectoption(</span>
+        <span class="c1"># SQL.AUTOCOMMIT, SQL.AUTOCOMMIT_ON if auto else SQL.AUTOCOMMIT_OFF)</span>
+
+    <span class="c1"># precision and scale is needed for decimal columns</span>
+<div class="viewcode-block" id="MSSQLConnection.guessClass"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.guessClass">[docs]</a>    <span class="k">def</span> <span class="nf">guessClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">precision</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Here we take raw values coming out of syscolumns</span>
+<span class="sd">        and map to SQLObject class types.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">IntCol</span><span class="p">,</span> <span class="p">{}</span>
+        <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;varchar&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">usingUnicodeStrings</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">UnicodeCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="n">size</span><span class="p">}</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">StringCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="n">size</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;char&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">usingUnicodeStrings</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">UnicodeCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span>
+                                        <span class="s1">&#39;varchar&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">StringCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span>
+                                   <span class="s1">&#39;varchar&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">DateTimeCol</span><span class="p">,</span> <span class="p">{}</span>
+        <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;decimal&#39;</span><span class="p">):</span>
+            <span class="c1"># be careful for awkward naming</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">DecimalCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="n">precision</span><span class="p">,</span>
+                                    <span class="s1">&#39;precision&#39;</span><span class="p">:</span> <span class="n">scale</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">Col</span><span class="p">,</span> <span class="p">{}</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.server_version"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.server_version">[docs]</a>    <span class="k">def</span> <span class="nf">server_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get server version:</span>
+<span class="sd">            8 - 2000</span>
+<span class="sd">            9 - 2005</span>
+<span class="sd">            10 - 2008</span>
+<span class="sd">            11 - 2012</span>
+<span class="sd">            12 - 2014</span>
+<span class="sd">            13 - 2016</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_version</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">server_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryOne</span><span class="p">(</span>
+                <span class="s2">&quot;SELECT SERVERPROPERTY(&#39;productversion&#39;)&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">PY2</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">server_version</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+                <span class="n">server_version</span> <span class="o">=</span> <span class="n">server_version</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+            <span class="n">server_version</span> <span class="o">=</span> <span class="n">server_version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">server_version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">server_version</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">server_version</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># unknown</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_server_version</span> <span class="o">=</span> <span class="n">server_version</span>
+        <span class="k">return</span> <span class="n">server_version</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.can_use_max_types"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.can_use_max_types">[docs]</a>    <span class="k">def</span> <span class="nf">can_use_max_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_max_types</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_max_types</span>
+        <span class="n">server_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_max_types</span> <span class="o">=</span> <span class="n">can_use_max_types</span> <span class="o">=</span> \
+            <span class="p">(</span><span class="n">server_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">server_version</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">can_use_max_types</span></div>
+
+<div class="viewcode-block" id="MSSQLConnection.can_use_microseconds"><a class="viewcode-back" href="../../../api/sqlobject.mssql.mssqlconnection.html#sqlobject.mssql.mssqlconnection.MSSQLConnection.can_use_microseconds">[docs]</a>    <span class="k">def</span> <span class="nf">can_use_microseconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_microseconds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_microseconds</span>
+        <span class="n">server_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_can_use_microseconds</span> <span class="o">=</span> <span class="n">can_use_microseconds</span> <span class="o">=</span> \
+            <span class="p">(</span><span class="n">server_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">server_version</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">can_use_microseconds</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../mssql.html" >sqlobject.mssql</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

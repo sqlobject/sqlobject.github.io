@@ -1,0 +1,175 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_string_id &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.tests.test_string_id</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span><span class="p">,</span> <span class="n">sqlmeta</span>
+<span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
+
+
+<span class="c1">########################################</span>
+<span class="c1"># String ID test</span>
+<span class="c1">########################################</span>
+
+
+<div class="viewcode-block" id="SOStringID"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_string_id.html#sqlobject.tests.test_string_id.SOStringID">[docs]</a><span class="k">class</span> <span class="nc">SOStringID</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SOStringID.sqlmeta"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_string_id.html#sqlobject.tests.test_string_id.SOStringID.sqlmeta">[docs]</a>    <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">(</span><span class="n">sqlmeta</span><span class="p">):</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="s1">&#39;so_string_id&#39;</span>
+        <span class="n">idType</span> <span class="o">=</span> <span class="nb">str</span></div>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">alternateID</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">mysqlCreate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    CREATE TABLE IF NOT EXISTS so_string_id (</span>
+<span class="s2">      id VARCHAR(50) PRIMARY KEY,</span>
+<span class="s2">      val TEXT</span>
+<span class="s2">    )</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">postgresCreate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    CREATE TABLE so_string_id (</span>
+<span class="s2">      id VARCHAR(50) PRIMARY KEY,</span>
+<span class="s2">      val TEXT</span>
+<span class="s2">    )</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">sybaseCreate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    CREATE TABLE so_string_id (</span>
+<span class="s2">      id VARCHAR(50) UNIQUE,</span>
+<span class="s2">      val VARCHAR(50) NULL</span>
+<span class="s2">    )</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">firebirdCreate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    CREATE TABLE so_string_id (</span>
+<span class="s2">      id VARCHAR(50) NOT NULL PRIMARY KEY,</span>
+<span class="s2">      val BLOB SUB_TYPE TEXT</span>
+<span class="s2">    )</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">mssqlCreate</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    CREATE TABLE so_string_id (</span>
+<span class="s2">      id VARCHAR(50) PRIMARY KEY,</span>
+<span class="s2">      val varchar(4000)</span>
+<span class="s2">    )</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">sqliteCreate</span> <span class="o">=</span> <span class="n">postgresCreate</span>
+
+    <span class="n">mysqlDrop</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    DROP TABLE IF EXISTS so_string_id</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">postgresDrop</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    DROP TABLE so_string_id</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">sqliteDrop</span> <span class="o">=</span> <span class="n">postgresDrop</span>
+    <span class="n">firebirdDrop</span> <span class="o">=</span> <span class="n">postgresDrop</span>
+    <span class="n">mssqlDrop</span> <span class="o">=</span> <span class="n">postgresDrop</span></div>
+
+
+<div class="viewcode-block" id="test_stringID"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_string_id.html#sqlobject.tests.test_string_id.test_stringID">[docs]</a><span class="k">def</span> <span class="nf">test_stringID</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">SOStringID</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">SOStringID</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;hey&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="s1">&#39;whatever&#39;</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">SOStringID</span><span class="o">.</span><span class="n">byVal</span><span class="p">(</span><span class="s1">&#39;whatever&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">t1</span> <span class="o">==</span> <span class="n">t2</span>
+    <span class="k">assert</span> <span class="n">t1</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">t2</span><span class="o">.</span><span class="n">val</span>
+    <span class="k">assert</span> <span class="n">t1</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="s1">&#39;whatever&#39;</span>
+
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">SOStringID</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;you&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="s1">&#39;nowhere&#39;</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">SOStringID</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;you&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">t1</span> <span class="o">==</span> <span class="n">t2</span>
+    <span class="k">assert</span> <span class="n">t1</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">t2</span><span class="o">.</span><span class="n">val</span>
+    <span class="k">assert</span> <span class="n">t1</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="s1">&#39;nowhere&#39;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

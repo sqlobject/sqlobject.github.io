@@ -1,0 +1,306 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.util.csvexport &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.util.csvexport</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Exports a SQLObject class (possibly annotated) to a CSV file.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cStringIO</span> <span class="k">import</span> <span class="n">StringIO</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">StringIO</span> <span class="k">import</span> <span class="n">StringIO</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span><span class="p">,</span> <span class="n">BytesIO</span>
+<span class="kn">import</span> <span class="nn">sqlobject</span>
+<span class="kn">from</span> <span class="nn">sqlobject.compat</span> <span class="k">import</span> <span class="n">PY2</span><span class="p">,</span> <span class="n">string_type</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;export_csv&#39;</span><span class="p">,</span> <span class="s1">&#39;export_csv_zip&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="export_csv"><a class="viewcode-back" href="../../../api/sqlobject.util.csvexport.html#sqlobject.util.csvexport.export_csv">[docs]</a><span class="k">def</span> <span class="nf">export_csv</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">select</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">orderBy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Export the SQLObject class ``soClass`` to a CSV file.</span>
+
+<span class="sd">    ``soClass`` can also be a SelectResults object, as returned by</span>
+<span class="sd">    ``.select()``.  If it is a class, all objects will be retrieved,</span>
+<span class="sd">    ordered by ``orderBy`` if given, or the ``.csvOrderBy`` attribute</span>
+<span class="sd">    if present (but csvOrderBy will only be applied when no select</span>
+<span class="sd">    result is given).</span>
+
+<span class="sd">    You can also pass in select results (or simply a list of</span>
+<span class="sd">    instances) in ``select`` -- if you have a list of objects (not a</span>
+<span class="sd">    SelectResults instance, as produced by ``.select()``) then you must</span>
+<span class="sd">    pass it in with ``select`` and pass the class in as the first</span>
+<span class="sd">    argument.</span>
+
+<span class="sd">    ``writer`` is a ``csv.writer()`` object, or a file-like object.</span>
+<span class="sd">    If not given, the string of the file will be returned.</span>
+
+<span class="sd">    Uses ``connection`` as the data source, if given, otherwise the</span>
+<span class="sd">    default connection.</span>
+
+<span class="sd">    Columns can be annotated with ``.csvTitle`` attributes, which will</span>
+<span class="sd">    form the attributes of the columns, or &#39;title&#39; (secondarily), or</span>
+<span class="sd">    if nothing then the column attribute name.</span>
+
+<span class="sd">    If a column has a ``.noCSV`` attribute which is true, then the</span>
+<span class="sd">    column will be suppressed.</span>
+
+<span class="sd">    Additionally a class can have an ``.extraCSVColumns`` attribute,</span>
+<span class="sd">    which should be a list of strings/tuples.  If a tuple, it should</span>
+<span class="sd">    be like ``(attribute, title)``, otherwise it is the attribute,</span>
+<span class="sd">    which will also be the title.  These will be appended to the end</span>
+<span class="sd">    of the CSV file; the attribute will be retrieved from instances.</span>
+
+<span class="sd">    Also a ``.csvColumnOrder`` attribute can be on the class, which is</span>
+<span class="sd">    the string names of attributes in the order they should be</span>
+<span class="sd">    presented.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">return_fileobj</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">writer</span><span class="p">:</span>
+        <span class="n">return_fileobj</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">return_fileobj</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="s1">&#39;writerow&#39;</span><span class="p">):</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">SQLObject</span><span class="o">.</span><span class="n">SelectResultsClass</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">select</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+            <span class="s2">&quot;You cannot pass in a select argument (</span><span class="si">%r</span><span class="s2">) &quot;</span>
+            <span class="s2">&quot;and a SelectResults argument (</span><span class="si">%r</span><span class="s2">) for soClass&quot;</span> <span class="o">%</span>
+            <span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="n">soClass</span><span class="p">))</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="n">soClass</span>
+        <span class="n">soClass</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">sourceClass</span>
+    <span class="k">elif</span> <span class="n">select</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="s1">&#39;csvOrderBy&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">select</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">csvOrderBy</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">orderBy</span><span class="p">:</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="n">orderBy</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">connection</span><span class="p">:</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">connection</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+
+    <span class="n">_actually_export_csv</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_fileobj</span><span class="p">:</span>
+        <span class="c1"># They didn&#39;t pass any writer or file object in, so we return</span>
+        <span class="c1"># the string result:</span>
+        <span class="k">return</span> <span class="n">return_fileobj</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
+
+
+<span class="k">def</span> <span class="nf">_actually_export_csv</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">writer</span><span class="p">):</span>
+    <span class="n">attributes</span><span class="p">,</span> <span class="n">titles</span> <span class="o">=</span> <span class="n">_find_columns</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">soInstance</span> <span class="ow">in</span> <span class="n">select</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">soInstance</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+               <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">]</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_find_columns</span><span class="p">(</span><span class="n">soClass</span><span class="p">):</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">columnList</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="s1">&#39;noCSV&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="s1">&#39;csvTitle&#39;</span><span class="p">):</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">csvTitle</span>
+        <span class="k">elif</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">title</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span>
+
+    <span class="k">for</span> <span class="n">attrDesc</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="s1">&#39;extraCSVColumns&#39;</span><span class="p">,</span> <span class="p">[]):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attrDesc</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">attr</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="n">attrDesc</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="n">title</span> <span class="o">=</span> <span class="n">attrDesc</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">title</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="s1">&#39;csvColumnOrder&#39;</span><span class="p">):</span>
+        <span class="n">oldOrder</span> <span class="o">=</span> <span class="n">order</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">csvColumnOrder</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">oldOrder</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="s2">&quot;Attribute </span><span class="si">%r</span><span class="s2"> in csvColumnOrder (on class </span><span class="si">%r</span><span class="s2">) &quot;</span>
+                    <span class="s2">&quot;does not exist as a column or in .extraCSVColumns &quot;</span>
+                    <span class="s2">&quot;(I have: </span><span class="si">%r</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">oldOrder</span><span class="p">))</span>
+            <span class="n">oldOrder</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">oldOrder</span><span class="p">)</span>
+
+    <span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="n">attrs</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">order</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">order</span><span class="p">,</span> <span class="n">titles</span>
+
+
+<div class="viewcode-block" id="export_csv_zip"><a class="viewcode-back" href="../../../api/sqlobject.util.csvexport.html#sqlobject.util.csvexport.export_csv_zip">[docs]</a><span class="k">def</span> <span class="nf">export_csv_zip</span><span class="p">(</span><span class="n">soClasses</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">zip</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                   <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Export several SQLObject classes into a .zip file.  Each</span>
+<span class="sd">    item in the ``soClasses`` list may be a SQLObject class,</span>
+<span class="sd">    select result, or ``(soClass, select)`` tuple.</span>
+
+<span class="sd">    Each file in the zip will be named after the class name (with</span>
+<span class="sd">    ``.csv`` appended), or using the filename in the ``.csvFilename``</span>
+<span class="sd">    attribute.</span>
+
+<span class="sd">    If ``file`` is given, the zip will be written to that.  ``file``</span>
+<span class="sd">    may be a string (a filename) or a file-like object.  If not given,</span>
+<span class="sd">    a string will be returnd.</span>
+
+<span class="sd">    If ``zip`` is given, then the files will be written to that zip</span>
+<span class="sd">    file.</span>
+
+<span class="sd">    All filenames will be prefixed with ``filename_prefix`` (which may</span>
+<span class="sd">    be a directory name, for instance).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">zipfile</span>
+    <span class="n">close_file_when_finished</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">close_zip_when_finished</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">return_when_finished</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">string_type</span><span class="p">):</span>
+            <span class="n">close_file_when_finished</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">zip</span><span class="p">:</span>
+        <span class="n">close_zip_when_finished</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">return_when_finished</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># zipfile on python3 requires BytesIO</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">zip</span><span class="p">:</span>
+        <span class="nb">zip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_actually_export_classes</span><span class="p">(</span><span class="n">soClasses</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="p">,</span>
+                                 <span class="n">connection</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">close_zip_when_finished</span><span class="p">:</span>
+            <span class="nb">zip</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">close_file_when_finished</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">return_when_finished</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
+
+
+<span class="k">def</span> <span class="nf">_actually_export_classes</span><span class="p">(</span><span class="n">soClasses</span><span class="p">,</span> <span class="nb">zip</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="p">,</span>
+                             <span class="n">connection</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">classDesc</span> <span class="ow">in</span> <span class="n">soClasses</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">classDesc</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="n">soClass</span><span class="p">,</span> <span class="n">select</span> <span class="o">=</span> <span class="n">classDesc</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">classDesc</span><span class="p">,</span> <span class="n">sqlobject</span><span class="o">.</span><span class="n">SQLObject</span><span class="o">.</span><span class="n">SelectResultsClass</span><span class="p">):</span>
+            <span class="n">select</span> <span class="o">=</span> <span class="n">classDesc</span>
+            <span class="n">soClass</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">sourceClass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">soClass</span> <span class="o">=</span> <span class="n">classDesc</span>
+            <span class="n">select</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="s1">&#39;csvFilename&#39;</span><span class="p">,</span> <span class="n">soClass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">filename</span> <span class="o">+=</span> <span class="s1">&#39;.csv&#39;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename_prefix</span> <span class="o">+</span> <span class="n">filename</span>
+        <span class="nb">zip</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span>
+                     <span class="n">export_csv</span><span class="p">(</span><span class="n">soClass</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

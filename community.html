@@ -1,75 +1,136 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-<title>SQLObject Community</title>
-    <link href="layout.css" type="text/css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SQLObject Community &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SQLObject Links" href="links.html" />
+    <link rel="prev" title="Download SQLObject" href="download.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
   </head>
-  <body>
-    <div id="page">
-      <h1 class="doc-title"><a></a></h1>
-      <div id="navcontainer">
-		    <ul id="navlist">
-          <li class="pagenav">
-            <ul>
-              <li class="page_item">
-                <a href="index.html" title="Project Home / Index">SQLObject</a>
-              </li>
-              <li class="page_item">
-                <a href="module-index.html" title="sqlobject package and module reference">Modules</a>
-              </li>
-              <li>
-                <a href="community.html" title="Mailing List">Discuss</a>
-              </li>
-	      <li>
-	        <a href="SQLObject.html">Documentation</a>
-	      </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <hr>
-      <div id="content"><div class="rst-doc">
-  <h1 class="pudge-member-page-heading">SQLObject Community</h1>
-  <p>SQLObject questions and discussion happens on the <a href="https://lists.sourceforge.net/mailman/listinfo/sqlobject-discuss" class="reference external">sqlobject-discuss
-mailing list</a>.
-<a href="http://www.gmane.org/" class="reference external">Gmane</a> also has the list in
-gmane.comp.python.sqlobject accessible by
-<a href="http://news.gmane.org/gmane.comp.python.sqlobject" class="reference external">HTTP</a>,
-<a href="http://blog.gmane.org/gmane.comp.python.sqlobject" class="reference external">HTTP (blog format)</a>
-and <a href="news://news.gmane.org/gmane.comp.python.sqlobject" class="reference external">News</a>.</p>
-<p>Bugs should be submitted to the <a href="https://sourceforge.net/p/sqlobject/bugs/" class="reference external">bug tracker at SourceForge</a> or <a href="https://github.com/sqlobject/sqlobject/issues" class="reference external">GitHub</a>, and
-<a href="https://sourceforge.net/p/sqlobject/patches/" class="reference external">patches to the patch tracker</a> (or send pull requests
-at GitHub).</p>
-<p>Development takes place in the <a href="download.html#repositories" class="reference external">git repositories</a>.  There are <a href="/devel/" class="reference external">development docs</a>.  If you are
-interested in contributing you should read the <a href="DeveloperGuide.html" class="reference external">Developer Guide</a>. There also exists <tt class="docutils literal">##sqlobject</tt> on the
-<a href="https://freenode.net/" class="reference external">Freenode IRC Network</a> for development discussions.</p>
-<p>The <a href="Authors.html" class="reference external">Author List</a> tries to list all the major
-contributors.</p>
-<p>One can also contribute to <a href="https://sites.google.com/site/sqlobject/" class="reference external">community-editable recipe/documentation site</a>.</p>
-<a href="https://sourceforge.net/projects/sqlobject" class="reference external image-reference"><img src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" style="width: 80px; height: 15px;" class="noborder align-center"></a>
-</div></div>
-      <div id="footer">
-        <p style="float: left;">
-          built with 
-          <a href="http://lesscode.org/projects/pudge/">pudge/0.1.3</a> |
-		      original design by 
-          <a href="http://blog.ratterobert.com/">ratter / robert</a>
-	      </p>
-        <div>
-        <br> <!--
-        <a name="search">
-          <form method="get" id="searchform" 
-                action="http://lesscode.org/blog/index.php">
-            <div>
-              <input type="text" value="" name="s" id="s" />
-              <input type="submit" id="searchsubmit" value="Search" />
-            </div>
-          </form>
-        </a> -->
-        <br>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="links.html" title="SQLObject Links"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="download.html" title="Download SQLObject"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="download.html"
+                        title="previous chapter">Download SQLObject</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="links.html"
+                        title="next chapter">SQLObject Links</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/community.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sqlobject-community">
+<h1>SQLObject Community<a class="headerlink" href="#sqlobject-community" title="Permalink to this headline">¶</a></h1>
+<p>SQLObject questions and discussion happens on the <a class="reference external" href="https://lists.sourceforge.net/mailman/listinfo/sqlobject-discuss">sqlobject-discuss
+mailing list</a>.</p>
+<p>Bugs should be submitted to the <a class="reference external" href="https://github.com/sqlobject/sqlobject/issues">GitHub issue tracker</a> or <a class="reference external" href="https://sourceforge.net/p/sqlobject/bugs/">bug tracker at
+SourceForge</a>, and patches as
+<a class="reference external" href="https://github.com/sqlobject/sqlobject/pulls">pull requests at GitHub</a>
+or <a class="reference external" href="https://sourceforge.net/p/sqlobject/patches/">to the patch tracker at SF</a>.</p>
+<p>Development takes place in the <a class="reference external" href="download.html#repositories">git repositories</a>.  There are <a class="reference external" href="/devel/">development docs</a>, i.e the
+docs from the development branch (master).  If you are interested in
+contributing you should read the <a class="reference external" href="DeveloperGuide.html">Developer Guide</a>.</p>
+<p>The <a class="reference external" href="Authors.html">Author List</a> tries to list all the major
+contributors.</p>
+<p>One can also contribute to <a class="reference external" href="https://sites.google.com/site/sqlobject/">community-editable recipe/documentation site</a>.</p>
+<a class="reference external image-reference" href="https://sourceforge.net/projects/sqlobject"><img alt="Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads" class="noborder align-center" src="https://sourceforge.net/sflogo.php?group_id=74338&amp;type=10" style="width: 80px; height: 15px;" /></a>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="links.html" title="SQLObject Links"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="download.html" title="Download SQLObject"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
     </div>
   </body>
 </html>

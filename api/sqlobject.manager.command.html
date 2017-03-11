@@ -1,0 +1,706 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.manager.command module &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.manager.command.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.manager.command">
+<span id="sqlobject-manager-command-module"></span><h1>sqlobject.manager.command module<a class="headerlink" href="#module-sqlobject.manager.command" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sqlobject.manager.command.Command">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">Command</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.aliases">
+<code class="descname">aliases</code><em class="property"> = ()</em><a class="headerlink" href="#sqlobject.manager.command.Command.aliases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.ask">
+<code class="descname">ask</code><span class="sig-paren">(</span><em>prompt</em>, <em>safe=False</em>, <em>default=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.ask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.ask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.classes">
+<code class="descname">classes</code><span class="sig-paren">(</span><em>require_connection=True</em>, <em>require_some=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.classes_from_egg">
+<code class="descname">classes_from_egg</code><span class="sig-paren">(</span><em>egg_spec</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.classes_from_egg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.classes_from_egg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.classes_from_module">
+<code class="descname">classes_from_module</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.classes_from_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.classes_from_module" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.classes_from_package">
+<code class="descname">classes_from_package</code><span class="sig-paren">(</span><em>package_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.classes_from_package"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.classes_from_package" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.config">
+<code class="descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.config_from_egg">
+<code class="descname">config_from_egg</code><span class="sig-paren">(</span><em>egg_spec</em>, <em>warn_no_sqlobject=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.config_from_egg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.config_from_egg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.connection">
+<code class="descname">connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.description">
+<code class="descname">description</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.manager.command.Command.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.help">
+<code class="descname">help</code><em class="property"> = ''</em><a class="headerlink" href="#sqlobject.manager.command.Command.help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.ini_config">
+<code class="descname">ini_config</code><span class="sig-paren">(</span><em>conf_fn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.ini_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.ini_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.load_options_from_egg">
+<code class="descname">load_options_from_egg</code><span class="sig-paren">(</span><em>egg_spec</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.load_options_from_egg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.load_options_from_egg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.max_args">
+<code class="descname">max_args</code><em class="property"> = 0</em><a class="headerlink" href="#sqlobject.manager.command.Command.max_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.max_args_error">
+<code class="descname">max_args_error</code><em class="property"> = 'You must provide no more than %(max_args)s arguments'</em><a class="headerlink" href="#sqlobject.manager.command.Command.max_args_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.min_args">
+<code class="descname">min_args</code><em class="property"> = 0</em><a class="headerlink" href="#sqlobject.manager.command.Command.min_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.min_args_error">
+<code class="descname">min_args_error</code><em class="property"> = 'You must provide at least %(min_args)s arguments'</em><a class="headerlink" href="#sqlobject.manager.command.Command.min_args_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.open_editor">
+<code class="descname">open_editor</code><span class="sig-paren">(</span><em>pretext</em>, <em>breaker=None</em>, <em>extension='.txt'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.open_editor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.open_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open an editor with the given text.  Return the new text,
+or None if no edits were made.  If given, everything after
+<cite>breaker</cite> will be ignored.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.orderClassesByDependencyLevel">
+<code class="descname">orderClassesByDependencyLevel</code><span class="sig-paren">(</span><em>classes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.orderClassesByDependencyLevel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.orderClassesByDependencyLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return classes ordered by their depth in the class dependency
+tree (this is <em>not</em> the inheritance tree), from the
+top level (independant) classes to the deepest level.
+The dependency tree is defined by the foreign key relations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.prog_name">
+<code class="descname">prog_name</code><a class="headerlink" href="#sqlobject.manager.command.Command.prog_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.Command.required_args">
+<code class="descname">required_args</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.manager.command.Command.required_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.Command.shorten_filename">
+<code class="descname">shorten_filename</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#Command.shorten_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.Command.shorten_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortens a filename to make it relative to the current
+directory (if it can).  For display purposes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandCreate">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandCreate</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandCreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandCreate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.Command" title="sqlobject.manager.command.Command"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.Command</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandCreate.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandCreate.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandCreate.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandCreate.name">
+<code class="descname">name</code><em class="property"> = 'create'</em><a class="headerlink" href="#sqlobject.manager.command.CommandCreate.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandCreate.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandCreate.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandCreate.summary">
+<code class="descname">summary</code><em class="property"> = 'Create tables'</em><a class="headerlink" href="#sqlobject.manager.command.CommandCreate.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandDrop">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandDrop</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandDrop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandDrop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.Command" title="sqlobject.manager.command.Command"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.Command</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandDrop.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandDrop.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandDrop.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandDrop.name">
+<code class="descname">name</code><em class="property"> = 'drop'</em><a class="headerlink" href="#sqlobject.manager.command.CommandDrop.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandDrop.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandDrop.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandDrop.summary">
+<code class="descname">summary</code><em class="property"> = 'Drop tables'</em><a class="headerlink" href="#sqlobject.manager.command.CommandDrop.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandExecute">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandExecute</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandExecute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandExecute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.Command" title="sqlobject.manager.command.Command"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.Command</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandExecute.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandExecute.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandExecute.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandExecute.execute_sql">
+<code class="descname">execute_sql</code><span class="sig-paren">(</span><em>sql</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandExecute.execute_sql"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandExecute.execute_sql" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandExecute.help">
+<code class="descname">help</code><em class="property"> = 'Runs SQL statements directly in the database, with no intervention.  Useful when used with a configuration file.  Each argument is executed as an individual statement.'</em><a class="headerlink" href="#sqlobject.manager.command.CommandExecute.help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandExecute.max_args">
+<code class="descname">max_args</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.manager.command.CommandExecute.max_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandExecute.name">
+<code class="descname">name</code><em class="property"> = 'execute'</em><a class="headerlink" href="#sqlobject.manager.command.CommandExecute.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandExecute.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandExecute.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandExecute.summary">
+<code class="descname">summary</code><em class="property"> = 'Execute SQL statements'</em><a class="headerlink" href="#sqlobject.manager.command.CommandExecute.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandHelp">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandHelp</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandHelp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandHelp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.Command" title="sqlobject.manager.command.Command"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.Command</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandHelp.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandHelp.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandHelp.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandHelp.max_args">
+<code class="descname">max_args</code><em class="property"> = 1</em><a class="headerlink" href="#sqlobject.manager.command.CommandHelp.max_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandHelp.name">
+<code class="descname">name</code><em class="property"> = 'help'</em><a class="headerlink" href="#sqlobject.manager.command.CommandHelp.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandHelp.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandHelp.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandHelp.summary">
+<code class="descname">summary</code><em class="property"> = 'Show help'</em><a class="headerlink" href="#sqlobject.manager.command.CommandHelp.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandList">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandList</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.Command" title="sqlobject.manager.command.Command"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.Command</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandList.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandList.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandList.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandList.name">
+<code class="descname">name</code><em class="property"> = 'list'</em><a class="headerlink" href="#sqlobject.manager.command.CommandList.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandList.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandList.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandList.summary">
+<code class="descname">summary</code><em class="property"> = 'Show all SQLObject classes found'</em><a class="headerlink" href="#sqlobject.manager.command.CommandList.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandRecord">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandRecord</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRecord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRecord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.Command" title="sqlobject.manager.command.Command"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.Command</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRecord.base_dir">
+<code class="descname">base_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRecord.base_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.base_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRecord.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRecord.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRecord.command_force_db_version">
+<code class="descname">command_force_db_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRecord.command_force_db_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.command_force_db_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRecord.find_last_version">
+<code class="descname">find_last_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRecord.find_last_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.find_last_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRecord.find_output_dir">
+<code class="descname">find_output_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRecord.find_output_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.find_output_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandRecord.help">
+<code class="descname">help</code><em class="property"> = 'Record state of table definitions.  The state of each table is written out to a separate file in a directory, and that directory forms a &quot;version&quot;.  A table is also added to your database (sqlobject_db_version) that reflects the version the database is currently at.  Use the upgrade command to sync databases with code.'</em><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandRecord.name">
+<code class="descname">name</code><em class="property"> = 'record'</em><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandRecord.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRecord.strip_comments">
+<code class="descname">strip_comments</code><span class="sig-paren">(</span><em>sql</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRecord.strip_comments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.strip_comments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandRecord.summary">
+<code class="descname">summary</code><em class="property"> = 'Record historical information about the database status'</em><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRecord.update_db">
+<code class="descname">update_db</code><span class="sig-paren">(</span><em>version</em>, <em>conn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRecord.update_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.update_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandRecord.version_regex">
+<code class="descname">version_regex</code><em class="property"> = &lt;_sre.SRE_Pattern object&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandRecord.version_regex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandRunner">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandRunner</code><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRunner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRunner.invalid">
+<code class="descname">invalid</code><span class="sig-paren">(</span><em>msg</em>, <em>code=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRunner.invalid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRunner.invalid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRunner.register">
+<code class="descname">register</code><span class="sig-paren">(</span><em>command</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRunner.register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRunner.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandRunner.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>argv</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandRunner.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandRunner.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandSQL">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandSQL</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandSQL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandSQL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.Command" title="sqlobject.manager.command.Command"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.Command</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandSQL.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandSQL.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandSQL.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandSQL.name">
+<code class="descname">name</code><em class="property"> = 'sql'</em><a class="headerlink" href="#sqlobject.manager.command.CommandSQL.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandSQL.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandSQL.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandSQL.summary">
+<code class="descname">summary</code><em class="property"> = 'Show SQL CREATE statements'</em><a class="headerlink" href="#sqlobject.manager.command.CommandSQL.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandStatus">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandStatus</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.Command" title="sqlobject.manager.command.Command"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.Command</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandStatus.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandStatus.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandStatus.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandStatus.help">
+<code class="descname">help</code><em class="property"> = 'This command checks the SQLObject definition and checks if the tables in the database match.  It can always test for missing tables, and on some databases can test for the existance of other tables.  Column types are not currently checked.'</em><a class="headerlink" href="#sqlobject.manager.command.CommandStatus.help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandStatus.name">
+<code class="descname">name</code><em class="property"> = 'status'</em><a class="headerlink" href="#sqlobject.manager.command.CommandStatus.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandStatus.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandStatus.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandStatus.print_class">
+<code class="descname">print_class</code><span class="sig-paren">(</span><em>soClass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandStatus.print_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandStatus.print_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandStatus.summary">
+<code class="descname">summary</code><em class="property"> = 'Show status of classes vs. database'</em><a class="headerlink" href="#sqlobject.manager.command.CommandStatus.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.CommandUpgrade">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">CommandUpgrade</code><span class="sig-paren">(</span><em>invoked_as</em>, <em>command_name</em>, <em>args</em>, <em>runner</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandUpgrade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.manager.command.CommandRecord" title="sqlobject.manager.command.CommandRecord"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.manager.command.CommandRecord</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandUpgrade.best_upgrade">
+<code class="descname">best_upgrade</code><span class="sig-paren">(</span><em>current</em>, <em>dest</em>, <em>target_dbname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandUpgrade.best_upgrade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.best_upgrade" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandUpgrade.command">
+<code class="descname">command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandUpgrade.command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandUpgrade.current_version">
+<code class="descname">current_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandUpgrade.current_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.current_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandUpgrade.help">
+<code class="descname">help</code><em class="property"> = 'This command runs scripts (that you write by hand) to upgrade a database.  The database\'s current version is in the sqlobject_version table (use record --force-db-version if a database does not have a sqlobject_version table), and upgrade scripts are in the version directory you are upgrading FROM, named upgrade_DBNAME_VERSION.sql, like &quot;upgrade_mysql_2004-12-01b.sql&quot;.'</em><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.manager.command.CommandUpgrade.make_plan">
+<code class="descname">make_plan</code><span class="sig-paren">(</span><em>current</em>, <em>dest</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#CommandUpgrade.make_plan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.make_plan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandUpgrade.name">
+<code class="descname">name</code><em class="property"> = 'upgrade'</em><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandUpgrade.parser">
+<code class="descname">parser</code><em class="property"> = &lt;optparse.OptionParser instance&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandUpgrade.summary">
+<code class="descname">summary</code><em class="property"> = 'Update the database to a new version (as created by record)'</em><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.CommandUpgrade.upgrade_regex">
+<code class="descname">upgrade_regex</code><em class="property"> = &lt;_sre.SRE_Pattern object&gt;</em><a class="headerlink" href="#sqlobject.manager.command.CommandUpgrade.upgrade_regex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable">
+<em class="property">class </em><code class="descclassname">sqlobject.manager.command.</code><code class="descname">SQLObjectVersionTable</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#SQLObjectVersionTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
+<p>This table is used to store information about the database and
+its version (used with record and update commands).</p>
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.j">
+<code class="descname">j</code><em class="property"> = sqlobject_db_version</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.q">
+<code class="descname">q</code><em class="property"> = sqlobject_db_version</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.sqlmeta" title="sqlobject.main.sqlmeta"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.sqlmeta</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'updated': &lt;DateTimeCol b450e96cL updated&gt;, 'version': &lt;StringCol b3f6828cL version&gt;}</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol version&gt;, &lt;SODateTimeCol updated default=datetime.datetime(2017, 3, 11, 18, 52, 10, 203831)&gt;]</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'updated': &lt;SODateTimeCol updated default=datetime.datetime(2017, 3, 11, 18, 52, 10, 204006)&gt;, 'version': &lt;SOStringCol version&gt;}</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = 'id'</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.manager.command.SQLObjectVersionTable" title="sqlobject.manager.command.SQLObjectVersionTable"><code class="xref py py-class docutils literal"><span class="pre">SQLObjectVersionTable</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = &lt;sqlobject.styles.MixedCaseUnderscoreStyle object&gt;</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'sqlobject_db_version'</em><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.updated">
+<code class="descclassname">SQLObjectVersionTable.</code><code class="descname">updated</code><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.updated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.manager.command.SQLObjectVersionTable.version">
+<code class="descclassname">SQLObjectVersionTable.</code><code class="descname">version</code><a class="headerlink" href="#sqlobject.manager.command.SQLObjectVersionTable.version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.manager.command.db_differences">
+<code class="descclassname">sqlobject.manager.command.</code><code class="descname">db_differences</code><span class="sig-paren">(</span><em>soClass</em>, <em>conn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#db_differences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.db_differences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the differences between a class and the table in a
+connection.  Returns [] if no differences are found.  This
+function does the best it can; it can miss many differences.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.manager.command.nowarning_tempnam">
+<code class="descclassname">sqlobject.manager.command.</code><code class="descname">nowarning_tempnam</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#nowarning_tempnam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.nowarning_tempnam" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.manager.command.standard_parser">
+<code class="descclassname">sqlobject.manager.command.</code><code class="descname">standard_parser</code><span class="sig-paren">(</span><em>connection=True</em>, <em>simulate=True</em>, <em>interactive=False</em>, <em>find_modules=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#standard_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.standard_parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.manager.command.update_sys_path">
+<code class="descclassname">sqlobject.manager.command.</code><code class="descname">update_sys_path</code><span class="sig-paren">(</span><em>paths</em>, <em>verbose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/manager/command.html#update_sys_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.manager.command.update_sys_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

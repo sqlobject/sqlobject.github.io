@@ -1,0 +1,259 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.maxdb.maxdbconnection module &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.maxdb.maxdbconnection.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.maxdb.maxdbconnection">
+<span id="sqlobject-maxdb-maxdbconnection-module"></span><h1>sqlobject.maxdb.maxdbconnection module<a class="headerlink" href="#module-sqlobject.maxdb.maxdbconnection" title="Permalink to this headline">¶</a></h1>
+<p>Contributed by Edigram SAS, Paris France <a class="reference external" href="Tel:01">Tel:01</a> 44 77 94 00
+Ahmed MOHAMED ALI &lt;<a class="reference external" href="mailto:ahmedmoali&#37;&#52;&#48;yahoo&#46;com">ahmedmoali<span>&#64;</span>yahoo<span>&#46;</span>com</a>&gt; 27 April 2004</p>
+<p>This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.</p>
+<p>connection creation sample:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">__connection__</span> <span class="o">=</span> <span class="n">DBConnection</span><span class="o">.</span><span class="n">maxdbConnection</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="n">hostname</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">dbname</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="n">user_name</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">user_password</span><span class="p">,</span> <span class="n">autoCommit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="exception">
+<dt id="sqlobject.maxdb.maxdbconnection.IncorrectIDStyleError">
+<em class="property">exception </em><code class="descclassname">sqlobject.maxdb.maxdbconnection.</code><code class="descname">IncorrectIDStyleError</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#IncorrectIDStyleError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.IncorrectIDStyleError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.maxdb.maxdbconnection.maxdbException" title="sqlobject.maxdb.maxdbconnection.maxdbException"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.maxdb.maxdbconnection.maxdbException</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sqlobject.maxdb.maxdbconnection.LowerBoundOfSliceIsNotSupported">
+<em class="property">exception </em><code class="descclassname">sqlobject.maxdb.maxdbconnection.</code><code class="descname">LowerBoundOfSliceIsNotSupported</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#LowerBoundOfSliceIsNotSupported"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.LowerBoundOfSliceIsNotSupported" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.maxdb.maxdbconnection.maxdbException" title="sqlobject.maxdb.maxdbconnection.maxdbException"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.maxdb.maxdbconnection.maxdbException</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection">
+<em class="property">class </em><code class="descclassname">sqlobject.maxdb.maxdbconnection.</code><code class="descname">MaxdbConnection</code><span class="sig-paren">(</span><em>host=''</em>, <em>port=None</em>, <em>user=None</em>, <em>password=None</em>, <em>database=None</em>, <em>autoCommit=1</em>, <em>sqlmode='internal'</em>, <em>isolation=None</em>, <em>timeout=None</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.dbconnection.html#sqlobject.dbconnection.DBAPI" title="sqlobject.dbconnection.DBAPI"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.dbconnection.DBAPI</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.GET_COLUMNS">
+<code class="descname">GET_COLUMNS</code><em class="property"> = &quot;\n    SELECT COLUMN_NAME, NULLABLE, DATA_DEFAULT, DATA_TYPE,\n           DATA_LENGTH, DATA_SCALE\n    FROM USER_TAB_COLUMNS WHERE TABLE_NAME=UPPER('%s')&quot;</em><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.GET_COLUMNS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.GET_PK_AND_FK">
+<code class="descname">GET_PK_AND_FK</code><em class="property"> = &quot;\n    SELECT constraint_cols.column_name, constraints.constraint_type,\n           refname,reftablename\n    FROM user_cons_columns constraint_cols\n    INNER JOIN user_constraints constraints\n    ON constraint_cols.constraint_name = constraints.constraint_name\n    LEFT OUTER JOIN show_foreign_key fk\n    ON constraint_cols.column_name = fk.columnname\n    WHERE constraints.table_name =UPPER('%s')&quot;</em><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.GET_PK_AND_FK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.addColumn">
+<code class="descname">addColumn</code><span class="sig-paren">(</span><em>tableName</em>, <em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.addColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.addColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.columnsFromSchema">
+<code class="descname">columnsFromSchema</code><span class="sig-paren">(</span><em>tableName</em>, <em>soClass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.columnsFromSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.columnsFromSchema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.createColumn">
+<code class="descname">createColumn</code><span class="sig-paren">(</span><em>soClass</em>, <em>col</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.createColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.createIDColumn">
+<code class="descname">createIDColumn</code><span class="sig-paren">(</span><em>soClass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.createIDColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createIDColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.createIndexSQL">
+<code class="descname">createIndexSQL</code><span class="sig-paren">(</span><em>soClass</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.createIndexSQL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createIndexSQL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.createReferenceConstraint">
+<code class="descname">createReferenceConstraint</code><span class="sig-paren">(</span><em>soClass</em>, <em>col</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.createReferenceConstraint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createReferenceConstraint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.createSequenceName">
+<code class="descname">createSequenceName</code><span class="sig-paren">(</span><em>table</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.createSequenceName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createSequenceName" title="Permalink to this definition">¶</a></dt>
+<dd><p>sequence name are builded with the concatenation of the table
+name with &#8216;_SEQ&#8217; word we truncate the name of the
+sequence_name because sapdb identifier cannot exceed 32
+characters so that the name of the sequence does not exceed 32
+characters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.createTable">
+<code class="descname">createTable</code><span class="sig-paren">(</span><em>soClass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.createTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.dbName">
+<code class="descname">dbName</code><em class="property"> = 'maxdb'</em><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.dbName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.delColumn">
+<code class="descname">delColumn</code><span class="sig-paren">(</span><em>sqlmeta</em>, <em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.delColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.delColumn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.dropTable">
+<code class="descname">dropTable</code><span class="sig-paren">(</span><em>tableName</em>, <em>cascade=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.dropTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.dropTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.guessClass">
+<code class="descname">guessClass</code><span class="sig-paren">(</span><em>t</em>, <em>flength</em>, <em>fscale=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.guessClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.guessClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>An internal method that tries to figure out what Col subclass
+is appropriate given whatever introspective information is
+available &#8211; both very database-specific.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.joinSQLType">
+<code class="descname">joinSQLType</code><span class="sig-paren">(</span><em>join</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.joinSQLType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.joinSQLType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.makeConnection">
+<code class="descname">makeConnection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.makeConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.makeConnection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.schemes">
+<code class="descname">schemes</code><em class="property"> = ['maxdb']</em><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.schemes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.sqlAddLimit">
+<em class="property">classmethod </em><code class="descname">sqlAddLimit</code><span class="sig-paren">(</span><em>query</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.sqlAddLimit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.sqlAddLimit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.supportTransactions">
+<code class="descname">supportTransactions</code><em class="property"> = True</em><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.supportTransactions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.maxdb.maxdbconnection.MaxdbConnection.tableExists">
+<code class="descname">tableExists</code><span class="sig-paren">(</span><em>tableName</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#MaxdbConnection.tableExists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.MaxdbConnection.tableExists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="sqlobject.maxdb.maxdbconnection.PrimaryKeyNotFounded">
+<em class="property">exception </em><code class="descclassname">sqlobject.maxdb.maxdbconnection.</code><code class="descname">PrimaryKeyNotFounded</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#PrimaryKeyNotFounded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.PrimaryKeyNotFounded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.maxdb.maxdbconnection.maxdbException" title="sqlobject.maxdb.maxdbconnection.maxdbException"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.maxdb.maxdbconnection.maxdbException</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sqlobject.maxdb.maxdbconnection.StyleMismatchError">
+<em class="property">exception </em><code class="descclassname">sqlobject.maxdb.maxdbconnection.</code><code class="descname">StyleMismatchError</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#StyleMismatchError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.StyleMismatchError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.maxdb.maxdbconnection.maxdbException" title="sqlobject.maxdb.maxdbconnection.maxdbException"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.maxdb.maxdbconnection.maxdbException</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sqlobject.maxdb.maxdbconnection.maxdbException">
+<em class="property">exception </em><code class="descclassname">sqlobject.maxdb.maxdbconnection.</code><code class="descname">maxdbException</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/maxdb/maxdbconnection.html#maxdbException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.maxdb.maxdbconnection.maxdbException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

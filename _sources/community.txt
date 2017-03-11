@@ -1,0 +1,41 @@
+SQLObject Community
+===================
+
+SQLObject questions and discussion happens on the `sqlobject-discuss
+mailing list
+<https://lists.sourceforge.net/mailman/listinfo/sqlobject-discuss>`_.
+`Gmane <http://www.gmane.org/>`_ also has the list in
+gmane.comp.python.sqlobject accessible by
+`HTTP <http://news.gmane.org/gmane.comp.python.sqlobject>`_,
+`HTTP (blog format) <http://blog.gmane.org/gmane.comp.python.sqlobject>`_
+and `News <news://news.gmane.org/gmane.comp.python.sqlobject>`_.
+
+Bugs should be submitted to the `bug tracker at SourceForge
+<https://sourceforge.net/p/sqlobject/bugs/>`_ or `GitHub
+<https://github.com/sqlobject/sqlobject/issues>`_, and
+`patches to the patch tracker
+<https://sourceforge.net/p/sqlobject/patches/>`_ (or send pull requests
+at GitHub).
+
+Development takes place in the `git repositories
+<download.html#repositories>`_.  There are `development docs`_.  If you are
+interested in contributing you should read the `Developer Guide
+<DeveloperGuide.html>`_. There also exists ``##sqlobject`` on the
+`Freenode IRC Network`_ for development discussions.
+
+.. _`development docs`: /devel/
+.. _`Freenode IRC Network`: https://freenode.net/
+
+The `Author List <Authors.html>`_ tries to list all the major
+contributors.
+
+One can also contribute to `community-editable recipe/documentation site
+<https://sites.google.com/site/sqlobject/>`_.
+
+.. image:: https://sourceforge.net/sflogo.php?group_id=74338&type=10
+   :target: https://sourceforge.net/projects/sqlobject
+   :class: noborder
+   :align: center
+   :height: 15
+   :width: 80
+   :alt: Get SQLObject at SourceForge.net. Fast, secure and Free Open Source software downloads

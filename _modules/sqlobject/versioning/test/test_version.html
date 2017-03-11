@@ -1,0 +1,281 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.versioning.test.test_version &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../versioning.html" accesskey="U">sqlobject.versioning</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.versioning.test.test_version</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">IntCol</span><span class="p">,</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span>
+<span class="kn">from</span> <span class="nn">sqlobject.inheritance</span> <span class="k">import</span> <span class="n">InheritableSQLObject</span>
+<span class="kn">from</span> <span class="nn">sqlobject.versioning</span> <span class="k">import</span> <span class="n">Versioning</span>
+<span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
+
+
+<div class="viewcode-block" id="MyClass"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.MyClass">[docs]</a><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="n">Versioning</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Base"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.Base">[docs]</a><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">so_value</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="n">Versioning</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Child"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.Child">[docs]</a><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">toy</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Government"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.Government">[docs]</a><span class="k">class</span> <span class="nc">Government</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Monarchy"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.Monarchy">[docs]</a><span class="k">class</span> <span class="nc">Monarchy</span><span class="p">(</span><span class="n">Government</span><span class="p">):</span>
+    <span class="n">monarch</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="n">Versioning</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="VChild"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.VChild">[docs]</a><span class="k">class</span> <span class="nc">VChild</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">weapon</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="n">Versioning</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="HasForeign"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.HasForeign">[docs]</a><span class="k">class</span> <span class="nc">HasForeign</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">foreign</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;Base&quot;</span><span class="p">)</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="n">Versioning</span><span class="p">()</span></div>
+
+
+<span class="k">def</span> <span class="nf">_set_extra</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;read all about it&quot;</span>
+
+
+<div class="viewcode-block" id="Extra"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.Extra">[docs]</a><span class="k">class</span> <span class="nc">Extra</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="n">Versioning</span><span class="p">(</span>
+        <span class="n">extraCols</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;extra&#39;</span><span class="p">:</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">_set_extra</span><span class="p">())})</span></div>
+
+
+<div class="viewcode-block" id="HasAltId"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.HasAltId">[docs]</a><span class="k">class</span> <span class="nc">HasAltId</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">altid</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">alternateID</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">versions</span> <span class="o">=</span> <span class="n">Versioning</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">():</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">MyClass</span><span class="p">,</span> <span class="n">Base</span><span class="p">,</span> <span class="n">Child</span><span class="p">,</span> <span class="n">Government</span><span class="p">,</span>
+               <span class="n">Monarchy</span><span class="p">,</span> <span class="n">VChild</span><span class="p">,</span> <span class="n">Extra</span><span class="p">,</span> <span class="n">HasAltId</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">HasForeign</span><span class="p">,</span> <span class="s2">&quot;_connection&quot;</span><span class="p">):</span>
+        <span class="n">classes</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">HasForeign</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HasForeign</span><span class="p">)</span>
+    <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;versions&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s2">&quot;_connection&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">):</span>
+            <span class="n">setupClass</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">versions</span><span class="o">.</span><span class="n">versionClass</span><span class="p">)</span>
+        <span class="n">setupClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s1">&#39;versions&#39;</span><span class="p">):</span>
+            <span class="n">setupClass</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">versions</span><span class="o">.</span><span class="n">versionClass</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">versions</span><span class="o">.</span><span class="n">versionClass</span><span class="o">.</span><span class="n">select</span><span class="p">():</span>
+                <span class="n">version</span><span class="o">.</span><span class="n">destroySelf</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="test_versioning"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.test_versioning">[docs]</a><span class="k">def</span> <span class="nf">test_versioning</span><span class="p">():</span>
+    <span class="c1"># the simple case</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">mc</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fleem&#39;</span><span class="p">)</span>
+    <span class="n">mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;morx&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mc</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">mc</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;fleem&quot;</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">select</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="test_inheritable_versioning"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.test_inheritable_versioning">[docs]</a><span class="k">def</span> <span class="nf">test_inheritable_versioning</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+
+    <span class="c1"># base versioned, child unversioned</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">Base</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fleem&#39;</span><span class="p">)</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;morx&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;fleem&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Base</span><span class="o">.</span><span class="n">select</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="n">child</span> <span class="o">=</span> <span class="n">Child</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;child&#39;</span><span class="p">,</span> <span class="n">toy</span><span class="o">=</span><span class="s1">&#39;nintendo&#39;</span><span class="p">)</span>
+    <span class="n">child</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;teenager&#39;</span><span class="p">,</span> <span class="n">toy</span><span class="o">=</span><span class="s1">&#39;guitar&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="c1"># child versioned, base unversioned</span>
+    <span class="n">government</span> <span class="o">=</span> <span class="n">Government</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;canada&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">government</span><span class="p">,</span> <span class="s1">&#39;versions&#39;</span><span class="p">)</span>
+
+    <span class="n">monarchy</span> <span class="o">=</span> <span class="n">Monarchy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;UK&#39;</span><span class="p">,</span> <span class="n">monarch</span><span class="o">=</span><span class="s1">&#39;king george iv&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">monarchy</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">monarchy</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;queen elisabeth ii&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">monarchy</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">monarchy</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;UK&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">Monarchy</span><span class="o">.</span><span class="n">select</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="c1"># both parent and child versioned</span>
+    <span class="n">num_base_versions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span>
+    <span class="n">vchild</span> <span class="o">=</span> <span class="n">VChild</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;kid&#39;</span><span class="p">,</span> <span class="n">weapon</span><span class="o">=</span><span class="s1">&#39;slingshot&#39;</span><span class="p">)</span>
+    <span class="n">vchild</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;toon&#39;</span><span class="p">,</span> <span class="n">weapon</span><span class="o">=</span><span class="s1">&#39;dynamite&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span> <span class="o">==</span> <span class="n">num_base_versions</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vchild</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="c1"># test setting using setattr directly rather than .set</span>
+    <span class="n">vchild</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;newname&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vchild</span><span class="o">.</span><span class="n">versions</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="test_restore"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.test_restore">[docs]</a><span class="k">def</span> <span class="nf">test_restore</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">Base</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fleem&#39;</span><span class="p">)</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;morx&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">base</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;morx&quot;</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">base</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;fleem&quot;</span>
+
+    <span class="n">monarchy</span> <span class="o">=</span> <span class="n">Monarchy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="n">monarch</span><span class="o">=</span><span class="s1">&#39;Emperor Norton I&#39;</span><span class="p">)</span>
+    <span class="n">monarchy</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;morx&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">monarchy</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;morx&quot;</span>
+    <span class="n">monarchy</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">monarchy</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;USA&quot;</span>
+    <span class="k">assert</span> <span class="n">monarchy</span><span class="o">.</span><span class="n">monarch</span> <span class="o">==</span> <span class="s2">&quot;Emperor Norton I&quot;</span>
+
+    <span class="n">extra</span> <span class="o">=</span> <span class="n">Extra</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fleem&#39;</span><span class="p">)</span>
+    <span class="n">extra</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;morx&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">extra</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;morx&quot;</span>
+    <span class="n">extra</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">restore</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">extra</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;fleem&quot;</span></div>
+
+
+<div class="viewcode-block" id="test_next"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.test_next">[docs]</a><span class="k">def</span> <span class="nf">test_next</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">Base</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">so_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;second&#39;</span><span class="p">)</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="n">so_value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">version</span><span class="o">.</span><span class="n">nextVersion</span><span class="p">()</span> <span class="o">==</span> <span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">version</span><span class="o">.</span><span class="n">nextVersion</span><span class="p">()</span><span class="o">.</span><span class="n">nextVersion</span><span class="p">()</span> <span class="o">==</span> <span class="n">base</span></div>
+
+
+<div class="viewcode-block" id="test_get_changed"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.test_get_changed">[docs]</a><span class="k">def</span> <span class="nf">test_get_changed</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">Base</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">so_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;second&#39;</span><span class="p">)</span>
+    <span class="n">base</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;third&#39;</span><span class="p">,</span> <span class="n">so_value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getChangedFields</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">getChangedFields</span><span class="p">())</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;So_Value&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="test_foreign_keys"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.test_foreign_keys">[docs]</a><span class="k">def</span> <span class="nf">test_foreign_keys</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">base1</span> <span class="o">=</span> <span class="n">Base</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">so_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">base2</span> <span class="o">=</span> <span class="n">Base</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">so_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">has_foreign</span> <span class="o">=</span> <span class="n">HasForeign</span><span class="p">(</span><span class="n">foreign</span><span class="o">=</span><span class="n">base1</span><span class="p">)</span>
+    <span class="n">has_foreign</span><span class="o">.</span><span class="n">foreign</span> <span class="o">=</span> <span class="n">base2</span>
+    <span class="k">assert</span> <span class="n">has_foreign</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">foreign</span> <span class="o">==</span> <span class="n">base1</span></div>
+
+
+<div class="viewcode-block" id="test_extra"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.test_extra">[docs]</a><span class="k">def</span> <span class="nf">test_extra</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="n">Extra</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+    <span class="n">extra</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;new&#39;</span>
+    <span class="k">assert</span> <span class="n">extra</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">extra</span> <span class="o">==</span> <span class="s1">&#39;read all about it&#39;</span>
+    <span class="k">assert</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">extra</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getChangedFields</span><span class="p">())</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="test_altid"><a class="viewcode-back" href="../../../../api/sqlobject.versioning.test.test_version.html#sqlobject.versioning.test.test_version.test_altid">[docs]</a><span class="k">def</span> <span class="nf">test_altid</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="n">HasAltId</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;fleem&quot;</span><span class="p">,</span> <span class="n">altid</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">extra</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;morx&quot;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../versioning.html" >sqlobject.versioning</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

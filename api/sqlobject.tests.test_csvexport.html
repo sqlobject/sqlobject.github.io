@@ -1,0 +1,339 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_csvexport module &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.tests.test_csvexport.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.tests.test_csvexport">
+<span id="sqlobject-tests-test-csvexport-module"></span><h1>sqlobject.tests.test_csvexport module<a class="headerlink" href="#module-sqlobject.tests.test_csvexport" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV">
+<em class="property">class </em><code class="descclassname">sqlobject.tests.test_csvexport.</code><code class="descname">ComplexCSV</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_csvexport.html#ComplexCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.age">
+<code class="descname">age</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.age" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.csvColumnOrder">
+<code class="descname">csvColumnOrder</code><em class="property"> = ['name', 'fname', 'lname', 'age']</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.csvColumnOrder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.extraCSVColumns">
+<code class="descname">extraCSVColumns</code><em class="property"> = [('name', 'Full Name'), 'initials']</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.extraCSVColumns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.fname">
+<code class="descname">fname</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.fname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.initials">
+<code class="descname">initials</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.initials" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.j">
+<code class="descname">j</code><em class="property"> = complex_cs_v</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.lname">
+<code class="descname">lname</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.lname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.name">
+<code class="descname">name</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.q">
+<code class="descname">q</code><em class="property"> = complex_cs_v</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.sqlmeta" title="sqlobject.main.sqlmeta"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.sqlmeta</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'lname': &lt;StringCol b3fcbf4cL lname&gt;, 'age': &lt;IntCol b3fcb58cL age&gt;, 'fname': &lt;StringCol b3bec34cL fname&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol fname&gt;, &lt;SOStringCol lname&gt;, &lt;SOIntCol age&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'lname': &lt;SOStringCol lname&gt;, 'age': &lt;SOIntCol age&gt;, 'fname': &lt;SOStringCol fname&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = 'id'</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.tests.test_csvexport.ComplexCSV" title="sqlobject.tests.test_csvexport.ComplexCSV"><code class="xref py py-class docutils literal"><span class="pre">ComplexCSV</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = &lt;sqlobject.styles.MixedCaseUnderscoreStyle object&gt;</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'complex_cs_v'</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.ComplexCSV.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV">
+<em class="property">class </em><code class="descclassname">sqlobject.tests.test_csvexport.</code><code class="descname">SimpleCSV</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_csvexport.html#SimpleCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.address">
+<code class="descname">address</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.hidden">
+<code class="descname">hidden</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.hidden" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.j">
+<code class="descname">j</code><em class="property"> = simple_cs_v</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.name">
+<code class="descname">name</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.q">
+<code class="descname">q</code><em class="property"> = simple_cs_v</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.sqlmeta" title="sqlobject.main.sqlmeta"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.sqlmeta</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'hidden': &lt;StringCol b37e18ecL hidden&gt;, 'name': &lt;StringCol b3fde18cL name&gt;, 'address': &lt;StringCol b4c63bccL address&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol name&gt;, &lt;SOStringCol address&gt;, &lt;SOStringCol hidden&gt;]</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'hidden': &lt;SOStringCol hidden&gt;, 'name': &lt;SOStringCol name&gt;, 'address': &lt;SOStringCol address&gt;}</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = 'id'</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.tests.test_csvexport.SimpleCSV" title="sqlobject.tests.test_csvexport.SimpleCSV"><code class="xref py py-class docutils literal"><span class="pre">SimpleCSV</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = &lt;sqlobject.styles.MixedCaseUnderscoreStyle object&gt;</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'simple_cs_v'</em><a class="headerlink" href="#sqlobject.tests.test_csvexport.SimpleCSV.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.tests.test_csvexport.assert_export">
+<code class="descclassname">sqlobject.tests.test_csvexport.</code><code class="descname">assert_export</code><span class="sig-paren">(</span><em>result</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_csvexport.html#assert_export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_csvexport.assert_export" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.tests.test_csvexport.test_complex">
+<code class="descclassname">sqlobject.tests.test_csvexport.</code><code class="descname">test_complex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_csvexport.html#test_complex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_csvexport.test_complex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.tests.test_csvexport.test_simple">
+<code class="descclassname">sqlobject.tests.test_csvexport.</code><code class="descname">test_simple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_csvexport.html#test_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_csvexport.test_simple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.tests.test_csvexport.test_zip">
+<code class="descclassname">sqlobject.tests.test_csvexport.</code><code class="descname">test_zip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/tests/test_csvexport.html#test_zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.tests.test_csvexport.test_zip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

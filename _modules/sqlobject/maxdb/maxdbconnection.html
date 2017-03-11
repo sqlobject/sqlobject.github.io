@@ -1,0 +1,417 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.maxdb.maxdbconnection &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../maxdb.html" accesskey="U">sqlobject.maxdb</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.maxdb.maxdbconnection</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Contributed by Edigram SAS, Paris France Tel:01 44 77 94 00</span>
+<span class="sd">Ahmed MOHAMED ALI &lt;ahmedmoali@yahoo.com&gt; 27 April 2004</span>
+
+<span class="sd">This program is distributed in the hope that it will be useful, but</span>
+<span class="sd">WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU</span>
+<span class="sd">General Public License for more details.</span>
+
+<span class="sd">connection creation sample::</span>
+
+<span class="sd">    __connection__ = DBConnection.maxdbConnection(</span>
+<span class="sd">        host=hostname, database=dbname,</span>
+<span class="sd">        user=user_name, password=user_password, autoCommit=1, debug=1)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">sqlobject.dbconnection</span> <span class="k">import</span> <span class="n">DBAPI</span>
+<span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">col</span>
+
+
+<div class="viewcode-block" id="maxdbException"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.maxdbException">[docs]</a><span class="k">class</span> <span class="nc">maxdbException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LowerBoundOfSliceIsNotSupported"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.LowerBoundOfSliceIsNotSupported">[docs]</a><span class="k">class</span> <span class="nc">LowerBoundOfSliceIsNotSupported</span><span class="p">(</span><span class="n">maxdbException</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">maxdbException</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="IncorrectIDStyleError"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.IncorrectIDStyleError">[docs]</a><span class="k">class</span> <span class="nc">IncorrectIDStyleError</span><span class="p">(</span><span class="n">maxdbException</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">maxdbException</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="s1">&#39;This primary key name is not in the expected style, &#39;</span>
+            <span class="s1">&#39;please rename the column to </span><span class="si">%r</span><span class="s1"> or switch to another style&#39;</span>
+            <span class="o">%</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StyleMismatchError"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.StyleMismatchError">[docs]</a><span class="k">class</span> <span class="nc">StyleMismatchError</span><span class="p">(</span><span class="n">maxdbException</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">maxdbException</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="s1">&#39;The name </span><span class="si">%r</span><span class="s1"> is only permitted for primary key, change the &#39;</span>
+            <span class="s1">&#39;column name or switch to another style&#39;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PrimaryKeyNotFounded"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.PrimaryKeyNotFounded">[docs]</a><span class="k">class</span> <span class="nc">PrimaryKeyNotFounded</span><span class="p">(</span><span class="n">maxdbException</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">maxdbException</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="s2">&quot;No primary key was defined on table </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<span class="n">SAPDBMAX_ID_LENGTH</span> <span class="o">=</span> <span class="mi">32</span>
+
+
+<div class="viewcode-block" id="MaxdbConnection"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection">[docs]</a><span class="k">class</span> <span class="nc">MaxdbConnection</span><span class="p">(</span><span class="n">DBAPI</span><span class="p">):</span>
+
+    <span class="n">supportTransactions</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">dbName</span> <span class="o">=</span> <span class="s1">&#39;maxdb&#39;</span>
+    <span class="n">schemes</span> <span class="o">=</span> <span class="p">[</span><span class="n">dbName</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">database</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">autoCommit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sqlmode</span><span class="o">=</span><span class="s1">&#39;internal&#39;</span><span class="p">,</span>
+                 <span class="n">isolation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">sapdb</span> <span class="k">import</span> <span class="n">dbapi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">dbapi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span> <span class="o">=</span> <span class="n">autoCommit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sqlmode</span> <span class="o">=</span> <span class="n">sqlmode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">isolation</span> <span class="o">=</span> <span class="n">isolation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+
+        <span class="n">DBAPI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_connectionFromParams</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                   <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_getConfigParams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sqlmode</span><span class="p">,</span> <span class="n">auto</span><span class="p">):</span>
+        <span class="n">autocommit</span> <span class="o">=</span> <span class="s1">&#39;off&#39;</span>
+        <span class="k">if</span> <span class="n">auto</span><span class="p">:</span>
+            <span class="n">autocommit</span> <span class="o">=</span> <span class="s1">&#39;on&#39;</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">opt</span><span class="p">[</span><span class="s2">&quot;autocommit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">autocommit</span>
+        <span class="n">opt</span><span class="p">[</span><span class="s2">&quot;sqlmode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sqlmode</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isolation</span><span class="p">:</span>
+            <span class="n">opt</span><span class="p">[</span><span class="s2">&quot;isolation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">isolation</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+            <span class="n">opt</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+        <span class="k">return</span> <span class="n">opt</span>
+
+    <span class="k">def</span> <span class="nf">_setAutoCommit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">auto</span><span class="p">):</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
+                      <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_getConfigParams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlmode</span><span class="p">,</span> <span class="n">auto</span><span class="p">))</span>
+
+<div class="viewcode-block" id="MaxdbConnection.createSequenceName"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createSequenceName">[docs]</a>    <span class="k">def</span> <span class="nf">createSequenceName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        sequence name are builded with the concatenation of the table</span>
+<span class="sd">        name with &#39;_SEQ&#39; word we truncate the name of the</span>
+<span class="sd">        sequence_name because sapdb identifier cannot exceed 32</span>
+<span class="sd">        characters so that the name of the sequence does not exceed 32</span>
+<span class="sd">        characters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">_SEQ&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">table</span><span class="p">[:</span><span class="n">SAPDBMAX_ID_LENGTH</span> <span class="o">-</span> <span class="mi">4</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.makeConnection"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.makeConnection">[docs]</a>    <span class="k">def</span> <span class="nf">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">Connection</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_getConfigParams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlmode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">conn</span></div>
+
+    <span class="k">def</span> <span class="nf">_queryInsertID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">soInstance</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span>
+        <span class="n">idName</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                <span class="s1">&#39;SELECT </span><span class="si">%s</span><span class="s1">.NEXTVAL FROM DUAL&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">createSequenceName</span><span class="p">(</span><span class="n">table</span><span class="p">)))</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">idName</span><span class="p">]</span> <span class="o">+</span> <span class="n">names</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">+</span> <span class="n">values</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insertSQL</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="s1">&#39;QueryIns&#39;</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugOutput</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="s1">&#39;QueryIns&#39;</span><span class="p">,</span> <span class="s1">&#39;result&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">id</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="MaxdbConnection.sqlAddLimit"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.sqlAddLimit">[docs]</a>    <span class="k">def</span> <span class="nf">sqlAddLimit</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="n">query</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;SELECT&quot;</span><span class="p">,</span> <span class="s2">&quot;SELECT ROWNO, &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sql</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;WHERE&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span> <span class="o">+</span> <span class="s1">&#39; AND &#39;</span> <span class="o">+</span> <span class="n">limit</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span> <span class="o">+</span> <span class="s1">&#39;WHERE &#39;</span> <span class="o">+</span> <span class="n">limit</span>
+        <span class="k">return</span> <span class="n">sql</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_queryAddLimitOffset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">start</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LowerBoundOfSliceIsNotSupported</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="s1">&#39; ROWNO   &lt;= </span><span class="si">%d</span><span class="s1"> &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">end</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">sqlAddLimit</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MaxdbConnection.createTable"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createTable">[docs]</a>    <span class="k">def</span> <span class="nf">createTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="c1"># We create the table in a transaction because the addition of the</span>
+        <span class="c1"># table and the sequence must be atomic.</span>
+
+        <span class="c1"># I tried to use the transaction class</span>
+        <span class="c1"># but I get a recursion limit error.</span>
+        <span class="c1"># t=self.transaction()</span>
+        <span class="c1"># t.query(&#39;CREATE TABLE %s (\n%s\n)&#39; %</span>
+        <span class="c1">#            (soClass.sqlmeta.table, self.createColumns(soClass)))</span>
+        <span class="c1">#</span>
+        <span class="c1"># t.query(&quot;CREATE SEQUENCE %s&quot; %</span>
+        <span class="c1">#         self.createSequenceName(soClass.sqlmeta.table))</span>
+        <span class="c1"># t.commit()</span>
+        <span class="c1"># so use transaction when the problem will be solved</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;CREATE TABLE </span><span class="si">%s</span><span class="s1"> (</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">createColumns</span><span class="p">(</span><span class="n">soClass</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;CREATE SEQUENCE </span><span class="si">%s</span><span class="s2">&quot;</span>
+                   <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">createSequenceName</span><span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.createReferenceConstraint"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createReferenceConstraint">[docs]</a>    <span class="k">def</span> <span class="nf">createReferenceConstraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">maxdbCreateReferenceConstraint</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.createColumn"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createColumn">[docs]</a>    <span class="k">def</span> <span class="nf">createColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">maxdbCreateSQL</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.createIDColumn"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createIDColumn">[docs]</a>    <span class="k">def</span> <span class="nf">createIDColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;INT&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span><span class="p">}[</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idType</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> PRIMARY KEY&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">,</span> <span class="n">key_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.createIndexSQL"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.createIndexSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createIndexSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">index</span><span class="o">.</span><span class="n">maxdbCreateIndexSQL</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.dropTable"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.dropTable">[docs]</a>    <span class="k">def</span> <span class="nf">dropTable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># We drop the table in a transaction because the removal of the</span>
+        <span class="c1"># table and the sequence must be atomic.</span>
+        <span class="c1"># I tried to use the transaction class</span>
+        <span class="c1"># but I get a recursion limit error.</span>
+        <span class="c1"># try:</span>
+        <span class="c1">#     t=self.transaction()</span>
+        <span class="c1">#     t.query(&quot;DROP TABLE %s&quot; % tableName)</span>
+        <span class="c1">#     t.query(&quot;DROP SEQUENCE %s&quot; % self.createSequenceName(tableName))</span>
+        <span class="c1">#     t.commit()</span>
+        <span class="c1"># except:</span>
+        <span class="c1">#     t.rollback()</span>
+        <span class="c1"># so use transaction when the problem will be solved</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DROP TABLE </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tableName</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;DROP SEQUENCE </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">createSequenceName</span><span class="p">(</span><span class="n">tableName</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.joinSQLType"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.joinSQLType">[docs]</a>    <span class="k">def</span> <span class="nf">joinSQLType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">join</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;INT NOT NULL&#39;</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.tableExists"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.tableExists">[docs]</a>    <span class="k">def</span> <span class="nf">tableExists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">):</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">table</span><span class="p">,)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span>
+                <span class="s2">&quot;SELECT OBJECT_NAME FROM ALL_OBJECTS &quot;</span>
+                <span class="s2">&quot;WHERE OBJECT_TYPE=&#39;TABLE&#39;&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">table</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">tableName</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.addColumn"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.addColumn">[docs]</a>    <span class="k">def</span> <span class="nf">addColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ALTER TABLE </span><span class="si">%s</span><span class="s1"> ADD </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">tableName</span><span class="p">,</span>
+                    <span class="n">column</span><span class="o">.</span><span class="n">maxdbCreateSQL</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="MaxdbConnection.delColumn"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.delColumn">[docs]</a>    <span class="k">def</span> <span class="nf">delColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sqlmeta</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ALTER TABLE </span><span class="si">%s</span><span class="s1"> DROP COLUMN </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+                                                      <span class="n">column</span><span class="o">.</span><span class="n">dbName</span><span class="p">))</span></div>
+
+    <span class="n">GET_COLUMNS</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT COLUMN_NAME, NULLABLE, DATA_DEFAULT, DATA_TYPE,</span>
+<span class="s2">           DATA_LENGTH, DATA_SCALE</span>
+<span class="s2">    FROM USER_TAB_COLUMNS WHERE TABLE_NAME=UPPER(&#39;</span><span class="si">%s</span><span class="s2">&#39;)&quot;&quot;&quot;</span>
+
+    <span class="n">GET_PK_AND_FK</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT constraint_cols.column_name, constraints.constraint_type,</span>
+<span class="s2">           refname,reftablename</span>
+<span class="s2">    FROM user_cons_columns constraint_cols</span>
+<span class="s2">    INNER JOIN user_constraints constraints</span>
+<span class="s2">    ON constraint_cols.constraint_name = constraints.constraint_name</span>
+<span class="s2">    LEFT OUTER JOIN show_foreign_key fk</span>
+<span class="s2">    ON constraint_cols.column_name = fk.columnname</span>
+<span class="s2">    WHERE constraints.table_name =UPPER(&#39;</span><span class="si">%s</span><span class="s2">&#39;)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MaxdbConnection.columnsFromSchema"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.columnsFromSchema">[docs]</a>    <span class="k">def</span> <span class="nf">columnsFromSchema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">colData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_COLUMNS</span>
+                                <span class="o">%</span> <span class="n">tableName</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">keymap</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">pkmap</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">fkData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GET_PK_AND_FK</span> <span class="o">%</span> <span class="n">tableName</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_col</span><span class="p">,</span> <span class="n">cons_type</span><span class="p">,</span> <span class="n">refcol</span><span class="p">,</span> <span class="n">reftable</span> <span class="ow">in</span> <span class="n">fkData</span><span class="p">:</span>
+            <span class="n">col_name</span> <span class="o">=</span> <span class="n">_col</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">pkmap</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">cons_type</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span>
+                <span class="n">keymap</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">reftable</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+            <span class="k">elif</span> <span class="n">cons_type</span> <span class="o">==</span> <span class="s1">&#39;P&#39;</span><span class="p">:</span>
+                <span class="n">pkmap</span><span class="p">[</span><span class="n">col_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pkmap</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PrimaryKeyNotFounded</span><span class="p">(</span><span class="n">tableName</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">nullAllowed</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">data_type</span><span class="p">,</span> <span class="n">data_len</span><span class="p">,</span>
+             <span class="n">data_scale</span><span class="p">)</span> <span class="ow">in</span> <span class="n">colData</span><span class="p">:</span>
+            <span class="c1"># id is defined as primary key --&gt; ok</span>
+            <span class="c1"># We let sqlobject raise error if the &#39;id&#39; is used</span>
+            <span class="c1"># for another column.</span>
+            <span class="n">field_name</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">field_name</span> <span class="o">==</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pkmap</span><span class="p">[</span><span class="n">field_name</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
+            <span class="n">colClass</span><span class="p">,</span> <span class="n">kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">guessClass</span><span class="p">(</span><span class="n">data_type</span><span class="p">,</span> <span class="n">data_len</span><span class="p">,</span> <span class="n">data_scale</span><span class="p">)</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_name</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;dbName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span>
+
+            <span class="k">if</span> <span class="n">nullAllowed</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span>
+                <span class="n">nullAllowed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nullAllowed</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;notNone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nullAllowed</span>
+            <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span>
+
+            <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">keymap</span><span class="p">:</span>
+                <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;foreignKey&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">keymap</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">colClass</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
+
+    <span class="n">_numericTypes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;INTEGER&#39;</span><span class="p">,</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span> <span class="s1">&#39;SMALLINT&#39;</span><span class="p">]</span>
+    <span class="n">_dateTypes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">,</span> <span class="s1">&#39;TIME&#39;</span><span class="p">,</span> <span class="s1">&#39;TIMESTAMP&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="MaxdbConnection.guessClass"><a class="viewcode-back" href="../../../api/sqlobject.maxdb.maxdbconnection.html#sqlobject.maxdb.maxdbconnection.MaxdbConnection.guessClass">[docs]</a>    <span class="k">def</span> <span class="nf">guessClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">flength</span><span class="p">,</span> <span class="n">fscale</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An internal method that tries to figure out what Col subclass</span>
+<span class="sd">        is appropriate given whatever introspective information is</span>
+<span class="sd">        available -- both very database-specific.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numericTypes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">IntCol</span><span class="p">,</span> <span class="p">{}</span>
+        <span class="c1"># The type returned by the sapdb library for LONG is</span>
+        <span class="c1"># SapDB_LongReader To get the data call the read member with</span>
+        <span class="c1"># desired size (default =-1 means get all)</span>
+
+        <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;LONG&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">StringCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="n">flength</span><span class="p">,</span>
+                                   <span class="s1">&#39;varchar&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dateTypes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">DateTimeCol</span><span class="p">,</span> <span class="p">{}</span>
+        <span class="k">elif</span> <span class="n">t</span> <span class="o">==</span> <span class="s1">&#39;FIXED&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">CurrencyCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="n">flength</span><span class="p">,</span>
+                                     <span class="s1">&#39;precision&#39;</span><span class="p">:</span> <span class="n">fscale</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">Col</span><span class="p">,</span> <span class="p">{}</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../maxdb.html" >sqlobject.maxdb</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,180 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.include.tests.test_hashcol &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.include.tests.test_hashcol</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hashlib</span> <span class="k">import</span> <span class="n">sha256</span><span class="p">,</span> <span class="n">md5</span>
+<span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">AND</span><span class="p">,</span> <span class="n">IntCol</span><span class="p">,</span> <span class="n">OR</span><span class="p">,</span> <span class="n">SQLObject</span>
+<span class="kn">from</span> <span class="nn">sqlobject.compat</span> <span class="k">import</span> <span class="n">PY2</span>
+<span class="kn">from</span> <span class="nn">sqlobject.include</span> <span class="k">import</span> <span class="n">hashcol</span>
+<span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
+
+<span class="c1">########################################</span>
+<span class="c1"># HashCol test</span>
+<span class="c1">########################################</span>
+
+<span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">sha256_str</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">sha256</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">md5_str</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">md5</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+<div class="viewcode-block" id="sha256_str"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.sha256_str">[docs]</a>    <span class="k">def</span> <span class="nf">sha256_str</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">sha256</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="md5_str"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.md5_str">[docs]</a>    <span class="k">def</span> <span class="nf">md5_str</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">md5</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="HashTest"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.HashTest">[docs]</a><span class="k">class</span> <span class="nc">HashTest</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+    <span class="n">so_count</span> <span class="o">=</span> <span class="n">IntCol</span><span class="p">(</span><span class="n">alternateID</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">col1</span> <span class="o">=</span> <span class="n">hashcol</span><span class="o">.</span><span class="n">HashCol</span><span class="p">()</span>
+    <span class="n">col2</span> <span class="o">=</span> <span class="n">hashcol</span><span class="o">.</span><span class="n">HashCol</span><span class="p">(</span><span class="n">hashMethod</span><span class="o">=</span><span class="n">sha256_str</span><span class="p">)</span></div>
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;This is more text&#39;</span><span class="p">,</span> <span class="s1">&#39;test 2&#39;</span><span class="p">]</span>
+<span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">items</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">setupClass</span><span class="p">(</span><span class="n">HashTest</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HashTest</span><span class="p">(</span><span class="n">so_count</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">col1</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">col2</span><span class="o">=</span><span class="n">s</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="test_create"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.test_create">[docs]</a><span class="k">def</span> <span class="nf">test_create</span><span class="p">():</span>
+    <span class="n">setup</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">item</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">s</span>
+        <span class="k">assert</span> <span class="n">item</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="n">s</span>
+
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">HashTest</span><span class="o">.</span><span class="n">_connection</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT so_count, col1, col2</span>
+<span class="s2">    FROM hash_test</span>
+<span class="s2">    ORDER BY so_count</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">so_count</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">md5_str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">so_count</span><span class="p">])</span> <span class="o">==</span> <span class="n">col1</span>
+        <span class="k">assert</span> <span class="n">sha256_str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">so_count</span><span class="p">])</span> <span class="o">==</span> <span class="n">col2</span></div>
+
+
+<div class="viewcode-block" id="test_select"><a class="viewcode-back" href="../../../../api/sqlobject.include.tests.test_hashcol.html#sqlobject.include.tests.test_hashcol.test_select">[docs]</a><span class="k">def</span> <span class="nf">test_select</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">value</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="n">value</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="c1"># Passing the hash in directly should fail</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="n">sha256_str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">AND</span><span class="p">(</span>
+            <span class="n">HashTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="n">value</span><span class="p">,</span>
+            <span class="n">HashTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="n">value</span>
+        <span class="p">)))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">col2</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">selectBy</span><span class="p">(</span><span class="n">col1</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">col2</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">HashTest</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">OR</span><span class="p">(</span>
+        <span class="n">HashTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col1</span> <span class="o">==</span> <span class="s1">&#39;test 2&#39;</span><span class="p">,</span>
+        <span class="n">HashTest</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">col2</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span>
+    <span class="p">)))</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

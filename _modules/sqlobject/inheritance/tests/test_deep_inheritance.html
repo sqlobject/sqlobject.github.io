@@ -1,0 +1,208 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.inheritance.tests.test_deep_inheritance &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../inheritance.html" accesskey="U">sqlobject.inheritance</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.inheritance.tests.test_deep_inheritance</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pytest</span> <span class="k">import</span> <span class="n">raises</span><span class="p">,</span> <span class="n">skip</span>
+<span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">MultipleJoin</span><span class="p">,</span> <span class="n">StringCol</span>
+<span class="kn">from</span> <span class="nn">sqlobject.inheritance</span> <span class="k">import</span> <span class="n">InheritableSQLObject</span>
+<span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">getConnection</span><span class="p">,</span> <span class="n">setupClass</span><span class="p">,</span> <span class="n">supports</span>
+
+<span class="c1">########################################</span>
+<span class="c1"># Deep Inheritance</span>
+<span class="c1">########################################</span>
+
+
+<div class="viewcode-block" id="DIPerson"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_deep_inheritance.html#sqlobject.inheritance.tests.test_deep_inheritance.DIPerson">[docs]</a><span class="k">class</span> <span class="nc">DIPerson</span><span class="p">(</span><span class="n">InheritableSQLObject</span><span class="p">):</span>
+    <span class="n">firstName</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">lastName</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">alternateID</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">manager</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;DIManager&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DIEmployee"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_deep_inheritance.html#sqlobject.inheritance.tests.test_deep_inheritance.DIEmployee">[docs]</a><span class="k">class</span> <span class="nc">DIEmployee</span><span class="p">(</span><span class="n">DIPerson</span><span class="p">):</span>
+    <span class="n">so_position</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DIManager"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_deep_inheritance.html#sqlobject.inheritance.tests.test_deep_inheritance.DIManager">[docs]</a><span class="k">class</span> <span class="nc">DIManager</span><span class="p">(</span><span class="n">DIEmployee</span><span class="p">):</span>
+    <span class="n">subdudes</span> <span class="o">=</span> <span class="n">MultipleJoin</span><span class="p">(</span><span class="s2">&quot;DIPerson&quot;</span><span class="p">,</span> <span class="n">joinColumn</span><span class="o">=</span><span class="s2">&quot;manager_id&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_creation_fail"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_deep_inheritance.html#sqlobject.inheritance.tests.test_deep_inheritance.test_creation_fail">[docs]</a><span class="k">def</span> <span class="nf">test_creation_fail</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Try to create a Manager without specifying a position.</span>
+<span class="sd">    This should fail without leaving any partial records in</span>
+<span class="sd">    the database.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">setupClass</span><span class="p">([</span><span class="n">DIManager</span><span class="p">,</span> <span class="n">DIEmployee</span><span class="p">,</span> <span class="n">DIPerson</span><span class="p">])</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;firstName&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;lastname&#39;</span><span class="p">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">}</span>
+    <span class="n">raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">DIManager</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">persons</span> <span class="o">=</span> <span class="n">DIEmployee</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">DIPerson</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">firstName</span> <span class="o">==</span> <span class="s1">&#39;John&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">persons</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="test_creation_fail2"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_deep_inheritance.html#sqlobject.inheritance.tests.test_deep_inheritance.test_creation_fail2">[docs]</a><span class="k">def</span> <span class="nf">test_creation_fail2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Try to create two Managers with the same position.</span>
+<span class="sd">    This should fail without leaving any partial records in</span>
+<span class="sd">    the database.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">setupClass</span><span class="p">([</span><span class="n">DIManager</span><span class="p">,</span> <span class="n">DIEmployee</span><span class="p">,</span> <span class="n">DIPerson</span><span class="p">])</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;firstName&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;lastName&#39;</span><span class="p">:</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;so_position&#39;</span><span class="p">:</span> <span class="s1">&#39;Project Manager&#39;</span><span class="p">}</span>
+    <span class="n">DIManager</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">persons</span> <span class="o">=</span> <span class="n">DIEmployee</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">DIPerson</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">firstName</span> <span class="o">==</span> <span class="s1">&#39;John&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">persons</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;firstName&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;lastName&#39;</span><span class="p">:</span> <span class="s1">&#39;Doe II&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;so_position&#39;</span><span class="p">:</span> <span class="s1">&#39;Project Manager&#39;</span><span class="p">}</span>
+    <span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="n">DIManager</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">persons</span> <span class="o">=</span> <span class="n">DIPerson</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">DIPerson</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">firstName</span> <span class="o">==</span> <span class="s1">&#39;John&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">persons</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">(</span><span class="s1">&#39;transactions&#39;</span><span class="p">):</span>
+        <span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Transactions aren&#39;t supported&quot;</span><span class="p">)</span>
+    <span class="n">transaction</span> <span class="o">=</span> <span class="n">DIPerson</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">transaction</span><span class="p">()</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;firstName&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;lastName&#39;</span><span class="p">:</span> <span class="s1">&#39;Doe III&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;so_position&#39;</span><span class="p">:</span> <span class="s1">&#39;Project Manager&#39;</span><span class="p">}</span>
+    <span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="n">DIManager</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">transaction</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">transaction</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+    <span class="n">transaction</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+    <span class="n">persons</span> <span class="o">=</span> <span class="n">DIPerson</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">DIPerson</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">firstName</span> <span class="o">==</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+                              <span class="n">connection</span><span class="o">=</span><span class="n">transaction</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">persons</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="test_deep_inheritance"><a class="viewcode-back" href="../../../../api/sqlobject.inheritance.tests.test_deep_inheritance.html#sqlobject.inheritance.tests.test_deep_inheritance.test_deep_inheritance">[docs]</a><span class="k">def</span> <span class="nf">test_deep_inheritance</span><span class="p">():</span>
+    <span class="n">setupClass</span><span class="p">([</span><span class="n">DIManager</span><span class="p">,</span> <span class="n">DIEmployee</span><span class="p">,</span> <span class="n">DIPerson</span><span class="p">])</span>
+
+    <span class="n">manager</span> <span class="o">=</span> <span class="n">DIManager</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Project&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Manager&#39;</span><span class="p">,</span>
+                        <span class="n">so_position</span><span class="o">=</span><span class="s1">&#39;Project Manager&#39;</span><span class="p">)</span>
+    <span class="n">manager_id</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">id</span>
+    <span class="n">employee_id</span> <span class="o">=</span> <span class="n">DIEmployee</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Project&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Leader&#39;</span><span class="p">,</span>
+                             <span class="n">so_position</span><span class="o">=</span><span class="s1">&#39;Project leader&#39;</span><span class="p">,</span> <span class="n">manager</span><span class="o">=</span><span class="n">manager</span><span class="p">)</span><span class="o">.</span><span class="n">id</span>
+    <span class="n">DIPerson</span><span class="p">(</span><span class="n">firstName</span><span class="o">=</span><span class="s1">&#39;Oneof&#39;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s1">&#39;Authors&#39;</span><span class="p">,</span> <span class="n">manager</span><span class="o">=</span><span class="n">manager</span><span class="p">)</span>
+
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">getConnection</span><span class="p">()</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cache</span>
+    <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">managers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">DIManager</span><span class="o">.</span><span class="n">select</span><span class="p">())</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">managers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">employees</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">DIEmployee</span><span class="o">.</span><span class="n">select</span><span class="p">())</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">employees</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">persons</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">DIPerson</span><span class="o">.</span><span class="n">select</span><span class="p">())</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">persons</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">person</span> <span class="o">=</span> <span class="n">DIPerson</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">employee_id</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">DIEmployee</span><span class="p">)</span>
+
+    <span class="n">person</span> <span class="o">=</span> <span class="n">DIPerson</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">manager_id</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">DIEmployee</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">DIManager</span><span class="p">)</span>
+    <span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">person</span> <span class="o">=</span> <span class="n">DIEmployee</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">manager_id</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">DIManager</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../inheritance.html" >sqlobject.inheritance</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

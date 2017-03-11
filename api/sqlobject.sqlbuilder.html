@@ -1,0 +1,987 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.sqlbuilder module &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sqlobject.sqlbuilder module</a><ul>
+<li><a class="reference internal" href="#sqlobject-sqlbuilder">sqlobject.sqlbuilder</a></li>
+<li><a class="reference internal" href="#disclaimer">Disclaimer</a></li>
+<li><a class="reference internal" href="#instructions">Instructions</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.sqlbuilder.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.sqlbuilder">
+<span id="sqlobject-sqlbuilder-module"></span><h1>sqlobject.sqlbuilder module<a class="headerlink" href="#module-sqlobject.sqlbuilder" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sqlobject-sqlbuilder">
+<h2>sqlobject.sqlbuilder<a class="headerlink" href="#sqlobject-sqlbuilder" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">author:</th><td class="field-body">Ian Bicking &lt;<a class="reference external" href="mailto:ianb&#37;&#52;&#48;colorstudy&#46;com">ianb<span>&#64;</span>colorstudy<span>&#46;</span>com</a>&gt;</td>
+</tr>
+</tbody>
+</table>
+<p>Builds SQL expressions from normal Python expressions.</p>
+</div>
+<div class="section" id="disclaimer">
+<h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h2>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation; either version 2.1 of the
+License, or (at your option any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU Lesser General Public
+License along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,
+USA.</p>
+</div>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
+<p>To begin a SQL expression, you must use some sort of SQL object &#8211; a
+field, table, or SQL statement (<code class="docutils literal"><span class="pre">SELECT</span></code>, <code class="docutils literal"><span class="pre">INSERT</span></code>, etc.)  You can
+then use normal operators, with the exception of: <cite>and</cite>, <cite>or</cite>, <cite>not</cite>,
+and <cite>in</cite>.  You can use the <cite>AND</cite>, <cite>OR</cite>, <cite>NOT</cite>, and <cite>IN</cite> functions
+instead, or you can also use <cite>&amp;</cite>, <cite>|</cite>, and <cite>~</cite> for <cite>and</cite>, <cite>or</cite>, and
+<cite>not</cite> respectively (however &#8211; the precidence for these operators
+doesn&#8217;t work as you would want, so you must use many parenthesis).</p>
+<p>To create a sql field, table, or constant/function, use the namespaces
+<cite>table</cite>, <cite>const</cite>, and <cite>func</cite>.  For instance, <code class="docutils literal"><span class="pre">table.address</span></code> refers
+to the <code class="docutils literal"><span class="pre">address</span></code> table, and <code class="docutils literal"><span class="pre">table.address.state</span></code> refers to the
+<code class="docutils literal"><span class="pre">state</span></code> field in the address table.  <code class="docutils literal"><span class="pre">const.NULL</span></code> is the <code class="docutils literal"><span class="pre">NULL</span></code>
+SQL constant, and <code class="docutils literal"><span class="pre">func.NOW()</span></code> is the <code class="docutils literal"><span class="pre">NOW()</span></code> function call
+(<cite>const</cite> and <cite>func</cite> are actually identicle, but the two names are
+provided for clarity).  Once you create this object, expressions
+formed with it will produce SQL statements.</p>
+<p>The <code class="docutils literal"><span class="pre">sqlrepr(obj)</span></code> function gets the SQL representation of these
+objects, as well as the proper SQL representation of basic Python
+types (None==NULL).</p>
+<p>There are a number of DB-specific SQL features that this does not
+implement.  There are a bunch of normal ANSI features also not present.</p>
+<p>See the bottom of this module for some examples, and run it (i.e.
+<code class="docutils literal"><span class="pre">python</span> <span class="pre">sql.py</span></code>) to see the results of those examples.</p>
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.ALL">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ALL</code><span class="sig-paren">(</span><em>subquery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ALL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.AND">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">AND</code><span class="sig-paren">(</span><em>*ops</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#AND"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.AND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.ANY">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ANY</code><span class="sig-paren">(</span><em>subquery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ANY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ANY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Alias">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Alias</code><span class="sig-paren">(</span><em>table</em>, <em>alias=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Alias.components">
+<code class="descname">components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Alias.components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Alias.components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.AliasField">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">AliasField</code><span class="sig-paren">(</span><em>tableName</em>, <em>fieldName</em>, <em>alias</em>, <em>aliasTable</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#AliasField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.AliasField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.Field" title="sqlobject.sqlbuilder.Field"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.Field</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.AliasField.tablesUsedImmediate">
+<code class="descname">tablesUsedImmediate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#AliasField.tablesUsedImmediate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.AliasField.tablesUsedImmediate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.AliasTable">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">AliasTable</code><span class="sig-paren">(</span><em>table</em>, <em>alias=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#AliasTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.AliasTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.Table" title="sqlobject.sqlbuilder.Table"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.Table</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.AliasTable.FieldClass">
+<code class="descname">FieldClass</code><a class="headerlink" href="#sqlobject.sqlbuilder.AliasTable.FieldClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.sqlbuilder.AliasField" title="sqlobject.sqlbuilder.AliasField"><code class="xref py py-class docutils literal"><span class="pre">AliasField</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.AliasTable.as_string">
+<code class="descname">as_string</code><em class="property"> = ''</em><a class="headerlink" href="#sqlobject.sqlbuilder.AliasTable.as_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.CONCAT">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">CONCAT</code><span class="sig-paren">(</span><em>*expressions</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#CONCAT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.CONCAT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.CONTAINSSTRING">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">CONTAINSSTRING</code><span class="sig-paren">(</span><em>expr</em>, <em>pattern</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#CONTAINSSTRING"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.CONTAINSSTRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.CROSSJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">CROSSJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#CROSSJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.CROSSJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.ColumnAS">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ColumnAS</code><span class="sig-paren">(</span><em>expr</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ColumnAS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ColumnAS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLOp" title="sqlobject.sqlbuilder.SQLOp"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLOp</span></code></a></p>
+<p>Just like SQLOp(&#8216;AS&#8217;, expr, name) except without the parentheses</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.ConstantSpace">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ConstantSpace</code><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ConstantSpace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ConstantSpace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.DESC">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">DESC</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#DESC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.DESC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Delete">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Delete</code><span class="sig-paren">(</span><em>table</em>, <em>where=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<p>To be safe, this will signal an error if there is no where clause,
+unless you pass in where=None to the constructor.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.ENDSWITH">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ENDSWITH</code><span class="sig-paren">(</span><em>expr</em>, <em>pattern</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ENDSWITH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ENDSWITH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.EXISTS">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">EXISTS</code><span class="sig-paren">(</span><em>subquery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#EXISTS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.EXISTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.FULLJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">FULLJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#FULLJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.FULLJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.FULLJOINConditional">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">FULLJOINConditional</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition=None</em>, <em>using_columns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#FULLJOINConditional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.FULLJOINConditional" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.FULLJOINOn">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">FULLJOINOn</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#FULLJOINOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.FULLJOINOn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.FULLJOINUsing">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">FULLJOINUsing</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>using_columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#FULLJOINUsing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.FULLJOINUsing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.FULLOUTERJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">FULLOUTERJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#FULLOUTERJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.FULLOUTERJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.FULLOUTERJOINConditional">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">FULLOUTERJOINConditional</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition=None</em>, <em>using_columns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#FULLOUTERJOINConditional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.FULLOUTERJOINConditional" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.FULLOUTERJOINOn">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">FULLOUTERJOINOn</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#FULLOUTERJOINOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.FULLOUTERJOINOn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.FULLOUTERJOINUsing">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">FULLOUTERJOINUsing</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>using_columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#FULLOUTERJOINUsing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.FULLOUTERJOINUsing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Field">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Field</code><span class="sig-paren">(</span><em>tableName</em>, <em>fieldName</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Field.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Field.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Field.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Field.tablesUsedImmediate">
+<code class="descname">tablesUsedImmediate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Field.tablesUsedImmediate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Field.tablesUsedImmediate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.IN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">IN</code><span class="sig-paren">(</span><em>item</em>, <em>list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#IN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.IN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.INNERJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">INNERJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#INNERJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.INNERJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.INNERJOINConditional">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">INNERJOINConditional</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition=None</em>, <em>using_columns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#INNERJOINConditional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.INNERJOINConditional" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.INNERJOINOn">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">INNERJOINOn</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#INNERJOINOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.INNERJOINOn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.INNERJOINUsing">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">INNERJOINUsing</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>using_columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#INNERJOINUsing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.INNERJOINUsing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.INSubquery">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">INSubquery</code><span class="sig-paren">(</span><em>item</em>, <em>subquery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#INSubquery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.INSubquery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.INSubquery.components">
+<code class="descname">components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#INSubquery.components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.INSubquery.components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.INSubquery.op">
+<code class="descname">op</code><em class="property"> = 'IN'</em><a class="headerlink" href="#sqlobject.sqlbuilder.INSubquery.op" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.ISNOTNULL">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ISNOTNULL</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ISNOTNULL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ISNOTNULL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.ISNULL">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ISNULL</code><span class="sig-paren">(</span><em>expr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ISNULL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ISNULL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.ImportProxy">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ImportProxy</code><span class="sig-paren">(</span><em>clsName</em>, <em>registry=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ImportProxy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ImportProxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<p>Class to be used in column definitions that rely on other tables that might
+not yet be in a classregistry.</p>
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.ImportProxy.FieldClass">
+<code class="descname">FieldClass</code><a class="headerlink" href="#sqlobject.sqlbuilder.ImportProxy.FieldClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.sqlbuilder.ImportProxyField" title="sqlobject.sqlbuilder.ImportProxyField"><code class="xref py py-class docutils literal"><span class="pre">ImportProxyField</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.ImportProxyField">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">ImportProxyField</code><span class="sig-paren">(</span><em>tableName</em>, <em>fieldName</em>, <em>original</em>, <em>soClass</em>, <em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ImportProxyField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ImportProxyField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLObjectField" title="sqlobject.sqlbuilder.SQLObjectField"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLObjectField</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.ImportProxyField.tablesUsedImmediate">
+<code class="descname">tablesUsedImmediate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#ImportProxyField.tablesUsedImmediate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.ImportProxyField.tablesUsedImmediate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Insert">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Insert</code><span class="sig-paren">(</span><em>table</em>, <em>valueList=None</em>, <em>values=None</em>, <em>template=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.JOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">JOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#JOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.JOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.LEFTJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LEFTJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LEFTJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LEFTJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.LEFTJOINConditional">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LEFTJOINConditional</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition=None</em>, <em>using_columns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LEFTJOINConditional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LEFTJOINConditional" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.LEFTJOINOn">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LEFTJOINOn</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LEFTJOINOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LEFTJOINOn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.LEFTJOINUsing">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LEFTJOINUsing</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>using_columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LEFTJOINUsing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LEFTJOINUsing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.LEFTOUTERJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LEFTOUTERJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LEFTOUTERJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LEFTOUTERJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.LEFTOUTERJOINConditional">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LEFTOUTERJOINConditional</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition=None</em>, <em>using_columns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LEFTOUTERJOINConditional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LEFTOUTERJOINConditional" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.LEFTOUTERJOINOn">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LEFTOUTERJOINOn</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LEFTOUTERJOINOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LEFTOUTERJOINOn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.LEFTOUTERJOINUsing">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LEFTOUTERJOINUsing</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>using_columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LEFTOUTERJOINUsing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LEFTOUTERJOINUsing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.LIKE">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">LIKE</code><span class="sig-paren">(</span><em>expr</em>, <em>string</em>, <em>escape=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LIKE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LIKE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.LIKE.components">
+<code class="descname">components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LIKE.components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LIKE.components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.LIKE.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#LIKE.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.LIKE.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.LIKE.op">
+<code class="descname">op</code><em class="property"> = 'LIKE'</em><a class="headerlink" href="#sqlobject.sqlbuilder.LIKE.op" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NATURALFULLJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NATURALFULLJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NATURALFULLJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NATURALFULLJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NATURALFULLOUTERJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NATURALFULLOUTERJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NATURALFULLOUTERJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NATURALFULLOUTERJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NATURALJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NATURALJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NATURALJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NATURALJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NATURALLEFTJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NATURALLEFTJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NATURALLEFTJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NATURALLEFTJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NATURALLEFTOUTERJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NATURALLEFTOUTERJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NATURALLEFTOUTERJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NATURALLEFTOUTERJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NATURALRIGHTJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NATURALRIGHTJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NATURALRIGHTJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NATURALRIGHTJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NATURALRIGHTOUTERJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NATURALRIGHTOUTERJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NATURALRIGHTOUTERJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NATURALRIGHTOUTERJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NOT">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NOT</code><span class="sig-paren">(</span><em>op</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NOT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NOT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NOTEXISTS">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NOTEXISTS</code><span class="sig-paren">(</span><em>subquery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NOTEXISTS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NOTEXISTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.NOTIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NOTIN</code><span class="sig-paren">(</span><em>item</em>, <em>list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NOTIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NOTIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.NOTINSubquery">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NOTINSubquery</code><span class="sig-paren">(</span><em>item</em>, <em>subquery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NOTINSubquery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NOTINSubquery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.INSubquery" title="sqlobject.sqlbuilder.INSubquery"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.INSubquery</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.NOTINSubquery.op">
+<code class="descname">op</code><em class="property"> = 'NOT IN'</em><a class="headerlink" href="#sqlobject.sqlbuilder.NOTINSubquery.op" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.NoDefault">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">NoDefault</code><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#NoDefault"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.NoDefault" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.OR">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">OR</code><span class="sig-paren">(</span><em>*ops</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#OR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.OR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Outer">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Outer</code><span class="sig-paren">(</span><em>table</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Outer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Outer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.OuterField">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">OuterField</code><span class="sig-paren">(</span><em>tableName</em>, <em>fieldName</em>, <em>original</em>, <em>soClass</em>, <em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#OuterField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.OuterField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLObjectField" title="sqlobject.sqlbuilder.SQLObjectField"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLObjectField</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.OuterField.tablesUsedImmediate">
+<code class="descname">tablesUsedImmediate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#OuterField.tablesUsedImmediate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.OuterField.tablesUsedImmediate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.OuterTable">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">OuterTable</code><span class="sig-paren">(</span><em>soClass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#OuterTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.OuterTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLObjectTable" title="sqlobject.sqlbuilder.SQLObjectTable"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLObjectTable</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.OuterTable.FieldClass">
+<code class="descname">FieldClass</code><a class="headerlink" href="#sqlobject.sqlbuilder.OuterTable.FieldClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.sqlbuilder.OuterField" title="sqlobject.sqlbuilder.OuterField"><code class="xref py py-class docutils literal"><span class="pre">OuterField</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.RIGHTJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RIGHTJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RIGHTJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RIGHTJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.RIGHTJOINConditional">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RIGHTJOINConditional</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition=None</em>, <em>using_columns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RIGHTJOINConditional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RIGHTJOINConditional" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.RIGHTJOINOn">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RIGHTJOINOn</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RIGHTJOINOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RIGHTJOINOn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.RIGHTJOINUsing">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RIGHTJOINUsing</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>using_columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RIGHTJOINUsing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RIGHTJOINUsing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.RIGHTOUTERJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RIGHTOUTERJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RIGHTOUTERJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RIGHTOUTERJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.RIGHTOUTERJOINConditional">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RIGHTOUTERJOINConditional</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition=None</em>, <em>using_columns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RIGHTOUTERJOINConditional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RIGHTOUTERJOINConditional" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.RIGHTOUTERJOINOn">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RIGHTOUTERJOINOn</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>on_condition</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RIGHTOUTERJOINOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RIGHTOUTERJOINOn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.RIGHTOUTERJOINUsing">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RIGHTOUTERJOINUsing</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>using_columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RIGHTOUTERJOINUsing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RIGHTOUTERJOINUsing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.RLIKE">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">RLIKE</code><span class="sig-paren">(</span><em>expr</em>, <em>string</em>, <em>escape=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RLIKE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RLIKE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.LIKE" title="sqlobject.sqlbuilder.LIKE"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.LIKE</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.RLIKE.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#RLIKE.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.RLIKE.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.RLIKE.op">
+<code class="descname">op</code><em class="property"> = 'RLIKE'</em><a class="headerlink" href="#sqlobject.sqlbuilder.RLIKE.op" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.RLIKE.op_db">
+<code class="descname">op_db</code><em class="property"> = {'sqlite': 'REGEXP', 'firebird': 'RLIKE', 'maxdb': 'RLIKE', 'rdbhost': '~', 'mysql': 'RLIKE', 'postgres': '~'}</em><a class="headerlink" href="#sqlobject.sqlbuilder.RLIKE.op_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Replace">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Replace</code><span class="sig-paren">(</span><em>table</em>, <em>values</em>, <em>template=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>where=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Replace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.Update" title="sqlobject.sqlbuilder.Update"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.Update</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Replace.sqlName">
+<code class="descname">sqlName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Replace.sqlName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Replace.sqlName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.SOME">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SOME</code><span class="sig-paren">(</span><em>subquery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SOME"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SOME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLCall">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLCall</code><span class="sig-paren">(</span><em>expr</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLCall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLCall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLCall.components">
+<code class="descname">components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLCall.components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLCall.components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLCall.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLCall.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLCall.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLConstant">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLConstant</code><span class="sig-paren">(</span><em>const</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLConstant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLConstant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLConstant.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLConstant.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLConstant.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.SQLExprConverter">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLExprConverter</code><span class="sig-paren">(</span><em>value</em>, <em>db</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExprConverter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExprConverter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLExpression">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLExpression</code><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExpression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExpression" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLExpression.components">
+<code class="descname">components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExpression.components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExpression.components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLExpression.contains">
+<code class="descname">contains</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExpression.contains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExpression.contains" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLExpression.endswith">
+<code class="descname">endswith</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExpression.endswith"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExpression.endswith" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLExpression.startswith">
+<code class="descname">startswith</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExpression.startswith"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExpression.startswith" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLExpression.tablesUsed">
+<code class="descname">tablesUsed</code><span class="sig-paren">(</span><em>db</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExpression.tablesUsed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExpression.tablesUsed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLExpression.tablesUsedImmediate">
+<code class="descname">tablesUsedImmediate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExpression.tablesUsedImmediate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExpression.tablesUsedImmediate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLExpression.tablesUsedSet">
+<code class="descname">tablesUsedSet</code><span class="sig-paren">(</span><em>db</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLExpression.tablesUsedSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLExpression.tablesUsedSet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLJoin">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLJoin</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>op='</em>, <em>'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLJoin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLJoin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLJoinConditional">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLJoinConditional</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>op</em>, <em>on_condition=None</em>, <em>using_columns=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLJoinConditional"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLJoinConditional" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLJoin" title="sqlobject.sqlbuilder.SQLJoin"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLJoin</span></code></a></p>
+<p>Conditional JOIN</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLJoinOn">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLJoinOn</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>op</em>, <em>on_condition</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLJoinOn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLJoinOn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLJoinConditional" title="sqlobject.sqlbuilder.SQLJoinConditional"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLJoinConditional</span></code></a></p>
+<p>Conditional JOIN ON</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLJoinUsing">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLJoinUsing</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em>, <em>op</em>, <em>using_columns</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLJoinUsing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLJoinUsing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLJoinConditional" title="sqlobject.sqlbuilder.SQLJoinConditional"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLJoinConditional</span></code></a></p>
+<p>Conditional JOIN USING</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLModulo">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLModulo</code><span class="sig-paren">(</span><em>expr1</em>, <em>expr2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLModulo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLModulo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLOp" title="sqlobject.sqlbuilder.SQLOp"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLOp</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLObjectField">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLObjectField</code><span class="sig-paren">(</span><em>tableName</em>, <em>fieldName</em>, <em>original</em>, <em>soClass</em>, <em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLObjectField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLObjectField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.Field" title="sqlobject.sqlbuilder.Field"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.Field</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLObjectField.contains">
+<code class="descname">contains</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLObjectField.contains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLObjectField.contains" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLObjectField.endswith">
+<code class="descname">endswith</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLObjectField.endswith"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLObjectField.endswith" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLObjectField.startswith">
+<code class="descname">startswith</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLObjectField.startswith"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLObjectField.startswith" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLObjectState">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLObjectState</code><span class="sig-paren">(</span><em>soObject</em>, <em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLObjectState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLObjectState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLObjectTable">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLObjectTable</code><span class="sig-paren">(</span><em>soClass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLObjectTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLObjectTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.Table" title="sqlobject.sqlbuilder.Table"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.Table</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.SQLObjectTable.FieldClass">
+<code class="descname">FieldClass</code><a class="headerlink" href="#sqlobject.sqlbuilder.SQLObjectTable.FieldClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.sqlbuilder.SQLObjectField" title="sqlobject.sqlbuilder.SQLObjectField"><code class="xref py py-class docutils literal"><span class="pre">SQLObjectField</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLObjectTableWithJoins">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLObjectTableWithJoins</code><span class="sig-paren">(</span><em>soClass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLObjectTableWithJoins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLObjectTableWithJoins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLObjectTable" title="sqlobject.sqlbuilder.SQLObjectTable"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLObjectTable</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLOp">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLOp</code><span class="sig-paren">(</span><em>op</em>, <em>expr1</em>, <em>expr2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLOp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLOp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLOp.components">
+<code class="descname">components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLOp.components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLOp.components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLOp.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLOp.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLOp.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLPrefix">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLPrefix</code><span class="sig-paren">(</span><em>prefix</em>, <em>expr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLPrefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLPrefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLPrefix.components">
+<code class="descname">components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLPrefix.components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLPrefix.components" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLPrefix.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLPrefix.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLPrefix.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.SQLTrueClauseClass">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">SQLTrueClauseClass</code><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLTrueClauseClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLTrueClauseClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.SQLTrueClauseClass.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#SQLTrueClauseClass.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.SQLTrueClauseClass.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.STARTSWITH">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">STARTSWITH</code><span class="sig-paren">(</span><em>expr</em>, <em>pattern</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#STARTSWITH"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.STARTSWITH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.STRAIGHTJOIN">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">STRAIGHTJOIN</code><span class="sig-paren">(</span><em>table1</em>, <em>table2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#STRAIGHTJOIN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.STRAIGHTJOIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Select">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Select</code><span class="sig-paren">(</span><em>items=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>where=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>groupBy=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>having=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>orderBy=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>limit=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>join=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>lazyColumns=False</em>, <em>distinct=False</em>, <em>start=0</em>, <em>end=None</em>, <em>reversed=False</em>, <em>forUpdate=False</em>, <em>clause=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>staticTables=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>distinctOn=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.clone">
+<code class="descname">clone</code><span class="sig-paren">(</span><em>**newOps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.clone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.clone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.distinct">
+<code class="descname">distinct</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.distinct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.distinct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>filter_clause</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.lazyColumns">
+<code class="descname">lazyColumns</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.lazyColumns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.lazyColumns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.limit">
+<code class="descname">limit</code><span class="sig-paren">(</span><em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.limit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.newClause">
+<code class="descname">newClause</code><span class="sig-paren">(</span><em>new_clause</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.newClause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.newClause" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.newItems">
+<code class="descname">newItems</code><span class="sig-paren">(</span><em>items</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.newItems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.newItems" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.orderBy">
+<code class="descname">orderBy</code><span class="sig-paren">(</span><em>orderBy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.orderBy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.orderBy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.reversed">
+<code class="descname">reversed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.reversed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.reversed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Select.unlimited">
+<code class="descname">unlimited</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Select.unlimited"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Select.unlimited" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Subquery">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Subquery</code><span class="sig-paren">(</span><em>op</em>, <em>subquery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Subquery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Subquery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Table">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Table</code><span class="sig-paren">(</span><em>tableName</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.sqlbuilder.Table.FieldClass">
+<code class="descname">FieldClass</code><a class="headerlink" href="#sqlobject.sqlbuilder.Table.FieldClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.sqlbuilder.Field" title="sqlobject.sqlbuilder.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Table.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Table.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Table.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.TableSpace">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">TableSpace</code><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#TableSpace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.TableSpace" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="sqlobject.sqlbuilder.TableSpace.TableClass">
+<code class="descname">TableClass</code><a class="headerlink" href="#sqlobject.sqlbuilder.TableSpace.TableClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.sqlbuilder.Table" title="sqlobject.sqlbuilder.Table"><code class="xref py py-class docutils literal"><span class="pre">Table</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Union">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Union</code><span class="sig-paren">(</span><em>*tables</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Union"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Union" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.sqlbuilder.Update">
+<em class="property">class </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">Update</code><span class="sig-paren">(</span><em>table</em>, <em>values</em>, <em>template=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em>, <em>where=&lt;class sqlobject.sqlbuilder.NoDefault&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.sqlbuilder.SQLExpression" title="sqlobject.sqlbuilder.SQLExpression"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.sqlbuilder.SQLExpression</span></code></a></p>
+<dl class="method">
+<dt id="sqlobject.sqlbuilder.Update.sqlName">
+<code class="descname">sqlName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#Update.sqlName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.Update.sqlName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="sqlobject.sqlbuilder.VersionError">
+<em class="property">exception </em><code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">VersionError</code><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#VersionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.VersionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.dictToList">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">dictToList</code><span class="sig-paren">(</span><em>template</em>, <em>dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#dictToList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.dictToList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.execute">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">execute</code><span class="sig-paren">(</span><em>expr</em>, <em>executor</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.sqlIdentifier">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">sqlIdentifier</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#sqlIdentifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.sqlIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.sqlbuilder.tablesUsedSet">
+<code class="descclassname">sqlobject.sqlbuilder.</code><code class="descname">tablesUsedSet</code><span class="sig-paren">(</span><em>obj</em>, <em>db</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/sqlbuilder.html#tablesUsedSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.sqlbuilder.tablesUsedSet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.declarative module &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.declarative.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.declarative">
+<span id="sqlobject-declarative-module"></span><h1>sqlobject.declarative module<a class="headerlink" href="#module-sqlobject.declarative" title="Permalink to this headline">¶</a></h1>
+<p>Declarative objects.</p>
+<p>Declarative objects have a simple protocol: you can use classes in
+lieu of instances and they are equivalent, and any keyword arguments
+you give to the constructor will override those instance variables.
+(So if a class is received, we&#8217;ll simply instantiate an instance with
+no arguments).</p>
+<p>You can provide a variable __unpackargs__ (a list of strings), and if
+the constructor is called with non-keyword arguments they will be
+interpreted as the given keyword arguments.</p>
+<p>If __unpackargs__ is (&#8216;*&#8217;, name), then all the arguments will be put
+in a variable by that name.</p>
+<p>You can define a __classinit__(cls, new_attrs) method, which will be
+called when the class is created (including subclasses).  Note: you
+can&#8217;t use super() in __classinit__ because the class isn&#8217;t bound to a
+name.  As an analog to __classinit__, Declarative adds
+__instanceinit__ which is called with the same argument (new_attrs).
+This is like __init__, but after __unpackargs__ and other factors have
+been taken into account.</p>
+<p>If __mutableattributes__ is defined as a sequence of strings, these
+attributes will not be shared between superclasses and their
+subclasses.  E.g., if you have a class variable that contains a list
+and you append to that list, changes to subclasses will effect
+superclasses unless you add the attribute here.</p>
+<p>Also defines classinstancemethod, which acts as either a class method
+or an instance method depending on where it is called.</p>
+<dl class="class">
+<dt id="sqlobject.declarative.classinstancemethod">
+<em class="property">class </em><code class="descclassname">sqlobject.declarative.</code><code class="descname">classinstancemethod</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/declarative.html#classinstancemethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.declarative.classinstancemethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Acts like a class method when called from a class, like an
+instance method when called by an instance.  The method should
+take two arguments, &#8216;self&#8217; and &#8216;cls&#8217;; one of these will be None
+depending on how the method was called.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.declarative.DeclarativeMeta">
+<em class="property">class </em><code class="descclassname">sqlobject.declarative.</code><code class="descname">DeclarativeMeta</code><a class="reference internal" href="../_modules/sqlobject/declarative.html#DeclarativeMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.declarative.DeclarativeMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">type</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.declarative.Declarative">
+<em class="property">class </em><code class="descclassname">sqlobject.declarative.</code><code class="descname">Declarative</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/declarative.html#Declarative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.declarative.Declarative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.declarative.Declarative.declarative_count">
+<code class="descname">declarative_count</code><em class="property"> = 0</em><a class="headerlink" href="#sqlobject.declarative.Declarative.declarative_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.declarative.Declarative.singleton">
+<code class="descname">singleton</code><em class="property"> = &lt;bound class method Declarative.singleton&gt;</em><a class="reference internal" href="../_modules/sqlobject/declarative.html#Declarative.singleton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.declarative.Declarative.singleton" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

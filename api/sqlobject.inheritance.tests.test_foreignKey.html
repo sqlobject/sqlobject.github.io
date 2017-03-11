@@ -1,0 +1,693 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.inheritance.tests.test_foreignKey module &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/sqlobject.inheritance.tests.test_foreignKey.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-sqlobject.inheritance.tests.test_foreignKey">
+<span id="sqlobject-inheritance-tests-test-foreignkey-module"></span><h1>sqlobject.inheritance.tests.test_foreignKey module<a class="headerlink" href="#module-sqlobject.inheritance.tests.test_foreignKey" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_foreignKey.</code><code class="descname">EmployeeWithNotes</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_foreignKey.html#EmployeeWithNotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes" title="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.firstName">
+<code class="descname">firstName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.firstName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.j">
+<code class="descname">j</code><em class="property"> = employee_with_notes</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.lastName">
+<code class="descname">lastName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.lastName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.note">
+<code class="descname">note</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.note" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.paper">
+<code class="descname">paper</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.paper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.paperID">
+<code class="descname">paperID</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.paperID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.q">
+<code class="descname">q</code><em class="property"> = employee_with_notes</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlobject.declarative.sqlmeta</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = 'EmployeeWithNotes'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'paperID': &lt;ForeignKey b4b32fecL paper&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOForeignKey paperID default=None connected to Paper&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'paperID': &lt;SOForeignKey paperID default=None connected to Paper&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.parentClass">
+<code class="descname">parentClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes" title="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes"><code class="xref py py-class docutils literal"><span class="pre">PersonWithNotes</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes" title="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes"><code class="xref py py-class docutils literal"><span class="pre">EmployeeWithNotes</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'employee_with_notes'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_foreignKey.</code><code class="descname">Note</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_foreignKey.html#Note"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.j">
+<code class="descname">j</code><em class="property"> = note</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.q">
+<code class="descname">q</code><em class="property"> = note</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.sqlmeta" title="sqlobject.main.sqlmeta"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.sqlmeta</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'text': &lt;StringCol b44f192cL text&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol text&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'text': &lt;SOStringCol text&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = 'id'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.Note" title="sqlobject.inheritance.tests.test_foreignKey.Note"><code class="xref py py-class docutils literal"><span class="pre">Note</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = &lt;sqlobject.styles.MixedCaseUnderscoreStyle object&gt;</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'note'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Note.text">
+<code class="descclassname">Note.</code><code class="descname">text</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Note.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_foreignKey.</code><code class="descname">Paper</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_foreignKey.html#Paper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.SQLObject" title="sqlobject.main.SQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.SQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.content">
+<code class="descname">content</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.j">
+<code class="descname">j</code><em class="property"> = paper</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.q">
+<code class="descname">q</code><em class="property"> = paper</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.main.html#sqlobject.main.sqlmeta" title="sqlobject.main.sqlmeta"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.main.sqlmeta</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'content': &lt;StringCol b551e4ecL content&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol content&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'content': &lt;SOStringCol content&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.idName">
+<code class="descname">idName</code><em class="property"> = 'id'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.idName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.Paper" title="sqlobject.inheritance.tests.test_foreignKey.Paper"><code class="xref py py-class docutils literal"><span class="pre">Paper</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.style">
+<code class="descname">style</code><em class="property"> = &lt;sqlobject.styles.MixedCaseUnderscoreStyle object&gt;</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'paper'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.Paper.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_foreignKey.</code><code class="descname">PersonWithNotes</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_foreignKey.html#PersonWithNotes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject" title="sqlobject.inheritance.InheritableSQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.InheritableSQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.childName">
+<code class="descname">childName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.firstName">
+<code class="descname">firstName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.firstName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.j">
+<code class="descname">j</code><em class="property"> = person_with_notes</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.lastName">
+<code class="descname">lastName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.lastName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.note">
+<code class="descname">note</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.note" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.noteID">
+<code class="descname">noteID</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.noteID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.q">
+<code class="descname">q</code><em class="property"> = person_with_notes</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.InheritableSQLMeta</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {'EmployeeWithNotes': &lt;class 'sqlobject.inheritance.tests.test_foreignKey.EmployeeWithNotes'&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'lastName': &lt;StringCol b551e4ccL lastName&gt;, 'childName': &lt;StringCol b551e68cL childName&gt;, 'noteID': &lt;ForeignKey b551e02cL note&gt;, 'firstName': &lt;StringCol b551e5acL firstName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol firstName&gt;, &lt;SOStringCol lastName&gt;, &lt;SOForeignKey noteID default=None connected to Note&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'lastName': &lt;SOStringCol lastName&gt;, 'childName': &lt;SOStringCol childName default=None&gt;, 'noteID': &lt;SOForeignKey noteID default=None connected to Note&gt;, 'firstName': &lt;SOStringCol firstName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.parentClass">
+<code class="descname">parentClass</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes" title="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes"><code class="xref py py-class docutils literal"><span class="pre">PersonWithNotes</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'person_with_notes'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.PersonWithNotes.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_foreignKey.</code><code class="descname">SOTestInhBase</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_foreignKey.html#SOTestInhBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sqlobject.inheritance.html#sqlobject.inheritance.InheritableSQLObject" title="sqlobject.inheritance.InheritableSQLObject"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.InheritableSQLObject</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.childName">
+<code class="descname">childName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.j">
+<code class="descname">j</code><em class="property"> = so_test_inh_base</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.q">
+<code class="descname">q</code><em class="property"> = so_test_inh_base</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.InheritableSQLMeta</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {'SOTestInhFKey': &lt;class 'sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey'&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'childName': &lt;StringCol b55ed3ecL childName&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'childName': &lt;SOStringCol childName default=None&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.parentClass">
+<code class="descname">parentClass</code><em class="property"> = None</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase" title="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase"><code class="xref py py-class docutils literal"><span class="pre">SOTestInhBase</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'so_test_inh_base'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey">
+<em class="property">class </em><code class="descclassname">sqlobject.inheritance.tests.test_foreignKey.</code><code class="descname">SOTestInhFKey</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_foreignKey.html#SOTestInhFKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase" title="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase"><code class="xref py py-class docutils literal"><span class="pre">sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase</span></code></a></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.base">
+<code class="descname">base</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.base" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.baseID">
+<code class="descname">baseID</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.baseID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.childName">
+<code class="descname">childName</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.j">
+<code class="descname">j</code><em class="property"> = so_test_inh_f_key</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.j" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.q">
+<code class="descname">q</code><em class="property"> = so_test_inh_f_key</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta">
+<em class="property">class </em><code class="descname">sqlmeta</code><span class="sig-paren">(</span><em>instance</em><span class="sig-paren">)</span><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sqlobject.declarative.sqlmeta</span></code></p>
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.childClasses">
+<code class="descname">childClasses</code><em class="property"> = {}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.childClasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.childName">
+<code class="descname">childName</code><em class="property"> = 'SOTestInhFKey'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.childName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.columnDefinitions">
+<code class="descname">columnDefinitions</code><em class="property"> = {'childName': &lt;StringCol b44b9bacL childName&gt;, 'baseID': &lt;ForeignKey b44b98ecL base&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.columnDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.columnList">
+<code class="descname">columnList</code><em class="property"> = [&lt;SOForeignKey baseID connected to SOTestInhBase&gt;, &lt;SOStringCol childName default=None&gt;]</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.columnList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.columns">
+<code class="descname">columns</code><em class="property"> = {'childName': &lt;SOStringCol childName default=None&gt;, 'baseID': &lt;SOForeignKey baseID connected to SOTestInhBase&gt;}</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.indexDefinitions">
+<code class="descname">indexDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.indexDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.indexes">
+<code class="descname">indexes</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.indexes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.joinDefinitions">
+<code class="descname">joinDefinitions</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.joinDefinitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.joins">
+<code class="descname">joins</code><em class="property"> = []</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.joins" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.parentClass">
+<code class="descname">parentClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.parentClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase" title="sqlobject.inheritance.tests.test_foreignKey.SOTestInhBase"><code class="xref py py-class docutils literal"><span class="pre">SOTestInhBase</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.soClass">
+<code class="descname">soClass</code><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.soClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey" title="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey"><code class="xref py py-class docutils literal"><span class="pre">SOTestInhFKey</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.table">
+<code class="descname">table</code><em class="property"> = 'so_test_inh_f_key'</em><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.SOTestInhFKey.sqlmeta.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.test_foreignKey">
+<code class="descclassname">sqlobject.inheritance.tests.test_foreignKey.</code><code class="descname">test_foreignKey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_foreignKey.html#test_foreignKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.test_foreignKey" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlobject.inheritance.tests.test_foreignKey.test_foreignKey2">
+<code class="descclassname">sqlobject.inheritance.tests.test_foreignKey.</code><code class="descname">test_foreignKey2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sqlobject/inheritance/tests/test_foreignKey.html#test_foreignKey2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sqlobject.inheritance.tests.test_foreignKey.test_foreignKey2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">SQLObject 3.2.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

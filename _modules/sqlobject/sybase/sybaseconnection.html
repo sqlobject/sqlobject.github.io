@@ -1,0 +1,277 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.sybase.sybaseconnection &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../sybase.html" accesskey="U">sqlobject.sybase</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.sybase.sybaseconnection</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sqlobject.dbconnection</span> <span class="k">import</span> <span class="n">DBAPI</span>
+<span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">col</span>
+
+
+<div class="viewcode-block" id="SybaseConnection"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection">[docs]</a><span class="k">class</span> <span class="nc">SybaseConnection</span><span class="p">(</span><span class="n">DBAPI</span><span class="p">):</span>
+
+    <span class="n">supportTransactions</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">dbName</span> <span class="o">=</span> <span class="s1">&#39;sybase&#39;</span>
+    <span class="n">schemes</span> <span class="o">=</span> <span class="p">[</span><span class="n">dbName</span><span class="p">]</span>
+    <span class="n">NumericType</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">locking</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">Sybase</span>
+        <span class="n">Sybase</span><span class="o">.</span><span class="n">_ctx</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">SybaseConnection</span><span class="o">.</span><span class="n">NumericType</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">Sybase</span> <span class="k">import</span> <span class="n">NumericType</span>
+            <span class="n">SybaseConnection</span><span class="o">.</span><span class="n">NumericType</span> <span class="o">=</span> <span class="n">NumericType</span>
+            <span class="kn">from</span> <span class="nn">sqlobject.converters</span> <span class="k">import</span> <span class="n">registerConverter</span><span class="p">,</span> <span class="n">IntConverter</span>
+            <span class="n">registerConverter</span><span class="p">(</span><span class="n">NumericType</span><span class="p">,</span> <span class="n">IntConverter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">Sybase</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locking</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">locking</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="n">autoCommit</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;autoCommit&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">autoCommit</span><span class="p">:</span>
+            <span class="n">autoCommit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">autoCommit</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">autoCommit</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;autoCommit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">autoCommit</span>
+        <span class="n">DBAPI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_connectionFromParams</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+                   <span class="n">host</span><span class="o">=</span><span class="n">host</span> <span class="ow">or</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SybaseConnection.insert_id"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.insert_id">[docs]</a>    <span class="k">def</span> <span class="nf">insert_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sybase adapter/cursor does not support the</span>
+<span class="sd">        insert_id method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT @@IDENTITY&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="SybaseConnection.makeConnection"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.makeConnection">[docs]</a>    <span class="k">def</span> <span class="nf">makeConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+                                   <span class="n">database</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">,</span>
+                                   <span class="n">auto_commit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">autoCommit</span><span class="p">,</span>
+                                   <span class="n">locking</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">locking</span><span class="p">)</span></div>
+
+    <span class="n">HAS_IDENTITY</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">       SELECT col.name, col.status, obj.name</span>
+<span class="s2">       FROM syscolumns col</span>
+<span class="s2">       JOIN sysobjects obj</span>
+<span class="s2">       ON obj.id = col.id</span>
+<span class="s2">       WHERE obj.name = &#39;</span><span class="si">%s</span><span class="s2">&#39;</span>
+<span class="s2">             AND (col.status &amp; 0x80) = 0x80</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_hasIdentity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HAS_IDENTITY</span> <span class="o">%</span> <span class="n">table</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_queryInsertID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">soInstance</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span>
+        <span class="n">idName</span> <span class="o">=</span> <span class="n">soInstance</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">idName</span><span class="p">]</span> <span class="o">+</span> <span class="n">names</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">+</span> <span class="n">values</span>
+
+        <span class="n">has_identity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hasIdentity</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+        <span class="n">identity_insert_on</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">has_identity</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">identity_insert_on</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SET IDENTITY_INSERT </span><span class="si">%s</span><span class="s1"> ON&#39;</span> <span class="o">%</span> <span class="n">table</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">names</span> <span class="ow">and</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insertSQL</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO </span><span class="si">%s</span><span class="s2"> DEFAULT VALUES&quot;</span> <span class="o">%</span> <span class="n">table</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="s1">&#39;QueryIns&#39;</span><span class="p">)</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">has_identity</span> <span class="ow">and</span> <span class="n">identity_insert_on</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SET IDENTITY_INSERT </span><span class="si">%s</span><span class="s1"> OFF&#39;</span> <span class="o">%</span> <span class="n">table</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">insert_id</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugOutput</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">printDebug</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="s1">&#39;QueryIns&#39;</span><span class="p">,</span> <span class="s1">&#39;result&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">id</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_queryAddLimitOffset</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="c1"># XXX Sybase doesn&#39;t support OFFSET</span>
+        <span class="k">if</span> <span class="n">end</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;SET ROWCOUNT </span><span class="si">%i</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> SET ROWCOUNT 0&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">query</span>
+
+<div class="viewcode-block" id="SybaseConnection.createReferenceConstraint"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.createReferenceConstraint">[docs]</a>    <span class="k">def</span> <span class="nf">createReferenceConstraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SybaseConnection.createColumn"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.createColumn">[docs]</a>    <span class="k">def</span> <span class="nf">createColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">sybaseCreateSQL</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SybaseConnection.createIDColumn"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.createIDColumn">[docs]</a>    <span class="k">def</span> <span class="nf">createIDColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">key_type</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;NUMERIC(18,0)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span><span class="p">}[</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idType</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> IDENTITY UNIQUE&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">,</span> <span class="n">key_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SybaseConnection.createIndexSQL"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.createIndexSQL">[docs]</a>    <span class="k">def</span> <span class="nf">createIndexSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soClass</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">index</span><span class="o">.</span><span class="n">sybaseCreateIndexSQL</span><span class="p">(</span><span class="n">soClass</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SybaseConnection.joinSQLType"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.joinSQLType">[docs]</a>    <span class="k">def</span> <span class="nf">joinSQLType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">join</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;NUMERIC(18,0) NOT NULL&#39;</span></div>
+
+    <span class="n">SHOW_TABLES</span> <span class="o">=</span> <span class="s2">&quot;SELECT name FROM sysobjects WHERE type=&#39;U&#39;&quot;</span>
+
+<div class="viewcode-block" id="SybaseConnection.tableExists"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.tableExists">[docs]</a>    <span class="k">def</span> <span class="nf">tableExists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">):</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">table</span><span class="p">,)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SHOW_TABLES</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">table</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">tableName</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="SybaseConnection.addColumn"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.addColumn">[docs]</a>    <span class="k">def</span> <span class="nf">addColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ALTER TABLE </span><span class="si">%s</span><span class="s1"> ADD COLUMN </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">tableName</span><span class="p">,</span>
+                    <span class="n">column</span><span class="o">.</span><span class="n">sybaseCreateSQL</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SybaseConnection.delColumn"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.delColumn">[docs]</a>    <span class="k">def</span> <span class="nf">delColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sqlmeta</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+            <span class="s1">&#39;ALTER TABLE </span><span class="si">%s</span><span class="s1"> DROP COLUMN </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">dbName</span><span class="p">))</span></div>
+
+    <span class="n">SHOW_COLUMNS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;SELECT &#39;</span>
+                    <span class="s1">&#39;COLUMN_NAME, DATA_TYPE, IS_NULLABLE, COLUMN_DEFAULT &#39;</span>
+                    <span class="s1">&#39;FROM INFORMATION_SCHEMA.COLUMNS &#39;</span>
+                    <span class="s1">&#39;WHERE TABLE_NAME = </span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SybaseConnection.columnsFromSchema"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.columnsFromSchema">[docs]</a>    <span class="k">def</span> <span class="nf">columnsFromSchema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">soClass</span><span class="p">):</span>
+        <span class="n">colData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryAll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SHOW_COLUMNS</span>
+                                <span class="o">%</span> <span class="n">tableName</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">nullAllowed</span><span class="p">,</span> <span class="n">default</span> <span class="ow">in</span> <span class="n">colData</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field</span> <span class="o">==</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">idName</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">colClass</span><span class="p">,</span> <span class="n">kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">guessClass</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">soClass</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">dbColumnToPythonAttr</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;dbName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;notNone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">nullAllowed</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span>
+            <span class="c1"># @@ skip key...</span>
+            <span class="c1"># @@ skip extra...</span>
+            <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;forceDBName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">colClass</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+    <span class="k">def</span> <span class="nf">_setAutoCommit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">auto</span><span class="p">):</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">auto_commit</span> <span class="o">=</span> <span class="n">auto</span>
+
+<div class="viewcode-block" id="SybaseConnection.guessClass"><a class="viewcode-back" href="../../../api/sqlobject.sybase.sybaseconnection.html#sqlobject.sybase.sybaseconnection.SybaseConnection.guessClass">[docs]</a>    <span class="k">def</span> <span class="nf">guessClass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">IntCol</span><span class="p">,</span> <span class="p">{}</span>
+        <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;varchar&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">StringCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])}</span>
+        <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;char&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">StringCol</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+                                   <span class="s1">&#39;varchar&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">DateTimeCol</span><span class="p">,</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">col</span><span class="o">.</span><span class="n">Col</span><span class="p">,</span> <span class="p">{}</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../sybase.html" >sqlobject.sybase</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>

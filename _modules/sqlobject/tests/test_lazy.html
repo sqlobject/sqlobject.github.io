@@ -1,0 +1,261 @@
+
+
+<!doctype html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sqlobject.tests.test_lazy &#8212; SQLObject 3.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '3.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for sqlobject.tests.test_lazy</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sqlobject</span> <span class="k">import</span> <span class="n">SQLObject</span><span class="p">,</span> <span class="n">StringCol</span>
+<span class="kn">from</span> <span class="nn">sqlobject.tests.dbtest</span> <span class="k">import</span> <span class="n">setupClass</span>
+
+
+<span class="c1">########################################</span>
+<span class="c1"># Lazy updates</span>
+<span class="c1">########################################</span>
+
+
+<div class="viewcode-block" id="Lazy"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_lazy.html#sqlobject.tests.test_lazy.Lazy">[docs]</a><span class="k">class</span> <span class="nc">Lazy</span><span class="p">(</span><span class="n">SQLObject</span><span class="p">):</span>
+
+    <span class="k">class</span> <span class="nc">sqlmeta</span><span class="p">:</span>
+        <span class="n">lazyUpdate</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">()</span>
+    <span class="n">other</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;nothing&#39;</span><span class="p">)</span>
+    <span class="n">third</span> <span class="o">=</span> <span class="n">StringCol</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;third&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestLazyTest"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_lazy.html#sqlobject.tests.test_lazy.TestLazyTest">[docs]</a><span class="k">class</span> <span class="nc">TestLazyTest</span><span class="p">:</span>
+
+<div class="viewcode-block" id="TestLazyTest.setup_method"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_lazy.html#sqlobject.tests.test_lazy.TestLazyTest.setup_method">[docs]</a>    <span class="k">def</span> <span class="nf">setup_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meth</span><span class="p">):</span>
+        <span class="c1"># All this stuff is so that we can track when the connection</span>
+        <span class="c1"># does an actual update; we put in a new _SO_update method</span>
+        <span class="c1"># that calls the original and sets an instance variable that</span>
+        <span class="c1"># we can later check.</span>
+        <span class="n">setupClass</span><span class="p">(</span><span class="n">Lazy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">Lazy</span><span class="o">.</span><span class="n">_connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_oldUpdate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">_SO_update</span>
+        <span class="n">newUpdate</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">so</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_oldUpdate</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_alternateUpdate</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">o</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">_SO_update</span> <span class="o">=</span> <span class="n">newUpdate</span></div>
+
+<div class="viewcode-block" id="TestLazyTest.teardown_method"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_lazy.html#sqlobject.tests.test_lazy.TestLazyTest.teardown_method">[docs]</a>    <span class="k">def</span> <span class="nf">teardown_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meth</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">_SO_update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oldUpdate</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oldUpdate</span></div>
+
+    <span class="k">def</span> <span class="nf">_alternateUpdate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">oldUpdate</span><span class="p">):</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">oldUpdate</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TestLazyTest.test_lazy"><a class="viewcode-back" href="../../../api/sqlobject.tests.test_lazy.html#sqlobject.tests.test_lazy.TestLazyTest.test_lazy">[docs]</a>    <span class="k">def</span> <span class="nf">test_lazy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">Lazy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tim&#39;</span><span class="p">)</span>
+        <span class="c1"># We just did an insert, but not an update:</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;joe&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;joe&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">syncUpdate</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;joe&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;joe&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">Lazy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;frank&#39;</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;joe&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;joe&#39;</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;joe2&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;joe2&#39;</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">syncUpdate</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;joe2&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">Lazy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;loaded&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;loaded&#39;</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;unloaded&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;unloaded&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;unloaded&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;whatever&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;whatever&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_SO_loadValue</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;whatever&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_SO_loadValue</span><span class="p">(</span><span class="s1">&#39;other&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;whatever&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">syncUpdate</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Now, check that get() doesn&#39;t screw</span>
+        <span class="c1"># cached objects&#39; validator state.</span>
+        <span class="n">obj_id</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">old_state</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">_SO_validatorState</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">Lazy</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">_SO_validatorState</span> <span class="ow">is</span> <span class="n">old_state</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;whatever&#39;</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;unloaded&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;unloaded&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="c1"># Fetch the object again with get() and</span>
+        <span class="c1"># make sure sqlmeta.dirty is still set, as the</span>
+        <span class="c1"># object should come from the cache.</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">Lazy</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;unloaded&#39;</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">syncUpdate</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Then clear the cache, and try a get()</span>
+        <span class="c1"># again, to make sure stuf like _SO_createdValues</span>
+        <span class="c1"># is properly initialized.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">Lazy</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;unloaded&#39;</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;spongebob&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;spongebob&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">syncUpdate</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">Lazy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">syncUpdate</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="c1"># Check that setting multiple values</span>
+        <span class="c1"># actually works. This was broken</span>
+        <span class="c1"># and just worked because we were testing</span>
+        <span class="c1"># only one value at a time, so &#39;name&#39;</span>
+        <span class="c1"># had the right value after the for loop *wink*</span>
+        <span class="c1"># Also, check that passing a name that is not</span>
+        <span class="c1"># a valid column doesn&#39;t break, but instead</span>
+        <span class="c1"># just does a plain setattr.</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="s1">&#39;who&#39;</span><span class="p">,</span> <span class="n">third</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;first&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">other</span> <span class="o">==</span> <span class="s1">&#39;who&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">third</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span>
+        <span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">syncUpdate</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">didUpdate</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">sqlmeta</span><span class="o">.</span><span class="n">dirty</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">SQLObject 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2004-2017, Ian Bicking and contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+    </div>
+  </body>
+</html>
